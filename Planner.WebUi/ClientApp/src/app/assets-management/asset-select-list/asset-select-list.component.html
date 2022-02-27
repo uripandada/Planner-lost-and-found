@@ -1,0 +1,46 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="asset-select-list">
+  <div class="filter-row">
+    <form [formGroup]="filterForm">
+      <div class="asset-select-list-filter-row-grid">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input formControlName="keywords" matInput placeholder="Find by keywords...">
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <mat-select formControlName="sortKey" name="sorts">
+              <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                {{sort.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="asset-select-list-items">
+    <div class="asset-select-list-item" [class.list-item-selected]="!(selectedAsset$ | async).id">
+      All assets
+    </div>
+    <div class="asset-select-list-item" *ngFor="let asset of filteredAssets$ | async" (click)="selectAsset(asset)" [class.list-item-selected]="(selectedAsset$ | async).id === asset.id">
+      <div class="asset-select-list-item-image">
+        <div class="single-file-upload-photo-item">
+          <div class="single-file-upload-photo" [class.no-photo]="!asset.imageUrl" [ngStyle]="{'background-image': 'url(' + (asset.imageUrl ? asset.imageUrl : noImageBackgroundUrl) + ')'}"></div>
+        </div>
+      </div>
+      <div class="asset-select-list-item-text">
+        <div class="asset-select-list-item-title">{{asset.name}}</div>
+        <div class="asset-select-list-item-subtitle">{{asset.serialNumber}}</div>
+      </div>
+      <div class="asset-select-list-item-type">
+        <div class="asset-select-list-item-type-icon">
+          <i class="icofont icofont-cubes" *ngIf="asset.isBulk"></i>
+          <i class="icofont icofont-cube" *ngIf="!asset.isBulk"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

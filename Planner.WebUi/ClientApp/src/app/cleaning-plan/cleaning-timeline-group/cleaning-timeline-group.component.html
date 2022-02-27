@@ -1,0 +1,43 @@
+<div class="wt-group">
+  <div class="wt-content">
+    <div class="wt-title">
+      <div>{{data.groupData.cleaner.name}}</div>
+      <div class="wt-second-worker-name">
+        <ng-container *ngIf="data.groupData.hasSecondaryCleaner">
+          + {{data.groupData.secondaryCleaner.name}}
+        </ng-container>
+      </div>
+    </div>
+    <div class="wt-status">
+        <button class="small-edit-button" (click)="edit()">Edit</button>
+    </div>
+  </div>
+  <div>
+    <!--<div class="wt-actions">
+      <div class="wt-tag">Tasks <span>0</span></div>-->
+      <!--<div class="">Credits <span>0</span></div>-->
+    <!--</div>-->
+    <div class="wt-actions">
+      <span class="wt-tag" title="Arrivals">
+        <!--<i class="icofont-login"></i>-->
+        <span>AR {{data.numberOfArrivals$ | async}}</span>
+      </span>
+      <span class="wt-tag" title="Stays">
+        <!--<i class="icofont-bed"></i>-->
+        <span>ST {{data.numberOfStays$ | async}}</span>
+      </span>
+      <span class="wt-tag" title="Departures">
+        <!--<i class="icofont-logout"></i>-->
+        <span>DE {{data.numberOfDepartures$ | async}}</span>
+      </span>
+      <span class="wt-tag" title="Tasks">
+        <!--<i class="icofont-card"></i>-->
+        <span>TS {{data.numberOfTasks$ | async}}</span>
+      </span>
+      <span class="wt-tag" title="Credits">
+        <!--<i class="icofont-card"></i>-->
+        <span>CR {{data.totalCredits$ | async}}</span>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isLoading$ | async"></mat-progress-bar>
+
+<div class="importPreviewRooms-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>Import rooms</b></div>
+    <div class="major-column-buttons">
+      <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+      <!--<button mat-flat-button class="button-with-icon" type="button" (click)="fileUpload.click()"><i class="icofont-save"></i> <span>Import data</span></button>
+      <button mat-flat-button class="button-with-icon secondary-button" type="button" [disabled]="!isFileUploaded" (click)="saveRooms()"><i class="icofont-upload-alt"></i> <span>Save data</span></button>-->
+    </div>
+  </div>
+  <div class="component-room-wrapper">
+    <div class="component-box">
+
+      <div *ngIf="!(isDataPreviewGenerated$ | async)" class="centered-import-actions-wrapper">
+        <button mat-flat-button class="button-with-icon" type="button" (click)="cancelImport()" [disabled]="(isLoading$| async)"><i class="icofont-undo"></i> <span>Cancel import</span></button>
+        <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-save"></i> <span>Select CSV file to import</span></button>
+      </div>
+
+      
+      <ng-container *ngIf="(isDataPreviewGenerated$ | async)">
+        <div class="component-list-row" *ngIf="(roomImportPreview$ | async) as roomImportPreview">
+
+          <div class="import-errors-warning warning-with-button-grid" *ngIf="!(isDataPreviewErrorFree$ | async)">
+            <div>
+              <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-refresh"></i> <span>Re-import</span></button>
+            </div>
+            <div>
+              Rooms extracted from the CSV file have some issues with the data. Please fix data issues and re-import the file.
+            </div>
+          </div>
+
+
+          <table class="list-view-table" *ngIf="roomImportPreview.rooms.length > 0">
+            <thead>
+              <tr>
+                <th>Room name</th>
+                <th>Room type</th>
+                <th>Room category</th>
+                <th>Beds</th>
+                <th>Order</th>
+                <th>Floor subsection</th>
+                <th>Floor section</th>
+                <th>Floor</th>
+                <th>Building</th>
+                <th>Area</th>
+                <th>Hotel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-view-items-row" *ngFor="let room of roomImportPreview.rooms">
+                <td>
+                  <div class="cell-value">{{room.roomName}}</div>
+                  <div *ngIf="room.hasError" class="cell-error">{{room.message}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.roomType}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.roomCategory}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.beds}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.order}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.floorSubSection}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.floorSection}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.floor}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.building}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.area}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{room.hotel}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="no-data" *ngIf="roomImportPreview.rooms.length === 0">No data in the uploaded file.</div>
+        </div>
+
+        <div class="import-footer-actions">
+          <div>
+            <button mat-flat-button class="button-with-icon" type="button" (click)="cancelImport()"><i class="icofont-undo"></i> <span>Cancel import</span></button>
+          </div>
+          <div>
+            <button mat-flat-button class="button-with-icon" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-refresh"></i> <span>Select another CSV file</span></button>
+
+            <ng-container *ngIf="(isDataPreviewErrorFree$ | async)">
+              <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="saveRooms()" [disabled]="(isLoading$| async)"><i class="icofont-save"></i> <span>Confirm import</span></button>
+            </ng-container>
+          </div>
+        </div>
+
+      </ng-container>
+
+
+    </div>
+  </div>
+</div>

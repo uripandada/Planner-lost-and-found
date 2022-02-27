@@ -1,0 +1,94 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="logs-component-wrapper component-wrapper">
+  <div class="component-list-details-wrapper">
+    <div class="component-list-wrapper">
+      <div class="major-column-title"><b>Cleaning generator logs</b></div>
+      <div class="component-box">
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row">
+              <div class="logs-filter-row-grid">
+                <div class="form-field-wrapper">
+                  <label>Cleaning date</label>
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput [matDatepicker]="cleaningDatePicker" formControlName="cleaningDate" (click)="cleaningDatePicker.open()" (focus)="cleaningDatePicker.open()">
+                    <mat-datepicker-toggle matSuffix [for]="cleaningDatePicker" [disableRipple]="true">
+                      <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #cleaningDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Hotel</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="hotelId" name="hotelId">
+                      <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                        {{hotel.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Generation ID</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="generationId" matInput placeholder="">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+
+          <table class="list-view-table">
+            <thead>
+              <tr>
+                <th>Message</th>
+                <th>Room</th>
+                <th>Reservations</th>
+                <th>Cleanings</th>
+                <th>Plugins</th>
+                <th>Reservation events</th>
+                <!--<th>Plugin events</th>-->
+                <th>Cleaning events</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-view-items-row" *ngFor="let log of logs$ | async">
+                <td class="">
+                  <div class="cell-value">{{log.message}}</div>
+                  <div class="sub-cell-value">GenID:{{log.generationId}}</div>
+                  <div class="sub-cell-value">Cleaning date:{{log.cleaningPlanDate | date:'dd.MM.yyyy.'}} </div>
+                  <div class="sub-cell-value">Generated at:{{log.at | date:'dd.MM.yyyy. HH:mm'}} </div>
+                </td>
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.roomDescription | json}}</code></pre></div>
+                </td>
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.reservationsDescription | json}}</code></pre></div>
+                </td>
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.cleaningsDescription | json}}</code></pre></div>
+                </td>
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.orderedPluginsDescription | json}}</code></pre></div>
+                </td>
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.reservationsEventsDescription | json}}</code></pre></div>
+                </td>
+                <!--<td class="">
+                  <div class="cell-value"><pre><code>{{log.pluginEventsDescription | json}}</code></pre></div>
+                </td>-->
+                <td class="">
+                  <div class="cell-value"><pre><code>{{log.cleaningEventsDescription | json}}</code></pre></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

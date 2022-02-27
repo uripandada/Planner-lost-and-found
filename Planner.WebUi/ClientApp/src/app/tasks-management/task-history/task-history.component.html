@@ -1,0 +1,22 @@
+
+<div class="task-history-item-list">
+  <div *ngFor="let item of historyItems$ | async" class="task-history-item">
+    <div class="history-item-avatar-wrapper">
+      <div class="history-item-avatar">{{item.createdByInitials}}</div>
+    </div>
+    <div class="task-history-item-content">
+      <div>
+        <div class="history-item-message">{{item.message}}</div>
+        <div class="history-item-label">{{item.createdAtString}} by {{item.createdByUserFullName}}</div>
+      </div>
+      <div class="changes-list" *ngIf="item.changes.length > 0">
+        <div class="change-item" *ngFor="let change of item.changes">
+            <div class="change-item-name">{{change.propertyName}}:</div>
+            <div class="change-item-value">{{change.oldValue}}</div>
+            <div class="change-item-separator">&rarr;</div>
+            <div class="change-item-value">{{change.newValue}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

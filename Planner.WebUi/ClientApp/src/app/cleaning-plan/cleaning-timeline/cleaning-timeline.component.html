@@ -1,0 +1,395 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="timeline-component-wrapper">
+  <div class="timeline-wrapper-wrapper">
+    <!--ABOVE TIMELINE ACTIONS-->
+    <div class="timeline-actions">
+      <div class="timeline-rs-actions">
+        <!--<button mat-flat-button type="button" (click)="selectCleanersService.showPopup(cleanersData, plannedCleanerIds$.value)"><i class="icofont-check"></i> Select attendants</button>-->
+        <button mat-flat-button type="button" (click)="selectCleanersService.showPopup(cleanersData, plannedCleanerIds$.value)">Select attendants</button>
+
+        <button mat-flat-button
+                type="button"
+                class="secondary-button"
+                mwlConfirmationPopover
+                [popoverMessage]="'Are you sure you want to send the plan?'"
+                placement="bottom"
+                (confirm)="sendPlan()">Send plan</button>
+        <ng-container *ngIf="isCleaningPlanSent$ | async">
+          <div class="timeline-is-sent-wrapper">
+            <i class="icofont-check-circled"></i> Last sent at <span>{{cleaningPlanSentAt$ | async | date:'MMMM d, HH:mm' }}</span>
+          </div>
+          <!--<button mat-flat-button type="button" class="toggle-lock-btn unlocked-btn" (click)="lockSentTimelineItems()" *ngIf="!(areSentItemsLocked$ | async)" title="Lock sent cleanings"><i class="icofont-unlocked"></i></button>
+          <button mat-flat-button type="button" class="toggle-lock-btn" (click)="unlockSentTimelineItems()" *ngIf="(areSentItemsLocked$ | async)" title="Unock sent cleanings"><i class="icofont-unlock"></i></button>-->
+        </ng-container>
+      </div>
+      <div class="timeline-rs-actions">
+        <!--<button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="showCpsatCofigPopup()"><i class="icofont-plus"></i> Create plan</button>-->
+
+        <button mat-flat-button
+                type="button"
+                mwlConfirmationPopover
+                [popoverMessage]="'Are you sure you want to clear the plan?'"
+                placement="bottom"
+                title="Clear planned cleanings"
+                (confirm)="resetPlan()">
+          Clear
+        </button>
+
+
+
+        <!--<button mat-flat-button
+                type="button"
+                class=""
+                (click)="resetPlan()"
+                title="Clear planned cleanings">Clear</button>-->
+
+        <button mat-flat-button
+                type="button"
+                mwlConfirmationPopover
+                [popoverMessage]="'Are you sure you want to refresh cleanings?'"
+                placement="bottom"
+                (confirm)="deleteAndRefresh()"
+                title="Recreate cleanings from the cleaning plugins">Refresh cleanings</button>
+
+        <button mat-flat-button type="button" class=""><i class="icofont-download"></i></button>
+        <button mat-flat-button type="button" (click)="toggleShowCpsatConfigurationDrawer()"><i class="icofont-settings"></i></button>
+      </div>
+    </div>
+    <!--TIMELINE-->
+    <div class="component-box position-relative">
+      <div class="groups-total-summary-wrapper">
+        <div class="groups-total-summary">
+          <div class="wt-actions">
+            <span class="wt-tag" title="Arrivals">
+              <!--<i class="icofont-login"></i>-->
+              <span>AR {{plannedNumberOfArrivals$ | async}}</span>
+            </span>
+            <span class="wt-tag" title="Stays">
+              <!--<i class="icofont-bed"></i>-->
+              <span>ST {{plannedNumberOfStays$ | async}}</span>
+            </span>
+            <span class="wt-tag" title="Departures">
+              <!--<i class="icofont-logout"></i>-->
+              <span>DE {{plannedNumberOfDepartures$ | async}}</span>
+            </span>
+            <span class="wt-tag" title="Tasks">
+              <!--<i class="icofont-card"></i>-->
+              <span>TS {{plannedNumberOfTasks$ | async}}</span>
+            </span>
+            <span class="wt-tag" title="Credits">
+              <!--<i class="icofont-card"></i>-->
+              <span>CR {{plannedTotalCredits$ | async}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-wrapper" #cleaningPlanner></div>
+      <div class="select-attendants-button-wrapper">
+        <button mat-flat-button type="button" (click)="openQuickCreateAttendant()">Quick Create Attendant</button>
+      </div>
+    </div>
+  </div>
+  <div class="selectable-timeline-items-wrapper">
+    <div>
+      <div class="plannable-cleanings-box-grid">
+        <div class="component-box">
+          <!-- FILTER FOR THE PLANNABLE CLEANINGS -->
+          <!--<form [formGroup]="filterCleaningsForm" autocomplete="off">-->
+            <div class="selectable-timeline-items-filter">
+              <div class="timeline-items-filter-input">
+                <div>
+                  <i class="icofont-filter"></i>
+                </div>
+                <div>
+                  <app-cleaning-timeline-filter [filterGroups]="cleaningFilterGroups" (changed)="onCleaningTimelineFilterChanged($event)"></app-cleaning-timeline-filter>
+                </div>
+              </div>
+              <div class="selectable-timeline-items-filter-tags">
+                <div class="filter-tag-item" *ngFor="let cc of cleaningCounts$ | async"><span>{{cc.description}}</span> <span>{{ cc.count }}</span></div>
+
+                <!--<div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyClean.value" (click)="toggleClean()"><span>Clean</span> <span>{{ filteredNumberOfCleanCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyDirty.value" (click)="toggleDirty()"><span>Dirty</span> <span>{{ filteredNumberOfDirtyCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyInspected.value" (click)="toggleInspected()"><span>Inspected</span> <span>{{ filteredNumberOfInspectedCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyVacant.value" (click)="toggleVacant()"><span>Vacant</span> <span>{{ filteredNumberOfVacantCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyOccupied.value" (click)="toggleOccupied()"><span>Occupied</span> <span>{{ filteredNumberOfOccupiedCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyDoNotDisturb.value" (click)="toggleDoNotDisturb()"><span>DND</span> <span>{{ filteredNumberOfDoNotDisturbCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyOutOfService.value" (click)="toggleOutOfService()"><span>OOS</span> <span>{{ filteredNumberOfOutOfServiceCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyPostponed.value" (click)="togglePostponed()"><span>Postponed</span> <span>{{ filteredNumberOfPostponedCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyActive.value" (click)="toggleActive()"><span>Active</span> <span>{{ filteredNumberOfActiveCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyInactive.value" (click)="toggleInactive()"><span>Inactive</span> <span>{{ filteredNumberOfInactiveCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyStay.value" (click)="toggleStay()"><span>Stay</span> <span>{{ filteredNumberOfStayCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyCheckIn.value" (click)="toggleCheckIn()"><span>Check In</span> <span>{{ filteredNumberOfCheckInCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyCheckOut.value" (click)="toggleCheckOut()"><span>Check Out</span> <span>{{ filteredNumberOfCheckOutCleanings$ | async }}</span></div>
+                <div class="filter-tag-item" [class.filter-tag-item-selected]="filterCleaningsForm.controls.filterOnlyVip.value" (click)="toggleVip()"><span>VIP</span> <span>{{ filteredNumberOfVipCleanings$ | async }}</span></div>-->
+              </div>
+
+            </div>
+          <!--</form>-->
+          <!-- PLANNABLE (AVAILABLE) CLEANINGS -->
+          <dts-select-container (select)="selectCleanings($event)" #selectCleaningsContainer class="selectable-timeline-items" [dragOverItems]="false">
+            <div [dtsSelectItem]="plannableItem" class="selectable-timeline-item" *ngFor="let plannableItem of filteredPlannableCleanings$ | async" draggable="true" (dragstart)="dragStartItemFromList($event, plannableItem)" (click)="selectItemFromList(plannableItem)" (mouseenter)="showPlannableTooltip($event)" (mouseleave)="hidePlannableTooltip($event)" [attr.data-plannable-item-id]="plannableItem.id">
+              <app-cleaning-timeline-item [data]="plannableItem" (click)="selectItemFromList(plannableItem)"></app-cleaning-timeline-item>
+            </div>
+          </dts-select-container>
+        </div>
+        <div class="plannable-cleanings-selection-summary">
+          <div *ngIf="!(showCreateCustomCleaningsForm$ | async) && !(showChangeCreditsForm$ | async)" class="sticky-top">
+            <div class="plannable-cleanings-form-header">
+              <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="showCreateCustomCleaningsForm()"><i class="icofont-plus"></i> Add cleanings</button>
+            </div>
+            <div class="plannable-cleanings-form-body">
+              <div class="number-of-cleanings"><b>{{numberOfSelectedCleanings$ | async}}</b> selected cleanings</div>
+              <div class="mass-actions">
+                <div class="action-with-description">
+                  <div class="action-description">{{numberOfActiveSelectedCleanings$ | async}} active</div>
+                  <div class="action-button-wrapper">
+                    <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="cancelSelectedCleanings()" [disabled]="(numberOfActiveSelectedCleanings$ | async) === 0"><i class="icofont-delete"></i> Cancel</button>
+                  </div>
+                </div>
+                <div class="action-with-description">
+                  <div class="action-description">{{numberOfInactiveSelectedCleanings$ | async}}  cancelled</div>
+                  <div class="action-button-wrapper">
+                    <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="activateSelectedCleanings()" [disabled]="(numberOfInactiveSelectedCleanings$ | async) === 0"><i class="icofont-delete-alt"></i> Reactivate</button>
+                  </div>
+                </div>
+                <div class="action-with-description">
+                  <div class="action-description">{{numberOfNotPostponedSelectedCleanings$ | async}}  regular</div>
+                  <div class="action-button-wrapper">
+                    <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="postponeSelectedCleanings()" [disabled]="(numberOfNotPostponedSelectedCleanings$ | async) === 0"><i class="icofont-redo"></i> Postpone</button>
+                  </div>
+                </div>
+                <div class="action-with-description">
+                  <div class="action-description">{{numberOfPostponedSelectedCleanings$ | async}}  postponed</div>
+                  <div class="action-button-wrapper">
+                    <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="undoPostponeSelectedCleanings()" [disabled]="(numberOfPostponedSelectedCleanings$ | async) === 0"><i class="icofont-undo"></i> Undo postpone</button>
+                  </div>
+                </div>
+                <div class="action-with-description">
+                  <div class="action-description">{{numberOfSelectedCleanings$ | async}}  cleanings</div>
+                  <div class="action-button-wrapper">
+                    <button mat-flat-button type="button" class="button-with-icon medium-button" (click)="showChangeCreditsForm()" [disabled]="(numberOfSelectedCleanings$ | async) === 0"><i class="icofont-pen-alt-4"></i> Change credits</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="(showCreateCustomCleaningsForm$ | async)" class="create-custom-cleanings-form-wrapper sticky-top">
+            <app-create-custom-cleanings-form [allWheres]="hotelWheres$ | async" [cleaningDate]="cleaningPlan.date" [cleaningPlanId]="cleaningPlan.id" (saved)="onCreateCustomCleaningsSaved($event)" (cancelled)="onCreateCustomCleaningsCancelled()"></app-create-custom-cleanings-form>
+          </div>
+
+          <div *ngIf="(showChangeCreditsForm$ | async)" class="change-credits-form-wrapper sticky-top">
+            <app-change-credits-form [cleanings]="selectedPlannableCleanings$ | async" (saved)="onChangeCreditsSaved($event)" (cancelled)="onChangeCreditsCancelled()"></app-change-credits-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-popup [isOpen]="showQuickAttendant$ | async" (closed)="closeQuickAttendant()" [isNonButtonCloseEnabled]="false">
+  <app-quick-create-attendant (closed)="closeQuickAttendant()" (created)="onAttendantCreated($event)"></app-quick-create-attendant>
+</app-popup>
+
+<app-popup [isOpen]="selectCleanersService.isPopupShown$ | async" (closed)="selectCleanersService.cancelSelection()" [isNonButtonCloseEnabled]="false">
+  <div class="popup-header">
+    <div class="major-column-title">
+      <b>Available cleaners</b>
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="selectCleanersService.cleanersForm" autocomplete="off">
+      <div class="popup-content no-bottom-padding">
+        <div>
+          <mat-form-field appearance="outline" class="no-bottom-padding-input full-width">
+            <mat-label>Filter cleaners</mat-label>
+            <input matInput placeholder="" formControlName="keywords">
+          </mat-form-field>
+        </div>
+        <div class="filter-cleaners-actions">
+          <div class="filter-cleaners-actions-left">
+            <button class="small-default-button" (click)="selectCleanersService.selectAll()">Select all ({{selectCleanersService.numberOfCleaners$ | async}})</button>
+            <button class="small-default-button" (click)="selectCleanersService.selectFiltered()">Select only filtered ({{selectCleanersService.numberOfFilteredCleaners$ | async}})</button>
+          </div>
+          <div class="filter-cleaners-actions-right">
+            <button class="small-default-button" (click)="selectCleanersService.deselectAll()">Deselect all ({{selectCleanersService.numberOfCleaners$ | async}})</button>
+            <button class="small-default-button" (click)="selectCleanersService.deselectFiltered()">Deselect only filtered ({{selectCleanersService.numberOfFilteredCleaners$ | async}})</button>
+          </div>
+        </div>
+        <div class="cleaning-timeline-cleaners">
+          <app-cleaning-timeline-cleaner-item *ngFor="let cleanerFormGroup of selectCleanersService.cleanersFormArray.controls; let i=index"
+                                              [cleanerFormGroup]="cleanerFormGroup"
+                                              [class.cleaner-hidden]="!cleanerFormGroup.controls.isVisible.value">
+          </app-cleaning-timeline-cleaner-item>
+        </div>
+      </div>
+      <div class="popup-actions">
+        <div class="popup-confirm-actions">
+          <!--<button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="selectCleanersService.saveSelection()"><i class="icofont-check-alt"></i> Save selection</button>-->
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveSelectedCleaners()"><i class="icofont-check-alt"></i> Save selection</button>
+        </div>
+        <div class="popup-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="selectCleanersService.cancelSelection()"><i class="icofont-close-line"></i> Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</app-popup>
+
+<ng-container *ngIf="editCleaningGroupService.isPopupShown$ | async">
+  <app-popup [isOpen]="editCleaningGroupService.isPopupShown$ | async" (closed)="editCleaningGroupService.hideEditCleanerPopup()" class="edit-cleaner-popup" [isNonButtonCloseEnabled]="false">
+    <div class="popup-header">
+      <h2>Edit {{ (editCleaningGroupService.cleaningGroup$ | async).cleaner.name}}</h2>
+    </div>
+    <div>
+      <form [formGroup]="editCleaningGroupService.editForm" autocomplete="off">
+        <div class="popup-content">
+          <div class="edit-cleaner-grid">
+            <div class="form-groups">
+              <div class="form-group-title">Availability intervals</div>
+              <app-time-interval-multiselect [timeIntervalsFormArray]="editCleaningGroupService.availabilityIntervalsFormArray" (timeIntervalAdded)="editCleaningGroupService.addNewAvailabilityInterval()"></app-time-interval-multiselect>
+            </div>
+            <div class="form-groups">
+              <div class="form-group-title">Floor preferences</div>
+              <div class="inline-form-row">
+                <label>Affinities</label>
+                <app-affinities-multiselect [elementId]="'affinities-multiselect-1'" [affinityGroups]="affinityGroups" [affinitiesFormArray]="editCleaningGroupService.affinitiesFormArray"></app-affinities-multiselect>
+              </div>
+            </div>
+            <div>
+              <div class="form-groups">
+                <div class="form-group-title">Cleaner info</div>
+                <div class="inline-form-row">
+                  <label>Weekly hours</label>
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput placeholder="Number of hours" formControlName="weeklyHours">
+                  </mat-form-field>
+                </div>
+                <div class="inline-form-row">
+                  <label>Max credits</label>
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput placeholder="Number of credits" formControlName="maxCredits">
+                  </mat-form-field>
+                </div>
+                <div class="inline-form-row">
+                  <label>Max departures</label>
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput placeholder="Number of departures" formControlName="maxDepartures">
+                  </mat-form-field>
+                </div>
+                <!-- <div class="inline-form-row">
+                  <label>Must fill all credits</label>
+                  <div class="full-width">
+                    <mat-slide-toggle formControlName="mustFillAllCredits"></mat-slide-toggle>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-groups">
+              <div class="form-group-title">Second cleaner info</div>
+              <div class="inline-form-row">
+                <label>Second cleaner</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-select formControlName="secondaryCleanerId">
+                    <mat-option value="-1">No second cleaner</mat-option>
+                    <mat-option *ngFor="let cleaner of cleaners" [value]="cleaner.id">
+                      {{cleaner.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="popup-actions">
+          <div class="popup-confirm-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="editCleaningGroupService.saveChanges()"><i class="icofont-check-alt"></i> Save changes</button>
+          </div>
+          <div class="popup-cancel-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="editCleaningGroupService.hideEditCleanerPopup()"><i class="icofont-close-line"></i> Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </app-popup>
+</ng-container>
+
+<app-popup [isOpen]="isCpsatConfigPopupShown$ | async" (closed)="hideCpsatCofigPopup()" [isNonButtonCloseEnabled]="false">
+  <div class="popup-header">
+    <div class="major-column-title">
+      <b>CPSAT planning</b>
+    </div>
+    <mat-progress-bar class="cpsat-configuration-progress-bar" mode="indeterminate" *ngIf="isLoadingCpsatCleaningPlan$ | async"></mat-progress-bar>
+  </div>
+
+  <!--CPSAT ALGORITHM PROGRESS-->
+  <ng-container *ngIf="!(isCpsatConfigurationFormShown$ | async)">
+
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Progress log">
+        <div>
+          <div class="cpsat-planner-progress-messages">
+            <!--<div class="cpsat-planner-progress-message" [class]="message.statusKey"><span class="light-gray">[2021-03-02 13:30:12]</span> Planning started</div>-->
+            <div *ngFor="let message of cpsatCleaningPlanProgressMessages$ | async" class="cpsat-planner-progress-message" [class]="message.statusKey">
+              <span class="light-gray">[{{message.dateTimeString}}]</span> {{message.message}}
+            </div>
+            <!--<div *ngIf="!(isCpsatResultShown$ | async)" class="cpsat-system-message"><span class="light-gray">[2021-03-02 13:30:12]</span> Planning success</div>-->
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Parameters" [disabled]="!(isCpsatResultShown$ | async)">
+        <div>
+          <div *ngIf="cpsatCleaningPlanResult$ | async as cpsatCleaningPlanResult">
+            <pre>{{cpsatCleaningPlanResult.cleaningContext | json}}</pre>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Results" [disabled]="!(isCpsatResultShown$ | async)">
+        <div>
+          <div *ngIf="cpsatCleaningPlanResult$ | async as cpsatCleaningPlanResult">
+            <pre>{{cpsatCleaningPlanResult.plannedCleanings | json}}</pre>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="popup-actions" *ngIf="isCpsatResultShown$ | async">
+      <div class="popup-confirm-actions">
+        <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="acceptCpsatSolution()" *ngIf="isCpsatResultSucess$ | async"><i class="icofont-check-alt"></i> Accept solution</button>
+        <button mat-flat-button type="button" class="button-with-icon" (click)="rerunCpsatAlgorithm()"><i class="icofont-refresh"></i> Rerun algorithm</button>
+      </div>
+      <div class="popup-cancel-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="hideCpsatCofigPopup()"><i class="icofont-close-line"></i> Cancel</button>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="isCpsatConfigurationFormShown$ | async">
+    <div *ngIf="cpsatConfiguration$ | async as cpsatConfiguration">
+      <app-cpsat-configuration-form [cpsatConfiguration]="cpsatConfiguration" (saved)="generateCpsatCleaningPlan($event)" (cancelled)="hideCpsatCofigPopup()"></app-cpsat-configuration-form>
+    </div>
+  </ng-container>
+
+</app-popup>
+
+
+<div style="overflow: hidden">
+  <div class="cpsat-config-drawer" *ngIf="cpsatConfiguration$ | async as cpsatConfiguration" [class.drawer-open]="showCpsatConfigurationDrawer$ | async">
+    <app-extended-cpsat-configuration [cpsatConfiguration]="cpsatConfiguration" (saved)="saveCpsatConfiguration($event)" (cancelled)="toggleShowCpsatConfigurationDrawer()"></app-extended-cpsat-configuration>
+  </div>
+</div>
+
+<!--<mat-drawer #drawer class="example-sidenav" mode="side" position="end">
+  <div *ngIf="cpsatConfiguration$ | async as cpsatConfiguration">
+    <app-extended-cpsat-configuration [cpsatConfiguration]="cpsatConfiguration" (saved)="generateCpsatCleaningPlan($event)" (hideDrawer)="drawer.toggle()"></app-extended-cpsat-configuration>
+  </div>
+</mat-drawer>-->
+
+<template #cleaningItemTooltipContainer>
+</template>

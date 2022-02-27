@@ -1,0 +1,22 @@
+.container-center-v2 {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+
+  &.login-form-wrapper {
+    > div {
+      width: 405px;
+
+      > form {
+        height: 700px;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

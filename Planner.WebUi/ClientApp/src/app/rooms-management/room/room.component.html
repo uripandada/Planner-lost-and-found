@@ -1,0 +1,26 @@
+<div class="room-item-with-beds">
+  <div class="room-item-grid">
+    <div class="room-label-wrapper">
+      <div class="room-label">{{ roomTypeDescription }}</div>
+      <div class="fs-wrapper fs-section">
+        <div class="fs-title">{{ roomForm.controls.section.value }}</div>
+      </div>
+      <div class="fs-wrapper fs-subsection">
+        <div class="fs-title">{{ roomForm.controls.subSection.value }}</div>
+      </div>
+    </div>
+    <div class="room-title">
+      <div>{{ roomForm.controls.name.value }}</div>
+    </div>
+    <div class="room-description">{{ roomForm.controls.categoryName.value }}</div>
+  </div>
+  <div *ngIf="showBedsSection" class="room-item-beds-grid">
+    <div *ngFor="let bed of beds" class="room-item-bed">
+      {{bed.name}}
+    </div>
+    <div *ngIf="showHiddenBedsLabel" class="room-item-bed beds-hidden">
+      +{{numberOfHiddenBeds}} more
+    </div>
+  </div>
+</div>
+

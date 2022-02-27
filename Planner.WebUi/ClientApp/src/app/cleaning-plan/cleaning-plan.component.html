@@ -1,0 +1,59 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="cleaning-plan-component-wrapper component-wrapper">
+  <!--<div class="component-header-row">
+    <div class="header-twocol-grid">
+      <div class="component-title">Cleaning</div>
+    </div>
+  </div>-->
+  <div class="cleaning-planner-header cp-grid-header">
+    <div class="major-column-title"><b>Cleaning plan</b></div>
+    <div>
+      <form [formGroup]="selectPlanForm" class="plan-form-grid">
+        <div class="">
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" class="full-width" (click)="picker.open();">
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="">
+          <div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="hotelId" name="hotelId">
+                  <mat-option *ngFor="let hotel of hotelService.hotels" [value]="hotel.id">
+                    {{hotel.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="showCpsatConfigPopup()"><i class="icofont-plus"></i> Create plan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
+  <ng-container *ngIf="!(isPlanLoaded$ | async)">
+    <div>
+      Plan is loading
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(isPlanLoaded$ | async)">
+    <div class="component-content-row">
+      <app-cleaning-timeline
+        [cleaningPlan]="cleaningPlan$ | async"
+        [affinityGroups]="affinityGroups$ | async"
+        [cleaners]="cleaners$ | async"
+        [isCpsatConfigPopupShown$]="isCpsatConfigPopupShown$"
+      ></app-cleaning-timeline>
+        <!--[calculatedCleanings]="calculatedCleanings$ | async"-->
+    </div>
+  </ng-container>
+</div>

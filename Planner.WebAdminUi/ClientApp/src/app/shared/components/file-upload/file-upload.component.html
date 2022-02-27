@@ -1,0 +1,11 @@
+<div class="photos-management-wrapper">
+  <app-file-upload-item *ngFor="let tempFile of uploadedFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="false" (fileRemoved)="removeUploadedFile($event)"></app-file-upload-item>
+  <app-file-upload-item *ngFor="let tempFile of temporaryUploadedFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="false" (fileRemoved)="removeTemporaryUploadedFile($event)"></app-file-upload-item>
+  <app-file-upload-item *ngFor="let tempFile of currentlyUploadingFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="true" (fileRemoved)="removeUploadingFile($event)"></app-file-upload-item>
+  <div class="photo-item add-new-photo-item" (click)="hiddenFileUpload.click()">
+    <div>+ Add</div>
+    <div>files</div>
+  </div>
+</div>
+
+<input id="hiddenFileUpload" type="file" style="display: none" #hiddenFileUpload (change)="filesSelected($event.target.files)" multiple>

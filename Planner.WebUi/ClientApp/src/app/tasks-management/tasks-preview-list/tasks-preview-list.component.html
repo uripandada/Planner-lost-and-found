@@ -1,0 +1,23 @@
+<table class="list-view-table">
+  <tbody>
+    <tr class="list-view-items-row" *ngFor="let task of tasks">
+      <td class="who-cell">
+        <div class="cell-value">{{task.userFullName}}</div>
+        <div class="sub-cell-value">{{task.userUsername}}</div>
+      </td>
+      <td class="when-cell">
+        <div class="cell-value">{{task.when}}</div>
+        <div class="sub-cell-value">{{task.whenDescription}}</div>
+      </td>
+      <td class="what-cell">
+        <ng-container *ngFor="let action of task.actions">
+          <div class="cell-value">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</div>
+        </ng-container>
+      </td>
+      <td class="where-cell">
+        <div class="cell-value">{{task.where}}</div>
+        <div class="sub-cell-value">{{task.whereDescription}}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>

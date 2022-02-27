@@ -1,0 +1,48 @@
+<div class="task-details-properties">
+  <div>
+    <!--<div class="task-details-edit-title">Reassign the task</div>-->
+
+    <div class="task-details-properties task-reassign-properties">
+      <ng-container *ngFor="let action of taskDetails.actions">
+        <div class="task-details-main-text">{{action.actionName}} <b>{{action.assetQuantity}}</b> &times; {{action.assetName}}</div>
+      </ng-container>
+      <div class="task-details-sub-text"><b>{{taskDetails.when}}</b> - {{taskDetails.startsAt | date:'MMMM d, y, HH:mm'}} - {{taskDetails.eventKey}}</div>
+      <!--<div class="task-details-sub-text"><b>{{taskDetails.roomName}}</b>, {{taskDetails.floorName}}, {{taskDetails.buildingName}}, {{taskDetails.hotelName}}</div>-->
+      <div class="task-details-sub-text"><b>{{taskDetails.userFullName}}</b> - {{taskDetails.userUsername}}</div>
+    </div>
+
+    <div>
+      <form [formGroup]="taskEditForm">
+
+        <div>
+          <mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+            <mat-label>Who</mat-label>
+            <input type="text"
+                   placeholder="Type to filter and choose..."
+                   matInput
+                   #multiselectInputOne
+                   formControlName="userId"
+                   [matAutocomplete]="whoAutocomplete">
+            <mat-autocomplete #whoAutocomplete="matAutocomplete" [displayWith]="displayWho">
+              <mat-option *ngFor="let who of whos" [value]="who.referenceId">
+                <div class="faa-title">{{who.referenceName}}</div>
+                <div class="faa-label">{{who.typeDescription}}</div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div>
+          <app-date-time [dateControl]="taskEditForm.controls.date" [timeControl]="taskEditForm.controls.time"></app-date-time>
+        </div>
+        <div class="task-edit-actions">
+          <div class="edit-confirm-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="confirm()"><i class="icofont-check-alt"></i> Reassign</button>
+          </div>
+          <div class="edit-cancel-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

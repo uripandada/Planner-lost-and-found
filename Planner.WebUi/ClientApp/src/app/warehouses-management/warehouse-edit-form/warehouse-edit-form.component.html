@@ -1,0 +1,38 @@
+<div class="warehouse-edit-form-component">
+
+  <!--<div class="box-icon-title-grid">
+    <div class="box-title-icon">
+      <i class="icofont-cube"></i>
+    </div>
+    <div class="warehouse-edit-title">
+      <span *ngIf="warehouse.id">Edit <b>{{warehouseForm.controls.name.value}}</b></span>
+      <span *ngIf="!warehouse.id">Create <b>a new central warehouse</b></span>
+    </div>
+  </div>-->
+
+  <div class="warehouse-edit-form-wrapper">
+    <form [formGroup]="warehouseForm" class="warehouse-edit-form">
+      <div>
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <label>Name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="name" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="form-actions">
+    <div class="form-left-side-actions">
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+        <i class="icofont-check-alt"></i>
+        Save
+      </button>
+    </div>
+    <div class="form-right-side-actions">
+      <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+    </div>
+  </div>
+</div>

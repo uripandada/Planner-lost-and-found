@@ -1,0 +1,20 @@
+<div class="room-beds-edit-form">
+  <div class="room-beds-edit-title">Beds</div>
+  <div class="room-beds-edit-list">
+    <div class="room-beds-edit-item" *ngFor="let bedFormGroup of roomBedsFormArray.controls; let bedFormGroupIndex = index">
+      <div class="room-beds-edit-ordinal">{{ bedFormGroupIndex + 1 }}.</div>
+      <div class="form-field-wrapper">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input [formControl]="bedFormGroup.controls.name" matInput placeholder="Bed">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-flat-button type="button" (click)="removeBed(bedFormGroupIndex)" class="delete-item-button"><i class="icofont-close"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="room-beds-edit-actions">
+  <button mat-flat-button type="button" class="button-with-icon small-button" (click)="addBed()"><i class="icofont-plus"></i> Add another bed</button>
+</div>

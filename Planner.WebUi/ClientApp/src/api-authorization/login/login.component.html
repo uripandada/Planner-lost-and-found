@@ -1,0 +1,52 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="login-background">
+  <div class="container-center-v2 login-form-wrapper">
+    <div></div>
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-card>
+          <!--<mat-card-title>HOPR</mat-card-title>-->
+          <mat-card-content>
+            <div class="login-logo"></div>
+            <div class="login-title">Welcome back to <b>HOPR</b></div>
+            <div class="login-sub-title">Login to your HOPR account</div>
+
+            <mat-form-field class="full-width higher-form-field" appearance="outline">
+              <mat-label>Hotel Group</mat-label>
+              <input matInput placeholder="Hotel Group" formControlName="hotelGroup" />
+              <mat-error *ngFor="let validation of validationMessages.hotelGroup">
+                <mat-error class="error-message"
+                  *ngIf="loginForm.get('hotelGroup').hasError(validation.type) && (loginForm.get('hotelGroup').dirty || loginForm.get('hotelGroup').touched)">
+                  {{ validation.message }}</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width higher-form-field" appearance="outline">
+              <mat-label>Username</mat-label>
+              <input matInput placeholder="Username" formControlName="username" />
+              <mat-error *ngFor="let validation of validationMessages.username">
+                <mat-error class="error-message"
+                  *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+                  {{ validation.message }}</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width higher-form-field" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput placeholder="Password" [type]="hidePasswordText ? 'password' : 'text'"
+                formControlName="password" />
+              <mat-icon matSuffix (click)="hidePasswordText = !hidePasswordText">{{ hidePasswordText ? "visibility_off" :
+                "visibility" }}</mat-icon>
+              <mat-error *ngFor="let validation of validationMessages.password">
+                <mat-error class="error-message"
+                  *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                  {{ validation.message }}</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <button mat-flat-button mat-accent color="accent" type="submit">
+              Log In
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+</div>

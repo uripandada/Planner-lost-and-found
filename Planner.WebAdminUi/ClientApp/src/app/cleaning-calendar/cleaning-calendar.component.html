@@ -1,0 +1,104 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="component-wrapper cleaning-calendar-component-wrapper">
+
+  <div class="component-box cleaning-calendar-component-header">
+    <div class="component-box-title">
+      <div class="">
+        <div class="major-column-title"><b>Cleaning calendar</b></div>
+        <div class="major-column-subtitle">Hotel's weekly cleaning calculation</div>
+      </div>
+    </div>
+    <div class="component-box-filter-row">
+      <form [formGroup]="selectCalendarForm" class="cleaning-calendar-filter-grid">
+
+        <div class="two-column-grid">
+          <div>
+            <app-hotel-group-picker [hotelGroupControl]="selectCalendarForm.controls.hotelGroup"></app-hotel-group-picker>
+          </div>
+          <div>
+            <app-hotel-picker [hotelControl]="selectCalendarForm.controls.hotel" [hotels]="hotels$ | async"></app-hotel-picker>
+          </div>
+        </div>
+        <div class="" *ngIf="isHotelLoaded$ | async">
+          <div class="week-picker-filter-row">
+            <div class="cleaning-calendar-week-picker">
+              <button mat-flat-button type="button" class="prev-week-wrapper filter-content-button" (click)="previousWeek()">
+                <i class="icofont-caret-left"></i>
+                <span>Prev week</span>
+              </button>
+              <app-week-picker [startDateControl]="selectCalendarForm.controls.dateFrom" [endDateControl]="selectCalendarForm.controls.dateTo" (weekChanged)="onWeekChanged($event)"></app-week-picker>
+              <button mat-flat-button type="button" class="next-week-wrapper filter-content-button" (click)="nextWeek()">
+                <span>Next week</span>
+                <i class="icofont-caret-right"></i>
+              </button>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="Filter by keywords">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <ng-container *ngIf="(isHotelLoaded$ | async) as isHotelLoaded">
+      <div *ngIf="!isHotelLoaded">
+        <div>Choose a hotel to see the cleaning calendar...</div>
+      </div>
+      <div *ngIf="isHotelLoaded">
+        <ng-container *ngIf="(isCalendarLoading$ | async)">
+          <div>
+            Calendar is loading
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!(isCalendarLoading$ | async)">
+          <div class="component-content-row">
+            <div class="component-box">
+              <div>
+
+                <table class="table-cleaning-calendar-2">
+                  <thead>
+                    <tr>
+                      <th class="c-room text-left">
+                      </th>
+                      <ng-container *ngIf="(calendarDays$ | async) as calendarDays">
+                        <th class="cd2" *ngFor="let day of calendarDays">
+                          <div class="cv-day-name">{{day.dayName}}</div>
+                          <div class="cv-date">{{day.dateString}}</div>
+                        </th>
+                      </ng-container>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngIf="calendarRooms$ | async as calendarRooms">
+                      <tr class="rrow frow" *ngFor="let room of calendarRooms">
+                        <td class="c-room">
+                          <div class="cv-title">{{room.name}}</div>
+                          <div>{{room.categoryName}}</div>
+                        </td>
+                        <td class="cd2" *ngFor="let roomDay of room.days">
+                          <div *ngFor="let cleaning of roomDay.cleanings" class="ccln">
+                            {{cleaning.cleaningName}}
+                          </div>
+                          <div class="cres" *ngFor="let reservation of roomDay.reservations">
+                            <i *ngIf="reservation.isArrival" class="icofont-sign-in"></i> {{reservation.guestName}} <i *ngIf="reservation.isDeparture" class="icofont-sign-out"></i>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+
+    </ng-container>
+
+  </div>
+</div>

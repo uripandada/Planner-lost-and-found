@@ -1,0 +1,21 @@
+<div class="key-value-multiselect-component">
+  <ng-container *ngFor="let keyValueFormGroup of keyValueFormArray.controls; let itemIndex = index;">
+    <div class="key-value-number">{{itemIndex + 1}}.</div>
+    <div>
+      <app-key-value-multiselect-item [keyControl]="keyValueFormGroup.controls.key" [valueControl]="keyValueFormGroup.controls.value"></app-key-value-multiselect-item>
+    </div>
+    <div class="key-value-delete">
+      <button mat-flat-button type="button" class="delete-icon-button"
+              mwlConfirmationPopover
+              [popoverMessage]="'Are you sure you want to remove the property?'"
+              placement="left"
+              (confirm)="deleteItem(itemIndex)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+  </ng-container>
+  <div></div>
+  <div class="key-value-actions text-center">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="addItem()"><i class="icofont-plus"></i> Add property</button>
+  </div>
+</div>

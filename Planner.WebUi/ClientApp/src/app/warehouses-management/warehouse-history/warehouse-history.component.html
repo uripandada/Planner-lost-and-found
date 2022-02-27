@@ -1,0 +1,90 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="filter-row asset-group-availability-filter-row">
+  <div>
+    <form [formGroup]="filterForm">
+      <div class="asset-group-availability-filter-row-grid">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input formControlName="keywords" matInput placeholder="Find by keywords...">
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <mat-select formControlName="sortKey" name="sorts">
+              <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                {{sort.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div></div>
+  <div>
+  </div>
+  <div>
+  </div>
+</div>
+
+<ng-container *ngIf="items$ | async as items">
+  <ng-container *ngIf="items.length === 0">
+    <div class="component-box-section">
+      <div class="info-box">
+        <div class="info-box-content">No data.</div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="items.length > 0">
+    <table class="list-view-table">
+      <thead>
+        <tr>
+          <th>At</th>
+          <th>Type</th>
+          <th>By</th>
+          <th>Asset</th>
+          <th class="text-right">Available</th>
+          <th class="text-right">Reserved</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="list-view-items-row" *ngFor="let item of items">
+          <td class="">
+            <div class="cell-value">{{item.createdAtString}}</div>
+          </td>
+          <td class="">
+            <div class="cell-value">{{item.typeKey}}</div>
+          </td>
+          <td class="">
+            <div class="cell-value">{{item.createdByName}}</div>
+          </td>
+          <td class="">
+            <div class="cell-value">{{item.assetName}}</div>
+          </td>
+          <td class="text-right">
+            <div class="cell-value">{{item.availableQuantityChange >= 0 ? '+' : ''}}{{item.availableQuantityChange}} ({{item.availableQuantityBeforeChange + item.availableQuantityChange}})</div>
+          </td>
+          <td class="text-right">
+            <div class="cell-value">{{item.reservedQuantityChange >= 0 ? '+' : ''}}{{item.reservedQuantityChange}} ({{item.reservedQuantityBeforeChange + item.reservedQuantityChange}})</div>
+          </td>
+          <td class="">
+            <div class="cell-value">{{item.note}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <div class="list-totals-description">
+        <span>Showing</span>
+        <span>{{loadedNumberOfItems$ | async}} of {{totalNumberOfItems$ | async}}</span>
+        <span>entries</span>
+      </div>
+      <div class="load-more-actions" *ngIf="showLoadMore$ | async">
+        <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+

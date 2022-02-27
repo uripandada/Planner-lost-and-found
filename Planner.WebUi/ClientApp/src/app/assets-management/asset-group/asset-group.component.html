@@ -1,0 +1,41 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="asset-edit-form asset-edit-details" *ngIf="!(isInEditMode$ | async)">
+  <div class="asset-group-edit-details-grid">
+    <div class="asset-grid-form-section">
+      <div class="asset-details-item-title">{{assetGroupForm.controls.name.value}}</div>
+    </div>
+    <div class="vertical-form-actions">
+      <div class="form-top-side-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="switchToEditMode()"><i class="icofont-pen-alt-4"></i> Edit</button>
+      </div>
+      <div class="form-bottom-side-actions">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<form [formGroup]="assetGroupForm" class="asset-edit-form" *ngIf="isInEditMode$ | async">
+  <div class="asset-group-edit-details-grid">
+    <div class="asset-grid-form-section">
+      <div class="form-field-wrapper">
+        <label>Name</label>
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input formControlName="name" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="vertical-form-actions">
+      <div class="form-top-side-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()" [disabled]="isSaving$ | async"><i class="icofont-undo"></i> Cancel</button>
+        <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+          <i class="icofont-check-alt"></i> Save
+        </button>
+      </div>
+      <div class="form-bottom-side-actions">
+      </div>
+    </div>
+  </div>
+</form>

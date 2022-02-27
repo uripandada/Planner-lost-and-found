@@ -1,0 +1,12 @@
+<div class="date-time-multiselect">
+  <div class="date-time-multiselect-items">
+    <div *ngFor="let dtForm of dateTimesFormArray.controls; index as dateTimeFormIndex" >
+      <app-date-time-multiselect-item [dateTimeForm]="dtForm" [dateTimeFormIndex]="dateTimeFormIndex"></app-date-time-multiselect-item>
+    </div>
+  </div>
+  <div class="date-time-multiselect-actions">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="add()"><i class="icofont-plus"></i> Add another time</button>
+  </div>
+</div>
+
+

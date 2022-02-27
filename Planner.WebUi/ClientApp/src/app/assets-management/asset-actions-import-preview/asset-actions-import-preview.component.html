@@ -1,0 +1,89 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isLoading$ | async"></mat-progress-bar>
+
+<div class="importPreviewAssets-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>Import asset actions</b></div>
+    <div class="major-column-buttons">
+      <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+    </div>
+  </div>
+  <div class="component-asset-wrapper">
+    <div class="component-box">
+
+      <div *ngIf="!(isDataPreviewGenerated$ | async)" class="centered-import-actions-wrapper">
+        <button mat-flat-button class="button-with-icon" type="button" (click)="cancelImport()" [disabled]="(isLoading$| async)"><i class="icofont-undo"></i> <span>Cancel import</span></button>
+        <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-save"></i> <span>Select CSV file to import</span></button>
+      </div>
+
+
+      <ng-container *ngIf="(isDataPreviewGenerated$ | async)">
+        <div class="component-list-row" *ngIf="(assetActionsImportPreview$ | async) as assetActionsImportPreview">
+
+          <div class="import-errors-warning warning-with-button-grid" *ngIf="!(isDataPreviewErrorFree$ | async)">
+            <div>
+              <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-refresh"></i> <span>Re-import</span></button>
+            </div>
+            <div>
+              Asset actions extracted from the CSV file have some issues with the data. Please fix data issues and re-import the file.
+            </div>
+          </div>
+
+
+          <table class="list-view-table" *ngIf="assetActionsImportPreview.assetActions.length > 0">
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th>Action</th>
+                <th>Type</th>
+                <th>Credits</th>
+                <th>Price</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-view-items-row" *ngFor="let assetAction of assetActionsImportPreview.assetActions">
+                <td>
+                  <div class="cell-value">{{assetAction.asset}}</div>
+                  <div *ngIf="assetAction.hasError" class="cell-error">{{assetAction.message}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{assetAction.action}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{assetAction.type}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{assetAction.credits}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{assetAction.price}}</div>
+                </td>
+                <td>
+                  <div class="cell-value">{{assetAction.priority}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="no-data" *ngIf="assetActionsImportPreview.assetActions.length === 0">No data in the uploaded file.</div>
+        </div>
+
+        <div class="import-footer-actions">
+          <div>
+            <button mat-flat-button class="button-with-icon" type="button" (click)="cancelImport()"><i class="icofont-undo"></i> <span>Cancel import</span></button>
+          </div>
+          <div>
+            <button mat-flat-button class="button-with-icon" type="button" (click)="fileUpload.click()" [disabled]="(isLoading$| async)"><i class="icofont-refresh"></i> <span>Select another CSV file</span></button>
+
+            <ng-container *ngIf="(isDataPreviewErrorFree$ | async)">
+              <button mat-flat-button class="button-with-icon secondary-button" type="button" (click)="save()" [disabled]="(isLoading$| async)"><i class="icofont-save"></i> <span>Confirm import</span></button>
+            </ng-container>
+          </div>
+        </div>
+
+      </ng-container>
+
+
+
+    </div>
+  </div>
+</div>

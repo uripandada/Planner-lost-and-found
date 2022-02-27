@@ -1,0 +1,33 @@
+<div class="master-filter-wrapper">
+  <div *ngFor="let selectedValue of selectedFilterValues$ | async; let itemIndex = index;" class="mf-tag">
+    <div>
+      <div class="mf-title">{{selectedValue.name}}</div>
+      <div class="mf-subtitle">{{selectedValue.description}}</div>
+    </div>
+    <button type="button" (click)="remove(itemIndex)"><i class="icofont-close-line"></i></button>
+  </div>
+  <div class="mf-form">
+    <mat-form-field appearance="outline" class="mf-autocomplete full-width">
+      <input type="text"
+             [id]="elementId"
+             placeholder="Search..."
+             matInput
+             [formControl]="keywordsControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)" [classList]="'master-filter-autocomplete'">
+        <mat-optgroup *ngFor="let group of filteredFilterGroups$ | async" [label]="group.name">
+          <mat-option *ngFor="let item of group.items" [value]="item.id">
+            <div class="faa-title">{{item.name}}</div>
+            <div class="faa-label">{{item.description}}</div>
+          </mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div class="mf-loading" *ngIf="isLoadingFilterValues$ | async">
+      <mat-spinner [diameter]="20" [strokeWidth]="2"></mat-spinner>
+      <div class="mf-loading-description">Loading filter values...</div>
+    </div>
+  </div>
+</div>
+
+

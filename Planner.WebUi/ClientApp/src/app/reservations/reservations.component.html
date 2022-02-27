@@ -1,0 +1,408 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="reservations-component-wrapper component-wrapper">
+  <div class="component-list-details-wrapper">
+    <div class="component-list-wrapper">
+      <div class="major-column-title"><b>Reservations</b></div>
+      <div class="component-box">
+
+
+
+        <div class="list-actions">
+          <div class="left-side-actions">
+            <!--<button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-upload-alt"></i> <span>Import data</span></button>-->
+            <!--<button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i
+                class="icofont-download"></i> <span>Export data</span></button>-->
+
+          </div>
+          <div class="right-side-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button"
+              (click)="synchronizeReservations()"><i class="icofont-refresh"></i> <span>Synchronize
+                reservations</span></button>
+
+          </div>
+        </div>
+
+
+
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row">
+              <div class="reservations-filter-row-grid">
+                <div class="form-field-wrapper">
+                  <label>Search</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="keywords" matInput placeholder="By title, name, floor...">
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Hotel</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="hotelId" name="hotelId">
+                      <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                        {{hotel.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Sort by</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="sortKey" name="food">
+                      <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                        {{sort.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <div *ngIf="(totalNumberOfReservations$ | async) === 0">
+            <div class="empty-monthly-date-tasks">
+              <div class="empty-alert">
+                No reservations found for the filter...
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="(totalNumberOfReservations$ | async) > 0">
+
+            <table class="list-view-table">
+              <thead>
+                <tr>
+                  <th class="reservation-cell">Reservation</th>
+                  <th class="status-cell">Status</th>
+                  <th class="check-in-cell">Check in</th>
+                  <th class="check-in-cell">Check out</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th class="guests-cell text-right">Guests</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="list-view-items-row" *ngFor="let reservation of reservations$ | async" [class.reservation-inactive]="!reservation.isActive">
+                  <td class="reservation-cell">
+                    <div class="cell-value">{{reservation.id}}</div>
+                  </td>
+                  <td class="status-cell">
+                    <div class="cell-value">{{reservation.rccReservationStatusKey}}</div>
+                  </td>
+                  <td class="check-in-cell">
+                    <div class="cell-value">{{reservation.checkIn | date:'medium' }}</div>
+                    <div class="sub-cell-value" *ngIf="reservation.actualCheckIn">{{reservation.actualCheckIn |
+                      date:'medium' }}</div>
+                  </td>
+                  <td class="check-in-cell">
+                    <div class="cell-value">{{reservation.checkOut | date:'medium' }}</div>
+                    <div class="sub-cell-value" *ngIf="reservation.actualCheckOut">{{reservation.actualCheckOut |
+                      date:'medium' }}</div>
+                  </td>
+                  <td class="">
+                    <div class="cell-value">{{reservation.guestName}}</div>
+                  </td>
+                  <td class="">
+                    <div class="room-number-wrapper" *ngIf="reservation.pmsRoomName">
+                      <div class="room-indicator" [class.clean]="reservation.roomIsClean"
+                           [class.dirty]="!reservation.roomIsClean" [class.occupied]="reservation.roomIsOccupied"
+                           [class.vacant]="!reservation.roomIsOccupied" [class.ooo]="reservation.roomIsOutOfService"
+                           [class.dnd]="reservation.roomIsDoNotDisturb">
+                      </div>
+                      <div class="cell-value">
+                        {{reservation.roomName}} <span *ngIf="reservation.roomName !== reservation.pmsRoomName">(PMS:{{reservation.pmsRoomName}})</span>
+                      </div>
+                    </div>
+
+                    <div class="room-number-wrapper no-room-number" *ngIf="!reservation.pmsRoomName">
+                      No room
+                    </div>
+                    <div class="sub-cell-value">{{reservation.hotelName}}</div>
+                  </td>
+                  <td class="guests-cell text-right">
+                    <div class="cell-value cell-guests">
+                      <div class="guest-icon guest-adult"><i class="icofont-male"></i> <span>{{reservation.numberOfAdults}}</span></div>
+                      <div class="guest-icon guest-kid"><i class="icofont-male"></i> <span>{{reservation.numberOfChildren}}</span></div>
+                      <div class="guest-icon guest-infant"><i class="icofont-baby"></i> <span>{{reservation.numberOfInfants}}</span></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div class="tasks-list-totals-description">
+                <span>Showing</span>
+                <span>{{loadedNumberOfReservations$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumberOfReservations$ | async}}</span>
+                <span>reservations</span>
+              </div>
+              <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+                <button mat-flat-button type="button" (click)="loadMoreReservations()">Load 20 more</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="showSynchronizationResultsPopup$ | async">
+  <app-popup [isOpen]="showSynchronizationResultsPopup$ | async" (closed)="hideSynchronizationResultPopup()"
+    class="edit-cleaner-popup">
+    <div class="popup-header">
+      <h2>Synchronization <span class="em-title-part">results</span></h2>
+    </div>
+    <div class="popup-content">
+      <div *ngIf="isSynchronizing$ | async">
+        ...SYNCHRONIZING...
+      </div>
+      <div *ngIf="!(isSynchronizing$ | async)">
+        <ng-container *ngIf="synchronizationResult$ | async as synchronizationResult">
+          <div class="synchronization-result-hotel-group"
+            *ngFor="let hotelGroup of synchronizationResult.hotelReservations">
+            <div class="major-column-title">Hotel <b>{{hotelGroup.hotelName}}</b></div>
+            <div class="hotel-group-reservations">
+
+              <div *ngIf="hotelGroup.newReservations && hotelGroup.newReservations.length > 0">
+                <div class="hotel-group-reservation-title">New reservations</div>
+                <div class="hotel-group-reservation">
+                  <table class="list-view-table">
+                    <thead>
+                      <tr>
+                        <th class="reservation-cell">Reservation</th>
+                        <th class="status-cell">Status</th>
+                        <th class="check-in-cell">Check in</th>
+                        <th class="check-in-cell">Check out</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th class="guests-cell text-right">Guests</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="list-view-items-row" *ngFor="let reservation of hotelGroup.newReservations">
+                        <td class="reservation-cell">
+                          <div class="cell-value">{{reservation.id}}</div>
+                        </td>
+                        <td class="status-cell">
+                          <div class="cell-value">{{reservation.rccReservationStatusKey}}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkIn | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckIn">{{reservation.actualCheckIn | date:'medium' }}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkOut | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckOut">{{reservation.actualCheckOut | date:'medium' }}</div>
+                        </td>
+                        <td class="">
+                          <div class="cell-value">{{reservation.guestName}}</div>
+                        </td>
+                        <td class="">
+                          <div class="room-number-wrapper" *ngIf="reservation.pmsRoomName">
+                            <div class="cell-value">{{reservation.roomName}}</div>
+                          </div>
+                          <div class="room-number-wrapper no-room-number" *ngIf="!reservation.pmsRoomName">
+                            No room
+                          </div>
+                          <div class="sub-cell-value" *ngIf="reservation.roomName !== reservation.pmsRoomName">{{reservation.pmsRoomName}}</div>
+                        </td>
+                        <td class="guests-cell text-right">
+                          <div class="cell-value cell-guests">
+                            <div class="guest-icon guest-adult"><i class="icofont-male"></i> <span>{{reservation.numberOfAdults}}</span></div>
+                            <div class="guest-icon guest-kid"><i class="icofont-male"></i> <span>{{reservation.numberOfChildren}}</span></div>
+                            <div class="guest-icon guest-infant"><i class="icofont-baby"></i> <span>{{reservation.numberOfInfants}}</span></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div *ngIf="hotelGroup.updatedReservations && hotelGroup.updatedReservations.length > 0">
+                <div class="hotel-group-reservation-title">Updated reservations</div>
+                <div class="hotel-group-reservation">
+                  <table class="list-view-table">
+                    <thead>
+                      <tr>
+                        <th class="reservation-cell">Reservation</th>
+                        <th class="status-cell">Status</th>
+                        <th class="check-in-cell">Check in</th>
+                        <th class="check-in-cell">Check out</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th class="guests-cell text-right">Guests</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="list-view-items-row" *ngFor="let reservation of hotelGroup.updatedReservations">
+                        <td class="reservation-cell">
+                          <div class="cell-value">{{reservation.id}}</div>
+                        </td>
+                        <td class="status-cell">
+                          <div class="cell-value">{{reservation.rccReservationStatusKey}}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkIn | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckIn">{{reservation.actualCheckIn | date:'medium' }}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkOut | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckOut">{{reservation.actualCheckOut | date:'medium' }}</div>
+                        </td>
+                        <td class="">
+                          <div class="cell-value">{{reservation.guestName}}</div>
+                        </td>
+                        <td class="">
+                          <div class="room-number-wrapper" *ngIf="reservation.pmsRoomName">
+                            <div class="cell-value">{{reservation.roomName}}</div>
+                          </div>
+                          <div class="room-number-wrapper no-room-number" *ngIf="!reservation.pmsRoomName">
+                            No room
+                          </div>
+                          <div class="sub-cell-value" *ngIf="reservation.roomName !== reservation.pmsRoomName">{{reservation.pmsRoomName}}</div>
+                        </td>
+                        <td class="guests-cell text-right">
+                          <div class="cell-value cell-guests">
+                            <div class="guest-icon guest-adult"><i class="icofont-male"></i> <span>{{reservation.numberOfAdults}}</span></div>
+                            <div class="guest-icon guest-kid"><i class="icofont-male"></i> <span>{{reservation.numberOfChildren}}</span></div>
+                            <div class="guest-icon guest-infant"><i class="icofont-baby"></i> <span>{{reservation.numberOfInfants}}</span></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div *ngIf="hotelGroup.deactivatedReservations && hotelGroup.deactivatedReservations.length > 0">
+                <div class="hotel-group-reservation-title">Deactivated reservations</div>
+                <div class="hotel-group-reservation">
+                  <table class="list-view-table">
+                    <thead>
+                      <tr>
+                        <th class="reservation-cell">Reservation</th>
+                        <th class="status-cell">Status</th>
+                        <th class="check-in-cell">Check in</th>
+                        <th class="check-in-cell">Check out</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th class="guests-cell text-right">Guests</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="list-view-items-row" *ngFor="let reservation of hotelGroup.deactivatedReservations">
+                        <td class="reservation-cell">
+                          <div class="cell-value">{{reservation.id}}</div>
+                        </td>
+                        <td class="status-cell">
+                          <div class="cell-value">{{reservation.rccReservationStatusKey}}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkIn | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckIn">{{reservation.actualCheckIn | date:'medium' }}</div>
+                        </td>
+                        <td class="check-in-cell">
+                          <div class="cell-value">{{reservation.checkOut | date:'medium' }}</div>
+                          <div class="sub-cell-value" *ngIf="reservation.actualCheckOut">{{reservation.actualCheckOut | date:'medium' }}</div>
+                        </td>
+                        <td class="">
+                          <div class="cell-value">{{reservation.guestName}}</div>
+                        </td>
+                        <td class="">
+                          <div class="room-number-wrapper" *ngIf="reservation.pmsRoomName">
+                            <div class="cell-value">{{reservation.roomName}}</div>
+                          </div>
+                          <div class="room-number-wrapper no-room-number" *ngIf="!reservation.pmsRoomName">
+                            No room
+                          </div>
+                          <div class="sub-cell-value" *ngIf="reservation.roomName !== reservation.pmsRoomName">{{reservation.pmsRoomName}}</div>
+                        </td>
+                        <td class="guests-cell text-right">
+                          <div class="cell-value cell-guests">
+                            <div class="guest-icon guest-adult"><i class="icofont-male"></i> <span>{{reservation.numberOfAdults}}</span></div>
+                            <div class="guest-icon guest-kid"><i class="icofont-male"></i> <span>{{reservation.numberOfChildren}}</span></div>
+                            <div class="guest-icon guest-infant"><i class="icofont-baby"></i> <span>{{reservation.numberOfInfants}}</span></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+              <div *ngIf="hotelGroup.autogeneratedRooms && hotelGroup.autogeneratedRooms.length > 0">
+                <div class="hotel-group-reservation-title">Automatically created rooms</div>
+                <div class="unassigned-rooms">
+                  <div class="room-item" *ngFor="let room of hotelGroup.autogeneratedRooms">
+                    <div class="room-item-grid">
+                      <div class="room-label">Unknown type</div>
+                      <div class="room-title">
+                        <div>{{ room.name }}</div>
+                      </div>
+                      <div class="room-description">Temporary</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="hotelGroup.autogeneratedBeds && hotelGroup.autogeneratedBeds.length > 0">
+                <div class="hotel-group-reservation-title">Automatically created hostel room beds</div>
+                <div class="unassigned-rooms">
+                  <div class="room-item" *ngFor="let bed of hotelGroup.autogeneratedBeds">
+                    <div class="room-item-grid">
+                      <div class="room-label"></div>
+                      <div class="room-title">
+                        <div>{{ bed.name }}</div>
+                      </div>
+                      <div class="room-subtitle">{{ bed.roomName }}</div>
+                      <div class="room-description">Hostel bed</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div *ngIf="hotelGroup.roomsWithNewExternalId && hotelGroup.roomsWithNewExternalId.length > 0">
+                <div class="hotel-group-reservation-title">Updated rooms with a new PMS room name</div>
+                <div class="unassigned-rooms">
+                  <div class="room-item" *ngFor="let room of hotelGroup.roomsWithNewExternalId">
+                    <div class="room-item-grid">
+                      <div class="room-label">Unknown type</div>
+                      <div class="room-title">
+                        <div>{{ room.name }}</div>
+                      </div>
+                      <div class="room-description">Temporary</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="hotelGroup.bedsWithNewExternalId && hotelGroup.bedsWithNewExternalId.length > 0">
+                <div class="hotel-group-reservation-title">Updated hostel beds with a new PMS bed name</div>
+                <div class="unassigned-rooms">
+                  <div class="room-item" *ngFor="let bed of hotelGroup.bedsWithNewExternalId">
+                    <div class="room-item-grid">
+                      <div class="room-label"></div>
+                      <div class="room-title">
+                        <div>{{ bed.name }}</div>
+                      </div>
+                      <div class="room-subtitle">{{ bed.roomName }}</div>
+                      <div class="room-description">Hostel bed</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+  </app-popup>
+</ng-container>

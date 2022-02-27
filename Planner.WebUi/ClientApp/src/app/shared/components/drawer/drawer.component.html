@@ -1,0 +1,6 @@
+<div *ngIf="isOpen" class="drawer" [class.open-drawer]="isOpen">
+  <div class="drawer-close-wrapper">
+    <button type="button" (click)="close()">&times;</button>
+  </div>
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,29 @@
+<div class="time-multiselect">
+  <div class="time-multiselect-items">
+    <div class="time-multiselect-items-item" *ngFor="let valueForm of valuesArray.controls; let valueFormIndex = index">
+      <div class="time-multiselect-item">
+        <div class="time-multiselect-item-number">{{ valueFormIndex + 1 }}.</div>
+        <div class="time-multiselect-item-content">
+          <mat-form-field appearance="outline" class="full-width">
+            <ng-container *ngIf="inputType === 'text'">
+              <input matInput type="text"
+                     [formControl]="valueForm.controls.value">
+            </ng-container>
+            <ng-container *ngIf="inputType === 'number'">
+              <input matInput type="number"
+                     [formControl]="valueForm.controls.value">
+            </ng-container>
+          </mat-form-field>
+        </div>
+        <div class="time-multiselect-item-actions">
+          <button mat-flat-button type="button" (click)="remove(valueFormIndex)" class="delete-icon-button"><i class="icofont-close"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="time-multiselect-actions">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="add()"><i class="icofont-plus"></i> Add</button>
+  </div>
+</div>
+
+

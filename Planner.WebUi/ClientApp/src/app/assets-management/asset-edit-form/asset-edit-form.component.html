@@ -1,0 +1,76 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="asset-edit-form asset-edit-details" *ngIf="!(isInEditMode$ | async)">
+  <div class="asset-edit-details-grid">
+    <div class="asset-grid-image-section">
+      <div class="single-file-upload-photo-item">
+        <div class="single-file-upload-photo" [class.no-photo]="!primaryImageFormGroup.controls.url.value" [ngStyle]="{'background-image': 'url(' + (primaryImageFormGroup.controls.url.value ? primaryImageFormGroup.controls.url.value : noImageBackgroundUrl) + ')'}"></div>
+      </div>
+    </div>
+    <div class="asset-grid-form-section">
+      <div class="asset-details-item-title">{{assetForm.controls.name.value}}</div>
+      <div class="asset-details-item-subtitle">
+        <span *ngFor="let tagFormGroup of tagsFormArray.controls; index as formGroupIndex" class="alt-title">{{tagFormGroup.controls.value.value}}</span>
+      </div>
+      <div class="asset-details-item-subtitle">{{assetForm.controls.isBulk.value ? 'Bulk asset' : 'Individual asset'}} {{assetForm.controls.serialNumber.value}}</div>
+    </div>
+    <div class="asset-grid-qrcode-section">
+      <div class="single-file-upload-photo-item">
+        <div *ngIf="qrCodeImageFormGroup.controls.url.value" class="single-file-upload-photo" [ngStyle]="{'background-image': 'url(' + (qrCodeImageFormGroup.controls.url.value) + ')'}"></div>
+      </div>
+    </div>
+    <div class="vertical-form-actions">
+      <div class="form-top-side-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="switchToEditMode()"><i class="icofont-pen-alt-4"></i> Edit</button>
+      </div>
+      <div class="form-bottom-side-actions">
+      </div>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="assetForm" class="asset-edit-form" *ngIf="isInEditMode$ | async">
+  <div class="asset-edit-details-grid">
+    <div class="asset-grid-image-section">
+      <app-single-file-upload [uploadedFile]="mainImageFileDetails$ | async" (fileUploaded)="onMainImageUploaded($event)" (fileRemoved)="onMainImageRemoved($event)"></app-single-file-upload>
+    </div>
+    <div class="asset-grid-form-section">
+      <div class="form-field-wrapper">
+        <label>Name</label>
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input formControlName="name" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <app-tags-multiselect [tags]="allTags" [tagsFormArray]="assetForm.controls.tags"></app-tags-multiselect>
+      </div>
+      <div class="inline-checkbox-with-input">
+        <div>
+          <mat-checkbox formControlName="isBulk">
+            Is bulk asset?
+          </mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Serial number</label>
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input formControlName="serialNumber" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="asset-grid-qrcode-section">
+      <app-single-file-upload [uploadedFile]="qrCodeFileDetails$ | async" (fileUploaded)="onQrCodeImageUploaded($event)" (fileRemoved)="onQrCodeImageRemoved($event)" [noImageBackgroundUrl]="'assets/images/QR_code_example.png'"></app-single-file-upload>
+    </div>
+    <div class="vertical-form-actions">
+      <div class="form-top-side-actions">
+        <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+          <i class="icofont-check-alt"></i> Save
+        </button>
+      </div>
+      <div class="form-bottom-side-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</form>

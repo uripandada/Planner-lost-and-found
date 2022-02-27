@@ -1,0 +1,20 @@
+<div class="room-item-with-beds">
+  <div class="room-item-grid">
+    <div class="room-label-wrapper">
+      <div class="room-label">{{ roomTypeDescription }}</div>
+    </div>
+    <div class="room-title">
+      <div>{{ room.name }}</div>
+    </div>
+    <div class="room-description">{{ roomCategory }}</div>
+  </div>
+  <div *ngIf="showBedsSection" class="room-item-beds-grid">
+    <div *ngFor="let bed of beds" class="room-item-bed">
+      {{bed.name}}
+    </div>
+    <div *ngIf="showHiddenBedsLabel" class="room-item-bed beds-hidden">
+      +{{numberOfHiddenBeds}} more
+    </div>
+  </div>
+</div>
+

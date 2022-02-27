@@ -1,0 +1,84 @@
+
+<ng-container *ngIf="(isEditMode$ | async)">
+
+  <div class="asset-model-item">
+    <div class="asset-model-wrapper">
+      <div class="asset-model-header-card">
+        <div class="asset-model-edit-form-wrapper">
+          <form [formGroup]="assetModelForm" class="asset-model-edit-form">
+            <div>
+              <div class="asset-model-edit-title">
+                <ng-container *ngIf="isCreateNew$ | async">Create new model</ng-container>
+                <ng-container *ngIf="!(isCreateNew$ | async)">Edit model</ng-container>
+              </div>
+              <div class="">
+                <div class="form-field-wrapper">
+                  <label>Name</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="name" matInput placeholder="Asset model name">
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Available quantity</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="availableQuantity" matInput placeholder="How many are available?">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <button type="button" mat-flat-button class="button-round-with-svg-icon" (click)="save()"><i class="svg-icon icon-check-red"></i></button>
+              </div>
+              <div>
+                <button type="button" mat-flat-button class="button-round-with-svg-icon no-border" (click)="cancel()"><i class="svg-icon icon-back-red"></i></button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!(isEditMode$ | async)">
+
+  <div class="asset-model-item" (click)="select()" [class.selected-asset-model]="isSelected$ | async">
+    <div class="asset-model-wrapper">
+      <div class="asset-model-header-card">
+        <div class="asset-model-details-wrapper">
+          <div class="asset-model-qrcode-wrapper">
+            <div class="qr-code-background"></div>
+            <div class="qr-code-button-wrapper">
+              <button type="button">Change QR</button>
+            </div>
+          </div>
+          <div class="asset-model-header-wrapper">
+            <div class="asset-model-title-wrapper">
+              <div class="asset-model-title"><span class="muted">Model </span> {{ assetModelForm.controls.name.value }}</div>
+              <div class="asset-model-content">
+                <div class="used-models-label">Used <b>{{ numberOfAssignments }}</b> of <b>{{ assetModelForm.controls.availableQuantity.value }}</b></div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <button mat-flat-button class="button-round-with-svg-icon" (click)="edit()"><i class="svg-icon icon-pen-red"></i></button>
+              </div>
+              <div>
+                <button mat-flat-button class="button-round-with-svg-icon"
+                        mwlConfirmationPopover
+                        [popoverMessage]="'Are you sure you want to delete the model?'"
+                        placement="left"
+                        (confirm)="delete()">
+                  <i class="svg-icon icon-trash-red"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+

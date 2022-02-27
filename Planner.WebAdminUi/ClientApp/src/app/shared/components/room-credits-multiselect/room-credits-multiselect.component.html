@@ -1,0 +1,46 @@
+<mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+  <input type="text"
+         placeholder="Select rooms"
+         aria-label="Number"
+         matInput
+         #multiselectInputOne
+         [formControl]="selectedRoomControl"
+         [matAutocomplete]="roomAutocomplete">
+  <mat-autocomplete #roomAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayRoom" 
+              (optionSelected)="blurAutocomplete()">
+    <mat-option *ngFor="let room of filteredRooms$ | async" [value]="room">
+      <div class="faa-title">{{room.name}}</div>
+      <div class="faa-label">{{room.building}} - {{room.floor}} - {{room.section}} - {{room.subSection}}</div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+
+
+<div class="selected-room-credits">
+  <div *ngFor="let roomFormGroup of roomsArray.controls; let roomIndex = index" class="selected-room-credit-item">
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="text"
+               placeholder="Value"
+               [formControl]="roomFormGroup.controls.credits">
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="room-credits-title">{{roomFormGroup.controls.name.value}}</div>
+      <div class="room-credits-subtitle">{{roomFormGroup.controls.building.value}} - {{roomFormGroup.controls.floor.value}} - {{roomFormGroup.controls.section.value}} - {{roomFormGroup.controls.subSection.value}}</div>
+    </div>
+    <div class="room-credits-delete">
+      <button mat-flat-button type="button" class="delete-icon-button"
+              mwlConfirmationPopover
+              [popoverMessage]="'Are you sure you want to remove the property?'"
+              placement="left"
+              (confirm)="removeSelectedRoom(roomIndex)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+    
+  </div>
+
+  <div *ngIf="roomsArray.length === 0" class="empty-list-results"><div class="empty-alert"> No rooms selected... </div></div>
+</div>

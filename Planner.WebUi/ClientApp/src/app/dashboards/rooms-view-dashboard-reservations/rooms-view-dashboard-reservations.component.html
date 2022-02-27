@@ -1,0 +1,53 @@
+<div class="reservation-cell">
+  <div *ngFor="let reservation of room.reservations" class="reservation-cell-item">
+    <div class="reservation-cell-item-grid">
+
+      <!-- RESERVATION ACTIONS - Fixed width -->
+      <div class="dashboard-actions-wrapper">
+        <div class="tasks-special-button" [class.b-active]="reservation.numberOfTasks > 0"><i class="icofont-tasks-alt"></i></div>
+        <div class="notes-special-button" [class.b-active]="reservation.numberOfNotes > 0">
+          <i class="icofont-notebook"></i>
+          <div class="notes-popup-wrapper" *ngIf="reservation.numberOfNotes > 0">
+            <div class="notes-popup">
+              <div class="note-wrapper" *ngFor="let note of reservation.notes">
+                <ng-container *ngIf="note.isPmsNote">
+                  <div class="note-title">PMS note</div>
+                  <div class="note-content">{{note.note}}</div>
+                </ng-container>
+                <ng-container *ngIf="!note.isPmsNote">
+                  <div class="note-title" *ngIf="note.isPmsNote">My note</div>
+                  <div class="note-title" *ngIf="!note.isPmsNote">{{note.createdByName}}</div>
+                  <div class="note-content">{{note.note}}</div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="messages-special-button" [class.b-active]="reservation.numberOfMessages > 0" (click)="openRoomMessages(); $event.stopPropagation();"><i class="icofont-envelope"></i> <span class="b-number">{{reservation.numberOfMessages}}</span></div>
+      </div>
+
+      <!-- RESERVATION STATUS COLUMN - Fixed width -->
+      <div class="res-status">
+        <div class="left-right"><span>{{reservation.checkInDescription}}</span> <span>{{reservation.checkInTimeString}}</span></div>
+        <div class="left-right"><span>{{reservation.checkOutDescription}}</span> <span>{{reservation.checkOutTimeString}}</span></div>
+        <div>{{reservation.stayDescription}}</div>
+      </div>
+
+      <!-- GUEST COLUMN - Variable width -->
+      <div>
+        <div class="res-guest"><span *ngIf="reservation.vip" class="d-vip-tag">VIP</span>{{reservation.guestName}}</div>
+        <div class="res-stay">{{reservation.fullCheckInDescription}} - {{reservation.fullCheckOutDescription}} <span *ngIf="reservation.isDayUse" class="res-day-use-tag">Day use</span></div>
+      </div>
+
+      <!-- VIP COLUMN - Fixed width -->
+      <div class="res-vip">
+        {{reservation.vip}}
+      </div>
+
+      <!-- GROUP COLUMN - Fixed width -->
+      <div class="res-group">
+        {{reservation.group}}
+      </div>
+    </div>
+  </div>
+</div>

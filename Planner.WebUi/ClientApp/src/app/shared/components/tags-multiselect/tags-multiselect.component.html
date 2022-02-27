@@ -1,0 +1,22 @@
+
+<div class="tags-multiselect-wrapper">
+  <div class="tags-form-grid">
+    <div class="form-field-wrapper">
+      <label>Tags</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input type="text" placeholder="Pick one or create new" aria-label="Number" matInput [formControl]="selectTagControl" [matAutocomplete]="auto" (keydown.enter)="addTag()">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTagName">
+          <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+            {{tag.value}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-flat-button type="button" (click)="addTag()">Add tag</button>
+    </div>
+  </div>
+  <div class="selected-tags-wrapper">
+    <div *ngFor="let tagFormGroup of tagsFormArray.controls; index as formGroupIndex" class="tag-item">{{tagFormGroup.controls.value.value}} <button type="button" (click)="removeTag(formGroupIndex)"><i class="icofont-close"></i></button></div>
+  </div>
+</div>

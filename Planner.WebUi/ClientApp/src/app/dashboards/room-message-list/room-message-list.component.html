@@ -1,0 +1,14 @@
+<div class="room-messages-progress-bar">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading$ | async"></mat-progress-bar>
+</div>
+
+<ng-container *ngIf="!(showComplexMessageMode$ | async)">
+  <app-room-message-send-simple-form [room]="room" [messageDetails]="selectedRoomMessageDetails$ | async" (advancedModeSet)="showComplexMessageForm()" (saved)="onMessageSaved()" (cancelled)="onMessageSaveCancelled()"></app-room-message-send-simple-form>
+</ng-container>
+<div class="complex-rmessage-form" *ngIf="(showComplexMessageMode$ | async)">
+  <app-room-message-send-complex-form [room]="room" [filterValues]="filterValues" [messageDetails]="selectedRoomMessageDetails$ | async" (simpleModeSet)="showSimpleMessageForm()" (saved)="onMessageSaved()" (cancelled)="onMessageSaveCancelled()"></app-room-message-send-complex-form>
+</div>
+<div class="rmessages" *ngIf="messages$ | async as messages">
+  <div class="major-column-title drawer-title"><b>Room {{room.name}}</b> messages</div>
+  <app-room-message-list-item *ngFor="let message of messages" [message]="message" (edited)="onMessageEdit(message)"></app-room-message-list-item>
+</div>

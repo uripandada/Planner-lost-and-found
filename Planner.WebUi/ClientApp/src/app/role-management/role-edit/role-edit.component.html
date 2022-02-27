@@ -1,0 +1,107 @@
+<ng-container *ngIf="role">
+  <div class="major-column-title">
+    <ng-container *ngIf="isCreateNew">Create a <b>new user role</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit the <b>{{role.name}}</b> role</ng-container>
+  </div>
+  <div class="roles-component-wrapper component-wrapper component-box">
+    <div class="role-edit-wrapper">
+      <form [formGroup]="roleForm">
+        <div class="role-edit">
+          <!--<div class="component-header-row">
+      <div class="header-twocol-grid">
+        <div class="component-title" *ngIf="role.id === ''">New role</div>
+        <div class="component-title" *ngIf="role.id !== '' && !role.isSystemRole">Edit role {{role.name}} </div>
+        <div class="component-title" *ngIf="role.isSystemRole">View role {{role.name}} </div>
+      </div>
+    </div>-->
+          <div class="role-settings-wrapper">
+            <div class="form-field-wrapper">
+              <label>Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="name" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+
+              <label>Hotel access</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="hotelAccessTypeKey" name="hotelAccessTypeKey">
+                  <mat-option *ngFor="let hotelAccessType of hotelAccessTypes" [value]="hotelAccessType.key">
+                    {{hotelAccessType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!--<mat-checkbox formControlName="hasAccessToMultipleHotels">Can users with this role access multiple hotels?</mat-checkbox>-->
+              <!--<label>Name</label>
+  <mat-form-field appearance="outline" color="accent" class="full-width">
+    <input matInput formControlName="name" type="text">
+  </mat-form-field>-->
+            </div>
+          </div>
+        </div>
+        <div class="role-claims">
+          <div class="major-column-title">
+            Settings permissions
+          </div>
+          <div class="claims-list">
+            <mat-checkbox formControlName="roomsClaim">Rooms</mat-checkbox>
+            <mat-checkbox formControlName="assetsClaim">Assets</mat-checkbox>
+            <mat-checkbox formControlName="usersClaim">Users</mat-checkbox>
+            <mat-checkbox formControlName="roleManagementClaim">Role Management</mat-checkbox>
+            <mat-checkbox formControlName="roomCategoriesClaim">Room Categories</mat-checkbox>
+            <mat-checkbox formControlName="hotelSettingClaim">Hotels Settings</mat-checkbox>
+          </div>
+          <div class="major-column-title">
+            Management permissions
+          </div>
+          <div class="claims-list">
+            <mat-checkbox formControlName="roomInsightsClaim">Room Insights</mat-checkbox>
+            <mat-checkbox formControlName="userInsightsClaim">User Insights</mat-checkbox>
+            <mat-checkbox formControlName="tasksClaim">Tasks</mat-checkbox>
+            <mat-checkbox formControlName="reservationClaim">Reservations</mat-checkbox>
+            <mat-checkbox formControlName="cleaningPlannerClaim">Cleaning Planner</mat-checkbox>
+            <mat-checkbox formControlName="cleaningCalendarClaim">Cleaning Calendar</mat-checkbox>
+            <mat-checkbox formControlName="reservationCalendarClaim">Reservation Calendar</mat-checkbox>
+            <mat-checkbox formControlName="lostAndFoundClaim">Lost And Found</mat-checkbox>
+            <mat-checkbox formControlName="onGuardClaim">On Guard</mat-checkbox>
+          </div>
+        </div>
+        <div class="room-configuration-edit-actions">
+          <div class="edit-confirm-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+              <i class="icofont-check-alt"></i>
+              <ng-container *ngIf="isCreateNew">Save</ng-container>
+              <ng-container *ngIf="!isCreateNew">Update</ng-container>
+            </button>
+          </div>
+          <div class="edit-cancel-actions">
+
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+
+            <button *ngIf="role.id != '' && !role.isSystemRole" mat-stroked-button type="button"
+                    class="button-with-icon" mwlConfirmationPopover
+                    [popoverMessage]="'Are you sure you want to delete the role?'" placement="left" (confirm)="delete()">
+              <i class="icofont-trash"></i>
+              Delete
+            </button>
+
+            <!--<button *ngIf="!isCreateNew" mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>-->
+          </div>
+        </div>
+        <!--<div class="button-right">
+          <button *ngIf="role.id != '' && !role.isSystemRole" mat-flat-button type="button"
+                  class="button-with-icon secondary-button" mwlConfirmationPopover
+                  [popoverMessage]="'Are you sure you want to delete the role?'" placement="left" (confirm)="delete()">
+            <i class="icofont-save"></i>
+            Delete
+          </button>
+          <button *ngIf="!role.isSystemRole" mat-flat-button type="button" class="button-with-icon primary-button"
+                  (click)="save()">
+            <i class="icofont-save"></i>
+            Save
+          </button>
+        </div>-->
+      </form>
+    </div>
+  </div>
+</ng-container>

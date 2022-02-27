@@ -1,0 +1,15 @@
+<div class="tasks-chart-wrapper">
+  <div class="tasks-chart-title">Workers</div>
+  <div class="tasks-chart-max-title">Max {{monthlyTasksGraphs.maxNumberOfWorkers}}</div>
+  <div echarts [options]="chartWorkersOption" class="monthly-users-chart-small" (chartInit)="onWorkersChartInit($event)"></div>
+</div>
+<div class="tasks-chart-wrapper">
+  <div class="tasks-chart-title">Tasks</div>
+  <div class="tasks-chart-max-title">Max {{monthlyTasksGraphs.maxNumberOfTasks}}</div>
+  <div echarts [options]="chartTasksOption" class="monthly-users-chart-small" (chartInit)="onTasksChartInit($event)"></div>
+</div>
+<div class="tasks-chart-wrapper">
+  <div class="tasks-chart-title">Tasks per worker</div>
+  <div class="tasks-chart-max-title">Max {{monthlyTasksGraphs.maxAverageTasksPerWorker}}</div>
+  <div echarts [options]="chartAvgTasksOption" class="monthly-users-chart-small" (chartInit)="onAverageTasksPerUserInit($event)"></div>
+</div>

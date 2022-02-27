@@ -1,0 +1,167 @@
+<!--<div *ngIf="cleaningData$ | async as cleaningData">
+  <h1>{{cleaningData.title}}</h1>
+  <div>{{cleaningData.itemTypeKey}}</div>
+</div>-->
+
+<div *ngIf="data" class="cp-tooltip" [class.is-clean]="data.isClean">
+  <ng-container *ngIf="data.itemTypeKey === 'TASK'">
+    <div class="cp-tooltip-header">Task</div>
+    <div class="major-column-title cp-tooltip-title text-center">
+      <div>Room <b>{{data.title}}</b></div>
+      <div *ngIf="data.floorName">{{data.buildingName}}, {{data.floorName}}</div>
+      <div><span *ngIf="data.floorSectionName">{{data.floorSectionName}}</span><span *ngIf="data.floorSubSectionName">, {{data.floorSubSectionName}}</span></div>
+      <div>{{data.taskDescription}}</div>
+    </div>
+    <div class="cp-tooltip-stats">
+      <div class="cp-tooltip-stat-item">
+        <i class="icofont-clock-time"></i>
+        <b>{{data.start | date:'HH:mm'}}</b>
+      </div>
+      <div class="cp-tooltip-stat-two-column">
+        <div class="cp-tooltip-stat-item">
+          <i class="icofont-credit-card"></i>
+          <b>{{data.credits}}</b>
+          <span>credits</span>
+        </div>
+        <div class="cp-tooltip-stat-item" *ngIf="data.price > 0">
+          <i class="icofont-money-bag"></i>
+          <b>{{data.price | number:'1.2-2'}}</b>
+          <span>€</span>
+        </div>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskHighPriority">
+        <i class="icofont-swoosh-up"></i>
+        <span><b>High</b>priority</span>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskLowPriority">
+        <i class="icofont-swoosh-down"></i>
+        <span><b>Low</b>priority</span>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskGuestRequest">
+        <i class="icofont-star"></i>
+        <span><b>Guest request</b></span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="data.itemTypeKey === 'CLEANING'">
+    <div class="cp-tooltip-header tooltip-alert-wrapper" *ngIf="!data.isRoomAssigned"><i class="icofont-warning"></i> Temporary room - NO FLOOR - can't be auto planned!</div>
+    <div class="cp-tooltip-title">{{data.cleaningDescription}}</div>
+    <div class="cp-tooltip-postponed" *ngIf="data.isPostponed"><i class="icofont-rounded-double-right"></i> Postponed for tomorrow!</div>
+    <div class="cp-tooltip-postponed" *ngIf="data.isChangeSheets"><i class="icofont-warning"></i> Change sheets required</div>
+    <div class="cp-tooltip-postponed" *ngIf="!data.isActive"><i class="icofont-warning"></i> Cleaning is deactivated</div>
+    <div class="cp-tooltip-postponed" *ngIf="data.isOutOfOrder"><i class="icofont-warning"></i> The room is out of service</div>
+    <div class="cp-tooltip-postponed" *ngIf="data.isDoNotDisturb"><i class="icofont-warning"></i> The guest doesn't want to be disturbed</div>
+    <div class="cp-tooltip-stats">
+      <div class="cp-tooltip-stat-item">
+        <i class="icofont-clock-time"></i>
+        <b>{{data.start | date:'HH:mm'}}</b>
+        <span>-</span>
+        <b>{{data.end | date:'HH:mm'}}</b>
+      </div>
+      <div class="cp-tooltip-stat-two-column">
+        <div class="cp-tooltip-stat-item">
+          <i class="icofont-credit-card"></i>
+          <b>{{data.credits}}</b>
+          <span>credits</span>
+        </div>
+        <div class="cp-tooltip-stat-item" *ngIf="data.price > 0">
+          <i class="icofont-money-bag"></i>
+          <b>{{data.price | number:'1.2-2'}}</b>
+          <span>€</span>
+        </div>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskHighPriority">
+        <i class="icofont-swoosh-up"></i>
+        <span><b>High</b>priority</span>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskLowPriority">
+        <i class="icofont-swoosh-down"></i>
+        <span><b>Low</b>priority</span>
+      </div>
+      <div class="cp-tooltip-stat-item" *ngIf="data.isTaskGuestRequest">
+        <i class="icofont-star"></i>
+        <span><b>Guest request</b></span>
+      </div>
+    </div>
+    <div class="tooltip-alert-wrapper" [class.alert-dirty]="!data.isClean" [class.alert-clean]="data.isClean">
+      <div><b>{{data.title}}</b> [{{data.roomCategoryName}}]</div>
+      <div *ngIf="data.floorName">{{data.buildingName}}, {{data.floorName}}<span *ngIf="data.floorSectionName">, {{data.floorSectionName}}</span><span *ngIf="data.floorSubSectionName">, {{data.floorSubSectionName}}</span></div>
+      <div *ngIf="data.isClean">The room is clean</div>
+      <div *ngIf="!data.isClean">The room is dirty</div>
+    </div>
+    <!--<div class="tooltip-alert-wrapper alert-dirty" *ngIf="!data.isClean">
+      <div><b>{{data.title}}</b> [{{data.roomCategoryName}}]</div>
+      <div *ngIf="data.floorName">{{data.buildingName}}, {{data.floorName}}<span *ngIf="data.floorSectionName">, {{data.floorSectionName}}</span><span *ngIf="data.floorSubSectionName">, {{data.floorSubSectionName}}</span></div>
+      <div>The room is dirty</div>
+    </div>-->
+    <div *ngIf="data.reservations && data.reservations.length > 0" class="cp-tooltip-reservations-wrapper">
+      <div class="cp-tooltip-occupied-wrapper" *ngFor="let reservation of data.reservations">
+        <div class="cp-tooltip-occupied">
+          <div><span class="cp-status-tag">{{reservation.typeAndTimeTag}}</span><span *ngIf="reservation.isVip" class="cp-vip-tag">VIP</span> {{reservation.guestName}}</div>
+          <div *ngIf="reservation.isVip" class="cp-vip-tag-content">{{reservation.vipTag}}</div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="data.tasks && data.tasks.length > 0">
+      <div class="cp-tooltip-occupied-wrapper" *ngFor="let task of data.tasks; index as taskIndex">
+        <div class="cp-tooltip-occupied"><div class="task-number" *ngIf="!task.isCompleted">{{taskIndex + 1}}</div><div class="task-number task-number-complete" *ngIf="task.isCompleted"><i class="icofont-check"></i></div> {{task.actionName}} {{task.assetQuantity}}&times;{{task.assetName}}</div>
+        <div class="cp-tooltip-subtitle">{{task.userFullName}}</div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+
+  <ng-container *ngIf="data.plannedAttendantTasks && data.plannedAttendantTasks.length > 0">
+    <div class="cp-tooltip-occupied-wrapper" *ngFor="let task of data.plannedAttendantTasks; index as taskIndex">
+      <div class="cp-tooltip-occupied ta-grid">
+        <div class="task-number" *ngIf="!task.isCompleted">{{taskIndex + 1}}</div>
+        <div class="task-number task-number-complete" *ngIf="task.isCompleted"><i class="icofont-check"></i></div>
+        <div class="cp-tooltip-subtitle">{{task.userFullName}}</div>
+      </div>
+      <div class="task-actions">
+        <div class="ta-item" *ngFor="let action of task.actions">
+          {{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <!--<div></div>
+  <div class="cp-tooltip-details"></div>
+  <div class="cp-tooltip-reservations"></div>
+  <div class="cp-tooltip-tasks"></div>
+  <div>{{data.itemTypeKey}}</div>
+  <div>{{data.taskDescription}}</div>
+  <div>{{data.isOccupied}}</div>
+  <div>{{data.isClean}}</div>
+  <div>{{data.isRoomAssigned}}</div>
+  <div>{{data.isOutOfOrder}}</div>
+  <div>{{data.isDoNotDisturb}}</div>
+  <div>{{data.start | date}}</div>
+  <div>{{data.end | date}}</div>
+  <div>{{data.reservations}}</div>
+  <div>{{data.tasks}}</div>-->
+</div>
+<!--id?: string | null;
+title?: string | null;
+hasArrival: boolean;
+eta?: string | null;
+hasDeparture: boolean;
+etd?: string | null;
+hasStay: boolean;
+isPostponed: boolean;
+roomId: string;
+reservationId?: string | null;
+itemTypeKey?: string | null;
+taskDescription?: string | null;
+isOccupied: boolean;
+isClean: boolean;
+isRoomAssigned: boolean;
+isOutOfOrder: boolean;
+isDoNotDisturb: boolean;
+reservations?: CleaningTimelineItemReservationData[] | null;
+tasks?: CleaningTimelineItemTaskData[] | null;
+cleaningPlanGroupId?: string | null;
+start: moment.Moment;
+end: moment.Moment;-->

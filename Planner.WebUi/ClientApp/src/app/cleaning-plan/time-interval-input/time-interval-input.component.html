@@ -1,0 +1,36 @@
+<div class="interval-form-wrapper">
+  <form [formGroup]="intervalFormGroup">
+    <div class="interval-separator"><i class="icofont-clock-time"></i></div>
+    <div class="interval-from-input">
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="text"
+               placeholder="From"
+               formControlName="from" [textMask]="{mask: mask}">
+        <mat-error *ngIf="intervalFormGroup.controls.from.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+        <mat-error *ngIf="intervalFormGroup.controls.from.hasError('pattern')">
+          <strong>Invalid</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="interval-separator"><i class="icofont-caret-right"></i></div>
+    <div class="interval-to-input">
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="text"
+               placeholder="To"
+               formControlName="to" [textMask]="{mask: mask}">
+        <mat-error *ngIf="intervalFormGroup.controls.to.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+        <mat-error *ngIf="intervalFormGroup.controls.from.hasError('pattern')">
+          <strong>Invalid</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="remove-interval">
+      <button type="button" (click)="remove()"><i class="icofont-close"></i></button>
+    </div>
+  </form>
+</div>
+

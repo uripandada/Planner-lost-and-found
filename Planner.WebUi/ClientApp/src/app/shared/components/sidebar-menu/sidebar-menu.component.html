@@ -1,0 +1,181 @@
+<div class="sidebar-menu-component">
+
+  <!--MAIN SIDEBAR-->
+  <div class="main-sidebar-menu">
+    <div class="main-sidebar-menu-link-groups">
+      <div class="management-sidebar-submenu">
+        <div class="sidebar-header">
+          <h1 (click)="navigateToHome()" class="sidebar-home-link">
+            <span class="displayed-text">Roomchecking</span>
+            <span class="collapsed-text"><span class="small-sidebar-logo"></span></span>
+          </h1>
+        </div>
+        <div class="sidebar-item sidebar-item-with-tooltip" (click)="showManagement()"
+          *hasClaim="['rooom_insights','user_insights','tasks','reservations','cleaning_planner','cleaning_calendar','reservation_calendar','lost_and_found','on_guard']"
+          [class.sidebar-item-active]="selectedSubMenuKey === MANAGEMENT">
+          <i class="svg-icon icon-management"></i> <span class="main-sidebar-label">Management</span>
+          <div class="sidebar-item-tooltip">Management</div>
+        </div>
+      </div>
+      <div class="bottom-sidebar-items">
+        <div class="sidebar-item sidebar-item-with-tooltip" (click)="showSettings()"
+          *hasClaim="['rooms', 'assets', 'users', 'role_management', 'room_categories', 'hotel_settings']"
+          [class.sidebar-item-active]="selectedSubMenuKey === SETTINGS">
+          <i class="icofont-gear"></i> <span class="main-sidebar-label">Settings</span>
+          <div class="sidebar-item-tooltip">Settings</div>
+        </div>
+        <a class="sidebar-item sidebar-item-with-tooltip" mat-menu-item [routerLink]='["/authentication/logout"]'
+          [state]='{ local: true }'>
+          <div class="navigation-avatar">{{userInitials}}</div>
+          <span class="main-sidebar-label">
+            Log out
+            {{userFullName}}
+          </span>
+          <div class="sidebar-item-tooltip">Log out</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!--SUB SIDEBAR-->
+  <div class="sub-sidebar-menu">
+    <div class="sidebar-header">
+      <h1 *ngIf="selectedSubMenuKey === MANAGEMENT">
+        <span class="displayed-text">Management</span>
+        <span class="collapsed-text">M</span>
+      </h1>
+      <h1 *ngIf="selectedSubMenuKey === SETTINGS">
+        <span class="displayed-text">Settings</span>
+        <span class="collapsed-text">S</span>
+      </h1>
+    </div>
+    <div class="sidebar-items-wrapper" *ngIf="selectedSubMenuKey === MANAGEMENT">
+
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--<a [routerLink]="['/room-insights']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'rooom_insights'"
+    class="sidebar-item">
+    <i class="svg-icon icon-investigate"></i>
+    <span>Room insights</span>
+  </a>
+
+  <a [routerLink]="['/user-insights']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'user_insights'"
+    class="sidebar-item">
+    <i class="svg-icon icon-investigate"></i>
+    <span>User insights</span>
+  </a>-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+
+      <a [routerLink]="['/dashboards/rooms-view']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'tasks'"
+         class="sidebar-item">
+        <i class="svg-icon icon-investigate"></i>
+        <span>Rooms overview</span>
+      </a>
+      <a [routerLink]="['/tasks-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'tasks'"
+         class="sidebar-item">
+        <i class="svg-icon icon-tasks"></i>
+        <span>Tasks</span>
+      </a>
+      <a [routerLink]="['/task-configurations']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'tasks'"
+         class="sidebar-item">
+        <i class="svg-icon icon-tasks"></i>
+        <span>Tasks in mass</span>
+      </a>
+      <a [routerLink]="['/cleaning-plan']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'cleaning_planner'"
+         class="sidebar-item">
+        <i class="svg-icon icon-sweeping"></i>
+        <span>Cleaning planner</span>
+      </a>
+      <a [routerLink]="['/cleaning-calendar']" [routerLinkActive]="['sidebar-item-active']"
+         *hasClaim="'cleaning_calendar'" class="sidebar-item">
+        <i class="svg-icon icon-sweeping"></i>
+        <span>Cleaning calendar</span>
+      </a>
+
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--<a [routerLink]="['/reservations-calendar']" [routerLinkActive]="['sidebar-item-active']"
+       *hasClaim="'reservation_calendar'" class="sidebar-item">
+      <i class="svg-icon icon-hotel-bell"></i>
+      <span>Reservations calendar</span>
+  </a>-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+      <!--!!!DO NOT DELETE!!!-->
+
+      <a [routerLink]="['/lost']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'lost_and_found'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel-bell"></i>
+        <span>Lost</span>
+      </a>
+      <a [routerLink]="['/found']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'lost_and_found'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel-bell"></i>
+        <span>Found</span>
+      </a>
+      <!--<a [routerLink]="['/on-guard']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'on_guard'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel-bell"></i>
+        <span>On Guard</span>
+      </a>-->
+    </div>
+
+    <div class="sidebar-items-wrapper" *ngIf="selectedSubMenuKey === SETTINGS">
+
+      <a [routerLink]="['/rooms-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'rooms'"
+         class="sidebar-item">
+        <i class="svg-icon icon-room-key"></i>
+        <span>Rooms</span>
+      </a>
+
+      <a [routerLink]="['/assets-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'assets'"
+         class="sidebar-item">
+        <i class="svg-icon icon-sofa"></i>
+        <span>Assets</span>
+      </a>
+
+      <a [routerLink]="['/users-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'users'"
+         class="sidebar-item">
+        <i class="svg-icon icon-worker"></i>
+        <span>Users</span>
+      </a>
+
+      <a [routerLink]="['/reservations']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'reservations'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel-bell"></i>
+        <span>Reservations</span>
+      </a>
+
+      <a [routerLink]="['/role-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'role_management'"
+         class="sidebar-item">
+        <i class="svg-icon icon-roles"></i>
+        <span>Role management</span>
+      </a>
+
+      <a [routerLink]="['/room-categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'room_categories'"
+         class="sidebar-item">
+        <i class="svg-icon icon-room-category"></i>
+        <span>Room categories</span>
+      </a>
+
+      <a [routerLink]="['/hotels-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'hotel_settings'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel"></i>
+        <span>Hotel settings</span>
+      </a>
+
+      <a [routerLink]="['/colors-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'hotel_settings'"
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel"></i>
+        <span>Color settings</span>
+      </a>
+
+    </div>
+
+  </div>
+</div>

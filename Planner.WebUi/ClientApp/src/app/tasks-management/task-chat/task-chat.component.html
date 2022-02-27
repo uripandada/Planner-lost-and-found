@@ -1,0 +1,40 @@
+<div class="task-chat-items">
+  <div class="no-task-chat-items" *ngIf="(messageGroups$ | async).length === 0">
+    There are no messages yet!
+  </div>
+  <ng-container *ngIf="(messageGroups$ | async).length > 0">
+    <div class="task-chat-group" [class.my-task-chat-group]="group.isMyMessage" *ngFor="let group of messageGroups$ | async">
+      <div class="task-chat-avatar-wrapper">
+        <div class="task-chat-avatar">{{group.createdByInitials}}</div>
+      </div>
+      <div class="task-chat-content-wrapper">
+        <div class="task-chat-header"><ng-container *ngIf="!group.isMyMessage"><span>{{group.createdByUserFullName}}</span><span>@</span></ng-container><span>{{group.createdAtString}}</span></div>
+        <div class="task-chat-messages">
+          <div *ngFor="let message of group.messages">
+            <div class="task-chat-message">{{message.message}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="task-chat-send-message-form">
+    <form [formGroup]="sendMessageForm" (ngSubmit)="sendMessage()">
+      <div class="chat-send-message-grid">
+        <div class="task-chat-avatar-wrapper">
+          <div class="task-chat-avatar">{{myInitials$ | async}}</div>
+        </div>
+        <mat-form-field appearance="outline">
+          <textarea formControlName="message"
+                    placeholder="Write a message here..."
+                    matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"></textarea>
+        </mat-form-field>
+        <div>
+          <button mat-flat-button type="submit"><i class="icofont-send-mail"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

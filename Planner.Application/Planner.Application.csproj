@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Authentication\Commands\**" />
+	  <Compile Remove="Authentication\Models\**" />
+	  <Compile Remove="Roles\Models\**" />
+	  <EmbeddedResource Remove="Authentication\Commands\**" />
+	  <EmbeddedResource Remove="Authentication\Models\**" />
+	  <EmbeddedResource Remove="Roles\Models\**" />
+	  <None Remove="Authentication\Commands\**" />
+	  <None Remove="Authentication\Models\**" />
+	  <None Remove="Roles\Models\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Reservations\Commands\SynchronizeReservations\ReservationsAndRoomsCalculator.cs~RF2dd5278.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Planner.Common\Planner.Common.csproj" />
+		<ProjectReference Include="..\Planner.CpsatCleaningCalculator\Planner.CpsatCleaningCalculator.csproj" />
+		<ProjectReference Include="..\Planner.Domain\Planner.Domain.csproj" />
+		<ProjectReference Include="..\Planner.RccSynchronization\Planner.RccSynchronization.csproj" />
+		<PackageReference Include="FluentValidation" Version="9.5.3" />
+		<PackageReference Include="gmaps-api-net" Version="0.32.0" />
+                <PackageReference Include="Google.OrTools" Version="9.2.9972" />
+		<PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.2" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Npgsql" Version="5.0.3" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0" />
+		<PackageReference Include="OpenIddict" Version="3.1.1" />
+		<PackageReference Include="OpenIddict.AspNetCore" Version="3.1.1" />
+		<PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="3.1.1" />
+		<PackageReference Include="Postmark" Version="4.5.0" />
+		<PackageReference Include="PusherClient" Version="2.1.0" />
+		<PackageReference Include="PusherServer" Version="4.6.1" />
+		<PackageReference Include="Quartz.AspNetCore" Version="3.3.3" />
+		<PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.3.3" />
+		<PackageReference Include="RestSharp" Version="106.11.7" />
+		<PackageReference Include="Syncfusion.Licensing" Version="19.1.0.58" />
+		<PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="19.1.0.58" />
+		<PackageReference Include="TimeZoneConverter" Version="3.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ExternalApi\LostAndFound\Commands\" />
+	  <Folder Include="MobileApi\Tasks\Commands\InsertTasksForMobile\" />
+	  <Folder Include="MobileApi\Tasks\Commands\AddPhotoToTaskForMobile\" />
+	  <Folder Include="MobileApi\Tasks\Commands\ReassignTasksForMobile\" />
+	  <Folder Include="MobileApi\Tasks\Commands\UpdateTasksForMobile\" />
+	  <Folder Include="OnGuards\Commands\" />
+	  <Folder Include="OnGuards\Models\" />
+	  <Folder Include="OnGuards\Queries\" />
+	  <Folder Include="Rcc\RoomStatuses\Commands\" />
+	</ItemGroup>
+
+</Project>

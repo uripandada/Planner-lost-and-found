@@ -1,0 +1,86 @@
+<div class="asset-rooms-filter component-box">
+  <form [formGroup]="filterForm">
+    <div class="assets-filter-row-grid">
+      <div class="form-field-wrapper">
+        <label>Filter rooms/appartments</label>
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input formControlName="keywords" matInput placeholder="By name,...">
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="form-field-wrapper">
+          <label>Sort by</label>
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <mat-select formControlName="sortKey" name="sort">
+              <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                {{sort.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="full-width">
+      <div class="select-hotel-wrapper">
+        <div class="select-hotel-label">
+          Hotel:
+        </div>
+        <div>
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="hotelId" name="hotelId">
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="usesModels && models && models.length > 0" class="asset-model-select-list ">
+      <div *ngFor="let model of models" class="component-box asset-model-select-list-item" (click)="selectAssetModel(model)" [class.asset-model-selected]="(selectedAssetModel$ | async).id === model.id">
+        <div class="asset-image no-asset-image-list-item">
+          <i class="svg-icon icon-box"></i>
+        </div>
+        <div>
+          {{model.name}}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="asset-rooms" *ngIf="assetRoomAssignments$ | async as assetRoomAssignments">
+  <div class="asset-assignments-title">
+    <div class="major-column-title">Assets in rooms for <b>Hotel</b></div>
+  </div>
+  <div class="asset-assignment-group" *ngFor="let buildingGroup of assetRoomAssignments.buildingGroups">
+    <div class="asset-assignment-group-title">
+      <div class="building-title">
+        <span class="svg-icon icon-building"></span>
+        <span>{{buildingGroup.buildingName}}</span>
+      </div>
+    </div>
+    <div class="asset-assignment-group-items">
+      <div class="asset-room-item"
+           [class.selected-asset-room]="room.isAssignedTo"
+           *ngFor="let room of buildingGroup.roomAssignments; index as roomIndex">
+        <div class="asset-room-name">{{room.roomName}}</div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="asset-room-item"
+       [class.selected-asset-room]="roomAssignmentFormGroup.controls.isSelected.value"
+       (click)="toggleRoomAssignment(roomAssignmentFormGroup.controls.id.value)"
+       *ngFor="let roomAssignmentFormGroup of filteredFormGroups$ | async; index as roomIndex">
+    <div class="asset-room-name">{{roomAssignmentFormGroup.controls.name.value}}</div>
+  </div>-->
+</div>
+<div class="form-actions asset-rooms-form-actions">
+  <div class="form-right-side-actions">
+    <!--<button mat-flat-button type="button" class="secondary-button" (click)="save()">Save room assignments</button>-->
+    <button mat-flat-button type="button" class="secondary-button">Save room assignments</button>
+  </div>
+  <div class="form-left-side-actions">
+  </div>
+</div>

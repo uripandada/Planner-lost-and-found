@@ -1,0 +1,55 @@
+
+
+  <div class="asset-action-wrapper">
+    <div class="asset-action-header-card component-box">
+      <div class="action-items-list">
+        <div class="asset-action-item-form-grid">
+          <div class="action-header"></div>
+          <div class="action-header section-subtitle">Available actions</div>
+          <div class="action-header section-subtitle">
+
+          </div>
+          <div class="action-header section-subtitle margin-right-10">
+            Default priority
+          </div>
+          <div class="action-header section-subtitle">
+            Assigned to by default
+          </div>
+          <div class="action-header section-subtitle text-right margin-right-10">
+            <div class="margin-right-10">Credits</div>
+          </div>
+          <div class="action-header section-subtitle text-right margin-right-10">
+            <div class="margin-right-10">Price</div>
+          </div>
+          <div class="action-header">
+          </div>
+          <div class="asset-action-item-separator"></div>
+        </div>
+        <ng-container *ngIf="assetActionsFormArray.length === 0">
+          <div class="empty-list-section">No actions! You can't create tasks for an asset with 0 actions.</div>
+        </ng-container>
+        <ng-container *ngFor="let actionItemFormGroup of assetActionsFormArray.controls; index as actionItemIndex">
+          <app-asset-action-item
+                                 [actionItemFormGroup]="actionItemFormGroup"
+                                 [actionItemIndex]="actionItemIndex"
+                                 [users]="users"
+                                 [userGroups]="userGroups"
+                                 [userSubGroups]="userSubGroups"
+                                 [systemDefinedActions]="systemDefinedActions"
+                                 (removed)="removeActionItem(actionItemIndex)"></app-asset-action-item>
+          <div class="asset-action-item-separator"></div>
+        </ng-container>
+        <div class="add-another-action-button-wrapper">
+          <button mat-flat-button type="button" (click)="addActionItem()" class=""><i class="icofont-plus"></i> Add an action</button>
+        </div>
+        <div class="items-list-buttons">
+          <div>
+            <button mat-flat-button type="button" (click)="saveActionItems()" class="secondary-button"><i class="icofont-save"></i> Save actions</button>
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

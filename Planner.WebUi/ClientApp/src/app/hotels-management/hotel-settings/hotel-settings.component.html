@@ -1,0 +1,223 @@
+<ng-container *ngIf="hotelSettings">
+  <form [formGroup]="settingsForm">
+    <div class="hotels-component-wrapper component-wrapper">
+      <div>
+        <div class="major-column-title">Edit settings for <b>{{hotel.name}}</b></div>
+        <div class="hotel-settings component-box">
+          <div class="hotel-settings-wrapper">
+            <div class="form-field-wrapper">
+              <label>Default check in time</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="defaultCheckInTime" type="time">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Default check out time</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="defaultCheckOutTime" type="time">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Default attendants start of workhours</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="defaultAttendantStartTime" type="time">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Default attendants end of workhours</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="defaultAttendantEndTime" type="time">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Default attendants max credits</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="defaultAttendantMaxCredits" type="number">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Reserve between cleanings</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="reserveBetweenCleanings" type="number">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Travel reserve</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="travelReserve" type="number">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="showHoursInWorkerPlanner" color="accent" class="full-width">
+                Show hours in
+                worker planner
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="useOrderInPlanning" color="accent" class="full-width">
+                Use order in planning
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="showCleaningDelays" color="accent" class="full-width">
+                Show cleaning delays
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="allowPostponeCleanings" color="accent" class="full-width">
+                Allow postpone cleanings
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="cleanHostelRoomBedsInGroups" color="accent" class="full-width">
+                Hostel room beds are cleaned as a group (Only for <b>hostel</b> rooms)
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Email addresses for sending plan</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="emailAddressesForSendingPlan">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-checkbox formControlName="sendPlanToAttendantsByEmail" color="accent" class="full-width">
+                Send plan to
+                attendants by email
+              </mat-checkbox>
+            </div>
+            <div class="form-field-wrapper">
+              <label>From email address</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="fromEmailAddress">
+              </mat-form-field>
+            </div>
+
+            <div class="hotel-settings-edit-actions flex-between">
+              <div class="edit-confirm-actions">
+                <button mat-flat-button type="button" class="button-with-icon secondary-button"
+                        (click)="saveHotelSettings()">
+                  <i class="icofont-check-alt"></i> Update
+                </button>
+              </div>
+              <div class="edit-cancel-actions">
+                <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+                  <i class="icofont-undo"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="major-column-title">Additional <b>{{hotel.name}}</b> settings</div>
+        <div class="hotel-plugins component-box">
+          <div class="hotel-plugins-wrapper">
+            <div class="major-column-title"><b>Time zone</b></div>
+            <div class="label-text">
+              {{hotelSettings.windowsTimeZoneId}} <span class="label-sub-text">(Windows)</span>
+            </div>
+            <div class="label-text">{{hotelSettings.ianaTimeZoneId}} <span class="label-sub-text">(IANA)</span></div>
+            <div class="major-column-title"><b>Cleaning plugins</b></div>
+            <div class="hotel-plugin-list">
+              <div class="hotel-plugin-item" *ngFor="let plugin of hotelSettings.plugins">
+                <div class="plugin-item-ordinal-number">{{plugin.ordinalNumber}}.</div>
+                <div class="plugin-item-name">{{plugin.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="major-column-title"><b>CPSAT Configuration</b></div>
+        <div class="component-box p-15">
+          <div class="two-column-grid">
+            <div class="buildings-matrix" [class.matrix-exists]="(buildingsDistanceMatrixExists$ | async)">
+              <div class="buildings-matrix-alert">
+                <div *ngIf="(buildingsDistanceMatrixExists$ | async)"><i class="icofont-check"></i> Buildings distance matrix</div>
+                <div *ngIf="!(buildingsDistanceMatrixExists$ | async)">Buildings distance matrix is not uploaded</div>
+              </div>
+              <input style="display: none" type="file" class="file-input" (change)="uploadBuildingDistanceMatrix($event)" #buildingDistanceMatrixUpload accept=".txt">
+              <button mat-flat-button class="button-with-icon" type="button" (click)="buildingDistanceMatrixUpload.click()"><i class="icofont-save"></i> <span>Upload buildings distance matrix</span></button>
+            </div>
+            <div class="floors-matrix" [class.matrix-exists]="(levelsDistanceMatrixExists$ | async)">
+              <div class="floors-matrix-alert">
+                <div *ngIf="(levelsDistanceMatrixExists$ | async)"><i class="icofont-check"></i> Floors distance matrix</div>
+                <div *ngIf="!(levelsDistanceMatrixExists$ | async)">Levels distance matrix is not uploaded</div>
+              </div>
+              <input style="display: none" type="file" class="file-input" (change)="uploadFloorDistanceMatrix($event)" #floorDistanceMatrixUpload accept=".txt">
+              <button mat-flat-button class="button-with-icon" type="button" (click)="floorDistanceMatrixUpload.click()"><i class="icofont-save"></i> <span>Upload levels distance matrix</span></button>
+            </div>
+          </div>
+
+          <div class="two-column-grid">
+            <div>
+              <div class="major-column-title"><b>Awards</b></div>
+              <div class="form-field-wrapper">
+                <label>Room award</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="roomAward" type="number">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Level award</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="levelAward" type="number">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Building award</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="buildingAward" type="number">
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <div class="major-column-title"><b>Weights</b></div>
+              <!--<div class="form-field-wrapper">
+    <label>Level time</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput formControlName="levelTime" type="number">
+    </mat-form-field>
+  </div>
+  <div class="form-field-wrapper">
+    <label>Cleaning time</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput formControlName="cleaningTime" type="number">
+    </mat-form-field>
+  </div>-->
+
+              <div class="form-field-wrapper">
+                <label>Weight level change</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="weightLevelChange" type="number">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Weight credits</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="weightCredits" type="number">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Minutes per credits</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="minutesPerCredit" type="number">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Min credits for multiple cleaners' cleaning</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput formControlName="minCreditsForMultipleCleanersCleaning" type="number">
+                </mat-form-field>
+              </div>
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

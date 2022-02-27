@@ -1,0 +1,19 @@
+<div class="cmp-filestack-file-uploads">
+  <div class="fsfu-item-wrapper" *ngFor="let uploadedFile of uploadedFiles$ | async">
+    <app-filestack-file-upload-item [fileUrl]="uploadedFile.fileUrl" [isUploaded]="uploadedFile.isUploaded" [fileUploadProgress]="uploadedFile.fileUploadProgress" (fileRemoved)="onFileRemoved($event)"></app-filestack-file-upload-item>
+  </div>
+  <div class="fsfu-item-wrapper" *ngFor="let uploadedFile of uploadingFiles$ | async">
+    <app-filestack-file-upload-item [fileUrl]="uploadedFile.fileUrl" [isUploaded]="uploadedFile.isUploaded" [fileUploadProgress]="uploadedFile.fileUploadProgress" (fileRemoved)="onFileRemoved($event)"></app-filestack-file-upload-item>
+  </div>
+  <div class="fsfu-item-wrapper add-new-image" (click)="hiddenFileUpload.click()" *ngIf="!(hideUploadButton$ | async)">
+    <ng-container *ngIf="isMultiUpload">
+      <div>+ Add</div>
+      <div>images</div>
+    </ng-container>
+    <ng-container *ngIf="!isMultiUpload">
+      <div>+ Select</div>
+      <div>image</div>
+    </ng-container>
+  </div>
+  <input id="hiddenFileUpload" type="file" style="display: none" #hiddenFileUpload (change)="uploadSelectedFiles($event.target.files)" [attr.multiple]="isMultiUpload ? 'multiple' : null">
+</div>

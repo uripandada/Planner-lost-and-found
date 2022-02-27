@@ -1,0 +1,9 @@
+<div *ngIf="isOpen" class="popup-wrapper">
+  <div class="popup-color-overlay" (click)="nonButtonClose()"></div>
+  <div class="popup">
+    <div class="popup-close-wrapper" *ngIf="isNonButtonCloseEnabled">
+      <button type="button" (click)="close()">&times;</button>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

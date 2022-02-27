@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" class="full-width">
+  <input type="text" placeholder="Select the hotel group" matInput [formControl]="hotelGroupControl" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayHotelGroupName">
+    <mat-option *ngFor="let group of filteredHotelGroups$ | async" [value]="group">
+      {{group.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

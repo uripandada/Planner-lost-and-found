@@ -1,0 +1,283 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+		<IsPackable>false</IsPackable>
+		<SpaRoot>ClientApp\</SpaRoot>
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+		<!-- Set this to true if you enable server-side prerendering -->
+		<BuildServerSideRenderer>false</BuildServerSideRenderer>
+		<UserSecretsId>0e1fc762-adff-4b7c-bd25-5e450f49ae05</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<ApplicationInsightsResourceId>/subscriptions/002284d5-c339-411c-9dd4-a2ed4257e978/resourceGroups/RoomchekingV2/providers/microsoft.insights/components/RoomcheckingV2</ApplicationInsightsResourceId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="9.5.3" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+		<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+		<PackageReference Include="NSwag.AspNetCore" Version="13.10.8" />
+		<PackageReference Include="NSwag.MSBuild" Version="13.10.8">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="OpenIddict" Version="3.1.1" />
+		<PackageReference Include="OpenIddict.AspNetCore" Version="3.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Don't publish the SPA source files, but do show them in the project files list -->
+		<Compile Remove="Areas\**" />
+		<Compile Remove="ClientApp\src\app\shared\components\week-selector\**" />
+		<Compile Remove="Data\**" />
+		<Compile Remove="Models\**" />
+		<Content Remove="$(SpaRoot)**" />
+		<Content Remove="Areas\**" />
+		<Content Remove="ClientApp\src\app\shared\components\week-selector\**" />
+		<Content Remove="Data\**" />
+		<Content Remove="Models\**" />
+		<EmbeddedResource Remove="Areas\**" />
+		<EmbeddedResource Remove="ClientApp\src\app\shared\components\week-selector\**" />
+		<EmbeddedResource Remove="Data\**" />
+		<EmbeddedResource Remove="Models\**" />
+		<None Remove="$(SpaRoot)**" />
+		<None Remove="Areas\**" />
+		<None Remove="ClientApp\src\app\shared\components\week-selector\**" />
+		<None Remove="Data\**" />
+		<None Remove="Models\**" />
+		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="ClientApp\src\app\app-routing.module.ts" />
+		<None Remove="ClientApp\src\app\assets-management\asset-edit-form\asset-edit-form.component.ts" />
+		<None Remove="ClientApp\src\app\assets-management\asset-group\asset-group.component.ts" />
+		<None Remove="ClientApp\src\app\assets-management\asset-sub-group\asset-sub-group.component.ts" />
+		<None Remove="ClientApp\src\app\cleaning-plan\cleaning-timeline\cleaning-timeline.component.ts" />
+		<None Remove="ClientApp\src\app\cleaning-plan\_services\edit-cleaning-group.service.ts" />
+		<None Remove="ClientApp\src\app\cleaning-plan\_services\select-cleaners.service.ts" />
+		<None Remove="ClientApp\src\app\core\angular-material.module.ts" />
+		<None Remove="ClientApp\src\app\core\custom-date-adapter.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\asset-details.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\asset-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\building-simple.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\hotel-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\room-category-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\room-details-data.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\system-defined-asset-action-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\tag-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\tasks-data.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\user-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\warehouse-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\resolvers\wheres-list.resolver.ts" />
+		<None Remove="ClientApp\src\app\core\services\cleaning-plan-service.ts" />
+		<None Remove="ClientApp\src\app\core\services\cleaning-timeline-tooltip.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\cleaning-timeline.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\color.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\hotel.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\loading.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\room-type.service.ts" />
+		<None Remove="ClientApp\src\app\core\services\signalr.service.ts" />
+		<None Remove="ClientApp\src\app\core\validators\autocomplete-single-select-required.validator.ts" />
+		<None Remove="ClientApp\src\app\room\room-details\room-details.component.ts" />
+		<None Remove="ClientApp\src\app\shared\components\popup\popup.component.ts" />
+		<None Remove="ClientApp\src\app\shared\directives\cleaning-process-status-to-icon.directive.ts" />
+		<None Remove="ClientApp\src\app\shared\helpers\date.helper.ts" />
+		<None Remove="ClientApp\src\app\shared\helpers\moment-date.helper.ts" />
+		<None Remove="ClientApp\src\app\tasks-management\task-chat\task-message-group.ts" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouse-details\warehouse-details.component.ts" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouse-edit-form\warehouse-edit-form.component.ts" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouses-management.component.html" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouses-management.component.scss" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouses-management.component.ts" />
+		<None Remove="ClientApp\src\app\warehouses-management\warehouses-management.service.ts" />
+		<None Remove="ClientApp\tsconfig.json" />
+	</ItemGroup>
+
+	<!--<ItemGroup>
+	  <Content Include="..\Planner.Shared\AppSettings\appsettings.Development.json" Link="appsettings.Development.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\Planner.Shared\AppSettings\appsettings.json" Link="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\Planner.Shared\AppSettings\appsettings.Testing.json" Link="appsettings.Testing.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<ProjectReference Include="..\Planner.Application\Planner.Application.csproj" />
+		<ProjectReference Include="..\Planner.Common\Planner.Common.csproj" />
+		<ProjectReference Include="..\Planner.Domain\Planner.Domain.csproj" />
+		<ProjectReference Include="..\Planner.Infrastructure\Planner.Infrastructure.csproj" />
+		<ProjectReference Include="..\Planner.Persistence\Planner.Persistence.csproj" />
+		<ProjectReference Include="..\Planner.RccSynchronization\Planner.RccSynchronization.csproj" />
+		<ProjectReference Include="..\Planner.Shared\Planner.Shared.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\assets-management\asset-edit-form\asset-edit-form.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\assets-management\asset-sub-group\asset-sub-group.component.ts">
+		  <SubType>Code</SubType>
+		</TypeScriptCompile>
+		<TypeScriptCompile Include="ClientApp\src\app\assets-management\asset-group\asset-group.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\cleaning-plan\cleaning-timeline\cleaning-timeline.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\cleaning-plan\_services\edit-cleaning-group.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\cleaning-plan\_services\select-cleaners.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\angular-material.module.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\custom-date-adapter.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\asset-details.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\building-simple.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\hotel-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\room-category-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\room-details-data.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\system-defined-asset-action-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\tag-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\cleaning-plan\_services\cleaning-plan-service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\tasks-data.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\user-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\asset-list.resolver.ts">
+		  <SubType>Code</SubType>
+		</TypeScriptCompile>
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\warehouse-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\resolvers\wheres-list.resolver.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\cleaning-timeline.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\cleaning-timeline-tooltip.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\color.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\hotel.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\loading.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\room-type.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\services\signalr.service.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\core\validators\autocomplete-single-select-required.validator.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\room\room-details\room-details.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\shared\components\popup\popup.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\shared\directives\cleaning-process-status-to-icon.directive.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\shared\helpers\date.helper.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\shared\helpers\moment-date.helper.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\tasks-management\task-chat\task-message-group.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\warehouses-management\warehouse-details\warehouse-details.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\warehouses-management\warehouse-edit-form\warehouse-edit-form.component.ts" />
+		<TypeScriptCompile Include="ClientApp\src\app\warehouses-management\warehouses-management.service.ts" />
+		<Content Include="ClientApp\tsconfig.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="ClientApp\src\app\assets-management\asset-model\" />
+		<Folder Include="ClientApp\src\app\assets-management\asset-model-edit-form\" />
+		<Folder Include="ClientApp\src\app\assets-management\asset-room-assignments\" />
+		<Folder Include="ClientApp\src\app\assets-management\room-assignments\" />
+		<Folder Include="ClientApp\src\app\cleaning-plan\floor-affinities-multiselect\" />
+		<Folder Include="ClientApp\src\app\cleaning-plan\create-custom-cleanings-form\" />
+		<Folder Include="ClientApp\src\app\cleaning-plan\cpsat-configuration-form\" />
+		<Folder Include="ClientApp\src\app\core\guards\" />
+		<Folder Include="ClientApp\src\app\core\interceptors\" />
+		<Folder Include="ClientApp\src\app\core\pipes\" />
+		<Folder Include="ClientApp\src\app\dashboards\rooms-view-dashboard\" />
+		<Folder Include="ClientApp\src\app\main\" />
+		<Folder Include="ClientApp\src\app\reservations\" />
+		<Folder Include="ClientApp\src\app\room-categories-management\" />
+		<Folder Include="ClientApp\src\app\room\room-edit-form\" />
+		<Folder Include="ClientApp\src\app\shared\components\file-upload\file-upload-item\" />
+		<Folder Include="ClientApp\src\app\shared\components\date-time\" />
+		<Folder Include="ClientApp\src\app\shared\components\date-time-multiselect\" />
+		<Folder Include="ClientApp\src\app\shared\components\time-multiselect\" />
+		<Folder Include="ClientApp\src\app\shared\components\tags-multiselect\" />
+		<Folder Include="ClientApp\src\app\tasks-management\tasks-preview-list\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-recurring-specific-time\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-recurring-monthly\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-recurring-weekly\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-recurring-daily\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-event\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-recurring\" />
+		<Folder Include="ClientApp\src\app\tasks-management\task-single\" />
+		<Folder Include="ClientApp\src\app\warehouses-management\warehouse-asset-groups\" />
+		<Folder Include="ClientApp\src\styles\icofont\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="plannerIdentity.pfx">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	
+	<Target Name="CopyLinkedContentFiles" BeforeTargets="Build">
+		<!-- condition intruduced because of build problems -->
+		<Copy SourceFiles="@(Content)" Condition="'%(Content.Link)' != ''" DestinationFiles="$(ProjectDir)\%(Content.Link)" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
+	</Target>
+	
+	<Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+		<Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
+		<Exec Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration)" />
+		<RemoveDir Directories="$(OutDir)References" />
+	</Target>
+
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+		<!-- Ensure Node.js is installed -->
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+	</Target>
+
+	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+			<DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>%(DistFiles.Identity)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
+</Project>

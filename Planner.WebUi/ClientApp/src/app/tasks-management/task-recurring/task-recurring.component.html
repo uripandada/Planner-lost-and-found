@@ -1,0 +1,91 @@
+<div [formGroup]="taskRecurringForm">
+  <div class="task-recurring-types">
+    <div class="form-groups">
+      <mat-radio-group aria-labelledby=""
+                       class="task-type-radio-group"
+                       formControlName="recurringTaskTypeKey">
+        <mat-radio-button class="example-radio-button" *ngFor="let taskType of allRecurringTaskTypes" [value]="taskType.key">
+          {{taskType.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="form-groups">
+      <div class="task-recurring-type-wrapper">
+        <div *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value === 'DAILY'">
+          <!--<div class="form-group-title">Daily tasks configuration</div>-->
+          <app-task-recurring-daily [taskRecurringDailyForm]="taskRecurringForm.controls.taskRecurringDailyForm"></app-task-recurring-daily>
+        </div>
+        <div *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value === 'WEEKLY'">
+          <!--<div class="form-group-title">Weekly tasks configuration</div>-->
+          <app-task-recurring-weekly [taskRecurringWeeklyForm]="taskRecurringForm.controls.taskRecurringWeeklyForm"></app-task-recurring-weekly>
+        </div>
+        <div *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value === 'MONTHLY'">
+          <!--<div class="form-group-title">Monthly tasks configuration</div>-->
+          <app-task-recurring-monthly [taskRecurringMonthlyForm]="taskRecurringForm.controls.taskRecurringMonthlyForm"></app-task-recurring-monthly>
+        </div>
+        <div *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value === 'SPECIFIC_TIME'">
+          <!--<div class="form-group-title">Specific times task configuration</div>-->
+          <app-task-recurring-specific-time [taskRecurringSpecificTimeForm]="taskRecurringForm.controls.taskRecurringSpecificTimeForm"></app-task-recurring-specific-time>
+        </div>
+        <div *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value === 'EVERY'">
+          <!--<div class="form-group-title">Specific times task configuration</div>-->
+          <app-task-recurring-every [taskRecurringEveryForm]="taskRecurringForm.controls.taskRecurringEveryForm"></app-task-recurring-every>
+        </div>
+      </div>
+    </div>
+    <!--<div class="form-groups task-recurring-until-wrapper" *ngIf="taskRecurringForm.controls.recurringTaskTypeKey.value !== 'SPECIFIC_TIME'">
+      <div class="form-group-title">Task repeats</div>
+      <div class="">
+        <div class="inline-form-row">
+          <label>Repeats for</label>
+          <div>
+            <mat-radio-group aria-labelledby=""
+                             class="task-recurrence-radio-group"
+                             formControlName="repeatsForKey">
+
+              <mat-radio-button class="" value="NUMBER_OF_DAYS">
+                <div>
+                  <div class="radio-inline-label">
+                    Number of days:
+                  </div>
+                  <div>
+                    <mat-form-field appearance="outline">
+                      <input type="text" matInput placeholder="# days" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-radio-button>
+              <mat-radio-button class="" value="NUMBER_OF_OCCURENCES">
+                <div>
+                  <div class="radio-inline-label">
+                    Number of occurences:
+                  </div>
+                  <div>
+                    <mat-form-field appearance="outline">
+                      <input type="text" matInput placeholder="# occurences" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-radio-button>
+              <mat-radio-button class="" value="SPECIFIC_DATE">
+                <div>
+                  <div class="radio-inline-label">
+                    Until date:
+                  </div>
+                  <div>
+                      <app-date-time></app-date-time>
+                  </div>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+
+        
+      </div>
+    </div>-->
+    <div></div>
+  </div>
+
+</div>

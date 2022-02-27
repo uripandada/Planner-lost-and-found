@@ -1,0 +1,103 @@
+<ng-container *ngIf="(isEditMode$ | async)">
+  <div class="list-actions">
+    <div class="major-column-title">Edit {{isAppartment ? 'appartment' : 'room'}} <b>{{roomDetails.name}}</b></div>
+  </div>
+  <div class="room-details-wrapper">
+    <div class="room-details-header-card component-box">
+      <div class="room-edit-form-wrapper">
+        <app-room-edit-form [room]="roomDetails"
+                            [roomCategories]="roomCategories"
+                            (inserted)="onRoomInserted($event, false)"
+                            (insertedWithContinue)="onRoomInserted($event, true)"
+                            (updated)="onRoomUpdated($event)"
+                            (cancelled)="onRoomCancelled()">
+        </app-room-edit-form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!(isEditMode$ | async)">
+  <div class="list-actions">
+    <div class="major-column-title"><b>{{isAppartment ? 'Appartment' : 'Room'}} details</b></div>
+  </div>
+  <div class="room-details-wrapper">
+    <div class="room-details-header-card component-box">
+      <div class="room-header-wrapper">
+        <div class="room-details-title-wrapper">
+          <div class="room-details-title">{{ roomDetails.name }}</div>
+          <div>
+            <button mat-flat-button class="button-round-with-svg-icon" (click)="edit()"><i class="svg-icon icon-pen-red"></i></button>
+          </div>
+        </div>
+        <div class="room-details-header-properties">
+          <div class="three-column-grid">
+            <div class="grid-column">
+              <div class="header-property">
+                <label>Type:</label>
+                <div>{{ roomDetails.typeKey }}</div>
+                <ng-container *ngIf="roomDetails.typeKey === 'HOSTEL'">
+                  <label>Beds:</label>
+                  <div class="comma-separated"><span *ngFor="let bed of roomDetails.beds">{{bed.name}}</span></div>
+                </ng-container>
+                <label>Category:</label>
+                <div>{{ roomDetails.categoryName }}</div>
+                <label>Occupancy:</label>
+                <div>Occupied</div>
+                <label>Housekeeping:</label>
+                <div>Clean</div>
+              </div>
+            </div>
+            <div class="grid-column">
+              <div class="header-property">
+                <label>Building:</label>
+                <div>Building 1</div>
+                <label>Floor:</label>
+                <div>Floor 1</div>
+                <label>Section:</label>
+                <div>{{ roomDetails.floorSectionName }}</div>
+                <label>Sub section:</label>
+                <div>{{ roomDetails.floorSubSectionName }}</div>
+              </div>
+            </div>
+            <div class="grid-column">
+              <div class="header-property">
+                <label>Address:</label>
+                <div>Some street 15a</div>
+                <label>Latitude:</label>
+                <div>8298561049</div>
+                <label>Longitude:</label>
+                <div>4841837609</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-tabs">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)">
+        <mat-tab label="External information">
+
+        </mat-tab>
+        <mat-tab label="Other information">
+
+        </mat-tab>
+        <mat-tab label="Assets">
+
+        </mat-tab>
+        <mat-tab label="Catalog">
+
+        </mat-tab>
+        <mat-tab label="Inventory">
+
+        </mat-tab>
+        <mat-tab label="History">
+
+        </mat-tab>
+        <mat-tab label="Notes">
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</ng-container>

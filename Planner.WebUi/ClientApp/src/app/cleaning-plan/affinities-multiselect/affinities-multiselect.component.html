@@ -1,0 +1,30 @@
+<div class="fa-filter-wrapper">
+  <form [formGroup]="filterAffinitiesForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <input type="text"
+             [id]="elementId"
+             placeholder="Select affinities..."
+             matInput
+             formControlName="keywords"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" [classList]="'floor-affinities-autocomplete'">
+        <mat-optgroup *ngFor="let group of filteredAffinityGroups$ | async" [label]="group.affinityGroupName">
+          <mat-option *ngFor="let affinity of group.affinities" [value]="affinity.referenceId">
+            <div class="faa-title">{{affinity.referenceName}}</div>
+            <div class="faa-label">{{affinity.referenceDescription}}</div>
+          </mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+<div class="affinity-tags">
+  <div *ngFor="let affinityFormGroup of affinitiesFormArray.controls; let affinityIndex = index;" class="affinity-tag">
+    <div>
+      <div class="tag-title">{{affinityFormGroup.controls.referenceName.value}}</div>
+      <div class="tag-subtitle">{{affinityFormGroup.controls.referenceDescription.value}}</div>
+    </div>
+    <button type="button" (click)="remove(affinityIndex)"><i class="icofont-close-line"></i></button>
+  </div>
+</div>

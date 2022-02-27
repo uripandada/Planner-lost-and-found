@@ -1,0 +1,298 @@
+<div class="assets-component-wrapper component-wrapper">
+
+  <div class="major-column-title-grid">
+    <div class="major-column-title">
+      <b>Asset management</b>
+    </div>
+    <div class="major-column-buttons">
+      <button mat-flat-button class="button-with-icon" type="button" (click)="openAssetImportPreview()"><i class="icofont-upload-alt"></i> <span>Import assets</span></button>
+      <button mat-flat-button class="button-with-icon" type="button" (click)="initiateAssetExport()"><i class="icofont-download"></i> <span>Export assets</span></button>
+      <button mat-flat-button class="button-with-icon" type="button" (click)="openAssetActionsImportPreview()"><i class="icofont-upload-alt"></i> <span>Import actions</span></button>
+      <button mat-flat-button class="button-with-icon" type="button" (click)="initiateAssetActionsExport()"><i class="icofont-download"></i> <span>Export actions</span></button>
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="createNew()"><i class="icofont-plus"></i> <span>Create an asset</span></button>
+    </div>
+  </div>
+
+  <!--<div class="major-column-title"><b>Assets management</b></div>-->
+  <div class="component-box">
+    <!--<div class="list-actions">
+      <div class="left-side-actions">
+        
+      </div>
+      <div class="right-side-actions">
+      </div>
+    </div>-->
+    <div class="component-filter-row">
+      <form [formGroup]="filterForm">
+        <div class="assets-filter-row-grid">
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="keywords" matInput placeholder="Find by keywords...">
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="sortKey" name="sorts">
+                <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                  {{sort.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="assets-grid">
+      <table class="list-view-table">
+        <thead>
+          <tr>
+            <th class="asset-image-cell"></th>
+            <th class="asset-name-cell">Asset</th>
+            <th class="asset-group-cell">Group</th>
+            <th class="asset-type-cell">Type</th>
+            <th class="asset-quantity-cell text-right">Available</th>
+            <th class="asset-quantity-cell text-right">Reserved</th>
+            <th class="asset-quantity-cell text-right">In use</th>
+            <th class="asset-quantity-cell text-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="list-view-items-row" *ngFor="let asset of assets$ | async; index as assetIndex" (click)="navigateToAssetDetails(asset)">
+            <td class="asset-image-cell">
+              <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+            </td>
+            <td class="asset-name-cell">
+              <div class="cell-value">
+                <div>{{asset.name}}</div>
+                <div class="sub-text">{{asset.tags}}</div>
+              </div>
+            </td>
+            <td class="asset-group-cell">
+              <div class="cell-value">
+                <div>{{asset.assetGroupName}}</div>
+                <div class="sub-text">{{asset.assetSubGroupName}}</div>
+              </div>
+            </td>
+            <td class="asset-type-cell">
+              <div class="cell-value">
+                <ng-container *ngIf="asset.isBulk">
+                  <div>Bulk</div>
+                  <div class="sub-text">{{asset.serialNumber}}</div>
+                </ng-container>
+                <ng-container *ngIf="!asset.isBulk">
+                  <div>Individual</div>
+                  <div class="sub-text">{{asset.serialNumber}}</div>
+                </ng-container>
+              </div>
+            </td>
+            <td class="asset-quantity-cell text-right">
+              <div class="cell-value available-quantity">{{asset.availableQuantity}}</div>
+            </td>
+            <td class="asset-quantity-cell text-right">
+              <div class="cell-value reserved-quantity">{{asset.reservedQuantity}}</div>
+            </td>
+            <td class="asset-quantity-cell text-right">
+              <div class="cell-value in-use-quantity">{{asset.inUseQuantity}}</div>
+            </td>
+            <td class="asset-quantity-cell text-right">
+              <div class="cell-value total-quantity">{{asset.totalQuantity}}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="totals-description">
+          <span>Showing</span>
+          <span>{{loadedNumberOfAssets$ | async}} of {{totalNumberOfAssets$ | async}}</span>
+          <span>assets</span>
+        </div>
+        <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+          <button mat-flat-button type="button" (click)="loadMore()">Load more</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--<div class="list-actions">
+  <div class="major-column-title"><b>Assets management</b></div>
+  <div class="major-column-buttons">
+    <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-upload-alt"></i> <span>Import data</span></button>
+    <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-download"></i> <span>Export data</span></button>
+  </div>
+</div>
+<div class="component-filter-wrapper">
+  <div class="component-box">
+    <div class="component-filter-row">
+      <form [formGroup]="filterForm">
+        <div class="assets-filter-row-grid">
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="keywords" matInput placeholder="Find by keywords...">
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="sortKey" name="sorts">
+                <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                  {{sort.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>-->
+<!--<div class="list-actions">
+  <div class="major-column-title"><b>Assets and asset models</b></div>
+  <div class="major-column-buttons">
+    <button mat-flat-button type="button" class="secondary-button button-with-icon" (click)="showCreateNewAssignmentPopup()"><i class="icofont-plus"></i> <span>Add a new asset</span></button>
+  </div>
+</div>-->
+<!--<div class="component-content-row">
+  <div class="assets-wrapper">
+    <div class="assets-grid">
+      <table class="list-view-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Asset</th>
+            <th>Group</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="list-view-items-row" *ngFor="let asset of assets$ | async; index as assetIndex" (click)="navigateToAssetDetails(asset)">
+            <td class="asset-image-cell">
+              <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+            </td>
+            <td class="asset-name-cell">
+              <div class="cell-value">
+                <div>{{asset.name}}</div>
+                <div>{{asset.tags}}</div>
+              </div>
+            </td>
+            <td class="asset-group-cell">
+              <div class="cell-value">
+                <div>{{asset.assetGroupName}}</div>
+                <div>{{asset.assetSubGroupName}}</div>
+              </div>
+            </td>
+            <td class="asset-type-cell">
+              <div class="cell-value">
+                <ng-container *ngIf="asset.isBulk">
+                  <div>Bulk</div>
+                  <div>{{asset.serialNumber}}</div>
+                </ng-container>
+                <ng-container *ngIf="!asset.isBulk">
+                  <div>Individual</div>
+                  <div>{{asset.serialNumber}}</div>
+                </ng-container>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="totals-description">
+          <span>Showing</span>
+          <span>{{loadedNumberOfAssets$ | async}} of {{totalNumberOfAssets$ | async}}</span>
+          <span>assets</span>
+        </div>-->
+<!--<div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+  <button mat-flat-button type="button" (click)="loadMoreCategories()">Load 20 more</button>
+</div>-->
+<!--</div>
+</div>-->
+<!--<div class="asset-item component-box" *ngFor="let asset of assets$ | async; index as assetIndex" (click)="navigateToAssetDetails(asset)" [class.asset-item-with-models]="asset.usesModels">
+
+    <div *ngIf="!asset.usesModels || asset.models.length === 0">
+      <ng-container *ngIf="asset.hasImage">
+        <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+      </ng-container>
+      <ng-container *ngIf="!asset.hasImage">
+        <div class="asset-image no-asset-image-list-item">
+          <i class="svg-icon icon-box"></i>
+        </div>
+      </ng-container>
+    </div>
+
+  <ng-container *ngIf="asset.usesModels">
+    <div class="asset-image-grid">
+      <div>
+        <ng-container *ngIf="asset.hasImage">
+          <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+        </ng-container>
+        <ng-container *ngIf="!asset.hasImage">
+          <div class="asset-image no-asset-image-list-item">
+            <i class="svg-icon icon-box"></i>
+          </div>
+        </ng-container>
+      </div>
+      <div class="asset-model-grid-items">
+        <div class="asset-model-grid-items-title">Models</div>
+
+        <div *ngFor="let assetModel of asset.models" class="asset-model-grid-item" [title]="assetModel.name">
+          <ng-container *ngIf="assetModel.hasImage">
+            <div class="asset-image" [ngStyle]="{'background-image': 'url(' + assetModel.imageUrl + ')' }"></div>
+          </ng-container>
+          <ng-container *ngIf="!assetModel.hasImage">
+            <div class="asset-image no-asset-image-list-item">
+              <i class="svg-icon icon-box"></i>
+            </div>
+          </ng-container>
+        </div>-->
+<!--<div class="asset-model-grid-item" title="Model name 1">
+  <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+</div>
+<div class="asset-model-grid-item" title="Model name 1">
+  <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+</div>-->
+<!--<div class="asset-model-grid-item" title="Model name 1">
+  <div class="asset-image" [ngStyle]="{'background-image': 'url(' + asset.imageUrl + ')' }"></div>
+</div>-->
+<!--<div class="asset-model-grid-item" *ngIf="asset.numberOfHiddenModels > 0">
+          <div class="asset-image show-more-asset-image">+{{asset.numberOfHiddenModels}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+
+  <div class="asset-title-wrapper">
+    <div class="asset-title"><span>{{ asset.name }}</span></div>
+    <div class="asset-subtitle">Used {{ asset.inUseQuantity }} of {{ asset.availableQuantity }}</div>
+  </div>
+</div>-->
+<!--</div>
+  </div>
+</div>
+
+<app-popup [isOpen]="showCreateNewAssetPopup$ | async" (closed)="hideCreateNewAssignmentPopup()">
+  <div class="popup-header">
+    <h2>Create new asset</h2>
+  </div>
+  <app-asset-edit-form [assetForm]="assetForm"
+                       [tags]="tags"
+                       [currentlyUploadingFiles]="currentlyUploadingFiles$ | async"
+                       [temporaryUploadedFiles]="temporaryUploadedFiles$ | async"
+                       [uploadedFiles]="uploadedFiles$ | async"
+                       (saved)="save()"
+                       (cancelled)="hideCreateNewAssignmentPopup()"
+                       (tagAdded)="addTag($event)"
+                       (tagRemoved)="removeTag($event)"
+                       (filesChanged)="uploadedFilesChanged($event)"
+                       (newAssetModelAdded)="onNewAssetModelAdded()"></app-asset-edit-form>
+</app-popup>-->

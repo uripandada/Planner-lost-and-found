@@ -1,0 +1,6 @@
+.users-filter-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 170px 125px auto;
+  column-gap: 15px;
+  align-items: center;
+}

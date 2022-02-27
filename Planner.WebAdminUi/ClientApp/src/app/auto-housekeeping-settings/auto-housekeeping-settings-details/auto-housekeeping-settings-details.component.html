@@ -1,0 +1,86 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<!--<div class="auto-update-description">
+  <div class=""><b>Rooms</b> {{ statusDescription$ | async }}</div>
+  <div class=""><b>Update to</b> {{ actionDescription$ | async }}</div>
+</div>-->
+<div class="auto-update-item">
+  <form [formGroup]="autoUpdateFormGroup" class="auto-update-form-grid">
+    <div class="vertical-checkbox-list">
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="dirty">Dirty</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="dirty">Clean</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="cleanNeedsInspection">Need inspection</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="inspected">Inspected</mat-checkbox>
+      </div>
+    </div>
+    <div class="vertical-checkbox-list">
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="inService">In service</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="outOfService">Out of service</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="doDisturb">Do disturb</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="doNotDisturb">Do not disturb</mat-checkbox>
+      </div>
+    </div>
+    <div class="vertical-checkbox-list">
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="occupied">Occupied</mat-checkbox>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-checkbox formControlName="vacant">Vacant</mat-checkbox>
+      </div>
+      <mat-form-field appearance="outline" class="au-name-regex">
+        <input formControlName="roomNameRegex" matInput placeholder="Name regex">
+      </mat-form-field>
+    </div>
+    <div class="au-form-separator align-self-center">
+      <i class="icofont-caret-right"></i>
+    </div>
+    <div class="au-single-input align-self-center">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="updateStatusTo" class="full-width">
+          <mat-option *ngFor="let toItem of listOfTos" [value]="toItem.key">
+            {{toItem.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="au-single-input align-self-center">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="updateStatusWhen" class="full-width">
+          <mat-option *ngFor="let whenItem of listOfWhens" [value]="whenItem.key">
+            {{whenItem.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="au-single-input align-self-center">
+      <mat-form-field appearance="outline">
+        <input matInput type="text"
+               placeholder="At"
+               formControlName="updateStatusAtTime" [textMask]="{mask: mask}">
+        <i matSuffix class="icofont-stopwatch"></i>
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="au-buttons">
+    <button mat-flat-button type="button" class="button-with-icon small-button"
+            mwlConfirmationPopover
+            [popoverMessage]="'Are you sure you want to delete the setting?'"
+            placement="left"
+            (confirm)="delete()">Delete</button>
+    <button mat-flat-button type="button" class="button-with-icon small-button secondary-button" (click)="save()">Save</button>
+  </div>
+
+</div>

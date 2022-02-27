@@ -1,0 +1,88 @@
+<ng-container *ngIf="warehouse$ | async as warehouse">
+  <ng-container *ngIf="(isEditMode$ | async)">
+    <div class="list-actions">
+      <div class="major-column-title" *ngIf="isCreateNew$ | async">Create a <b>new {{warehouse.isCentralWarehouse ? 'central' : ''}} warehouse</b></div>
+      <div class="major-column-title" *ngIf="!(isCreateNew$ | async)">Edit {{warehouse.isCentralWarehouse ? 'central' : ''}} warehouse <b>{{warehouse.name}}</b></div>
+    </div>
+    <div class="warehouse-edit-form-wrapper">
+      <div class="component-box">
+        <app-warehouse-edit-form [warehouse]="warehouse" (inserted)="onWarehouseInserted($event)" (updated)="onWarehouseUpdated($event)" (cancelled)="onCancelEditWarehouse()"></app-warehouse-edit-form>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!(isEditMode$ | async) && !(isCreateNew$ | async)">
+    <div class="list-actions">
+      <div class="major-column-title"><b>{{warehouse.isCentralWarehouse ? 'Central warehouse' : 'Warehouse'}}</b></div>
+    </div>
+    <div class="room-details-wrapper">
+      <div class="room-details-header-card component-box">
+        <div class="room-header-wrapper">
+          <div class="room-details-title-wrapper">
+            <div class="room-details-title">{{ warehouse.name }}</div>
+            <div>
+              <button mat-flat-button class="button-round-with-svg-icon" (click)="edit()"><i class="svg-icon icon-pen-red"></i></button>
+            </div>
+          </div>
+          <div class="room-details-header-properties">
+            <div class="three-column-grid">
+              <div class="grid-column">
+                <!--<div class="header-property">
+                  <label>Type:</label>
+                  <div>{{ roomDetails.typeKey }}</div>
+                  <label>Category:</label>
+                  <div>{{ roomDetails.categoryName }}</div>
+                  <label>Occupancy:</label>
+                  <div>Occupied</div>
+                  <label>Housekeeping:</label>
+                  <div>Clean</div>
+                </div>-->
+              </div>
+              <div class="grid-column">
+                <!--<div class="header-property">
+                  <label>Building:</label>
+                  <div>Building 1</div>
+                  <label>Floor:</label>
+                  <div>Floor 1</div>
+                  <label>Section:</label>
+                  <div>{{ roomDetails.floorSectionName }}</div>
+                  <label>Sub section:</label>
+                  <div>{{ roomDetails.floorSubSectionName }}</div>
+                </div>-->
+              </div>
+              <div class="grid-column">
+                <!--<div class="header-property">
+                  <label>Address:</label>
+                  <div>Some street 15a</div>
+                  <label>Latitude:</label>
+                  <div>8298561049</div>
+                  <label>Longitude:</label>
+                  <div>4841837609</div>
+                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-tabs">
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)" class="warehouse-asset-groups-tab">
+          <mat-tab label="Inventory">
+            <div class="component-box warehouse-asset-groups-list">
+              <app-warehouse-asset-groups [warehouseDetails]="warehouse$ | async"></app-warehouse-asset-groups>
+            </div>
+          </mat-tab>
+          <mat-tab label="Inventory reviews">
+            <div class="component-box warehouse-asset-groups-list">
+              <app-warehouse-inventory-archive [warehouseDetails]="warehouse$ | async"></app-warehouse-inventory-archive>
+            </div>
+          </mat-tab>
+          <mat-tab label="History">
+            <div class="component-box warehouse-asset-groups-list">
+              <app-warehouse-history [warehouseDetails]="warehouse$ | async"></app-warehouse-history>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

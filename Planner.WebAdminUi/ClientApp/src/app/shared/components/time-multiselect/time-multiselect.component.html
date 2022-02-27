@@ -1,0 +1,10 @@
+<div class="time-multiselect">
+  <div class="time-multiselect-items">
+    <app-time-multiselect-item class="time-multiselect-items-item" *ngFor="let timeForm of timesArray.controls; let timeFormIndex = index" [timeForm]="timeForm" [timeFormIndex]="timeFormIndex" (removed)="onRemoved($event)"></app-time-multiselect-item>
+  </div>
+  <div class="time-multiselect-actions">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="add()"><i class="icofont-plus"></i> Add time</button>
+  </div>
+</div>
+
+

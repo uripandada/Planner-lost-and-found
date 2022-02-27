@@ -1,0 +1,262 @@
+<div class="extended-cpsat-configuration-form">
+  <form [formGroup]="cpsatConfigurationForm" autocomplete="off">
+
+    <div class="popup-content">
+      <div>
+        <div class="major-column-title"><b>Options</b></div>
+        <div class="form-field-wrapper">
+          <label>Solver run time</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="solverRunTime" type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="major-column-title"><b>Objectives</b></div>
+        <div class="form-field-wrapper">
+          <label>Planning strategy</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="planningStrategyTypeKey">
+              <mat-option [value]="'BALANCE_BY_ROOMS'">Balance by rooms</mat-option>
+              <mat-option [value]="'BALANCE_BY_CREDITS_STRICT'">Balance by credits strict</mat-option>
+              <mat-option [value]="'BALANCE_BY_CREDITS_WITH_AFFINITIES'">Balance by credits with affinities</mat-option>
+              <mat-option [value]="'TARGET_BY_ROOMS'">Target by rooms</mat-option>
+              <mat-option [value]="'TARGET_BY_CREDITS'">Target by credits</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <ng-container *ngIf="
+            cpsatConfigurationForm.controls.planningStrategyTypeKey.value ===
+            'BALANCE_BY_ROOMS'
+          ">
+          <div class="form-field-wrapper">
+            <label>Min rooms</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="balanceByRoomsMinRooms" type="number" />
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Max rooms</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="balanceByRoomsMaxRooms" type="number" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="
+            cpsatConfigurationForm.controls.planningStrategyTypeKey.value ===
+            'BALANCE_BY_CREDITS_STRICT'
+          ">
+          <div class="from-to-form-group">
+            <div class="form-field-wrapper">
+              <label>Min credits</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="balanceByCreditsStrictMinCredits" type="number" />
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Max credits</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="balanceByCreditsStrictMaxCredits" type="number" />
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="
+            cpsatConfigurationForm.controls.planningStrategyTypeKey.value ===
+            'BALANCE_BY_CREDITS_WITH_AFFINITIES'
+          ">
+          <div class="from-to-form-group">
+            <div class="form-field-wrapper">
+              <label>Min credits</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="balanceByCreditsWithAffinitiesMinCredits" type="number" />
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Max credits</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="balanceByCreditsWithAffinitiesMaxCredits" type="number" />
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="
+            cpsatConfigurationForm.controls.planningStrategyTypeKey.value ===
+            'TARGET_BY_ROOMS'
+          ">
+          <div class="form-field-wrapper">
+            <label>Rooms</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="targetByRoomsValue" type="text" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="
+            cpsatConfigurationForm.controls.planningStrategyTypeKey.value ===
+            'TARGET_BY_CREDITS'
+          ">
+          <div class="form-field-wrapper">
+            <label>Credits</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="targetByCreditsValue" type="text" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </div>
+      <div>
+
+        <div class="major-column-title"><b>Constraints</b></div>
+        <div class="major-column-subtitle"><b>Buildings</b></div>
+        <div class="form-group-separator"></div>
+        <div class="form-field-wrapper">
+          <label>Max number of buildings per attendant</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxNumberOfBuildingsPerAttendant" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Max travel time between buildings</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxBuildingTravelTime" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="doesBuildingMovementReduceCredits"></mat-checkbox><label class="ml-2">
+            Building
+            movement reduces credits?
+          </label>
+        </div>
+        <div>
+          <div class="form-group-separator"></div>
+          <div class="form-field-wrapper">
+            <label>Building movement credit reduction</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="buildingMovementCreditsReduction" type="number" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div>
+        <div class="major-column-subtitle"><b>Floors</b></div>
+        <div class="form-field-wrapper">
+          <label>Max number of levels per attendant</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxNumberOfLevelsPerAttendant" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="doesLevelMovementReduceCredits"></mat-checkbox><label class="ml-2">
+            Level movement
+            reduces credits?
+          </label>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Level movement credit reduction</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="levelMovementCreditsReduction" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Level movement credit reduction applies after X levels</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="applyLevelMovementCreditReductionAfterNumberOfLevels" placeholder="X"
+                   type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+
+      <div>
+        <div class="major-column-title"><b>Stays & departures</b></div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="doBalanceStaysAndDepartures"></mat-checkbox><label class="ml-2">
+            Balance Stays & Departures
+          </label>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Stay & Departure epsilon weight</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="weightEpsilonStayDeparture" type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div>
+        <div class="major-column-subtitle"><b>Departures</b></div>
+        <div class="form-field-wrapper">
+          <label>Max number of departures per attendant</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxDeparture" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="maxDeparturesReducesCredits"></mat-checkbox><label class="ml-2">
+            Departure reduces credits?
+          </label>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Departure credit reduction</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxDeparturesEquivalentCredits" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Departure credit reduction applies after X departures</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxDeparturesReductionThreshold" type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div>
+        <div class="major-column-subtitle"><b>Stays</b></div>
+        <div class="form-field-wrapper">
+          <label>Max number of stays per attendant</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxStay" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="maxStaysIncreasesCredits"></mat-checkbox><label class="ml-2">
+            Stay increases credits?
+          </label>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Stay credit increase</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxStaysEquivalentCredits" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Stay credit increases after X stays</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="maxStaysIncreaseThreshold" type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="popup-actions">
+      <div class="popup-confirm-actions">
+        <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+          <i class="icofont-check-alt"></i> Save
+        </button>
+        <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+          <i class="icofont-close-line"></i> Cancel
+        </button>
+      </div>
+      <div class="popup-cancel-actions">
+      </div>
+    </div>
+  </form>
+</div>

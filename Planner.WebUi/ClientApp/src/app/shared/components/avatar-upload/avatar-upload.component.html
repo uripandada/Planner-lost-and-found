@@ -1,0 +1,27 @@
+<!--<div class="photos-management-wrapper">
+  <app-file-upload-item *ngFor="let tempFile of uploadedFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="false" (fileRemoved)="removeUploadedFile($event)"></app-file-upload-item>
+  <app-file-upload-item *ngFor="let tempFile of temporaryUploadedFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="false" (fileRemoved)="removeTemporaryUploadedFile($event)"></app-file-upload-item>
+  <app-file-upload-item *ngFor="let tempFile of currentlyUploadingFiles$ | async; trackBy: trackByFn; index as uploadingIndex" [fileIndex]="uploadingIndex" [file]="tempFile" [isUploadInProgress]="true" (fileRemoved)="removeUploadingFile($event)"></app-file-upload-item>
+  <div class="photo-item add-new-photo-item" (click)="hiddenFileUpload.click()">
+    <div>+ Add</div>
+    <div>files</div>
+  </div>
+</div>-->
+
+<input id="hiddenFileUpload" type="file" style="display: none" #hiddenFileUpload (change)="fileSelected($event.target.files)">
+<div>
+  <div class="user-avatar-image-wrapper">
+    <div class="user-avatar-image-background"><i class="icofont-user-alt-4"></i></div>
+    <ng-container *ngIf="(avatar$ | async) as avatar">
+      <div class="user-avatar-image" [ngStyle]="{'background-image': 'url(' + avatar.fileUrl + ')'}"></div>
+    </ng-container>
+  </div>
+  <div class="user-avatar-buttons">
+    <div>
+      <button mat-flat-button type="button" class="cancel-button small-button" (click)="hiddenFileUpload.click()"><i class="icofont-image"></i> Change</button>
+    </div>
+    <div>
+      <button mat-flat-button type="button" class="cancel-button small-button" (click)="remove()"><i class="icofont-close"></i></button>
+    </div>
+  </div>
+</div>

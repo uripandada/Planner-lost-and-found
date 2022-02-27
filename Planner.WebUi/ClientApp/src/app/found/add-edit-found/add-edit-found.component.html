@@ -1,0 +1,244 @@
+<ng-container *ngIf="item">
+  <div class="major-column-title">
+    <ng-container *ngIf="isCreateNew">Create a <b>new found item</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit found item <b>{{ item.referenceNumber }}</b></ng-container>
+  </div>
+  <div class="item-component-wrapper component-wrapper component-box">
+    <div class="item-edit-wrapper">
+      <form [formGroup]="foundForm" (ngSubmit)="save()">
+        <div class="item-edit">
+
+
+          <div class="form-section">
+            <div class="major-column-title"><b>What is found?</b></div>
+
+            <div class="found-description-grid">
+              <div class="form-field-wrapper">
+                <label>Description</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="description" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('description')">
+                    <span *ngIf="f.description.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Found On</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput [matDatepicker]="datePickerLostOn" formControlName="foundOn">
+                  <mat-datepicker-toggle matSuffix [for]="datePickerLostOn" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
+                  <mat-datepicker #datePickerLostOn></mat-datepicker>
+                  <mat-error class="error" *ngIf="canShowErrorMessage('foundOn')">
+                    <span *ngIf="f.foundOn.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Where was it found?</label>
+                  <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"
+                    [displayProperty]="'typeDescription'">
+                  </app-where-select>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Client name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="description" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('clientname')">
+                    <span *ngIf="f.description.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Notes</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <textarea matInput formControlName="notes" type="text" multiple></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="major-column-title"><b>Who found it?</b></div>
+            <div class="two-column-grid-21">
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>Who</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="typeOfLoss">
+                      <mat-option *ngFor="let typeOfLoss of typesOfLoss" [value]="typeOfLoss.key">
+                        {{ typeOfLoss.value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Name</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input matInput formControlName="firstName" type="text" />
+                    <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
+                      <span *ngIf="f.firstName.errors.required">Required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- <div class="form-field-wrapper">
+                <label>Last Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="lastName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('lastName')">
+                    <span *ngIf="f.lastName.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div> -->
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Email Address</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="email" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Phone Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="phoneNumber" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="major-column-title"><b>Information</b></div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Status</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]="status.key">{{ status.value }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Where did we store it?</label>
+               <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <app-file-upload (filesChanged)="uploadedFilesChanged($event)"
+                  [currentlyUploadingFiles]="currentlyUploadingFiles"
+                  [temporaryUploadedFiles]="temporaryUploadedFiles"
+                  [uploadedFiles]="uploadedFiles">
+                </app-file-upload>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Category</label>
+               <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-fields-wrapper">
+            <ng-container *ngIf="f.status.value == statuses.ClientContacted">
+              <div class="form-field-wrapper">
+                <label>First Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="firstName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
+                    <span *ngIf="f.firstName.errors.required">
+                      First name is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Last Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="lastName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('lastName')">
+                    <span *ngIf="f.lastName.errors.required">
+                      Last name is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Phone number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="phoneNumber" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Email</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="email" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('email')">
+                    <span *ngIf="f.email.errors.required">
+                      Email is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Street</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="street" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>City</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="city" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>Country</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input matInput formControlName="country" type="text" />
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Postal code</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input matInput formControlName="postalCode" type="text" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Tracking Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="referenceNumber" type="text" />
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="item-configuration-edit-actions">
+          <div class="edit-confirm-actions">
+            <button mat-flat-button type="submit" class="button-with-icon secondary-button">
+              <i class="icofont-check-alt"></i>
+              <ng-container *ngIf="isCreateNew">Save</ng-container>
+              <ng-container *ngIf="!isCreateNew">Update</ng-container>
+            </button>
+          </div>
+          <div class="edit-cancel-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+              <i class="icofont-undo"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

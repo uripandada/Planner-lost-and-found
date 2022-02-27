@@ -1,0 +1,5 @@
+<div class="room-name-grid">
+  <div class="cell-value" [style.color]="roomOrBed.housekeepingStatusColorHex" [title]="roomOrBed.housekeepingStatusCode">{{roomOrBed.name}}</div>
+  <div class="btn-toggle-priority" [class.b-active]="isCleaningPriority$ | async" (click)="changeIsCleaningPriority(); $event.stopPropagation();"><i class="icofont-star"></i></div>
+  <div class="is-guest-in-button" [class.in-room]="isGuestCurrentlyIn$ | async" (click)="changeIsGuestCurrentlyInStatus(); $event.stopPropagation();"><i class="icofont-user-alt-3"></i></div>
+</div>

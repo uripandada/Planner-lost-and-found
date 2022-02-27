@@ -1,0 +1,29 @@
+<div class="single-file-upload-wrapper">
+
+  <div class="single-file-upload-photo-item" *ngIf="(uploadedFile$ | async) as file">
+    <ng-container *ngIf="file.isImage">
+      <div class="single-file-upload-photo" [class.no-photo]="!file.imageUrl" [ngStyle]="{'background-image': 'url(' + (file.imageUrl ? file.imageUrl : noImageBackgroundUrl) + ')'}"></div>
+    </ng-container>
+    <div *ngIf="!file.isImage" class="display-text">{{file.displayText}}</div>
+    <div class="delete-buttons-wrapper">
+      <button type="button" class="button-only-icon" (click)="removeUploadedFile()"><i class="icofont-close"></i></button>
+    </div>
+    <div class="upload-buttons-wrapper">
+      <button type="button" class="button-only-icon" (click)="hiddenFileUpload.click()"><i class="icofont-refresh"></i></button>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="isUploadInProgress$ | async"></mat-progress-bar>
+  </div>
+
+  <div class="single-file-upload-photo-item no-single-file-uploaded-item" *ngIf="!(uploadedFile$ | async)" >
+    <div class="single-file-upload-photo no-photo" [ngStyle]="{'background-image':'url(' + noImageBackgroundUrl + ')'}"></div>
+    <div class="display-text"></div>
+    <div class="delete-buttons-wrapper">
+    </div>
+    <div class="upload-buttons-wrapper">
+      <button type="button" class="button-only-icon" (click)="hiddenFileUpload.click()"><i class="icofont-upload"></i></button>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="isUploadInProgress$ | async"></mat-progress-bar>
+  </div>
+</div>
+
+<input type="file" style="display: none" #hiddenFileUpload (change)="uploadFilesToTemporaryStorage($event.target.files)">

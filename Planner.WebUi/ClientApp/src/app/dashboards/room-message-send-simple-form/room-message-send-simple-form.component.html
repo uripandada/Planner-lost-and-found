@@ -1,0 +1,51 @@
+<div class="room-messages-send-progress-bar" *ngIf="isLoading$ | async">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="rmsg-small-title left-right">
+  <div class="rmsg-small-title-text">Simple mode</div>
+  <div><button mat-flat-button type="button" class="small-button" (click)="setAdvancedMode()">Advanced mode</button></div>
+</div>
+<form [formGroup]="messageForm" class="simple-rmessage-form">
+
+  <div class="rmsg-main-type">
+    <mat-radio-group formControlName="mainTypeKey">
+      <mat-radio-button value="ROOM">Room {{room.name}}</mat-radio-button>
+      <mat-radio-button value="RESERVATIONS" *ngIf="room.reservations.length > 0">Reservations</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="rmsg-reservations" *ngIf="messageForm.controls.mainTypeKey.value === 'RESERVATIONS'">
+    <div formArrayName="reservations" *ngFor="let reservationFg of reservationsFormArray.controls; let i = index">
+      <mat-checkbox [formControlName]="i">
+        {{room.reservations[i].guestName}}
+      </mat-checkbox>
+    </div>
+    <mat-error class="left-side-mat-errors" *ngIf="messageForm.controls.reservations.invalid && (messageForm.controls.reservations.dirty || messageForm.controls.reservations.touched)">
+      <div *ngIf="messageForm.controls.reservations.errors.required">Required</div>
+      <div *ngIf="messageForm.controls.reservations.errors.minLength">You have to select at least one reservation</div>
+      <div *ngIf="messageForm.controls.reservations.errors.atLeastOneSelected">You have to select at least one reservation</div>
+    </mat-error>
+  </div>
+  <div class="rmsg-message">
+    <mat-form-field appearance="outline" class="full-width">
+      <textarea matInput rows="6" formControlName="message" placeholder="Write a message here"></textarea>
+      <mat-error *ngIf="messageForm.controls.message.invalid && (messageForm.controls.message.dirty || messageForm.controls.message.touched)">
+        <div *ngIf="messageForm.controls.message.errors.required">Required</div>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="popup-actions">
+    <div class="popup-confirm-actions">
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+        <i class="icofont-send-mail"></i>
+        <ng-container *ngIf="(isEditMode$ | async) as isEditMode; else sendMessageLabel">Re-send changes</ng-container>
+        <ng-template #sendMessageLabel>Send</ng-template>
+      </button>
+      <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+        <i class="icofont-undo"></i> Cancel
+      </button>
+    </div>
+    <div class="popup-cancel-actions">
+    </div>
+  </div>
+</form>

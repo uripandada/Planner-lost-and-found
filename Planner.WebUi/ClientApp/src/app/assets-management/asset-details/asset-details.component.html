@@ -1,0 +1,237 @@
+
+<div class="list-actions">
+  <div class="major-column-title">
+    <ng-container *ngIf="isCreateNew$ | async">Create a <b>new asset <span *ngIf="assetGroupForm.controls.typeKey.value === 'GROUP'">group</span></b></ng-container>
+    <ng-container *ngIf="!(isCreateNew$ | async)"><b>Asset <span *ngIf="assetGroupForm.controls.typeKey.value === 'GROUP'">group</span> details</b></ng-container>
+  </div>
+</div>
+
+
+
+<div class="asset-details-wrapper details-wrapper">
+  <div class="asset-details-header-card details-header-card component-box">
+    <div class="asset-header-wrapper">
+      <div [formGroup]="assetGroupForm" class="asset-group-type-checkboxes" *ngIf="isCreateNew$ | async">
+        <mat-radio-group formControlName="typeKey">
+          <mat-radio-button value="SIMPLE">Simple asset</mat-radio-button>
+          <mat-radio-button value="GROUP">Group of assets</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+
+      <div class="">
+        <ng-container *ngIf="assetGroupForm.controls.typeKey.value === 'SIMPLE'">
+          <app-asset-edit-form *ngFor="let assetForm of assetsFormArray.controls; index as assetFormIndex"
+                               [assetForm]="assetForm"
+                               [allTags]="tags"
+                               [assetGroupId]="assetGroupForm.controls.id.value"
+                               (inserted)="onSimpleAssetInserted($event)"
+                               (cancelled)="onSimpleAssetCancelled()"
+                               ></app-asset-edit-form>
+        </ng-container>
+        <ng-container *ngIf="assetGroupForm.controls.typeKey.value === 'GROUP'">
+          <app-asset-group [assetGroupForm]="assetGroupForm"
+                           (inserted)="onAssetGroupInserted($event)"
+                           (cancelled)="onAssetGroupCancelled()"
+                           ></app-asset-group>
+        </ng-container>
+      </div>
+
+
+
+      <!--<div class="asset-details-title-wrapper">-->
+      <!--<div class="asset-image" [ngStyle]="{'background-image': 'url(' + assetDetails.imageUrl + ')' }">
+
+      </div>-->
+      <!--<div class="asset-details-title details-title"><span class="muted">Asset </span>--> <!--{{ assetDetails.name }}-->
+      <!--</div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon" (click)="edit()"><i class="svg-icon icon-pen-red"></i></button>
+        </div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon"
+                  mwlConfirmationPopover
+                  [popoverMessage]="'Are you sure you want to delete the asset?'"
+                  placement="left"
+                  (confirm)="delete()">
+            <i class="svg-icon icon-trash-red"></i>
+          </button>
+        </div>
+      </div>-->
+
+    </div>
+  </div>
+  <div class="custom-tabs">
+    <!--<mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedTabIndexControl.value" (selectedIndexChange)="selectedTabIndexControl.setValue($event)">-->
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTabIndexControl.value" (selectedIndexChange)="selectedTabIndexControl.setValue($event)">
+      <mat-tab label="Assets" *ngIf="assetGroupForm.controls.typeKey.value === 'GROUP'" [disabled]="isCreateNew$ | async">
+        <ng-template matTabContent>
+          <div *ngIf="isCreateNew$ | async" class="info-box">
+            <div class="info-box-content">You have to save the group before you can add assets to it.</div>
+          </div>
+
+          
+          <div *ngIf="!(isCreateNew$ | async)" class="group-assets">
+            <div class="group-assets-list-actions">
+              <div class="left-side">
+                {{assetsFormArray.length}} assets total
+              </div>
+              <div class="right-side">
+                <button mat-flat-button type="button" class="button-with-icon" (click)="addNewAsset()"><i class="icofont-plus"></i> Add a new asset to the group</button>
+              </div>
+            </div>
+            <div class="group-assets-list compact-assets-list">
+              <div class="component-box group-asset-item-box" *ngFor="let assetForm of assetsFormArray.controls; index as assetFormIndex">
+                <app-asset-edit-form [assetForm]="assetForm"
+                                     [allTags]="tags"
+                                     [assetGroupId]="assetGroupForm.controls.id.value"
+                                     (inserted)="onGroupedAssetInserted($event)"
+                                     (cancelled)="onGroupedAssetCancelled(assetForm.controls.id.value, assetFormIndex)"></app-asset-edit-form>
+              </div>
+            </div>
+          </div>
+
+          <!--<app-asset-edit-form [assetForm]="assetDetailsForm"
+                               [tags]="tags"
+                               [uploadedFiles]="uploadedFiles"
+                               [showHeaderFormInBox]="true"
+                               (saved)="saveAssetDetails()"
+                               (cancelled)="cancelAssetDetails()"
+                               (tagAdded)="addTag($event)"
+                               (tagRemoved)="removeTag($event)"
+                               (newAssetModelAdded)="addNewAssetModel()"
+                               (filesChanged)="uploadedFilesChanged($event)"></app-asset-edit-form>-->
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Availability" [disabled]="isCreateNew$ | async">
+        <ng-template matTabContent>
+          <div *ngIf="isLoadingTabData$ | async">
+            Loading...
+          </div>
+          <div *ngIf="!(isLoadingTabData$ | async)" class="asset-availability-tab">
+
+            <!--<div class="asset-group-availability-grid">-->
+              <!--<div class="component-box asset-group-availability-assets">
+                <app-asset-select-list [assetGroupId]="assetDetails.assetGroup.id"></app-asset-select-list>
+              </div>-->
+              <div class="component-box asset-group-availability-list" *ngIf="!(isCreateNew$ | async)">
+               <app-asset-groups-availability [assetGroupId]="assetDetails.assetGroup.id"></app-asset-groups-availability>
+                <!--<div class="component-box-section">
+                  <div class="major-column-title-grid">
+                    <div class="major-column-title">
+                      Used at
+                    </div>
+                    <div class="major-column-buttons">
+                      <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-plus"></i> <span>Assign in use</span></button>
+                    </div>
+                  </div>
+                  <div class="major-column-content"></div>
+                </div>-->
+              </div>
+            <!--</div>-->
+
+
+            <!--<app-room-assignments
+                                  [assetId]="assetDetails.id"
+                                  [usesModels]="assetDetailsForm.controls.usesModels.value"
+                                  [models]="assetModels$ | async"></app-room-assignments>-->
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Actions" [disabled]="isCreateNew$ | async">
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async) && (actionTabData$ | async) as actionTabData">
+          <!--<app-asset-action [assetGroupId]="modelsSelectList$ | async"
+                            [assetActionsFormArray]="assetActionsFormArray"
+                            [users]="users"
+                            [userGroups]="userGroups"
+                            [userSubGroups]="userSubGroups"
+                            (modelSelected)="selectModelActions($event)"
+                            (newAssetActionItemAdded)="addNewAssetActionItem()"
+                            (actionsUpdatedSuccess)="updateActions($event)"></app-asset-action>-->
+          <app-asset-action [assetGroupId]="assetDetails.assetGroup.id"
+                            [assetActionsFormArray]="assetActionsFormArray"
+                            [users]="users"
+                            [userGroups]="userGroups"
+                            [userSubGroups]="userSubGroups"
+                            [systemDefinedActions]="systemDefinedActions"
+                            (newAssetActionItemAdded)="addNewAssetActionItem()"></app-asset-action>
+        </div>
+
+
+      </mat-tab>
+      <mat-tab label="Plans" [disabled]="isCreateNew$ | async">
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset plans placeholder
+        </div>
+
+
+      </mat-tab>
+      <mat-tab label="Contracts" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset contracts placeholder
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Dashboard" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset dashboard placeholder
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Meters" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset meters placeholder
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Files" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset files placeholder
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Depreciation" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset depreciation placeholder
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Downtime" [disabled]="isCreateNew$ | async">
+
+        <div *ngIf="isLoadingTabData$ | async">
+          Loading...
+        </div>
+        <div *ngIf="!(isLoadingTabData$ | async)">
+          Asset downtime placeholder
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

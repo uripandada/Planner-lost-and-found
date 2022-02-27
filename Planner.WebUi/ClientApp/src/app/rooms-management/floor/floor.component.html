@@ -1,0 +1,102 @@
+
+<div class="floor-wrapper" [class.edit-floor-wrapper]="(isEditMode$ | async)">
+  <ng-container *ngIf="!(isEditMode$ | async)">
+    <div class="floor-header">
+      <div class="floor-title">
+        <div>
+          <span class="svg-icon icon-floor"></span> <span>{{ floorForm.controls.name.value }}</span>
+        </div>
+        <div class="major-column-subtitle"><b>{{ numberOfRooms$ | async }}</b> rooms</div>
+      </div>
+      <div>
+        <button mat-flat-button class="button-round-with-svg-icon" (click)="editFloor()"><i class="svg-icon icon-pen-red"></i></button>
+      </div>
+      <div>
+      </div>
+      <div>
+        <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleFloorCollapse()">
+          <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="isFloorCollapsed$ | async"></i>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(isEditMode$ | async)">
+    <div class="floor-header edit-floor-header component-box">
+      <div class="edit-floor-icon">
+        <div>
+          <span class="svg-icon icon-floor"></span>
+        </div>
+      </div>
+      <div class="floor-edit-form-wrapper">
+        <div class="edit-floor-title"><span *ngIf="floorForm.controls.id.value">Edit <b>{{floorForm.controls.name.value}} {{floorForm.controls.number.value}}</b></span><span *ngIf="!floorForm.controls.id.value">Create <b>new floor</b></span></div>
+        <div class="edit-floor-form">
+          <form [formGroup]="floorForm">
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="number" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="name" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="default-actions floor-edit-actions">
+        <div class="left-side-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveFloor()"><i class="icofont-check-alt"></i> Save</button>
+        </div>
+        <div class="right-side-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancelSaveFloor()"><i class="icofont-undo"></i> Cancel</button>
+          <ng-container *ngIf="floorForm.controls.id.value">
+            <button mat-flat-button type="button" class="button-with-icon"  
+                    mwlConfirmationPopover
+                    [popoverMessage]="'Are you sure you want to delete the floor?'"
+                    placement="left"
+                    (confirm)="deleteFloor()">
+              <i class="icofont-trash"></i> Delete
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!(isFloorCollapsed$ | async)">
+    <div class="rooms-wrapper" *ngIf="floorForm.controls.id.value">
+      <app-room *ngFor="let roomForm of roomsFormArray.controls; index as roomIndex" class="room-item" [class.wide-room-item]="roomForm.controls.typeKey.value === 'APPARTMENT'"
+                (click)="roomDetails(roomForm.controls.id.value)"
+                [roomForm]="roomForm"
+                [isAppartmentRoom]="roomForm.controls.typeKey.value === 'APPARTMENT'"
+                [roomIndex]="roomIndex"></app-room>
+
+      <div class="room-item warehouse-item" *ngFor="let warehouseForm of warehousesFormArray.controls; index as warehouseIndex;" (click)="goToWarehouseDetails(warehouseForm.controls.id.value)">
+        <div class="room-item-grid">
+          <div class="room-label">Warehouse</div>
+          <div class="room-title">
+            <div>{{ warehouseForm.controls.name.value }}</div>
+          </div>
+          <!--<div class="room-description"></div>-->
+        </div>
+      </div>
+
+      <div class="new-item-buttons">
+        <div class="room-item new-room-item" (click)="addNewRoom()">
+          <div class="new-room-label">+ Add</div>
+          <div class="new-room-label" *ngIf="buildingTypeKey === 'HOTEL_HOSTEL'">Room</div>
+          <div class="new-room-label" *ngIf="buildingTypeKey === 'APPARTMENT'">Appt</div>
+        </div>
+        <div class="room-item new-room-item new-warehouse-item" [routerLink]="['/warehouses', 'new-warehouse', hotelId, floorForm.controls.id.value]">
+          <div class="new-room-label">+ Add</div>
+          <div class="new-room-label">Warehouse</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

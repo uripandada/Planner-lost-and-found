@@ -1,0 +1,41 @@
+<mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+  <input type="text"
+         [placeholder]="placeholderText"
+         aria-label="Number"
+         matInput
+         #multiselectInput
+         [formControl]="selectedWhereControl"
+         [matAutocomplete]="whereAutocomplete">
+  <mat-autocomplete #whereAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWhere" 
+              (optionSelected)="blurAutocomplete()">
+    <mat-option *ngFor="let where of filteredWheres$ | async" [value]="where">
+      <div class="faa-title">{{where.referenceName}}</div>
+      <div class="faa-label">{{where.typeDescription}}</div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div class="selected-wheres-list">
+  <div *ngFor="let where of selectedWheres$ | async" class="selected-where-item">
+    <div>
+      <div class="faa-title">{{where.referenceName}}</div>
+      <div class="faa-label">{{where.typeDescription}}</div>
+    </div>
+    <div>
+      <button mat-flat-button type="button" class="delete-button"
+              mwlConfirmationPopover
+              [popoverMessage]="'Are you sure you want to remove the where?'"
+              placement="top"
+              (confirm)="removeSelectedWhere(where)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isRequired && (selectedWheres$ | async).length === 0" class="selected-where-item empty-selected-where-item">
+    <div>
+      <div class="faa-label">Select at least one "where"</div>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>

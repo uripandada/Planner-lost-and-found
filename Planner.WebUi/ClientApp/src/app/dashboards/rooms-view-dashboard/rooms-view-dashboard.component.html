@@ -1,0 +1,91 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="component-wrapper rooms-overview-dashboard">
+  <div class="component-content-row">
+    <div class="rooms-view-dashboard-wrapper">
+      <div class="">
+        <div class="major-column-title-grid ro-title-grid">
+          <div class="major-column-title"><b>Rooms overview</b></div>
+          <div>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select [formControl]="hotelIdControl" name="hotelId">
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="component-box">
+          <div class="master-filter-row-with-sort">
+            <div>
+              <app-master-filter-multiselect [hotelId]="hotelIdControl.value" [elementId]="'master-filter'" (changed)="masterFilterChanged($event)"></app-master-filter-multiselect>
+            </div>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select [formControl]="spaceAccessTypeKeyControl">
+                <mat-option *ngFor="let spaceAccessType of spaceAccessTypes" [value]="spaceAccessType.key">
+                  {{spaceAccessType.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="list-view-wrapper">
+            <div class="list-view-grid-items">
+
+              <div class="list-view-header-item">
+              </div>
+              <app-rooms-view-dashboard-room class="app-rooms-view-dashboard-room" *ngFor="let room of rooms$ | async" [room]="room" (click)="showRoomHistory(room)" (roomMessagesOpened)="showRoomMessages(room)"></app-rooms-view-dashboard-room>
+            </div>
+            <div>
+              <div class="tasks-list-totals-description">
+                <span>Showing</span>
+                <span>{{loadedNumber$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumber$ | async}}</span>
+                <span>rooms</span>
+              </div>
+              <div class="rooms-list-load-more-actions" *ngIf="showLoadMore$ | async">
+                <button mat-flat-button type="button" (click)="loadMore()">Load 100 more</button>
+                <button mat-flat-button type="button" (click)="loadAllRooms()">Load all rooms</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-drawer [isOpen]="showRoomHistory$ | async" (closed)="onRoomHistoryClosed()" *ngIf="selectedRoom$ | async as selectedRoom">
+  <div class="major-column-title drawer-title"><b>Room {{selectedRoom.name}}</b> history</div>
+  <div class="history-timeline">
+    <div class="hi-menu">
+      <ng-container *ngIf="selectedRoom.beds.length > 0">
+        <div class="dsn-item" [class.dns-active]="(selectedBedHistoryId$ | async) === null" (click)="selectRoomBedHistory(null)">Room</div>
+        <div class="dsn-item" *ngFor="let bed of selectedRoom.beds" [class.dns-active]="(selectedBedHistoryId$ | async) === bed.id" (click)="selectRoomBedHistory(bed.id)">{{bed.name}}</div>
+      </ng-container>
+    </div>
+    <div class="hi-items">
+      <div class="ht-item" *ngFor="let historyItem of (roomHistoryItems$ | async)">
+        <div class="ht-icon"></div>
+        <div class="ht-content">
+          <div class="ht-title">{{historyItem.atDateString}} {{historyItem.userName}}</div>
+          <div class="ht-description"><span class="ht-time">{{historyItem.atTimeString}}</span> <span>{{historyItem.description}}</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</app-drawer>
+
+<app-drawer [isOpen]="showRoomMessages$ | async" (closed)="onRoomMessagesClosed()" *ngIf="selectedRoomMessagesRoom$ | async as selectedRoomMessagesRoom">
+  <div class="major-column-title drawer-title"><b>Send</b> messages</div>
+  <div class="loading-room-messages" *ngIf="(isLoadingRoomMessagesFilterValues$ | async); else elRoomMessagesLoaded">Loading messages...</div>
+  <ng-template #elRoomMessagesLoaded>
+    <div class="room-messages">
+      <app-room-message-list [room]="selectedRoomMessagesRoom" [filterValues]="roomMessagesFilterValues$ | async"></app-room-message-list>
+    </div>
+  </ng-template>
+</app-drawer>

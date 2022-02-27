@@ -1,0 +1,41 @@
+<mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+  <input type="text"
+         [placeholder]="placeholderText"
+         aria-label="Number"
+         matInput
+         #multiselectInputOne
+         [formControl]="selectedWhoControl"
+         [matAutocomplete]="whoAutocomplete">
+  <mat-autocomplete #whoAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWho" 
+              (optionSelected)="blurAutocomplete()">
+    <mat-option *ngFor="let who of filteredWhos$ | async" [value]="who">
+      <div class="faa-title">{{who.referenceName}}</div>
+      <div class="faa-label">{{who.typeDescription}}</div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div class="selected-wheres-list">
+  <div *ngFor="let who of value" class="selected-where-item">
+    <div>
+      <div class="faa-title">{{who.referenceName}}</div>
+      <div class="faa-label">{{who.typeDescription}}</div>
+    </div>
+    <div>
+      <button mat-flat-button type="button" class="delete-button"
+              mwlConfirmationPopover
+              [popoverMessage]="'Are you sure you want to remove the who?'"
+              placement="top"
+              (confirm)="removeSelectedWho(who)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!(isValid$ | async) && isRequired" class="selected-where-item empty-selected-where-item">
+    <div>
+      <div class="faa-label">Select at least one "who"</div>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>

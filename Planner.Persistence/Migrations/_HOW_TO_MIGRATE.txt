@@ -1,0 +1,18 @@
+﻿1. In command prompt, position yourself in the SOLUTION directory. That is the directory that contains all project directories.
+
+2. To create migration, execute command:
+	  TENANT CONTEXT MIGRATION:
+	  dotnet ef migrations add MIGRATION_NAME --project "Planner.Persistence" --startup-project "Planner.WebUi" --context DatabaseContext --output-dir Migrations
+
+	  MASTER CONTEXT MIGRATION:
+	  dotnet ef migrations add MIGRATION_NAME --project "Planner.Persistence" --startup-project "Planner.WebUi" --context MasterDatabaseContext --output-dir MasterMigrations
+
+3. To update database, execute command: 
+	  TENANT CONTEXT UPDATE:
+	  dotnet ef database update --project "Planner.WebUi" --context DatabaseContext
+	  
+	  MASTER CONTEXT UPDATE:
+	  dotnet ef database update --project "Planner.WebUi" --context MasterDatabaseContext
+
+IMPORTANT: The update database will update the database defined in the DefaultConnection in the appsettings.json file or in 
+the appsettings.Development.json if it is overridden there.

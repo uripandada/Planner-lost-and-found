@@ -1,0 +1,94 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="component-wrapper cleaning-calendar-component-wrapper">
+
+  <div class="component-box cleaning-calendar-component-header">
+    <div class="component-box-title">
+      <div class="">
+        <div class="major-column-title"><b>Cleaning calendar tests</b></div>
+        <div class="major-column-subtitle">Tests for the system cleaning prediction</div>
+      </div>
+    </div>
+
+
+    <div class="component-box-filter-row">
+      <form [formGroup]="filterForm">
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="reservationsKey">
+                <mat-option *ngFor="let reservationsKey of reservationsKeys" [value]="reservationsKey.key">
+                  {{reservationsKey.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="basedOnKey">
+                <mat-option *ngFor="let basedOnKey of basedOnKeys" [value]="basedOnKey.key">
+                  {{basedOnKey.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <ng-container *ngIf="(isLoaded$ | async) as isLoaded">
+      <div *ngIf="!isLoaded">
+        <div>Generating tests, please wait...</div>
+      </div>
+      <div *ngIf="isLoaded">
+        <ng-container *ngIf="testResults$ | async as testResults">
+          <div class="component-content-row">
+            <div class="component-box">
+              <div style="overflow-y:auto">
+                <table class="table-cleaning-calendar-2">
+                  <thead>
+                    <tr>
+                      <th class="c-room text-left">
+                      </th>
+                      <th class="cd2" *ngFor="let day of testResults.days">
+                        <div class="cv-day-name">{{day.dayName}}</div>
+                        <div class="cv-date">{{day.dateString}}</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr class="rrow frow" *ngFor="let room of testResults.rooms">
+                      <td class="c-room">
+                        <div class="cv-title">{{room.name}}</div>
+                        <div>{{room.categoryName}}</div>
+                        <div class="test-description"><span>RESERVATIONS:</span>{{room.reservationsDescription}}</div>
+                        <div class="test-description"><span>BASED ONS:</span> {{room.basedOnsDescription}}</div>
+                        <div class="test-description"><span>OOS: {{room.isOutOfService}}</span> <span>DND: {{room.isDoNotDisturb}}</span></div>
+                        <div class="test-description"><span>FLOOR:</span> {{room.floorId}}</div>
+                        <div class="test-description"><span>SEC:{{room.section}}</span> <span>SUBSEC: {{room.subSection}}</span></div>
+                      </td>
+                      <td class="cd2" *ngFor="let roomDay of room.days">
+                        <div *ngFor="let cleaning of roomDay.cleanings" class="ccln">
+                          <div>
+                            {{cleaning.cleaningName}} ({{cleaning.credits}}, {{cleaning.cleaningType}})
+                          </div>
+                          <div>
+                            {{cleaning.recommendedIntervalFromTimeString}} - {{cleaning.recommendedIntervalToTimeString}}
+                          </div>
+                        </div>
+                        <div class="cres" *ngFor="let reservation of roomDay.reservations">
+                          <i *ngIf="reservation.isArrival" class="icofont-sign-in"></i> {{reservation.guestName}} <i *ngIf="reservation.isDeparture" class="icofont-sign-out"></i>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

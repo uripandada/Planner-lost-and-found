@@ -1,0 +1,35 @@
+<div class="sidebar-menu-component">
+  <div class="sub-sidebar-menu">
+    <div class="sidebar-header">
+      <h1><b>RC</b>Admin</h1>
+    </div>
+    <div class="sidebar-items-wrapper">
+      <div class="sidebar-items-top-wrapper">
+        <a [routerLink]="['/hotel-groups']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Hotel groups</span>
+        </a>
+        <a [routerLink]="['/cleaning-plugins']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Cleaning plugins</span>
+        </a>
+        <a [routerLink]="['/cleaning-calendar']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Cleaning calendar</span>
+        </a>
+        <a [routerLink]="['/cleaning-calendar-tests']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Cleaning tests</span>
+        </a>
+        <a [routerLink]="['/auto-housekeeping-update-settings']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Auto HK update settings</span>
+        </a>
+        <a [routerLink]="['/users-management']" [routerLinkActive]="['sidebar-item-active']" class="sidebar-item">
+          <span>Users</span>
+        </a>
+      </div>
+      <div class="sidebar-items-bottom-wrapper">
+        <a class="sidebar-item sidebar-item-with-icon" mat-menu-item [routerLink]='["/authentication/logout"]' [state]='{ local: true }'>
+          <i class="icofont-power"></i>
+          <span>{{userFullName}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

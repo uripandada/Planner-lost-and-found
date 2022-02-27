@@ -1,0 +1,20 @@
+.container-center-v2 {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  &.login-form-wrapper {
+    > div {
+      width: 300px;
+
+      > form {
+        height: 700px;
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

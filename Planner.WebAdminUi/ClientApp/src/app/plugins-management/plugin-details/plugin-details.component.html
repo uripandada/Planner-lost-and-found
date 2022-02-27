@@ -1,0 +1,822 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-box" *ngIf="isDataInitialized$ | async">
+  <div class="component-box-title">
+    <ng-container *ngIf="isCreateNew$ | async">
+      <div class="major-column-title-grid">
+        <div>
+          <div class="major-column-title">
+            <b>New plugin</b>
+          </div>
+          <div class="major-column-subtitle">Create a new plugin</div>
+        </div>
+        <div>
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="loading.isLoading$ | async">
+            <i class="icofont-check-alt"></i> Save
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!(isCreateNew$ | async)">
+      <div class="major-column-title-grid">
+        <div>
+          <div class="major-column-title">
+            Edit <b>{{(pluginDetails$ | async).name}}</b>
+          </div>
+          <div class="major-column-subtitle">Edit the plugin details</div>
+        </div>
+        <div>
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="loading.isLoading$ | async">
+            <i class="icofont-check-alt"></i> Update
+          </button>
+        </div>
+      </div>
+
+
+    </ng-container>
+  </div>
+  <div>
+    <form [formGroup]="pluginDetailsForm" class="plugins-form-grid">
+      <div>
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <mat-checkbox formControlName="isActive">Is active?</mat-checkbox>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-checkbox formControlName="isTopRule">Is top rule?</mat-checkbox>
+          </div>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Type</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let type of cleaningPluginTypes" [value]="type">
+                {{type.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper" *ngIf="pluginDetailsForm.controls.type.value">
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'DAILY'">
+
+            <div class="plugin-daily-time-type-row">
+              <mat-radio-group formControlName="dailyCleaningTimeTypeKey">
+                <mat-radio-button value="ANY_TIME">Any time in the day</mat-radio-button>
+                <mat-radio-button value="SPECIFIC_TIMES">At specific times</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <ng-container *ngIf="pluginDetailsForm.controls.dailyCleaningTimeTypeKey.value === 'SPECIFIC_TIMES'">
+              <app-time-multiselect [timesArray]="pluginDetailsForm.controls.dailyCleaningTypeTimes"></app-time-multiselect>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'WEEKLY'">
+
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnMonday">Monday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeMondayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeMondayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeMondayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnTuesday">Tuesday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeTuesdayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeTuesdayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeTuesdayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnWednesday">Wednesday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeWednesdayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeWednesdayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeWednesdayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnThursday">Thursday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeThursdayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeThursdayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeThursdayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnFriday">Friday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeFridayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeFridayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeFridayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnSaturday">Saturday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeSaturdayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeSaturdayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeSaturdayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+            <div class="weekly-plugin-date-row">
+              <div class="weekly-plugin-date-name">
+              </div>
+              <div class="weekly-plugin-date-content">
+                <div class="plugin-daily-time-type-row">
+                  <mat-checkbox formControlName="weeklyCleanOnSunday">Sunday</mat-checkbox>
+                  <mat-radio-group formControlName="weeklyTimeSundayTypeKey">
+                    <mat-radio-button value="ANY_TIME">Any time</mat-radio-button>
+                    <mat-radio-button value="SPECIFIC_TIMES">Specific times</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <ng-container *ngIf="pluginDetailsForm.controls.weeklyTimeSundayTypeKey.value === 'SPECIFIC_TIMES'">
+                  <app-time-multiselect [timesArray]="pluginDetailsForm.controls.weeklyCleaningTypeSundayTimes"></app-time-multiselect>
+                </ng-container>
+              </div>
+            </div>
+
+          </ng-container>
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'PERIODICAL'">
+
+
+
+
+
+            <div class="balanced-intervals-wrapper">
+              <div *ngFor="let intervalFormGroup of periodicalIntervalsArray.controls; let intervalIndex = index">
+                <div class="balanced-interval">
+                  <div class="balanced-interval-number">{{intervalIndex + 1}}.</div>
+                  <div class="balanced-interval-form-row">
+
+                    <div class="form-field-wrapper inline-form-field-wrapper">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-select [formControl]="intervalFormGroup.controls.intervalTypeKey">
+                          <mat-option value="FROM">From</mat-option>
+                          <mat-option value="MORE_THAN">More than</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="bi-from-to-row">
+                      <div class="form-field-wrapper inline-form-field-wrapper">
+                        <mat-form-field appearance="outline" class="bnr-nights-input">
+                          <input [formControl]="intervalFormGroup.controls.fromNights" matInput placeholder="M">
+                          <span matSuffix>nights</span>
+                        </mat-form-field>
+                      </div>
+                      <ng-container *ngIf="intervalFormGroup.controls.intervalTypeKey.value === 'FROM'">
+                        <span>to</span>
+                        <div class="form-field-wrapper inline-form-field-wrapper">
+                          <mat-form-field appearance="outline" class="bnr-nights-input">
+                            <input [formControl]="intervalFormGroup.controls.toNights" matInput placeholder="N">
+                            <span matSuffix>nights</span>
+                          </mat-form-field>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="intervalFormGroup.controls.intervalTypeKey.value !== 'FROM'">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <div> </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="balanced-interval-delete">
+                    <button mat-flat-button type="button" class="delete-icon-button"
+                            mwlConfirmationPopover
+                            [popoverMessage]="'Are you sure you want to remove the interval?'"
+                            placement="left"
+                            (confirm)="deletePeriodicalInterval(intervalIndex)">
+                      <i class="icofont-close"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="balanced-interval-options">
+                  <div class="bi-frequency-row">
+                    <mat-radio-group [formControl]="intervalFormGroup.controls.periodTypeKey">
+                      <div class="radio-button-list-item rb-autobalance-grid">
+                        <mat-radio-button value="BALANCE_OVER_RESERVATION"></mat-radio-button>
+                        <span>Balance</span>
+                        <ng-container *ngIf="intervalFormGroup.controls.periodTypeKey.value === 'BALANCE_OVER_RESERVATION'">
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="bnr-cleanings-input">
+                              <input [formControl]="intervalFormGroup.controls.numberOfCleanings" matInput placeholder="N">
+                              <span matSuffix>cleanings</span>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+                        <span>over reservation duration</span>
+                      </div>
+                      <div class="radio-button-list-item rb-balanceoverreservation-grid">
+                        <mat-radio-button value="BALANCE_OVER_PERIOD"></mat-radio-button>
+                        <span>Balance over period of</span>
+                        <ng-container *ngIf="intervalFormGroup.controls.periodTypeKey.value === 'BALANCE_OVER_PERIOD'">
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="bnr-days-input">
+                              <input [formControl]="intervalFormGroup.controls.everyNumberOfDays" matInput placeholder="N">
+                              <span matSuffix>days</span>
+                            </mat-form-field>
+                          </div>
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="bnr-cleanings-input">
+                              <input [formControl]="intervalFormGroup.controls.numberOfCleanings" matInput placeholder="N">
+                              <span matSuffix>cleanings</span>
+                            </mat-form-field>
+                          </div>
+                          <span>from</span>
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <mat-select [formControl]="intervalFormGroup.controls.fromDayKey">
+                                <mat-option value="CHECK_IN">Check in</mat-option>
+                                <mat-option value="FIRST_MONDAY">First monday</mat-option>
+                                <mat-option value="FIRST_TUESDAY">First tuesday</mat-option>
+                                <mat-option value="FIRST_WEDNESDAY">First wednesday</mat-option>
+                                <mat-option value="FIRST_THURSDAY">First thursday</mat-option>
+                                <mat-option value="FIRST_FRIDAY">First friday</mat-option>
+                                <mat-option value="FIRST_SATURDAY">First saturday</mat-option>
+                                <mat-option value="FIRST_SUNDAY">First sunday</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+                      </div>
+                      <div class="radio-button-list-item rb-everyndays-grid">
+                        <mat-radio-button value="ONCE_EVERY_N_DAYS"></mat-radio-button>
+                        <span>Once every</span>
+                        <ng-container *ngIf="intervalFormGroup.controls.periodTypeKey.value === 'ONCE_EVERY_N_DAYS'">
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="bnr-days-input">
+                              <input [formControl]="intervalFormGroup.controls.everyNumberOfDays" matInput placeholder="N">
+                              <span matSuffix>days</span>
+                            </mat-form-field>
+                          </div>
+                          <span>from</span>
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <mat-select [formControl]="intervalFormGroup.controls.fromDayKey">
+                                <mat-option value="CHECK_IN">Check in</mat-option>
+                                <mat-option value="FIRST_MONDAY">First monday</mat-option>
+                                <mat-option value="FIRST_TUESDAY">First tuesday</mat-option>
+                                <mat-option value="FIRST_WEDNESDAY">First wednesday</mat-option>
+                                <mat-option value="FIRST_THURSDAY">First thursday</mat-option>
+                                <mat-option value="FIRST_FRIDAY">First friday</mat-option>
+                                <mat-option value="FIRST_SATURDAY">First saturday</mat-option>
+                                <mat-option value="FIRST_SUNDAY">First sunday</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pd-cb-postpone-sunday">
+                <mat-checkbox formControlName="periodicalPostponeSundayCleaningsToMonday">Postpone sunday cleanings to monday?</mat-checkbox>
+              </div>
+
+              <div class="balanced-interval-actions text-center">
+                <button mat-flat-button type="button" class="button-with-icon small-button" (click)="addNewPeriodicalInterval()"><i class="icofont-plus"></i> Add interval</button>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </ng-container>
+          <!--<ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'BALANCED_PERIODICAL'">-->
+            <!--<div class="form-field-wrapper">
+    <label>Weekly balancing factor</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <input formControlName="weeklyBalancingFactor" matInput placeholder="e.g. 4">
+    </mat-form-field>
+  </div>-->
+            <!--<div class="inline-form-group-row">
+              <span>Clean every</span>
+              <div class="form-field-wrapper inline-form-field-wrapper">
+                <mat-form-field appearance="outline" class="bnr-days-input">
+                  <input formControlName="balancingPeriodicalEveryNumberOfDays" matInput placeholder="N">
+                  <span matSuffix>days</span>
+                </mat-form-field>
+              </div>
+              <span>from the check in</span>
+            </div>
+            <div class="inline-form-group-row">
+              <span>Balance</span>
+              <div class="form-field-wrapper inline-form-field-wrapper">
+                <mat-form-field appearance="outline"  class="bnr-cleanings-input">
+                  <input formControlName="balancingPeriodicalNumberOfCleanings" matInput placeholder="M">
+                  <span matSuffix>cleanings</span>
+                </mat-form-field>
+              </div>
+              <span>every {{pluginDetailsForm.controls.balancingPeriodicalEveryNumberOfDays.value}} days</span>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'BALANCED'">
+            <div class="balanced-intervals-wrapper">
+              <div *ngFor="let intervalFormGroup of balancingIntervalsArray.controls; let intervalIndex = index">
+                <div class="balanced-interval">
+                  <div class="balanced-interval-number">{{intervalIndex + 1}}.</div>
+                  <div class="balanced-interval-form-row">
+
+                    <div class="form-field-wrapper inline-form-field-wrapper">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-select [formControl]="intervalFormGroup.controls.intervalTypeKey">
+                          <mat-option value="FROM">From</mat-option>
+                          <mat-option value="MORE_THAN">More than</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="bi-from-to-row">
+                      <div class="form-field-wrapper inline-form-field-wrapper">
+                        <mat-form-field appearance="outline" class="bnr-nights-input">
+                          <input [formControl]="intervalFormGroup.controls.fromNights" matInput placeholder="M">
+                          <span matSuffix>nights</span>
+                        </mat-form-field>
+                      </div>
+                      <ng-container *ngIf="intervalFormGroup.controls.intervalTypeKey.value === 'FROM'">
+                        <span>to</span>
+                        <div class="form-field-wrapper inline-form-field-wrapper">
+                          <mat-form-field appearance="outline" class="bnr-nights-input">
+                            <input [formControl]="intervalFormGroup.controls.toNights" matInput placeholder="N">
+                            <span matSuffix>nights</span>
+                          </mat-form-field>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="intervalFormGroup.controls.intervalTypeKey.value !== 'FROM'">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <div> </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="balanced-interval-delete">
+                    <button mat-flat-button type="button" class="delete-icon-button"
+                            mwlConfirmationPopover
+                            [popoverMessage]="'Are you sure you want to remove the interval?'"
+                            placement="left"
+                            (confirm)="deletePeriodicalInterval(intervalIndex)">
+                      <i class="icofont-close"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="balanced-interval-options">
+                  <div class="bi-frequency-row">
+                    <mat-radio-group [formControl]="intervalFormGroup.controls.intervalBalancingTypeKey">
+                      <div class="radio-button-list-item rb-autobalance-grid">
+                        <mat-radio-button value="AUTOBALANCE"></mat-radio-button>
+                        <span>Autobalance</span>
+                        <ng-container *ngIf="intervalFormGroup.controls.intervalBalancingTypeKey.value === 'AUTOBALANCE'">
+                          <div class="form-field-wrapper inline-form-field-wrapper">
+                            <mat-form-field appearance="outline" class="bnr-cleanings-input">
+                              <input [formControl]="intervalFormGroup.controls.autobalancingNumberOfCleanings" matInput placeholder="N">
+                              <span matSuffix>cleanings</span>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+                      </div>
+                      <div class="radio-button-list-item rb-everyndays-grid">
+                        <mat-radio-button value="EVERY_N_DAYS"></mat-radio-button>
+                          <span>Every</span>
+                          <ng-container *ngIf="intervalFormGroup.controls.intervalBalancingTypeKey.value === 'EVERY_N_DAYS'">
+                            <div class="form-field-wrapper inline-form-field-wrapper">
+                              <mat-form-field appearance="outline" class="bnr-days-input">
+                                <input [formControl]="intervalFormGroup.controls.everyNumberOfDays" matInput placeholder="N">
+                                <span matSuffix>days</span>
+                              </mat-form-field>
+                            </div>
+                            <span>from</span>
+                            <div class="form-field-wrapper inline-form-field-wrapper">
+                              <mat-form-field appearance="outline" class="full-width">
+                                <mat-select [formControl]="intervalFormGroup.controls.everyNumberOfDaysFromKey">
+                                  <mat-option value="CHECK_IN">Check in</mat-option>
+                                  <mat-option value="FIRST_MONDAY">First monday</mat-option>
+                                  <mat-option value="FIRST_TUESDAY">First tuesday</mat-option>
+                                  <mat-option value="FIRST_WEDNESDAY">First wednesday</mat-option>
+                                  <mat-option value="FIRST_THURSDAY">First thursday</mat-option>
+                                  <mat-option value="FIRST_FRIDAY">First friday</mat-option>
+                                  <mat-option value="FIRST_SATURDAY">First saturday</mat-option>
+                                  <mat-option value="FIRST_SUNDAY">First sunday</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                      </div>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pd-cb-postpone-sunday">
+                <mat-checkbox formControlName="periodicalPostponeSundayCleaningsToMonday">Postpone sunday cleanings to monday?</mat-checkbox>
+              </div>
+
+              <div class="balanced-interval-actions text-center">
+                <button mat-flat-button type="button" class="button-with-icon small-button" (click)="addNewPeriodicalInterval()"><i class="icofont-plus"></i> Add interval</button>
+              </div>
+            </div>
+          </ng-container>-->
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'WEEK_BASED'">
+            <div class="cleaning-weeks">
+              <div *ngFor="let cleaningWeekGroup of weekBasedCleaningTypeWeeksArray.controls; let weekIndex = index" class="cleaning-week" [class.selected-cleaning-week]="cleaningWeekGroup.controls.isSelected.value" (click)="toggleWeekBasedCleaningWeek(weekIndex)">
+                {{cleaningWeekGroup.controls.name.value}}
+              </div>
+            </div>
+            <div class="cleaning-week-weekdays">
+              <mat-radio-group formControlName="weekBasedCleaningDayOfTheWeekKey">
+                <div class="radio-button-list">
+                  <mat-radio-button value="MONDAY">Monday</mat-radio-button>
+                  <mat-radio-button value="TUESDAY">Tuesday</mat-radio-button>
+                  <mat-radio-button value="WEDNESDAY">Wednesday</mat-radio-button>
+                  <mat-radio-button value="THURSDAY">Thursday</mat-radio-button>
+                  <mat-radio-button value="FRIDAY">Friday</mat-radio-button>
+                  <mat-radio-button value="SATURDAY">Saturday</mat-radio-button>
+                  <mat-radio-button value="SUNDAY">Sunday</mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="pluginDetailsForm.controls.type.value.key === 'MONTHLY'">
+            <div class="form-field-wrapper">
+              <label>Time of the month</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-select formControlName="monthlyCleaningTypeTimeOfMonthKey">
+                  <mat-option value="BEGINNING_OF_MONTH">Beginning of the month</mat-option>
+                  <mat-option value="MIDDLE_OF_MONTH">Middle of the month</mat-option>
+                  <mat-option value="END_OF_MONTH">End of the month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+        </div>
+        <div class="form-field-wrapper">
+          <label>Name</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Instructions</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <textarea formControlName="instructions" matInput rows="3"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="plugin-details-style-row">
+          <div class="form-field-wrapper">
+            <label>Color</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input formControlName="color" matInput placeholder="e.g. #FFAA99">
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Display style</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="displayStyle" class="full-width">
+                <mat-option *ngFor="let displayStyle of displayStyles" [value]="displayStyle">
+                  {{displayStyle.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Start cleaning after</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="startsCleaningAfter" matInput placeholder="Number of days">
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="postponeUntilVacant">Postpone until vacant?</mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="cleanOnSaturday">Clean on saturday?</mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="cleanOnSunday">Clean on sunday?</mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="cleanOnHolidays">Clean on holidays?</mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="changeSheets">Change sheets?</mat-checkbox>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-checkbox formControlName="isNightlyCleaningPlugin">Is nightly cleaning plugin?</mat-checkbox>
+        </div>
+      </div>
+      <div>
+        <div class="form-field-wrapper">
+          <label>Based on</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="basedOn">
+              <mat-option *ngFor="let basedOn of cleaningPluginBasedOns" [value]="basedOn">
+                {{basedOn.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="component-box-filter-row">
+          <ng-container *ngIf="basedOnsFormArray.length === 0">
+            <div class="empty-list-results">
+              <div class="empty-alert">
+                Nothing selected...
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="basedOnsFormArray.length > 0">
+            <div class="list-of-cleaning-plugins">
+              <table class="list-view-table">
+                <!--<thead>
+                  <tr>
+                    <th class="basedon-name-cell"></th>
+                    <th class="delete-button-cell"></th>
+                  </tr>
+                </thead>-->
+                <tbody>
+                  <tr class="list-view-items-row" *ngFor="let basedOnFormGroup of basedOnsFormArray.controls; index as basedOnIndex" (click)="selectBasedOn(basedOnFormGroup)" [class.list-view-items-row-selected]="basedOnFormGroup.controls.id.value === (selectedBasedOnFormGroup$ | async)?.controls.id.value">
+                    <td class="basedon-name-cell">
+                      <div class="cell-value">{{basedOnFormGroup.controls.name.value}}</div>
+                      <div class="cell-description">{{basedOnFormGroup.controls.description.value}}</div>
+                    </td>
+                    <td class="delete-button-cell">
+                      <button mat-flat-button type="button" class="delete-icon-button" (click)="deleteSelectedBasedOn($event, basedOnIndex)"><i class="icofont-close"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div>
+                <div class="list-totals">
+                  <span>Showing</span>
+                  <span>{{basedOnsFormArray.length}}</span>
+                  <span>results</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+      <div>
+        <ng-container *ngIf="(selectedBasedOnFormGroup$ | async) as selectedBasedOnFormGroup">
+          <div class="based-on-title"><b>{{selectedBasedOnFormGroup.controls.name.value}}</b></div>
+
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'ALL'"></div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'OCCUPATION'">
+            <div class="vertical-checkbox-list">
+              <div class="form-field-wrapper">
+                <mat-checkbox [formControl]="selectedBasedOnFormGroup.controls.cleanStay">Stay</mat-checkbox>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-checkbox [formControl]="selectedBasedOnFormGroup.controls.cleanDeparture">Departure</mat-checkbox>
+              </div>
+              <div class="form-field-wrapper clean-vacant-form-section-grid">
+                <mat-checkbox [formControl]="selectedBasedOnFormGroup.controls.cleanVacant">Vacant,</mat-checkbox>
+                <span>every</span>
+                <div class="form-field-wrapper inline-form-field-wrapper">
+                  <mat-form-field appearance="outline" class="bnr-days-input">
+                    <input [formControl]="selectedBasedOnFormGroup.controls.cleanVacantEveryNumberOfDays" matInput placeholder="N">
+                    <span matSuffix>days</span>
+                  </mat-form-field>
+                </div>
+                <span>from previous cleaning</span>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-checkbox [formControl]="selectedBasedOnFormGroup.controls.cleanOutOfService">Out of service</mat-checkbox>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'ROOM'">
+            <app-room-credits-multiselect [allRooms]="hotelRooms$ | async" [roomsArray]="selectedBasedOnFormGroup.controls.roomsArray"></app-room-credits-multiselect>
+            <!--<app-room-multiselect [allRooms]="hotelRooms$ | async" [formControl]="selectedBasedOnFormGroup.controls.rooms"></app-room-multiselect>-->
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'ROOM_CATEGORY'">
+            <div class="plugin-cleaning-category-grid">
+              <ng-container *ngFor="let fg of selectedBasedOnFormGroup.controls.categoriesArray.controls">
+                <div class="form-field-wrapper">
+                  <mat-checkbox [formControl]="fg.controls.isSelected">{{fg.controls.categoryName.value}}</mat-checkbox>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Credits</label>
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput [formControl]="fg.controls.credits">
+                  </mat-form-field>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'NIGHTS'">
+            <div>
+              <mat-radio-group [formControl]="selectedBasedOnFormGroup.controls.nightsTypeKey">
+                <div class="radio-button-list-item rb-nightstypekey-grid">
+                  <mat-radio-button value="SPECIFIC_NIGHTS">Specific nights</mat-radio-button>
+                  <mat-radio-button value="PERIODICAL">Periodical</mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+            <div *ngIf="selectedBasedOnFormGroup.controls.nightsTypeKey.value === 'SPECIFIC_NIGHTS'">
+              <app-simple-multiselect [valuesArray]="selectedBasedOnFormGroup.controls.nightsArray" [inputType]="'number'"></app-simple-multiselect>
+            </div>
+            <div *ngIf="selectedBasedOnFormGroup.controls.nightsTypeKey.value === 'PERIODICAL'" class="rb-periodicalnights-grid">
+              <span>Every</span>
+              <div class="form-field-wrapper inline-form-field-wrapper">
+                <mat-form-field appearance="outline" class="bnr-days-input">
+                  <input [formControl]="selectedBasedOnFormGroup.controls.nightsEveryNumberOfDays" matInput placeholder="N">
+                  <span matSuffix>days</span>
+                </mat-form-field>
+              </div>
+              <span>from</span>
+              <div class="form-field-wrapper inline-form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-select [formControl]="selectedBasedOnFormGroup.controls.nightsFromKey">
+                    <mat-option value="CHECK_IN">Check in</mat-option>
+                    <mat-option value="FIRST_MONDAY">First monday</mat-option>
+                    <mat-option value="FIRST_TUESDAY">First tuesday</mat-option>
+                    <mat-option value="FIRST_WEDNESDAY">First wednesday</mat-option>
+                    <mat-option value="FIRST_THURSDAY">First thursday</mat-option>
+                    <mat-option value="FIRST_FRIDAY">First friday</mat-option>
+                    <mat-option value="FIRST_SATURDAY">First saturday</mat-option>
+                    <mat-option value="FIRST_SUNDAY">First sunday</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'RESERVATION_SPACE_CATEGORY'">
+            <app-simple-multiselect [valuesArray]="selectedBasedOnFormGroup.controls.reservationSpaceCategoriesArray"></app-simple-multiselect>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'PRODUCT_TAG'">
+            <app-based-on-products-multiselect [productsTagsFormArray]="selectedBasedOnFormGroup.controls.productOrTagArray" [allProducts]="products$ | async"></app-based-on-products-multiselect>
+            <div>
+              <div>
+                <mat-checkbox [formControl]="selectedBasedOnFormGroup.controls.productsTagsMustBeConsumedOnTime">Must be consumed</mat-checkbox>
+              </div>
+              <div class="from-to-section-grid" >
+                <span>From</span>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [matDatepicker]="pickerFrom" [formControl]="selectedBasedOnFormGroup.controls.productsTagsConsumationIntervalFrom" (click)="pickerFrom.open()">
+                  <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+                <span>to</span>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [matDatepicker]="pickerTo" [formControl]="selectedBasedOnFormGroup.controls.productsTagsConsumationIntervalTo" (click)="pickerTo.open()">
+                  <mat-datepicker-toggle matSuffix [for]="pickerTo">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'FLOOR'" class="based-on-hotels">
+            <div class="based-on-buildings">
+              <div class="based-on-building based-on-group" *ngFor="let buildingFg of selectedBasedOnFormGroup.controls.buildingsArray.controls">
+                <div class="based-on-building-title"><b>{{buildingFg.controls.buildingName.value}}</b> ({{buildingFg.controls.numberOfFloors.value}} floors)</div>
+                <div class="based-on-floors based-on-buttons" *ngIf="buildingFg.controls.numberOfFloors.value > 0">
+                  <div class="based-on-item based-on-floor" [class.selected-based-on-item]="floorFg.controls.isSelected.value" (click)="toggleIsSelected(floorFg)" *ngFor="let floorFg of buildingFg.controls.floorsArray.controls">{{floorFg.controls.floorName.value}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'SECTION'">
+            <div class="based-on-buildings">
+              <div class="based-on-building based-on-group" *ngFor="let buildingFg of selectedBasedOnFormGroup.controls.buildingsArray.controls">
+                <div class="based-on-building-title"><b>{{buildingFg.controls.buildingName.value}}</b> ({{buildingFg.controls.numberOfFloors.value}} floors)</div>
+                <div class="based-on-floors">
+                  <div class="based-on-floor based-on-group" *ngFor="let floorFg of buildingFg.controls.floorsArray.controls">
+                    <div class="based-on-floor-title"><b>{{floorFg.controls.floorName.value}}</b> ({{floorFg.controls.numberOfSections.value}} sections)</div>
+                    <div class="based-on-sections based-on-buttons" *ngIf="floorFg.controls.numberOfSections.value > 0">
+                      <div class="based-on-item based-on-section" [class.selected-based-on-item]="sectionFg.controls.isSelected.value" (click)="toggleIsSelected(sectionFg)" *ngFor="let sectionFg of floorFg.controls.sectionsArray.controls">
+                        {{sectionFg.controls.sectionName.value}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'SUB_SECTION'">
+            <div class="based-on-buildings">
+              <div class="based-on-building based-on-group" *ngFor="let buildingFg of selectedBasedOnFormGroup.controls.buildingsArray.controls">
+                <div class="based-on-building-title"><b>{{buildingFg.controls.buildingName.value}}</b> ({{buildingFg.controls.numberOfFloors.value}} floors)</div>
+                <div class="based-on-floors">
+                  <div class="based-on-floor based-on-group" *ngFor="let floorFg of buildingFg.controls.floorsArray.controls">
+                    <div class="based-on-floor-title"><b>{{floorFg.controls.floorName.value}}</b> ({{floorFg.controls.numberOfSections.value}} sections)</div>
+                    <div class="based-on-sections">
+                      <div class="based-on-section based-on-group" *ngFor="let sectionFg of floorFg.controls.sectionsArray.controls">
+                        <div class="based-on-section-title"><b>{{sectionFg.controls.sectionName.value}}</b> ({{sectionFg.controls.numberOfSubSections.value}} sub sections)</div>
+                        <div class="based-on-sub-sections based-on-buttons" *ngIf="sectionFg.controls.numberOfSubSections.value > 0">
+                          <div class="based-on-item based-on-sub-section" [class.selected-based-on-item]="subSectionFg.controls.isSelected.value" (click)="toggleIsSelected(subSectionFg)" *ngFor="let subSectionFg of sectionFg.controls.subSectionsArray.controls">
+                            {{subSectionFg.controls.subSectionName.value}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'OTHER_PROPERTIES'">
+            <!--<app-key-value-multiselect [keyValueFormArray]="selectedBasedOnFormGroup.controls.otherPropertiesArray"></app-key-value-multiselect>-->
+            <app-based-on-other-properties-multiselect [otherPropertiesFormArray]="selectedBasedOnFormGroup.controls.otherPropertiesArray"></app-based-on-other-properties-multiselect>
+          </div>
+          <div *ngIf="selectedBasedOnFormGroup.controls.key.value === 'CLEANLINESS'">
+            <div>
+              <mat-radio-group [formControl]="selectedBasedOnFormGroup.controls.cleanlinessKey">
+                <div class="radio-button-list-item rb-cleanliness-grid">
+                  <mat-radio-button value="ONLY_CLEAN">Only clean rooms</mat-radio-button>
+                  <mat-radio-button value="ONLY_DIRTY">Only dirty rooms</mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <!--<div class="form-field-wrapper">
+    <label>{{selectedBasedOn.parametersDescription}}</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput>
+      <mat-hint>{{selectedBasedOn.predefinedParameters}}</mat-hint>
+    </mat-form-field>
+  </div>-->
+        </ng-container>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="component-box" *ngIf="!(isDataInitialized$ | async)">
+  <div class="empty-list-results">
+    <div class="empty-alert">
+      ...Please wait, data is loading...
+    </div>
+  </div>
+</div>

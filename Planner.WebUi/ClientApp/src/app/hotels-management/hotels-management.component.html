@@ -1,0 +1,127 @@
+<div class="hotels-component-wrapper component-wrapper">
+  <!--<div class="component-header-row">
+    <div class="header-twocol-grid">
+      <div class="component-title">Hotel settings</div>
+      <div></div>
+    </div>
+  </div>-->
+
+
+  <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
+    <div class="component-list-wrapper">
+      <div class="major-column-title"><b>Hotels</b></div>
+      <div class="component-box">
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row">
+              <div class="hotel-settings-filter-row-grid">
+                <div class="form-field-wrapper">
+                  <label>Search hotels</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="keywords" matInput placeholder="By name...">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <table class="list-view-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-view-items-row" *ngFor="let hotel of hotels" (click)="selectHotel(hotel)" [class.list-view-items-row-selected]="hotel.id === (selectedHotel$ | async).id">
+                <td class="name-cell">
+                  <div class="cell-value">{{hotel.name}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="tasks-list-totals-description">
+              <span>Showing</span>
+              <span>{{hotels.length}}</span>
+              <span>hotels</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-actions">
+        <button type="button" mat-flat-button class="button-with-icon" (click)="nightlyUpdateHkStatuses()">Nightly update HK statuses</button>
+      </div>
+    </div>
+    <div class="component-details-wrapper">
+        <div class="details-content-wrapper">
+          <ng-container *ngIf="(this.isLoadingHotelSettingsDetails$ | async)">
+            <div class="component-box-title">Loading hotel settings...</div>
+          </ng-container>
+          <ng-container *ngIf="!(this.isLoadingHotelSettingsDetails$ | async) && (this.hotelSettingsDetails$ | async) as hotelSettingsDetails">
+            <app-hotel-settings [hotelSettings]="hotelSettingsDetails" [hotel]="selectedHotel" (saved)="onHotelSettingsSaved($event)" (cancelled)="onCancelled()"></app-hotel-settings>
+          </ng-container>
+        </div>
+
+
+      <!--<ng-container *ngIf="!(this.isLoadingHotelSettingsDetails$ | async) && !(this.isHotelSettingsLoaded$ | async)">
+        <div class="no-task-selected-panel">
+          <img src="/assets/images/task-list.svg" />
+        </div>
+      </ng-container>-->
+      <!--<ng-container *ngIf="(isHotelSettingsLoaded$ | async)">
+    <div class="details-content-wrapper">
+      <ng-container *ngIf="(this.isLoadingHotelSettingsDetails$ | async)">
+        <div class="component-box-title">Loading hotel settings...</div>
+      </ng-container>
+      <ng-container *ngIf="!(this.isLoadingHotelSettingsDetails$ | async) && (this.hotelSettingsDetails$ | async) as hotelSettingsDetails">
+        <app-hotel-settings [hotelSettings]="hotelSettingsDetails" [hotel]="selectedHotel" [hotelName]="selectedHotelName | async" (saved)="onHotelSettingsSaved($event)"></app-hotel-settings>
+      </ng-container>
+    </div>
+  </ng-container>-->
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--<div class="component-content-row">
+    <div class="hotel-wrapper">-->
+      <!--<div class="component-filter-row">
+        <form [formGroup]="filterForm">
+          <div class="hotels-filter-row-grid">
+            <div class="form-field-wrapper">
+              <label>Search hotels</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="By name">
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>-->
+      <!--<div class="hotel-header">
+        <div class="hotel-header-item">Hotel name</div>
+      </div>
+      <div class="hotel-row" *ngFor="let hotel of hotels">
+        <div class="hotel-row-item" (click)="selectHotel(hotel)" [class.selected]="hotel.id === selectedHotel.id">
+          {{ hotel.name }}
+        </div>
+      </div>-->
+    <!--</div>
+    <div class="hotel-settings-wrapper">
+      <ng-container *ngIf="selectedHotelSettings | async ">
+        <app-hotel-settings [hotelSettings]="selectedHotelSettings | async" [hotelName]="selectedHotelName | async"></app-hotel-settings>
+      </ng-container>
+    </div>
+  </div>-->
+</div>

@@ -1,0 +1,3107 @@
+<div class="dashboards-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>Room insights</b></div>
+  </div>
+
+
+
+
+  <!--<div class="component-filter-wrapper">
+    <div class="component-box">
+      <div class="component-filter-row">
+        <form [formGroup]="filterForm">
+          <div class="users-filter-row-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="Find by keywords...">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="sortKey" name="sorts">
+                  <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                    {{sort.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>-->
+  <div class="charts-row">
+    <div class="percent-chart-row">
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Occupancy</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Clean status</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Cleaning progress</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Task progress</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-bed"></i> Stays</div>
+          <div class="stat-number-block-label">192</div>
+        </div>
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-check"></i> Reservations</div>
+          <div class="stat-number-block-label">267</div>
+        </div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-login"></i> Check ins</div>
+          <div class="stat-number-block-label">192</div>
+        </div>
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-users-alt-4"></i> Guests</div>
+          <div class="stat-number-block-label">259</div>
+        </div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-login"></i> Check outs</div>
+          <div class="stat-number-block-label">162</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="list-actions">
+    <div class="major-column-title">
+      <div>
+        Room view <b>across all hotels</b>
+      </div>
+    </div>
+    <div class="major-column-buttons">
+    </div>
+  </div>
+  <div class="component-content-row">
+    <div class="component-box">
+      <div class="insights-room-view-item">
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-clean"><i class="icofont-check"></i> Clean</div>
+          <div class="ins-cleaning-scheduled">Cleaned at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>102</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-dirty"><i class="icofont-bucket1"></i> Dirty</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>103</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-verified"><i class="icofont-check-circled"></i> Verified</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>104</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-dnd"><i class="icofont-not-allowed"></i> Do not disturb</div>
+          <div class="ins-room-status ins-status-clean"><i class="icofont-check"></i> Clean</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>105</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-dnd"><i class="icofont-not-allowed"></i> Do not disturb</div>
+          <div class="ins-room-status ins-status-dirty"><i class="icofont-bucket1"></i> Dirty</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>106</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-dnd"><i class="icofont-not-allowed"></i> Do not disturb</div>
+          <div class="ins-room-status ins-status-verified"><i class="icofont-check-circled"></i> Verified</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>107</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status ins-status-oos"><i class="icofont-close-circled"></i> Out of service</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+        <div class="ins-room-column ins-details">
+          <div class="ins-title">Room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column ins-status">
+          <div class="ins-room-status">Clean, Do not disturb</div>
+          <div class="ins-cleaning-scheduled">Cleaning scheduled at 18:00</div>
+        </div>
+        <div class="ins-room-column ins-workers">
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-bucket1"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="task-details-avatar-wrapper">
+            <i class="icofont-wrench"></i>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-occupancy">
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Checked in at 03.02.2012. 17:00</div>
+            </div>
+          </div>
+          <div class="ins-occupancy-item">
+            <div><i class="icofont-bed"></i></div>
+            <div>
+              <div>John Doe <span class="ins-sub-title">456-456Y</span></div>
+              <div class="ins-sub-title">Checked in at 01.02.2012. 15:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-reservations">
+          <div class="ins-reservations-item">
+            <div><i class="icofont-logout"></i></div>
+            <div>
+              <div>Martin Pinjusic <span class="ins-sub-title">123-123X</span></div>
+              <div class="ins-sub-title">Check out at 12.02.2012 13:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Mark Smith <span class="ins-sub-title">734-743X</span></div>
+              <div class="ins-sub-title">Check in at 14.02.2012 17:00</div>
+            </div>
+          </div>
+          <div class="ins-reservations-item">
+            <div><i class="icofont-login"></i></div>
+            <div>
+              <div>Jane Casters <span class="ins-sub-title">332-354X</span></div>
+              <div class="ins-sub-title">Check in at 15.02.2012 16:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-tasks">
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by John Smith</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring back 1xbaby bed - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Brian Forester</div>
+            </div>
+          </div>
+          <div class="ins-task-item">
+            <div><i class="icofont-tasks-alt"></i></div>
+            <div>
+              <div>Bring 1xTV - Room 101</div>
+              <div class="ins-sub-title">12.02.2012 13:00 by Jake Woods</div>
+            </div>
+          </div>
+        </div>
+        <div class="ins-room-column ins-latest-activities">
+          <div class="ins-sub-title">13.02.2020. 18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">18.02.2020. 12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">18.02.2020. 12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">21.02.2020. 15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

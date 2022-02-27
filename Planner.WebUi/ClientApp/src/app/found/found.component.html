@@ -1,0 +1,124 @@
+<div class="found-component-wrapper component-wrapper">
+    <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
+      <div class="component-list-wrapper">
+
+
+
+        <div class="major-column-title-grid">
+          <div class="major-column-title">
+            <b>Found</b>
+          </div>
+          <div class="major-column-matform">
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="hotelId" name="hotelId">
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+              <!-- <mat-error class="error" *ngIf="canShowErrorMessage('hotelId')">
+                <span *ngIf="f.hotelId.errors.required">Required</span>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="major-column-buttons">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="createNewFound()">
+              <i class="icofont-plus"></i> <span>Create new found item</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-box">
+          <div class="component-box-filter-row">
+            <form [formGroup]="filterForm">
+              <div class="item-filter-row-grid">
+                <div class="form-field-wrapper">
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="keywords" matInput placeholder="Filter items...">
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput [matDatepicker]="dateFrom" formControlName="dateFrom">
+                    <mat-datepicker-toggle matSuffix [for]="dateFrom" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
+                    <mat-datepicker #dateFrom></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <input matInput [matDatepicker]="dateTo" formControlName="dateTo">
+                    <mat-datepicker-toggle matSuffix [for]="dateTo" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
+                    <mat-datepicker #dateTo></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="component-list-row" *ngIf="(itemsList | async) as items">
+            <div *ngIf="items.length === 0">
+              <div class="empty-monthly-date-tasks">
+                <div class="empty-alert">
+                  No items found for the filter...
+                </div>
+              </div>
+            </div>
+            <div *ngIf="items.length > 0">
+              <table class="list-view-table">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Notes</th>
+                    <th>Place</th>
+                    <th>Status</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Found On</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="list-view-items-row" *ngFor="let item of items" (click)="selectItem(item)"
+                      [class.list-view-items-row-selected]="item.id === selectedItem.value?.id">
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.description}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.notes}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.place}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{statusMappings[item.status]}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.firstName}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.lastName}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="tasks-list-totals-description">
+                <span>Showing</span>
+                <span>{{items.length}}</span>
+                <span>items</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-details-wrapper">
+        <div class="details-content-wrapper">
+          <div class="item-settings-wrapper">
+            <ng-container *ngIf="selectedItem | async ">
+              <app-add-edit-found [item]="selectedItem | async" (reloadList)="reloadList($event)"
+                (cancelled)="onItemEditCancelled($event)"></app-add-edit-found>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

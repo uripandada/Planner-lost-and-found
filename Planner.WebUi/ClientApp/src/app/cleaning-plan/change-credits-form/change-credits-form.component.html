@@ -1,0 +1,30 @@
+<div class="major-column-title">Change <b>credits</b></div>
+<div class="component-box">
+  <div class="">
+    <form [formGroup]="changeCreditsForm">
+
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Credits</mat-label>
+          <input formControlName="credits" matInput>
+          <mat-error *ngIf="changeCreditsForm.controls.credits.invalid && (changeCreditsForm.controls.credits.dirty || changeCreditsForm.controls.credits.touched)">
+            <div *ngIf="changeCreditsForm.controls.credits.errors.required">Required</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <div class="edit-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+            <i class="icofont-check-alt"></i>
+            <ng-container>Save</ng-container>
+          </button>
+        </div>
+        <div class="edit-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

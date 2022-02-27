@@ -1,0 +1,109 @@
+<div class="sub-group-wrapper" [class.edit-sub-group-wrapper]="(isEditMode$ | async)">
+  <div class="component-box sub-group-box">
+    <ng-container *ngIf="!(isEditMode$ | async)">
+      <div class="sub-group-header" *ngIf="subGroupForm.controls.id.value !== '00000000-0000-0000-0000-000000000000'">
+        <div class="sub-group-title">
+          
+          <div>{{ subGroupForm.controls.name.value }}</div>
+          <div class="major-column-subtitle">Sub group with <b>{{ numberOfUsers$ | async }}</b> users</div>
+        </div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon" (click)="editSubGroup()">
+            <i class="svg-icon icon-pen-red"></i>
+          </button>
+        </div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon" mwlConfirmationPopover
+                  [popoverMessage]="'Are you sure you want to delete the subgroup?'" placement="left"
+                  (confirm)="deleteSubGroup()">
+            <i class="svg-icon icon-trash-red"></i>
+          </button>
+        </div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleCollapse()">
+            <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="isCollapsed$ | async"></i>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(isEditMode$ | async)">
+      <div class="sub-group-header edit-sub-group-header">
+
+          <div class="sub-group-edit-form-wrapper">
+            <div class="">
+              <form [formGroup]="subGroupForm">
+                <div class="form-field-wrapper">
+                  <label>Name</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="name" matInput>
+                  </mat-form-field>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="default-actions floor-edit-actions">
+            <div class="left-side-actions">
+              <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveSubGroup()">
+                <i class="icofont-check-alt"></i> Save
+              </button>
+            </div>
+            <div class="right-side-actions">
+              <button mat-flat-button type="button" class="button-with-icon" (click)="cancelSaveSubGroup()">
+                <i class="icofont-undo"></i> Cancel
+              </button>
+            </div>
+          </div>
+
+
+      </div>
+    </ng-container>
+
+
+
+    <ng-container *ngIf="!(isCollapsed$ | async)">
+      <div class="users-wrapper" *ngIf="subGroupForm.controls.id.value">
+        <div class="list-view-table-wrapper">
+          <table class="list-view-table">
+            <tbody>
+              <tr class="list-view-items-row"
+                  [class.inactive-user]="!userFormGroup.controls.isActive.value"
+                  *ngFor="let userFormGroup of usersFormArray.controls; index as userFormGroupIndex">
+                <td class="avatar-cell">
+                  <div class="task-chat-avatar-wrapper">
+                    <div class="task-chat-avatar" *ngIf="!userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-color': userFormGroup.controls.defaultAvatarColorHex.value }">{{userFormGroup.controls.initials.value}}</div>
+                    <div class="task-chat-avatar-image" *ngIf="userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-image': 'url(' + userFormGroup.controls.avatarImageUrl.value + ')'}"></div>
+                  </div>
+                </td>
+                <td class="name-cell">
+                  <span>
+                    {{ userFormGroup.controls.firstName.value }} {{ userFormGroup.controls.lastName.value }}
+                  </span>
+                </td>
+                <td class="username-cell"><span>{{ userFormGroup.controls.username.value }}</span></td>
+                <td class="role-cell"><span>{{ userFormGroup.controls.userRole.value }}</span></td>
+                <td class="user-actions-cell">
+                  <button mat-flat-button class="button-round-with-svg-icon"
+                          (click)="editUser(userFormGroup.controls.id.value, userFormGroupIndex)">
+                    <i class="svg-icon icon-pen-red"></i>
+                  </button>
+                  <button mat-flat-button class="button-round-with-svg-icon" mwlConfirmationPopover
+                          [popoverMessage]="'Are you sure you want to delete the user?'"
+                          placement="left"
+                          (confirm)="deleteUser(userFormGroupIndex)">
+                    <i class="svg-icon icon-trash-red"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="add-user-wrapper" *ngIf="subGroupForm.controls.id.value !== '00000000-0000-0000-0000-000000000000'">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="addNewUser()">
+            <i class="icofont-plus"></i> <span>Add user to {{ subGroupForm.controls.name.value }}</span>
+          </button>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

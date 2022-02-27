@@ -1,0 +1,21 @@
+<div class="date-multiselect">
+  <div class="date-multiselect-items">
+    <div *ngFor="let dateControl of datesFormArray.controls; index as dateIndex" class="dmi-grid-item">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <input matInput [matDatepicker]="picker" [formControl]="dateControl" (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <i class="icofont-calendar" matDatepickerToggleIcon></i>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="date-multiselect-item-actions">
+        <button class="item-remove-button" type="button" (click)="remove(dateIndex)"><i class="icofont-close"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="date-time-multiselect-actions">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="add()"><i class="icofont-plus"></i> Add another date</button>
+  </div>
+</div>
+
+

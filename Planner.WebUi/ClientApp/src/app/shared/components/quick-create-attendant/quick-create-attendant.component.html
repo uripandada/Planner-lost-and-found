@@ -1,0 +1,123 @@
+<div class="popup-header">
+  <div class="major-column-title">
+    <b>Create Attendant</b>
+  </div>
+</div>
+<div>
+  <form [formGroup]="userForm" autocomplete="off">
+    <div class="user-details-wrapper">
+      <div class="popup-content">
+        <div class="user-edit-form">
+          <div class="avatar-row-wrapper">
+            <div>
+              <app-avatar-upload [initialAvatarUrl]="userDetails.avatarImageUrl"
+                                 (selected)="onAvatarImageSelected($event)" (removed)="onAvatarImageRemoved()"></app-avatar-upload>
+            </div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>First Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="firstName" matInput />
+                  <mat-error *ngIf="userForm.controls.firstName.invalid && (userForm.controls.firstName.dirty || userForm.controls.firstName.touched)">
+                    <div *ngIf="userForm.controls.firstName.errors.required">Required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Last Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="lastName" matInput />
+                  <mat-error *ngIf="userForm.controls.lastName.invalid && (userForm.controls.lastName.dirty || userForm.controls.lastName.touched)">
+                    <div *ngIf="userForm.controls.lastName.errors.required">Required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Username</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="userName" matInput />
+                  <mat-error *ngIf="userForm.controls.userName.invalid && (userForm.controls.userName.dirty || userForm.controls.userName.touched)">
+                    <div *ngIf="userForm.controls.userName.errors.required">Required</div>
+                    <div *ngIf="userForm.controls.userName.errors.USER_USERNAME_ALREADY_EXISTS">Already exists</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Language</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="language">
+                    <!--<mat-option [value]="null">Ungrouped</mat-option>-->
+                    <mat-option *ngFor="let lang of languages" [value]="lang.key">
+                      <span>{{ lang.value }} ({{ lang.eng }}, {{ lang.key }})</span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>New password</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="password" matInput type="password" />
+                    <mat-error *ngIf="userForm.controls.password.invalid && (userForm.controls.password.dirty || userForm.controls.password.touched)">
+                      <div *ngIf="userForm.controls.password.errors.PASSWORDS_DONT_MATCH">Don't match</div>
+                      <div *ngIf="userForm.controls.password.errors.PASSWORD_TOO_SHORT">Too short</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>New password repeated</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="passwordConfirmation" type="password" matInput />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Group</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="groupId">
+                    <mat-option [value]="null">Ungrouped</mat-option>
+                    <mat-option *ngFor="let group of groups" [value]="group.id">
+                      {{ group.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Subgroup</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="subGroupId">
+                    <mat-option [value]="null">Ungrouped</mat-option>
+                    <mat-option *ngFor="let subGroup of subGroups" [value]="subGroup.id">
+                      {{ subGroup.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Registration Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="registrationNumber" matInput />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup-actions">
+      <div class="popup-confirm-actions">
+        <button mat-flat-button type="button" class="button-with-icon secondary-button"
+                (click)="handleCreateNewAttendant()" [disabled]="isSaving$ | async">
+          <i class="icofont-check-alt"></i> Save changes
+        </button>
+      </div>
+      <div class="popup-cancel-actions">
+        <button mat-flat-button type="button" class="button-with-icon" (click)="closePopup()">
+          <i class="icofont-close-line"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-container *ngIf="hierarchy$ | async"></ng-container>

@@ -1,0 +1,93 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-wrapper cleaning-plugins-component-wrapper">
+
+  <div class="component-box cleaning-plugins-component-header">
+    <div class="component-box-title">
+      <div class="left-side">
+        <div class="major-column-title"><b>Cleaning plugins</b></div>
+        <div class="major-column-subtitle">Manage cleaning plugins per hotel and hotel group</div>
+      </div>
+      <div class="right-side">
+      </div>
+    </div>
+    <div class="component-box-filter-row">
+      <form [formGroup]="hotelSelectionForm" class="plugins-form">
+        <div class="two-column-grid">
+          <div>
+            <app-hotel-group-picker [hotelGroupControl]="hotelSelectionForm.controls.hotelGroup" (hotelGroupSelected)="onHotelGroupSelected($event)"></app-hotel-group-picker>
+          </div>
+          <div>
+            <app-hotel-picker [hotelControl]="hotelSelectionForm.controls.hotel" [hotels]="hotels$ | async" (hotelSelected)="onHotelSelected($event)"></app-hotel-picker>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="cleaning-plugins-component-content">
+    <div class="cleaning-plugins-content-grid" *ngIf="areCleaningPluginsLoaded$ | async">
+      <div class="component-box cleaning-plugins-list-wrapper">
+        <div class="component-box-title cleaning-plugins-list-wrapper-title">
+          <div class="left-side">
+            <div class="major-column-title">
+              <b>{{hotelSelectionForm.controls.hotelGroup.value.name}}, {{hotelSelectionForm.controls.hotel.value.name}}</b>
+            </div>
+            <div class="major-column-subtitle">Available cleaning plugins for selected hotel group and hotel</div>
+          </div>
+          <div class="right-side">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newCleaningPlugin()"><i class="icofont-plus"></i> <span>Add</span></button>
+          </div>
+        </div>
+        <div class="component-box-filter-row">
+          <ng-container *ngIf="(numberOfCleaningPlugins$ | async) === 0">
+            <div class="empty-list-results">
+              <div class="empty-alert">
+                No cleaning plugins found for the hotel...
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="(cleaningPlugins$ | async) as cleaningPlugins">
+              <div class="list-of-cleaning-plugins" *ngIf="cleaningPlugins.length > 0">
+
+
+                <div class="orderable-list">
+                  <div class="orderable-list-title"></div>
+                  <div class="orderable-list-content" cdkDropList (cdkDropListDropped)="onCleaningPluginListItemDropped($event)">
+                    <div cdkDrag [cdkDragData]="plugin" class="orderable-list-item cleaning-plugin-item" *ngFor="let plugin of cleaningPlugins; index as pluginIndex" (click)="selectCleaningPlugin(plugin)" [class.orderable-list-item-selected]="plugin.id === (selectedCleaningPlugin$ | async)?.id">
+                      <div class="ordinal-number">{{plugin.ordinalNumber}}</div>
+                      <div [class.plugin-inactive]="!plugin.isActive">
+                        <div class="cell-value">{{plugin.name}} <span *ngIf="!plugin.isActive" class="plugin-inactive-indicator">Inactive</span></div>
+                        <div class="cell-description">{{plugin.typeDescription}}</div>
+                      </div>
+                      <div class="plugin-top-rule-indicator">
+                        <i class="icofont-tack-pin" *ngIf="plugin.isTopRule"></i>
+                      </div>
+                      <div class="delete-button-cell">
+                        <button mat-flat-button type="button" class="delete-icon-button"
+                                mwlConfirmationPopover
+                                [popoverMessage]="'Are you sure you want to delete the plugin?'"
+                                placement="left"
+                                (confirm)="deleteCleaningPlugin(pluginIndex, plugin.id, plugin.isTopRule)">
+                          <i class="icofont-close"></i>
+                        </button>
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div>
+                  <div class="list-totals">
+                    <span>Showing</span>
+                    <span>{{cleaningPlugins.length}}</span>
+                    <span>plugins</span>
+                  </div>
+                </div>
+              </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="cleaning-plugins-list-wrapper">
+        <app-plugin-details [hotelId]="hotelSelectionForm.controls.hotel?.value.id" [plugin]="selectedCleaningPlugin$ | async" [configuration]="configuration$ | async" (inserted)="onPluginInserted($event)" (updated)="onPluginUpdated($event)"></app-plugin-details>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="time-multiselect">
+  <div class="time-multiselect-items">
+    <div class="time-multiselect-items-item" *ngFor="let valueForm of otherPropertiesFormArray.controls; let valueFormIndex = index">
+      <div class="time-multiselect-item">
+        <div class="time-multiselect-item-number">{{ valueFormIndex + 1 }}.</div>
+        <div class="bo-properties-content">
+
+
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput type="text" [formControl]="valueForm.controls.key">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select [formControl]="valueForm.controls.basedOnOtherPropertiesTypeKey" name="basedOnOtherPropertiesTypeKey">
+              <mat-option *ngFor="let basedOnOtherPropertyType of basedOnOtherPropertyTypes" [value]="basedOnOtherPropertyType.key">
+                {{basedOnOtherPropertyType.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput type="text" [formControl]="valueForm.controls.value">
+          </mat-form-field>
+
+          <!--<ng-container *ngIf="valueForm.controls.basedOnProductsTagsTypeKey.value !== 'REGEX' && valueForm.controls.basedOnProductsTagsTypeKey.value !== 'EXISTING_PRODUCT'">
+            <div class="case-sensitive-grid">
+              <mat-checkbox [formControl]="valueForm.controls.isCaseSensitive">Case sensitive?</mat-checkbox>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput type="text" [formControl]="valueForm.controls.comparisonValue">
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="valueForm.controls.basedOnProductsTagsTypeKey.value === 'REGEX'">
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput type="text" [formControl]="valueForm.controls.comparisonValue">
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngIf="valueForm.controls.basedOnProductsTagsTypeKey.value === 'EXISTING_PRODUCT'">
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select [formControl]="valueForm.controls.productId" name="productId">
+                <mat-option *ngFor="let product of allProducts" [value]="product.id">
+                  {{product.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </ng-container>-->
+
+
+
+
+
+          <!--<mat-form-field appearance="outline" class="full-width">
+    <ng-container *ngIf="inputType === 'text'">
+      <input matInput type="text"
+             [formControl]="valueForm.controls.value">
+    </ng-container>
+    <ng-container *ngIf="inputType === 'number'">
+      <input matInput type="number"
+             [formControl]="valueForm.controls.value">
+    </ng-container>
+  </mat-form-field>-->
+        </div>
+        <div class="time-multiselect-item-actions">
+          <button mat-flat-button type="button" (click)="remove(valueFormIndex)" class="delete-icon-button"><i class="icofont-close"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="time-multiselect-actions">
+    <button mat-flat-button type="button" class="button-with-icon small-button" (click)="add()"><i class="icofont-plus"></i> Add</button>
+  </div>
+</div>
+
+

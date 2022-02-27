@@ -1,0 +1,377 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="reservations-calendar-component-wrapper component-wrapper">
+  <div class="cleaning-planner-header">
+    <div class="major-column-title"><b>Reservations calendar</b></div>
+    <div class="component-box">
+      <div class="component-box-filter-row">
+        <form [formGroup]="selectCalendarForm" class="cleaning-calendar-filter-grid">
+          <div class="two-column-grid">
+            <div class="select-plan-date-wrapper">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="fromPicker" formControlName="dateFrom" (click)="fromPicker.open()" (focus)="fromPicker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="fromPicker" [disableRipple]="true">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #fromPicker></mat-datepicker>
+                </mat-form-field>
+                <!--<mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="pickerFrom" formControlName="dateFrom" (click)="pickerFrom.open()">
+                  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>-->
+              </div>
+            </div>
+            <div class="select-plan-date-wrapper">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="toPicker" formControlName="dateTo" (click)="toPicker.open()" (focus)="toPicker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="toPicker" [disableRipple]="true">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #toPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="select-hotel-wrapper">
+            <div class="select-hotel-label">
+              Hotel:
+            </div>
+            <div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="hotelId" name="hotelId">
+                    <mat-option *ngFor="let hotel of hotelService.hotels" [value]="hotel.id">
+                      {{hotel.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+  <ng-container *ngIf="(isCalendarLoading$ | async)">
+    <div>
+      Calendar is loading
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!(isCalendarLoading$ | async)">
+    <div class="component-content-row">
+      <div class="component-box">
+        <div>
+          <table class="table-reservations-calendar">
+            <thead>
+              <tr>
+                <th class="c-room text-left">
+                  <!--<div clss="cv-room-title">Rooms</div>-->
+                </th>
+                <th class="cd2" colspan="2">
+                  <div class="cv-day-name">Monday</div>
+                  <div class="cv-date">08.02.2021.</div>
+                </th>
+                <th class="cd2" colspan="2">
+                  <div class="cv-day-name">Tuesday</div>
+                  <div class="cv-date">09.02.2021.</div>
+                </th>
+                <th class="cd2" colspan="2">
+                  <div class="cv-day-name">Wednesday</div>
+                  <div class="cv-date">10.02.2021.</div>
+                </th>
+                <th class="cd2" colspan="2">
+                  <div class="cv-day-name">Thursday</div>
+                  <div class="cv-date">11.02.2021.</div>
+                </th>
+                <th class="cd2" colspan="2">
+                  <div class="cv-day-name">Friday</div>
+                  <div class="cv-date">12.02.2021.</div>
+                </th>
+                <!--<th class="c-day" colspan="2">
+          <div class="cv-day-name">Saturday</div>
+          <div class="cv-date">13.02.2021.</div>
+        </th>
+        <th class="c-day" colspan="2">
+          <div class="cv-day-name">Sunday</div>
+          <div class="cv-date">14.02.2021.</div>
+        </th>-->
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="rrow frow">
+                <td class="c-room" rowspan="4">
+                  <div class="cv-title">110</div>
+                  <div>Room</div>
+                  <!--<div>Sub section R12</div>
+      <div>Section F1-S2</div>
+      <div>Floor 3</div>
+      <div>Building 1</div>-->
+                </td>
+                <td class="cd1 res rend" colspan="1">
+                  <div class="rst">
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Martin Pinjušić</div>
+                  </div>
+                </td>
+                <td class="cd2 res rstart rend" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jack Black</div>
+                  </div>
+                </td>
+                <td class="cd4 res rstart rend" colspan="4">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jonathan Weizmann</div>
+                  </div>
+                </td>
+                <td class="cd3 res rstart" colspan="3">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="cv-guest">John Doe</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow">
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd4 res rstart rend" colspan="4">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Bruce Smith</div>
+                  </div>
+                </td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd2 res rstart rend" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jane Smith</div>
+                  </div>
+                </td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res rstart" colspan="1">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="cv-guest">Jane Doe</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow">
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd4 res rstart rend rsingle" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jim Corrigan</div>
+                  </div>
+                </td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+              </tr>
+              <tr class="crow">
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clni"><i class="icofont-plugin"></i> Monthly cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Departure cleaning</div>
+                </td>
+              </tr>
+
+
+
+              <tr class="rrow frow crow">
+                <td class="c-room" rowspan="1">
+                  <div class="cv-title">120</div>
+                  <div>Room</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Vacant cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+              </tr>
+              <tr class="rrow frow crow">
+                <td class="c-room" rowspan="1">
+                  <div class="cv-title">122</div>
+                  <div>Room</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+              </tr>
+
+
+              <tr class="rrow frow">
+                <td class="c-room" rowspan="3">
+                  <div class="cv-title">111</div>
+                  <div>Room</div>
+                  <!--<div>Sub section R12</div>
+      <div>Section F1-S2</div>
+      <div>Floor 3</div>
+      <div>Building 1</div>-->
+                </td>
+                <td class="cd1 res rend" colspan="1">
+                  <div class="rst">
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Martin Pinjušić</div>
+                  </div>
+                </td>
+                <td class="cd2 res rstart rend" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jack Black</div>
+                  </div>
+                </td>
+                <td class="cd4 res rstart rend" colspan="4">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jonathan Weizmann</div>
+                  </div>
+                </td>
+                <td class="cd3 res rstart" colspan="3">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="cv-guest">John Doe</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow">
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd4 res rstart rend rsingle" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jim Corrigan</div>
+                  </div>
+                </td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+              </tr>
+              <tr class="crow">
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Departure cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+              </tr>
+
+
+              <tr class="rrow frow">
+                <td class="c-room" rowspan="2">
+                  <div class="cv-title">111</div>
+                  <div>Room</div>
+                  <!--<div>Section F1-S2</div>
+      <div>Floor 3</div>
+      <div>Building 1</div>-->
+                </td>
+                <td class="cd1 res rend" colspan="1">
+                  <div class="rst">
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Martin Pinjušić</div>
+                  </div>
+                </td>
+                <td class="cd2 res rstart rend" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jack Black</div>
+                  </div>
+                </td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd1 res-mty"><div></div></td>
+                <td class="cd2 res rstart rend" colspan="2">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="rentr"></div>
+                    <div class="cv-guest">Jonathan Weizmann</div>
+                  </div>
+                </td>
+                <td class="cd3 res rstart" colspan="3">
+                  <div class="rst">
+                    <div class="rsttr"></div>
+                    <div class="cv-guest">John Doe</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="crow">
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Departure cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                  <div class="clnc"><i class="icofont-check"></i> Jane Doe 13:30-13:50</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                  <div class="clni"><i class="icofont-plugin"></i> Week day cleaning</div>
+                </td>
+                <td class="cd2 cln" colspan="2">
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

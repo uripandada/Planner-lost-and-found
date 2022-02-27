@@ -1,0 +1,41 @@
+.item-component-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+    padding: 8px 15px 15px 15px;
+    font-size: 14px;
+    color: #434343;
+  }
+  
+  .item-edit-wrapper {
+    background-color: white;
+    height: 100%;
+  
+    .item-edit {
+      .component-title {
+        padding: 16px 0px 12px 0px;
+      }
+  
+      .item-fields-wrapper {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  
+    .button-right {
+      float: right;
+      button {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  .item-configuration-edit-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  

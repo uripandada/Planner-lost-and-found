@@ -1,0 +1,38 @@
+<div class="major-column-title">Create <b>custom cleanings</b></div>
+<div class="component-box">
+  <div class="task-details-content">
+    <form [formGroup]="createCustomCleaningsForm">
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <input formControlName="description" matInput>
+        <mat-error *ngIf="createCustomCleaningsForm.controls.description.invalid && (createCustomCleaningsForm.controls.description.dirty || createCustomCleaningsForm.controls.description.touched)">
+          <div *ngIf="createCustomCleaningsForm.controls.description.errors.required">Required</div>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Credits</mat-label>
+        <input formControlName="credits" matInput>
+        <mat-error *ngIf="createCustomCleaningsForm.controls.credits.invalid && (createCustomCleaningsForm.controls.credits.dirty || createCustomCleaningsForm.controls.credits.touched)">
+          <div *ngIf="createCustomCleaningsForm.controls.credits.errors.required">Required</div>
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <app-where-multiselect [allWheres]="allWheres" [isRequired]="true" [showMiniTags]="false" formControlName="wheres"></app-where-multiselect>
+      </div>
+
+      <div class="room-category-edit-actions">
+        <div class="edit-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+            <i class="icofont-check-alt"></i>
+            <ng-container>Save</ng-container>
+          </button>
+        </div>
+        <div class="edit-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

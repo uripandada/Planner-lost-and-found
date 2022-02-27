@@ -1,0 +1,17 @@
+<div class="time-multiselect-item">
+  <div class="time-multiselect-item-number">{{ timeFormIndex + 1 }}.</div>
+  <div class="time-multiselect-item-content">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput type="text"
+             placeholder="From"
+             [formControl]="timeForm.controls.time" [textMask]="{mask: mask}">
+      <i matSuffix class="icofont-stopwatch"></i>
+    </mat-form-field>
+  </div>
+  <div class="time-multiselect-item-actions">
+    <button mat-flat-button type="button" (click)="remove()"><i class="icofont-close"></i></button>
+  </div>
+</div>
+
+

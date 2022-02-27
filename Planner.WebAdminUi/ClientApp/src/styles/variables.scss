@@ -1,0 +1,30 @@
+$color-palette-main: #6C8A9B;
+$color-palette-alt: #FD6574;
+$color-palette-gray: #E6E6E4;
+$color-palette-gray-light: #F9F5EF;
+
+
+$color-text-black: #000000;
+$color-text-dark-gray: #7F8185;
+$color-text-light-gray: #E7E7E7;
+
+$color-status-red: #FF5151;
+$color-status-yellow: #FCCF5B;
+$color-status-green: #9AFDAA;
+
+//$color-primary: #29437F;
+$color-primary: $color-palette-alt;
+$color-primary-dark: darken(#29437F, 10%);
+//$color-secondary: #EF7373;
+$color-secondary: $color-palette-alt;
+$color-tertiary: #376577;
+
+$color-background-main: #F4F8FF;
+$color-background-red: #FCE3E3;
+$color-background-blue: #EDF1FF;
+$font-primary: 'roboto';
+
+$color-sidebar-hover: rgba(55, 81, 141, 0.66);
+
+$color-background-button-gray: #EEEEEE;
+$color-text-button-gray: #454545;

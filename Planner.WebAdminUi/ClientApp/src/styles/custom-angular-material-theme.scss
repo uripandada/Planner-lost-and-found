@@ -1,0 +1,110 @@
+@import '~@angular/material/theming';
+@import 'variables.scss';
+
+/*$accent-color-one: lightseagreen;
+$accent-color-blue: dodgerblue;*/
+/*$accent-color-one: #3498db;
+$accent-color-blue: #1abc9c;*/
+
+$mat-pr-color: (
+  50: $color-primary,
+  100: $color-primary,
+  200: $color-primary,
+  300: $color-primary,
+  400: $color-primary,
+  500: $color-primary,
+  600: $color-primary,
+  700: $color-primary,
+  800: $color-primary,
+  900: $color-primary,
+  A100: $color-primary,
+  A200: $color-primary,
+  A400: $color-primary,
+  A700: $color-primary,
+  contrast: (
+    50:   $dark-primary-text,
+    100:  $dark-primary-text,
+    200:  $dark-primary-text,
+    300:  $dark-primary-text,
+    400:  $dark-primary-text,
+    500:  $light-primary-text,
+    600:  $light-primary-text,
+    700:  $light-primary-text,
+    800:  $light-primary-text,
+    900:  $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$mat-sec-color: (
+  50:   $color-secondary,
+  100:  $color-secondary,
+  200:  $color-secondary,
+  300:  $color-secondary,
+  400:  $color-secondary,
+  500:  $color-secondary,
+  600:  $color-secondary,
+  700:  $color-secondary,
+  800:  $color-secondary,
+  900:  $color-secondary,
+  A100: $color-secondary,
+  A200: $color-secondary,
+  A400: $color-secondary,
+  A700: $color-secondary,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$custom-typography: mat-typography-config(
+    $font-family: $font-primary
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core($custom-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$light-theme-primary: mat-palette($mat-pr-color);
+$light-theme-accent: mat-palette($mat-sec-color, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$light-theme-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$light-theme: mat-light-theme($light-theme-primary, $light-theme-accent, $light-theme-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($light-theme);
+
+// Copy the palettes from your selected theme (usually theme.scss).
+/*$app-primary: mat-palette($mat-grey);
+$app-accent: mat-palette($mat-light-blue);
+$app-warn: mat-palette($mat-red);*/
+/*
+// Create your Sass color vars (will be available in all the project)
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($light-theme-warn);*/
+

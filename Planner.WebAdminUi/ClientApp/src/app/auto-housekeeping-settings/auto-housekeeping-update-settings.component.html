@@ -1,0 +1,38 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-wrapper cleaning-plugins-component-wrapper">
+
+  <div class="component-box cleaning-plugins-component-header">
+    <div class="component-box-title">
+      <div class="left-side">
+        <div class="major-column-title"><b>Automatic housekeeping settings</b></div>
+        <div class="major-column-subtitle">Manage automatic housekeeping update settings</div>
+      </div>
+      <div class="right-side">
+      </div>
+    </div>
+    <div class="component-box-filter-row">
+      <form [formGroup]="hotelSelectionForm" class="plugins-form">
+        <div class="two-column-grid">
+          <div>
+            <app-hotel-group-picker [hotelGroupControl]="hotelSelectionForm.controls.hotelGroup" (hotelGroupSelected)="onHotelGroupSelected($event)"></app-hotel-group-picker>
+          </div>
+          <div>
+            <app-hotel-picker [hotelControl]="hotelSelectionForm.controls.hotel" [hotels]="hotels$ | async" (hotelSelected)="onHotelSelected($event)"></app-hotel-picker>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="ahk-updates-component-content" *ngIf="isListOfAutoUpdatesLoaded$ | async">
+    <div class="ahk-item component-box" *ngFor="let autoUpdateFormGroup of autoUpdatesFormArray.controls; let formIndex = index">
+      <app-auto-housekeeping-settings-details [autoUpdateFormGroup]="autoUpdateFormGroup" [hotelId]="selectedHotelId$ | async" (deleted)="onAutoHousekeepingSettingsDetailsDeleted(formIndex)"></app-auto-housekeeping-settings-details>
+    </div>
+    <div class="ahk-description">
+      {{autoUpdatesFormArray.length}} settings
+    </div>
+    <div class="ahk-actions">
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="addNewAutoUpdatesSettings()"><i class="icofont-plus"></i> <span>Add another setting</span></button>
+    </div>
+  </div>
+</div>

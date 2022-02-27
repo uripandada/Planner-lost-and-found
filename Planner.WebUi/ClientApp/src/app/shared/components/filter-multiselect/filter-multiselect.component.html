@@ -1,0 +1,32 @@
+<!--<mat-form-field appearance="outline" class="full-width">
+  <mat-date-range-input [rangePicker]="filterRangePicker">
+    <input matStartDate placeholder="Start date" [formControl]="startDateControl" (dateChange)="startDateChanged($event)" (click)="filterRangePicker.open()" (focus)="filterRangePicker.open()">
+    <input matEndDate placeholder="End date" [formControl]="endDateControl" (dateChange)="endDateChanged($event)" (click)="filterRangePicker.open()" (focus)="filterRangePicker.open()">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="filterRangePicker">
+    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+  </mat-datepicker-toggle>
+  <mat-date-range-picker #filterRangePicker></mat-date-range-picker>
+</mat-form-field>-->
+
+<div class="form-field-wrapper filter-multiselect-grid">
+  <div class="fm-selected-options">
+    <div class="fm-selected-option" *ngFor="let option of selectedOptions$ | async; index as selectedItemIndex;">
+      <div class="fms-content">
+        <div class="fms-title">{{option.label}}</div>
+        <div class="fms-value">{{option.value}}</div>
+      </div>
+      <div class="fms-actions">
+        <button type="button"><i class="icofont-close-line" (click)="remove(selectedItemIndex)"></i></button>
+      </div>
+    </div>
+  </div>
+  <mat-form-field appearance="outline" class="full-width">
+    <input type="text" placeholder="Filter..." matInput [formControl]="filterControl" [matAutocomplete]="autocomplete" #autoCompleteInput (keydown.enter)="close($event);">
+    <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="displayFilterName" [class]="'filter-multiselect-autocomplete'" [panelWidth]="'auto'">
+      <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option" class="filter-multiselect-option">
+        <i class="icofont-search-1"></i> <ng-container *ngIf="option.filterValue"><b>{{option.filterValue}}</b></ng-container> <span class="fmo-tag">{{option.description}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

@@ -1,0 +1,49 @@
+<div class="cpsat-configuration-form-component">
+  <form [formGroup]="cpsatConfigurationForm" autocomplete="off">
+    <div class="popup-content no-bottom-padding">
+          <div class="form-field-wrapper">
+            <label>Cleaning priorities</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="cleaningPriorityKey">
+                <mat-option [value]="'Departure'">Departure</mat-option>
+                <mat-option [value]="'Stay'">Stay</mat-option>
+                <mat-option [value]="'Arrival'">Arrival</mat-option>
+                <mat-option [value]="'ChangeSheet'">Change sheet</mat-option>
+                <mat-option [value]="'Others'">Others</mat-option>
+                <mat-option [value]="'NoPriority'">No priority</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-checkbox formControlName="doUsePrePlan">Use preplan?</mat-checkbox>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-checkbox formControlName="doCompleteProposedPlanOnUsePreplan">Complete proposed plan?</mat-checkbox>
+          </div>
+          <!--<div class="form-field-wrapper">
+            <mat-checkbox formControlName="doUsePreAffinity">Use preaffinity?</mat-checkbox>
+          </div>-->
+          <div class="form-field-wrapper">
+            <mat-checkbox formControlName="arePreferredLevelsExclusive">Preferred levels are exclusive?</mat-checkbox>
+          </div>
+    </div>
+    <div class="popup-actions">
+      <div class="popup-confirm-actions">
+        <button mat-flat-button
+                type="button"
+                class="button-with-icon secondary-button"
+                (click)="generateCpsatCleaningPlan()">
+          <i class="icofont-check-alt"></i> Generate plan
+        </button>
+      </div>
+      <div class="popup-cancel-actions">
+        <button mat-flat-button
+                type="button"
+                class="button-with-icon"
+                (click)="hideCpsatCofigPopup()">
+                <i class="icofont-close-line"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

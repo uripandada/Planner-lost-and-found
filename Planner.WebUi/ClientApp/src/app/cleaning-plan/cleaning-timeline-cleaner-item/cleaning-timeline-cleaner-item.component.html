@@ -1,0 +1,20 @@
+<form [formGroup]="cleanerFormGroup" class="cleaner-form-group">
+  <div>
+    <mat-checkbox required
+                  name="first-name"
+                  formControlName="isSelected">
+    </mat-checkbox>
+  </div>
+  <!--<div class="task-details-avatar-wrapper">
+    <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl">{{task.userInitials}}</div>
+    <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+  </div>-->
+  <div class="cleaner-select-avatar-wrapper">
+    <div class="avatar-initials" *ngIf="!cleanerFormGroup.controls.avatarUrl.value">{{cleanerFormGroup.controls.fullNameInitials.value}}</div>
+    <div class="avatar-image" *ngIf="cleanerFormGroup.controls.avatarUrl.value" [ngStyle]="{'background-image': 'url(' + cleanerFormGroup.controls.avatarUrl.value + ')'}"></div>
+  </div>
+  <div>
+    <div class="ci-title"><span>{{cleanerFormGroup.controls.name.value}}</span></div>
+    <div class="ci-subtitle"><span class="ci-title-label">{{cleanerFormGroup.controls.username.value}}</span>, <span>{{cleanerFormGroup.controls.groupName.value}}</span>, <span>{{cleanerFormGroup.controls.subGroupName.value}}</span></div>
+  </div>
+</form>

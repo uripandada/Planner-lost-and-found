@@ -1,0 +1,1134 @@
+<div class="user-insights-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>User insights</b></div>
+  </div>
+
+
+
+
+  <!--<div class="component-filter-wrapper">
+    <div class="component-box">
+      <div class="component-filter-row">
+        <form [formGroup]="filterForm">
+          <div class="users-filter-row-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="Find by keywords...">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="sortKey" name="sorts">
+                  <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                    {{sort.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>-->
+  <div class="charts-row users-charts-row">
+    <div class="percent-chart-row">
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Maintenance on duty</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Cleaners on duty</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="doughnut-dashboard-chart-wrapper">
+        <div class="doughnut-title">Activities progress</div>
+        <div class="doughnut-dashboard-chart">
+          <div echarts [options]="occupancyOptions"></div>
+        </div>
+        <div class="doughnut-center-label">60<span>%</span></div>
+        <div class="doughnut-description">24/90</div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-bucket1"></i> AVG per cleaner</div>
+          <div class="stat-number-block-label">4.3</div>
+        </div>
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-tasks-alt"></i> AVG per maintenance</div>
+          <div class="stat-number-block-label">9.6</div>
+        </div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-bucket1"></i> MIN cleanings</div>
+          <div class="stat-number-block-label">2</div>
+        </div>
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-tasks-alt"></i> MIN tasks</div>
+          <div class="stat-number-block-label">4</div>
+        </div>
+      </div>
+      <div class="ştat-number-column">
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-bucket1"></i> MAX cleanings</div>
+          <div class="stat-number-block-label">7</div>
+        </div>
+        <div class="stat-number-block">
+          <div class="stat-number-block-title"><i class="icofont-tasks-alt"></i> MAX tasks</div>
+          <div class="stat-number-block-label">12</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-actions">
+    <div class="major-column-title">
+      <div>
+        Room view <b>across all hotels</b>
+      </div>
+    </div>
+    <div class="major-column-buttons">
+    </div>
+  </div>
+  <div class="component-content-row">
+    <div class="component-box">
+      <div class="insights-room-view-item">
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Cleaning</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag">On duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title"><b>Bring 1xBaby bed</b> room <b>101</b></div>
+          <div class="ins-sub-title">Sunny seaside hotel</div>
+          <div class="ins-sub-title">West side</div>
+          <div class="ins-sub-title">The blue building</div>
+          <div class="ins-sub-title">Floor 4</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+        <div class="ins-room-column uins-user">
+          <div>
+            <div class="task-details-avatar-image" style="background-image: url('/uploaded-files/avatars/cd64f0ea-052b-4887-8de2-03791518903a/_gavin1.jpg');"></div>
+          </div>
+          <div class="uins-room-on-duty-flag uins-off-duty">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-user-details">
+          <div class="ins-title"><b>John Doe</b></div>
+          <div class="ins-sub-title">john_doe</div>
+          <div class="ins-sub-title">Cleaner</div>
+          <div class="ins-sub-title">In-house cleaners</div>
+          <div class="ins-sub-title">Cleaners 2</div>
+        </div>
+        <div class="ins-room-column uins-current-activity">
+          <div class="ins-title">Off duty</div>
+        </div>
+        <div class="ins-room-column uins-activities">
+          <div class="uins-activity-item">
+            <div><i class="icofont-tasks-alt"></i> <span>Bring 1xBaby bed</span></div>
+            <div class="ins-sub-title"><span>13:30</span> <span>Room 203</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>14:15</span> <span>Room 206</span></div>
+          </div>
+          <div class="uins-activity-item">
+            <div><i class="icofont-bucket1"></i> <span>Cleaning</span></div>
+            <div class="ins-sub-title"><span>15:00</span> <span>Room 207</span></div>
+          </div>
+        </div>
+        <div class="ins-room-column uins-latest-activities">
+          <div class="ins-sub-title">18:32</div>
+          <div>User checked in</div>
+          <div class="ins-sub-title">12:31</div>
+          <div>Cleaning finished</div>
+          <div class="ins-sub-title">12:05</div>
+          <div>Cleaning started</div>
+          <div class="ins-sub-title">15:43</div>
+          <div>Repair 1xTV completed</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="list-view-item-grid" *ngIf="!room.showBeds">
+  <div class="room-cell">
+    <app-rooms-view-dashboard-room-name-actions [roomOrBed]="room"></app-rooms-view-dashboard-room-name-actions>
+  </div>
+  <app-rooms-view-dashboard-reservations [room]="room" (roomMessagesOpened)="openRoomMessages()"></app-rooms-view-dashboard-reservations>
+  <app-rooms-view-dashboard-workers [room]="room"></app-rooms-view-dashboard-workers>
+</div>
+
+
+
+<div class="list-view-item-grid with-beds" *ngIf="room.showBeds">
+  <div class="room-cell with-beds">
+    <div class="cell-value">{{room.name}}</div>
+  </div>
+
+  <div class="beds-wrapper">
+    <div class="beds-cell" *ngFor="let bed of room.beds">
+      <div class="room-cell">
+        <app-rooms-view-dashboard-room-name-actions [roomOrBed]="bed"></app-rooms-view-dashboard-room-name-actions>
+      </div>
+      <app-rooms-view-dashboard-reservations [room]="bed" (roomMessagesOpened)="openRoomMessages()"></app-rooms-view-dashboard-reservations>
+      <app-rooms-view-dashboard-workers [room]="bed"></app-rooms-view-dashboard-workers>
+    </div>
+  </div>
+</div>

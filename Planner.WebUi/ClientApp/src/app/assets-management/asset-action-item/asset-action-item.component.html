@@ -1,0 +1,77 @@
+<div class="asset-action-item-item">
+  <form [formGroup]="actionItemFormGroup" class="asset-action-item-edit-form">
+    <div class="asset-action-item-form-grid">
+      <div class="asset-action-item-index">{{actionItemIndex + 1}}.</div>
+      <div class="form-field-wrapper asset-action-name-wrapper">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input type="text" matInput [formControl]="actionFormControl" [matAutocomplete]="actionsAutocomplete">
+          <mat-autocomplete #actionsAutocomplete="matAutocomplete" [displayWith]="displayAction">
+            <mat-option *ngFor="let action of filteredSystemDefinedActions$ | async" [value]="action">
+              <div class="faa-title">{{action.name}}</div>
+              <div class="faa-label">System defined - {{action.key}}</div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="asset-action-type" *ngIf="actionItemFormGroup.controls.isSystemDefined.value">System defined action</div>
+        <!--<mat-form-field appearance="outline" color="accent" class="full-width">
+    <input formControlName="name" matInput placeholder="Action name...">
+  </mat-form-field>-->
+      </div>
+      <!--<div class="form-empty-checkbox-wrapper text-center">
+        <mat-checkbox class="checkbox-item" formControlName="isBlocking"></mat-checkbox>
+      </div>
+      <div class="form-empty-checkbox-wrapper text-center">
+        <mat-checkbox class="checkbox-item" formControlName="isHighPriority"></mat-checkbox>
+      </div>-->
+      <div class="section-subtitle text-center">
+        <mat-button-toggle-group formControlName="quickOrTimedKey" name="quickTimedKey" aria-label="Font Style">
+          <mat-button-toggle value="TIMED">Timed</mat-button-toggle>
+          <mat-button-toggle value="QUICK">Quick</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="section-subtitle margin-right-10">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <mat-select formControlName="priorityKey">
+            <mat-option value="HIGH">High</mat-option>
+            <mat-option value="NORMAL">Normal</mat-option>
+            <mat-option value="LOW">Low</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--<div class="section-subtitle text-center">
+        <mat-checkbox class="checkbox-item" formControlName="isMandatory"></mat-checkbox>
+      </div>-->
+      <div class="section-subtitle margin-right-10">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input type="text" matInput formControlName="defaultAssignedToUser" [matAutocomplete]="usersAutocomplete">
+          <mat-autocomplete #usersAutocomplete="matAutocomplete" [displayWith]="displayUserName">
+            <mat-option *ngFor="let user of filteredUsers$ | async" [value]="user">
+              <div class="faa-title">{{user.name}}</div>
+              <div class="faa-label">{{user.description}}</div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="section-subtitle margin-right-10">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input formControlName="credits" matInput placeholder="Credits" class="text-right">
+        </mat-form-field>
+      </div>
+      <div class="section-subtitle margin-right-10">
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input formControlName="price" matInput placeholder="Price" class="text-right">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-flat-button type="button" class="delete-button"
+                mwlConfirmationPopover
+                [popoverMessage]="'Are you sure you want to remove the action?'"
+                placement="left"
+                (confirm)="remove()">
+          <i class="icofont-close"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+

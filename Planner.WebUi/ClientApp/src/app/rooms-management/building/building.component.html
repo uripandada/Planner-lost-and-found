@@ -1,0 +1,140 @@
+
+<div class="building-wrapper">
+  <ng-container *ngIf="!(isEditMode$ | async)">
+    <div class="building-header component-box">
+      <div class="building-title">
+        <div>
+          <span class="svg-icon icon-building"></span> <span>{{ buildingForm.controls.name.value }}</span><span *ngIf="buildingForm.controls.area.value">, {{ buildingForm.controls.area.value.name }}</span>
+        </div>
+        <div class="major-column-subtitle">
+          <b>{{ numberOfFloors$ | async }}</b> floors,
+          <b>{{ numberOfRooms$ | async }}</b> rooms
+        </div>
+      </div>
+      <div>
+        <button mat-flat-button class="button-round-with-svg-icon" (click)="editBuilding()"><i class="svg-icon icon-pen-red"></i></button>
+      </div>
+      <div>
+      </div>
+      <div>
+        <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleBuildingCollapse()">
+          <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="isBuildingCollapsed$ | async"></i>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(isEditMode$ | async)">
+    <div class="building-header edit-building-header component-box">
+      <div class="edit-building-icon">
+        <div>
+          <span class="svg-icon icon-building"></span>
+        </div>
+      </div>
+      <div class="building-edit-form-wrapper">
+        <div class="edit-building-title"><span *ngIf="buildingForm.controls.id.value">Edit <b>{{buildingForm.controls.name.value}}</b></span><span *ngIf="!buildingForm.controls.id.value">Create <b>new building</b></span></div>
+        <form [formGroup]="buildingForm">
+          <div class="radio-button-group-wrapper">
+            <mat-radio-group formControlName="typeKey">
+              <mat-radio-button value="HOTEL_HOSTEL">Hotel/Hostel</mat-radio-button>
+              <mat-radio-button value="APPARTMENT">Appartment building</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="name" matInput>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Area</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input type="text" placeholder="Pick one or create new" aria-label="Number" matInput formControlName="area" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAreaName">
+                  <mat-option *ngFor="let area of filteredAreas$ | async" [value]="area">
+                    {{area.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Address</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="address" matInput>
+              </mat-form-field>
+            </div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Latitude</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="latitude" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Longitude</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="longitude" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="default-actions building-edit-actions">
+        <div class="left-side-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveBuilding()"><i class="icofont-check-alt"></i> Save</button>
+        </div>
+        <div class="right-side-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancelSaveBuilding()"><i class="icofont-undo"></i> Cancel</button>
+          <ng-container *ngIf="buildingForm.controls.id.value">
+            <button mat-flat-button type="button" class="button-with-icon"
+                    mwlConfirmationPopover
+                    [popoverMessage]="'Are you sure you want to delete the building?'"
+                    placement="left"
+                    (confirm)="deleteBuilding()">
+              <i class="icofont-trash"></i> Delete
+            </button>
+          </ng-container>
+        </div>
+      </div>
+
+      <!--<div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon" (click)="saveBuilding()"><i class="svg-icon icon-check-red"></i></button>
+        </div>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon no-border" (click)="cancelSaveBuilding()"><i class="svg-icon icon-back-red"></i></button>
+        </div>
+      </div>-->
+      <div>
+      </div>
+      <div>
+        <!--<button mat-flat-button class="button-round-with-svg-icon transparent-button" disabled="disabled"><i class="svg-icon icon-collapse-black"></i></button>-->
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!(isBuildingCollapsed$ | async)">
+    <div>
+      <app-floor *ngFor="let floorFormArray of floorsFormArray.controls; index as floorIndex"
+                 [floorForm]="floorFormArray"
+                 [floorIndex]="floorIndex"
+                 [buildingId]="buildingForm.controls.id.value"
+                 [buildingTypeKey]="buildingForm.controls.typeKey.value"
+                 (roomAdded)="onRoomAdded($event)"
+                 (unsavedFloorRemoved)="removeFloorForm($event)"
+                 (floorAdded)="onFloorAdded($event)"
+                 (floorUpdated)="onFloorUpdated($event)"
+                 (floorDeleted)="deleteFloor($event)"></app-floor>
+    </div>
+
+    <div class="add-floor-wrapper" *ngIf="buildingForm.controls.id.value">
+      <button mat-flat-button type="button" class="add-floor-button button-with-icon" (click)="addNewFloor()"><i class="icofont-plus"></i> Add floor to {{ buildingForm.controls.name.value }}</button>
+    </div>
+  </ng-container>
+</div>

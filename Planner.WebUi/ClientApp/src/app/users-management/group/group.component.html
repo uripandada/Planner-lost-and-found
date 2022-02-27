@@ -1,0 +1,130 @@
+<div class="group-wrapper">
+  <div class="component-box group-box">
+
+    <ng-container *ngIf="!(isEditMode$ | async)">
+      <div class="group-header">
+        <div class="group-title">
+          <div>{{ groupForm.controls.name.value }}</div>
+          <div class="major-column-subtitle">
+            Group with
+            <b>{{ numberOfUserSubGroups$ | async }}</b> sub groups,
+            <b>{{ numberOfUsers$ | async }}</b> users
+          </div>
+        </div>
+        <ng-container *ngIf="groupForm.controls.id.value !== '00000000-0000-0000-0000-000000000000'">
+          <div>
+            <button mat-flat-button class="button-round-with-svg-icon" (click)="editGroup()">
+              <i class="svg-icon icon-pen-red"></i>
+            </button>
+          </div>
+          <div>
+            <button mat-flat-button class="button-round-with-svg-icon" mwlConfirmationPopover
+                    [popoverMessage]="'Are you sure you want to delete the group?'" placement="left" (confirm)="removeGroup()">
+              <i class="svg-icon icon-trash-red"></i>
+            </button>
+          </div>
+        </ng-container>
+        <div>
+          <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleCollapse()">
+            <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="isCollapsed$ | async"></i>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="(isEditMode$ | async)">
+      <div class="group-header edit-group-header">
+        <div class="group-edit-form-wrapper">
+          <form [formGroup]="groupForm">
+            <div class="form-field-wrapper">
+              <label>Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="name" matInput>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+
+        <div class="default-actions">
+          <div class="left-side-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveGroup()"><i class="icofont-check-alt"></i> Save</button>
+          </div>
+          <div class="right-side-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancelSaveGroup()"><i class="icofont-undo"></i> Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <!-- LIST OF USERS when the group is not collapsed -->
+    <ng-container *ngIf="!(isCollapsed$ | async)">
+      <div class="users-wrapper" *ngIf="groupForm.controls.id.value">
+        <div class="list-view-table-wrapper">
+          <table class="list-view-table">
+            <tbody>
+              <tr class="list-view-items-row"
+                  [class.inactive-user]="!userFormGroup.controls.isActive.value"
+                  *ngFor="let userFormGroup of usersFormArray.controls; index as userFormGroupIndex">
+                <td class="avatar-cell">
+                  <div class="task-chat-avatar-wrapper">
+                    <div class="task-chat-avatar" *ngIf="!userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-color': userFormGroup.controls.defaultAvatarColorHex.value }">{{userFormGroup.controls.initials.value}}</div>
+                    <div class="task-chat-avatar-image" *ngIf="userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-image': 'url(' + userFormGroup.controls.avatarImageUrl.value + ')'}"></div>
+                  </div>
+                </td>
+                <td class="name-cell">
+                  <span>
+                    {{ userFormGroup.controls.firstName.value }} {{ userFormGroup.controls.lastName.value }}
+                  </span>
+                </td>
+                <td class="username-cell"><span>{{ userFormGroup.controls.username.value }}</span></td>
+                <td class="role-cell"><span>{{ userFormGroup.controls.userRole.value }}</span></td>
+                <td class="user-actions-cell">
+                  <button mat-flat-button class="button-round-with-svg-icon"
+                          (click)="editUser(userFormGroup.controls.id.value, userFormGroupIndex)">
+                    <i class="svg-icon icon-pen-red"></i>
+                  </button>
+                  <button mat-flat-button class="button-round-with-svg-icon" mwlConfirmationPopover
+                          [popoverMessage]="'Are you sure you want to delete the user?'"
+                          (confirm)="deleteUser(userFormGroupIndex)"
+                          placement="left">
+                    <i class="svg-icon icon-trash-red"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="add-user-wrapper" *ngIf="groupForm.controls.id.value && groupForm.controls.id.value !== '00000000-0000-0000-0000-000000000000'">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="addNewUser()">
+              <i class="icofont-plus"></i> <span>Add user to {{ groupForm.controls.name.value }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <!-- LIST OF SUBGROUPS when the group is not collapsed -->
+    <div *ngIf="!(isCollapsed$ | async)" class="user-sub-groups-wrapper">
+
+      <div class="user-sub-groups">
+        <app-subgroup *ngFor="let subGroup of subGroupFormArray.controls; index as subGroupIndex" [subGroupForm]="subGroup"
+                      [subGroupIndex]="subGroupIndex" [groupId]="groupForm.controls.id.value"
+                      (subGroupAdded)="onSubGroupAdded()"
+                      (unsavedSubGroupRemoved)="removeSubGroup($event)" (subGroupRemoved)="onSubGroupRemoved($event)">
+        </app-subgroup>
+      </div>
+
+      <div class="add-sub-group-wrapper" *ngIf="groupForm.controls.id.value && groupForm.controls.id.value !== '00000000-0000-0000-0000-000000000000'">
+        <button mat-flat-button type="button" class="add-sub-group-button button-with-icon" (click)="addNewSubGroup()"><i class="icofont-plus"></i> Add subgroup to <b>{{ groupForm.controls.name.value }}</b></button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>

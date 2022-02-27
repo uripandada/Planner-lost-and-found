@@ -1,0 +1,27 @@
+<div class="colors-mgt-component-wrapper component-wrapper">
+  <div class="component-list-wrapper">
+    <div class="major-column-title"><b>Colors management</b></div>
+    <div class="component-box hk-status-colors">
+      <div class="major-column-title"><b>Housekeeping status colors</b></div>
+      <div class="color-form-row" *ngFor="let color of colors">
+        <ngx-colors ngx-colors-trigger
+                    [hideTextInput]="false"
+                    [hideColorPicker]="false"
+                    [(ngModel)]="color.colorHex">
+        </ngx-colors>
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input [(ngModel)]="color.colorHex" matInput>
+          </mat-form-field>
+        </div>
+        <div class="color-description">{{color.description}}</div>
+      </div>
+
+      <div class="save-hk-color-changes">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+            <i class="icofont-check-alt"></i> Save status colors
+          </button>
+      </div>
+    </div>
+  </div>
+</div>

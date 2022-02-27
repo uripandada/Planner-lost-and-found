@@ -1,0 +1,69 @@
+@import '../../styles/variables.scss';
+
+
+.component-content-row {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-gap: 3px;
+  .component-filter-row {
+    box-shadow: none;
+  }
+
+}
+
+.item-wrapper {
+
+  .item-header {
+    background-color: $color-background-button-gray;
+    color: $color-text-button-gray;
+    display: grid;
+    grid-template-columns: 1fr;
+    line-height: 16px;
+
+  }
+
+  .item-header-item {
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 17px 0 17px 20px;
+    border-color: $color-tertiary;
+  }
+
+
+
+  .item-row {
+    background-color: white;
+    color: $color-text-black;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 4px 4px 0 0;
+    line-height: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid;
+    border-color: rgba($color-tertiary, 0.5);
+  }
+  .selected {
+    background-color: $color-background-blue;
+    color: $color-primary;
+    border-right: 3px solid;
+    border-color: $color-secondary;
+  }
+
+  .item-row-item {
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 17px 0 17px 20px;
+  }
+
+}
+
+
+.item-filter-row-grid {
+  display: grid !important;
+  grid-gap: 15px;
+  grid-template-columns: 1fr 250px 250px !important;
+  margin: 10px;
+
+}

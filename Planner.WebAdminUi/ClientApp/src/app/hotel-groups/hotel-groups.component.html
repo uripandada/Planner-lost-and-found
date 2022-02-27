@@ -1,0 +1,93 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-wrapper">
+
+  <div class="component-list-details-wrapper hotel-groups-grid">
+    <div class="component-list-wrapper">
+      <div class="component-box">
+        <div class="component-box-title">
+          <div class="left-side">
+            <div class="major-column-title"><b>Hotel groups</b></div>
+            <div class="major-column-subtitle">All hotel groups available in the system</div>
+          </div>
+          <div class="right-side">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newHotelGroup()"><i class="icofont-plus"></i> <span>Create a new hotel group</span></button>
+          </div>
+        </div>
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row two-column-filter-row">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="keywords" matInput placeholder="Filter by keywords">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="sortKey" name="food">
+                    <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                      {{sort.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <div *ngIf="(totalNumberOfHotelGroups$ | async) === 0">
+            <div class="empty-list-results">
+              <div class="empty-alert">
+                No hotel groups found for the filter...
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="(totalNumberOfHotelGroups$ | async) > 0">
+            <table class="list-view-table">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="list-view-items-row" *ngFor="let hotelGroup of hotelGroups$ | async" (click)="selectHotelGroup(hotelGroup)" [class.list-view-items-row-selected]="hotelGroup.id === (selectedHotelGroupId$ | async)">
+                  <td class="key-cell">
+                    <div class="cell-value">{{hotelGroup.key}}</div>
+                  </td>
+                  <td class="name-cell">
+                    <div class="cell-value">{{hotelGroup.name}}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div class="list-totals">
+                <span>Showing</span>
+                <span>{{loadedNumberOfHotelGroups$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumberOfHotelGroups$ | async}}</span>
+                <span>hotel groups</span>
+              </div>
+              <div class="load-more-actions" *ngIf="showLoadMore$ | async">
+                <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="component-details-wrapper">
+      <div class="details-content-wrapper">
+        <ng-container *ngIf="(this.isLoadingHotelGroupDetails$ | async)">
+          <div class="component-box-title">Loading hotel group...</div>
+        </ng-container>
+        <ng-container *ngIf="!(this.isLoadingHotelGroupDetails$ | async)">
+          <app-hotel-group-details [hotelGroup]="selectedHotelGroupDetails$ | async" (inserted)="onHotelGroupInserted($event)" (updated)="onHotelGroupUpdated($event)" (cancelled)="onHotelGroupCancelled()"></app-hotel-group-details>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>

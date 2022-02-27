@@ -1,0 +1,16 @@
+<div class="tim-wrapper">
+  <div class="tim-items-title">
+    <div class="interval-separator"></div>
+    <div class="interval-input">From</div>
+    <div class="interval-separator"></div>
+    <div class="interval-input">To</div>
+  </div>
+  <div class="tim-items">
+    <app-time-interval-input class="tim-item" *ngFor="let intervalFormGroup of timeIntervalsFormArray.controls; let intervalFormIndex = index" [intervalFormGroup]="intervalFormGroup" [intervalFormIndex]="intervalFormIndex" (removed)="onIntervalRemoved(intervalFormIndex)"></app-time-interval-input>
+  </div>
+  <div class="tim-actions">
+    <button mat-flat-button type="button" class="button-with-icon" (click)="addNewInterval()"><i class="icofont-plus"></i> Add interval</button>
+  </div>
+</div>
+
+

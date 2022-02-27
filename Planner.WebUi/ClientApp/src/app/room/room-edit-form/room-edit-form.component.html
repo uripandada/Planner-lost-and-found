@@ -1,0 +1,67 @@
+<div class="room-edit-form-component">
+  <div class="room-edit-form-wrapper">
+    <form [formGroup]="roomForm" class="room-edit-form">
+      <div>
+        <div class="radio-button-group">
+          <mat-radio-group aria-labelledby=""
+                           class=""
+                           formControlName="typeKey">
+            <mat-radio-button class="" *ngFor="let roomType of roomTypes" [value]="roomType.key">
+              {{roomType.value}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <label>Name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="name" matInput>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Category</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="categoryId">
+                <mat-option *ngFor="let roomCategory of roomCategories" [value]="roomCategory.id">
+                  {{roomCategory.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <label>Floor section name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="floorSectionName" matInput>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Floor subsection name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="floorSubSectionName" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="roomForm.controls.typeKey.value === 'HOSTEL'">
+          <app-room-beds-edit [roomBedsFormArray]="roomBedsFormArray"></app-room-beds-edit>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="form-actions">
+    <div class="form-left-side-actions">
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save(false)">
+        <i class="icofont-check-alt"></i>
+        Save
+      </button>
+      <button mat-stroked-button type="button" class="button-with-icon secondary-button outlined-button" (click)="save(true)" *ngIf="isCreateNewRoom">
+        <i class="icofont-arrow-right"></i>
+        Save and continue
+      </button>
+    </div>
+    <div class="form-right-side-actions">
+      <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+    </div>
+  </div>
+</div>

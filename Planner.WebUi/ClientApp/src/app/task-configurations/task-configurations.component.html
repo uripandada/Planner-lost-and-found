@@ -1,0 +1,376 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="component-wrapper task-configurations-component">
+  <div class="component-content-row">
+    <div class="task-configurations-list-details-grid component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
+      <div class="component-list-wrapper">
+
+        <div class="major-column-title"><b>Task in mass definition</b></div>
+
+        <div class="component-box">
+          <div class="component-filter-row">
+            <form [formGroup]="filterForm">
+              <div class="tasks-filter-row-grid">
+                <div class="filter-row">
+                  <div class="form-field-wrapper">
+                    <!--<label>Search tasks</label>-->
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <input formControlName="keywords" matInput placeholder="Find by keywords">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-field-wrapper">
+                    <!--<label>Sort by</label>-->
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <mat-select formControlName="sortKey" name="sort">
+                        <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                          {{sort.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="list-view-wrapper task-configurations-list">
+            <table class="list-view-table">
+              <thead>
+                <tr>
+                  <th class="progress-c">Completed</th>
+                  <th class="progress-c">Verified</th>
+                  <th class="tc-what-c">What to do</th>
+                  <th class="tc-desc-c">Description</th>
+                  <th class="nr-c">Total</th>
+                  <th class="nr-c">Pending</th>
+                  <th class="nr-c">Waiting</th>
+                  <th class="nr-c">Started</th>
+                  <th class="nr-c">Paused</th>
+                  <th class="nr-c">Completed</th>
+                  <th class="nr-c">Verified</th>
+                  <th class="nr-c">Cancelled</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="list-view-items-row" *ngFor="let taskConfig of taskConfigurations$ | async" (click)="selectTaskConfiguration(taskConfig)" [class.list-view-items-row-selected]="taskConfig.id === (selectedTaskConfigurationGridItemId$ | async)">
+                  <td class="progress-c">
+                    <div class="tc-prog-wrapper" [class]="taskConfig.completionStatus">
+                      <div class="tc-prog-percent">{{taskConfig.completionPercentString}}</div>
+                      <div class="tc-prog" [style.width.%]="taskConfig.completionFactor * 100">
+                      </div>
+                    </div>
+                  </td>
+                  <td class="progress-c">
+                    <div class="tc-prog-wrapper" [class]="taskConfig.verificationStatus">
+                      <div class="tc-prog-percent">{{taskConfig.verificationPercentString}}</div>
+                      <div class="tc-prog" [style.width.%]="taskConfig.verificationFactor * 100">
+                      </div>
+                    </div>
+                    <!--<div class="tc-prog-wrapper STARTING">
+                      <div class="tc-prog-percent">25%</div>
+                      <div class="tc-prog" [style.width.%]="25">
+                      </div>
+                    </div>
+
+                    <div class="tc-prog-wrapper IN_PROGRESS">
+                      <div class="tc-prog-percent">60%</div>
+                      <div class="tc-prog" [style.width.%]="60">
+                      </div>
+                    </div>
+                    <div class="tc-prog-wrapper ALMOST_COMPLETE">
+                      <div class="tc-prog-percent">85%</div>
+                      <div class="tc-prog" [style.width.%]="85">
+                      </div>
+                    </div>
+                    <div class="tc-prog-wrapper COMPLETE">
+                      <div class="tc-prog-percent">100%</div>
+                      <div class="tc-prog" [style.width.%]="100">
+                      </div>
+                    </div>-->
+                  </td>
+                  <td class="tc-what-c">
+                    <div class="tc-action" *ngFor="let tcAction of taskConfig.actions; let tcActionIndex = index"><span class="tc-action-index">{{tcActionIndex + 1}}.</span>{{tcAction.actionName}} {{tcAction.assetQuantity}}&times;{{tcAction.assetName}}</div>
+                  </td>
+                  <td class="tc-desc-c">{{taskConfig.taskDescription}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfPendingTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfWaitingTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfStartedTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfPausedTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfFinishedTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfVerifiedTasks}}</td>
+                  <td class="nr-c">{{taskConfig.numberOfCancelledTasks}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div class="tasks-list-totals-description">
+                <span>Showing</span>
+                <span>{{loadedNumberOfTaskConfigurations$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumberOfTaskConfigurations$ | async}}</span>
+                <span>task configurations</span>
+              </div>
+              <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+                <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="details-view-wrapper component-details-wrapper">
+        <div class="details-content-wrapper">
+          <ng-container *ngIf="(this.isLoadingTaskConfigurationDetails$ | async)">
+            <div class="major-column-title">Loading task configuration...</div>
+          </ng-container>
+          <ng-container *ngIf="!(this.isLoadingTaskConfigurationDetails$ | async) && (this.taskConfigurationDetails$ | async) as taskConfigurationDetails">
+            <div class="major-column-title">Task configuration details</div>
+            <div class="task-configuration-details-content component-box">
+
+
+              <div class="tcd-summary" *ngIf="(selectedTaskConfigurationGridItem$ | async) as selectedConfig">
+                <div class="tcd-summary-cards">
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfTasks}}</div>
+                    <label>Total</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfPendingTasks}}</div>
+                    <label>Pending</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfWaitingTasks}}</div>
+                    <label>Waiting</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfStartedTasks}}</div>
+                    <label>Started</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfPausedTasks}}</div>
+                    <label>Paused</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfFinishedTasks}}</div>
+                    <label>Finished</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfVerifiedTasks}}</div>
+                    <label>Verified</label>
+                  </div>
+                  <div class="tcd-summary-card">
+                    <div>{{selectedConfig.numberOfCancelledTasks}}</div>
+                    <label>Cancelled</label>
+                  </div>
+                </div>
+                <div class="tcd-progress">
+                  <div class="tc-prog-wrapper" [class]="selectedConfig.completionStatus">
+                    <div class="tc-prog-percent">Completed {{selectedConfig.completionPercentString}}</div>
+                    <div class="tc-prog" [style.width.%]="selectedConfig.completionFactor * 100">
+                    </div>
+                  </div>
+                  <div class="tc-prog-wrapper" [class]="selectedConfig.verificationStatus">
+                    <div class="tc-prog-percent">Verified {{selectedConfig.verificationPercentString}}</div>
+                    <div class="tc-prog" [style.width.%]="selectedConfig.verificationFactor * 100">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="tcd-whats">
+                <div class="tdc-section-title">What to do?</div>
+                <div class="tcd-what" *ngFor="let what of taskConfigurationDetails.whats; let whatIndex = index;">
+                  <span class="tcd-what-ordinal">{{whatIndex + 1}}.</span>{{what.actionName}} <b>{{what.assetQuantity}}</b> &times; {{what.assetName}}
+                </div>
+              </div>
+
+              <div class="tcd-description">
+                <div class="tdc-section-title">Task description</div>
+                {{(selectedTaskConfigurationGridItem$ | async).taskDescription}}
+              </div>
+
+              <div class="tcd-whos">
+                <div class="tdc-section-title">Who will do it?</div>
+                <div class="tdc-whos-list">
+                  <div class="tcd-who" *ngFor="let who of taskConfigurationDetails.whos">
+                    <div class="selected-where-item">
+                      <div>
+                        <div class="faa-title">{{who.referenceName}}</div>
+                        <div class="faa-label">{{who.typeDescription}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tcd-wheres">
+                <div class="tdc-section-title">Where to do it?</div>
+                <div class="tdc-wheres-list">
+                  <div class="tcd-where" *ngFor="let where of taskConfigurationDetails.wheres">
+                    <div class="selected-where-item">
+                      <div>
+                        <div class="faa-title">{{where.referenceName}}</div>
+                        <div class="faa-label">{{where.typeDescription}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tcd-other-options">
+                <div class="tdc-section-title">Additional information</div>
+                <div class="tdc-subsection two-column-grid">
+                  <div class="tdc-data">
+                    <label>Credits</label>
+                    <div>{{taskConfigurationDetails.credits}}</div>
+                  </div>
+                  <div class="tdc-data">
+                    <label>Price</label>
+                    <div>{{taskConfigurationDetails.price}} <span class="tdc-data-suffix">€</span></div>
+                  </div>
+                </div>
+                <div class="tdc-subsection" *ngIf="taskConfigurationDetails.comment">
+                  <div class="tdc-data">
+                    <label>Comment</label>
+                    <div>{{taskConfigurationDetails.comment}}</div>
+                  </div>
+                </div>
+                <div class="tdc-subsection tdc-subsection-booleans">
+                  <div class="tdc-data tdc-boolean" [class.tdc-boolean-success]="taskConfigurationDetails.isGuestRequest">
+                    <div>
+                      <i [class.icofont-check]="taskConfigurationDetails.isGuestRequest" [class.icofont-minus]="!taskConfigurationDetails.isGuestRequest"></i>
+                    </div>
+                    <div>Guest request</div>
+                  </div>
+                  <div class="tdc-data tdc-boolean" [class.tdc-boolean-success]="taskConfigurationDetails.isShownInNewsFeed">
+                    <div>
+                      <i [class.icofont-check]="taskConfigurationDetails.isShownInNewsFeed" [class.icofont-minus]="!taskConfigurationDetails.isShownInNewsFeed"></i>
+                    </div>
+                    <div>Shown in news feed</div>
+                  </div>
+                  <div class="tdc-data tdc-boolean" [class.tdc-boolean-success]="taskConfigurationDetails.isRescheduledEveryDayUntilFinished">
+                    <div>
+                      <i [class.icofont-check]="taskConfigurationDetails.isRescheduledEveryDayUntilFinished" [class.icofont-minus]="!taskConfigurationDetails.isRescheduledEveryDayUntilFinished"></i>
+                    </div>
+                    <div>Rescheduled every day until finished</div>
+                  </div>
+                  <div class="tdc-data tdc-boolean" [class.tdc-boolean-success]="taskConfigurationDetails.isMajorNotificationRaisedWhenFinished">
+                    <div>
+                      <i [class.icofont-check]="taskConfigurationDetails.isMajorNotificationRaisedWhenFinished" [class.icofont-minus]="!taskConfigurationDetails.isMajorNotificationRaisedWhenFinished"></i>
+                    </div>
+                    <div>Notifies when finished</div>
+                  </div>
+                  <div class="tdc-data tdc-boolean" [class.tdc-boolean-success]="taskConfigurationDetails.isBlockingCleaningUntilFinished">
+                    <div>
+                      <i [class.icofont-check]="taskConfigurationDetails.isBlockingCleaningUntilFinished" [class.icofont-minus]="!taskConfigurationDetails.isBlockingCleaningUntilFinished"></i>
+                    </div>
+                    <div>Blocks cleanings until finished</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tcd-tasks-wrapper">
+                <div>
+                  <table class="list-view-table">
+                    <thead>
+                      <tr>
+                        <th class="who-cell">User</th>
+                        <th class="where-cell">Where</th>
+                        <th class="when-cell">When</th>
+                        <th class="task-status-cell">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="list-view-items-row" *ngFor="let task of tasks$ | async">
+                        <td class="who-cell">
+                          <div class="td-user-avatar-grid">
+                            <!--<div class="task-details-avatar-wrapper">
+                              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+                              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+                            </div>-->
+                            <div>
+                              <div class="cell-value">{{task.userFullName}}</div>
+                              <!--<div class="sub-cell-value">{{task.userUsername}}</div>-->
+                            </div>
+                          </div>
+                        </td>
+                        <td class="where-cell">
+                          <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+                          <!--<div class="sub-cell-value">{{task.whereDescription}}</div>-->
+                        </td>
+                        <td class="when-cell">
+                          <div class="cell-value">{{task.whenDescription}}</div>
+                          <!--<div class="sub-cell-value">{{task.whenDescription}}</div>-->
+                        </td>
+                        <td class="task-status-cell">
+                          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <div class="tasks-list-totals-description">
+                      <span>Showing</span>
+                      <span>{{loadedNumberOfTasks$ | async}}</span>
+                      <span>/</span>
+                      <span>{{totalNumberOfTasks$ | async}}</span>
+                      <span>tasks</span>
+                    </div>
+                    <div class="tasks-list-load-more-actions" *ngIf="showLoadMoreTasks$ | async">
+                      <button mat-flat-button type="button" (click)="loadMoreConfigurationTasks()">Load 20 more</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+          </ng-container>
+        </div>
+        <ng-container *ngIf="!(this.isLoadingTaskConfigurationDetails$ | async) && !(this.taskConfigurationDetails$ | async)">
+          <div class="no-task-selected-panel">
+            <img src="/assets/images/task-list.svg" />
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<ng-container *ngIf="isTaskConfigurationPopupShown$ | async">
+  <app-popup [isOpen]="isTaskConfigurationPopupShown$ | async" (closed)="hideTaskConfigurationPopup()" class="tasks-configuration-popup" [isNonButtonCloseEnabled]="false">
+    <div class="popup-header">
+      <div class="major-column-title" *ngIf="(isCreateNew$ | async)">
+        Generate <b>new</b> tasks
+      </div>
+      <div class="major-column-title" *ngIf="!(isCreateNew$ | async)">
+        <ng-container *ngIf="(selectedTaskConfiguration$ | async) as taskConfig">
+          <b>Edit</b> task configuration
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <app-task-configuration [taskConfiguration]="selectedTaskConfiguration$ | async"
+                              [allTaskActions]="tasksData.allTaskActions"
+                              [allWhos]="tasksData.allWhos"
+                              [allWheres]="tasksData.allWheres"
+                              [allTaskTypes]="tasksData.allTaskTypes"
+                              [allRecurringTaskTypes]="tasksData.allRecurringTaskTypes"
+                              [allEventTaskTypes]="tasksData.allEventTaskTypes"
+                              [allEventTaskModifierTypes]="tasksData.allEventTaskModifierTypes"
+                              (cancelled)="hideTaskConfigurationPopup()"
+                              (saved)="tasksSaved($event)"></app-task-configuration>
+    </div>
+  </app-popup>
+</ng-container>-->

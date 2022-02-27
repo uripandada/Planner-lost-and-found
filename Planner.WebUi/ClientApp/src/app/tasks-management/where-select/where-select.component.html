@@ -1,0 +1,15 @@
+<mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+  <input type="text"
+         [placeholder]="placeholderText"
+         aria-label="Number"
+         matInput
+         #multiselectInput
+         [formControl]="whereFormControl"
+         [matAutocomplete]="whereAutocomplete">
+  <mat-autocomplete #whereAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWhere" >
+    <mat-option *ngFor="let where of filteredWheres$ | async" [value]="where">
+      <div class="faa-title">{{where.referenceName}}</div>
+      <div class="faa-label">{{where.typeDescription}}</div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

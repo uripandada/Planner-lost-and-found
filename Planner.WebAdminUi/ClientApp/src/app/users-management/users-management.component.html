@@ -1,0 +1,93 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-wrapper">
+
+  <div class="component-list-details-wrapper">
+    <div class="component-list-wrapper">
+      <div class="component-box">
+        <div class="component-box-title">
+          <div class="left-side">
+            <div class="major-column-title"><b>Users</b></div>
+            <div class="major-column-subtitle">Everyone who can access the Roomchecking Administration interface</div>
+          </div>
+          <div class="right-side">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newUser()"><i class="icofont-plus"></i> <span>Create a new user</span></button>
+          </div>
+        </div>
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row two-column-filter-row">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="keywords" matInput placeholder="Filter by username or email">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="sortKey" name="food">
+                    <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                      {{sort.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <div *ngIf="(totalNumberOfUsers$ | async) === 0">
+            <div class="empty-list-results">
+              <div class="empty-alert">
+                No users found for the filter...
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="(totalNumberOfUsers$ | async) > 0">
+            <table class="list-view-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="list-view-items-row" *ngFor="let user of users$ | async" (click)="selectUser(user)" [class.list-view-items-row-selected]="user.id === (selectedUserId$ | async)">
+                  <td class="username-cell">
+                    <div class="cell-value">{{user.username}}</div>
+                  </td>
+                  <td class="email-cell">
+                    <div class="cell-value">{{user.email}}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div class="list-totals">
+                <span>Showing</span>
+                <span>{{loadedNumberOfUsers$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumberOfUsers$ | async}}</span>
+                <span>users</span>
+              </div>
+              <div class="load-more-actions" *ngIf="showLoadMore$ | async">
+                <button mat-flat-button type="button" (click)="loadMoreUsers()">Load 20 more</button>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="component-details-wrapper">
+      <div class="details-content-wrapper">
+        <ng-container *ngIf="(this.isLoadingUserDetails$ | async)">
+          <div class="component-box-title">Loading user...</div>
+        </ng-container>
+        <ng-container *ngIf="!(this.isLoadingUserDetails$ | async)">
+          <app-user-details [user]="selectedUserDetails$ | async" (inserted)="onUserInserted($event)" (updated)="onUserUpdated($event)" (cancelled)="onUserCancelled()"></app-user-details>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>

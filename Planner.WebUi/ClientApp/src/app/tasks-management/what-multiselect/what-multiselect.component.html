@@ -1,0 +1,49 @@
+
+<div class="what-form-group">
+  <div class="inline-form-row">
+    <mat-form-field appearance="outline" color="accent" class="full-width">
+      <input [formControl]="selectWhatForm.controls.quantity" matInput placeholder="0" class="text-right">
+    </mat-form-field>
+  </div>
+  <div>&times;</div>
+  <div class="inline-form-row">
+    <mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+      <input type="text"
+             [placeholder]="'What to do?'"
+             aria-label="Number"
+             matInput
+             #multiselectInputOne
+             [formControl]="selectWhatForm.controls.what"
+             [matAutocomplete]="whatAutocomplete">
+      <mat-autocomplete #whatAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWhat"
+                        (optionSelected)="blurAutocomplete()">
+        <mat-option *ngFor="let what of filteredWhats$ | async" [value]="what">
+          <div class="faa-title">{{what.actionName}} {{what.assetName}}</div>
+          <div class="faa-label">{{what.description}}</div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="selected-whats-list">
+  <div *ngFor="let whatFormGroup of whatsFormArray.controls; let whatFormGroupIndex = index" class="selected-what-item">
+    <div class="what-index-label">
+      <!--<span>
+        {{whatFormGroupIndex + 1}}
+      </span>-->
+    </div>
+    <div>
+      <div class="selected-what-title">{{whatFormGroup.controls.actionName.value}} <ng-container *ngIf="+(whatFormGroup.controls.assetQuantity.value) > 1"><b>{{whatFormGroup.controls.assetQuantity.value}}</b>&times;</ng-container>{{whatFormGroup.controls.assetName.value}}</div>
+    </div>
+    <div>
+      <button mat-flat-button type="button" class="delete-button"
+              mwlConfirmationPopover
+              [popoverMessage]="'Are you sure you want to remove the what?'"
+              placement="bottom"
+              (confirm)="removeWhat(whatFormGroupIndex)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+  </div>
+</div>

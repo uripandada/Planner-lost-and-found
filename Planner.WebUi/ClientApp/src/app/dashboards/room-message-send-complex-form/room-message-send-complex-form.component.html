@@ -1,0 +1,93 @@
+
+<div class="rmsg-small-title left-right">
+  <div class="rmsg-small-title-text">Advanced mode</div>
+  <div><button mat-flat-button type="button" class="small-button" (click)="setSimpleMode()">Simple mode</button></div>
+</div>
+<form [formGroup]="messageForm" class="rmessage-form">
+
+  <div class="rmsg-main-type">
+    <mat-radio-group formControlName="forType">
+      <mat-radio-button [value]="roomMessageForType.TODAY">Today</mat-radio-button>
+      <mat-radio-button [value]="roomMessageForType.PLACES">Future</mat-radio-button>
+      <mat-radio-button [value]="roomMessageForType.RESERVATIONS">Reservations</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="rmsg-message">
+    <mat-form-field appearance="outline" class="full-width">
+      <textarea matInput rows="6" formControlName="message" placeholder="Write a message here"></textarea>
+      <mat-error *ngIf="messageForm.controls.message.invalid && (messageForm.controls.message.dirty || messageForm.controls.message.touched)">
+        <div *ngIf="messageForm.controls.message.errors.required">Required</div>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="rmsg-wheres">
+    <app-messages-filter-multiselect [elementId]="'msg-fms-id'" [filterGroups]="whereGroups$ | async" [filterValuesFormArray]="selectedFilterValuesFormArray"></app-messages-filter-multiselect>
+    <mat-error class="left-side-mat-errors" *ngIf="messageForm.controls.filterValues.invalid && (messageForm.controls.filterValues.dirty || messageForm.controls.filterValues.touched)">
+      <div *ngIf="messageForm.controls.filterValues.errors.required">You have to select at least one</div>
+    </mat-error>
+  </div>
+
+  <ng-container *ngIf="messageForm.controls.forType.value === roomMessageForType.PLACES">
+    <div class="rmsg-date-type">
+      <mat-radio-group formControlName="dateType">
+        <mat-radio-button [value]="roomMessageDateType.SPECIFIC_DATES">Specific dates</mat-radio-button>
+        <mat-radio-button [value]="roomMessageDateType.INTERVAL">Interval</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="rmsg-specific-dates" *ngIf="messageForm.controls.dateType.value === roomMessageDateType.SPECIFIC_DATES">
+      <mat-error class="left-side-mat-errors" *ngIf="messageForm.controls.dates.invalid && (messageForm.controls.dates.dirty || messageForm.controls.dates.touched)">
+        <div *ngIf="messageForm.controls.dates.errors.required">You have to select at least one date</div>
+      </mat-error>
+      <app-date-multiselect [datesFormArray]="messageForm.controls.dates"></app-date-multiselect>
+    </div>
+    <div class="rmsg-interval" *ngIf="messageForm.controls.dateType.value === roomMessageDateType.INTERVAL">
+      <mat-form-field appearance="outline">
+        <mat-label>From date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="intervalStartDate" (click)="startPicker.open()">
+        <mat-datepicker-toggle matSuffix [for]="startPicker">
+          <i class="icofont-calendar" matDatepickerToggleIcon></i>
+        </mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>To date</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="intervalEndDate" (click)="endPicker.open()">
+        <mat-datepicker-toggle matSuffix [for]="endPicker">
+          <i class="icofont-calendar" matDatepickerToggleIcon></i>
+        </mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent" class="full-width">
+        <mat-label>Every X days</mat-label>
+        <input formControlName="intervalEveryNumberOfDays" matInput placeholder="Every X days" class="text-right">
+        <mat-error class="left-side-mat-errors" *ngIf="messageForm.controls.intervalEveryNumberOfDays.invalid && (messageForm.controls.intervalEveryNumberOfDays.dirty || messageForm.controls.intervalEveryNumberOfDays.touched)">
+          <div *ngIf="messageForm.controls.intervalEveryNumberOfDays.errors.required">You have to select at least one</div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <div class="rmsg-reservation-dates" *ngIf="messageForm.controls.forType.value === roomMessageForType.RESERVATIONS">
+    <div class="form-field-wrapper">
+      <mat-checkbox formControlName="reservationOnArrivalDate">On arrival date</mat-checkbox>
+    </div>
+    <div class="form-field-wrapper">
+      <mat-checkbox formControlName="reservationOnStayDates">On stay dates</mat-checkbox>
+    </div>
+    <div class="form-field-wrapper">
+      <mat-checkbox formControlName="reservationOnDepartureDate">On departure date</mat-checkbox>
+    </div>
+  </div>
+  <div class="popup-actions">
+    <div class="popup-confirm-actions">
+      <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+        <ng-container *ngIf="(isEditMode$ | async) as isEditMode; else sendMessageLabel">Re-send changes</ng-container>
+        <ng-template #sendMessageLabel>Send</ng-template>
+      </button>
+      <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+        <i class="icofont-undo"></i> Cancel
+      </button>
+    </div>
+    <div class="popup-cancel-actions">
+    </div>
+  </div>
+</form>

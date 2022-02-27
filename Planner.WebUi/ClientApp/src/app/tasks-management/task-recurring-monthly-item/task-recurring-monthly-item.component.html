@@ -1,0 +1,35 @@
+<form [formGroup]="startsAtMonthDayForm">
+
+  <div class="monthly-multiselect-item">
+    <div class="input-text-label">
+      Every
+    </div>
+    <div class="nth-of-month-wrapper">
+      <!--<mat-form-field appearance="outline">
+    <input formControlName="nthOfMonth" type="text" matInput placeholder="Day..." />
+  </mat-form-field>-->
+      <mat-form-field appearance="outline" color="accent" class="full-width">
+        <mat-select formControlName="nthOfMonth" name="sort">
+          <mat-option *ngFor="let monthDay of monthDays" [value]="monthDay.id">
+            <span [innerHtml]="monthDay.text"></span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-text-label">
+      of the month at
+    </div>
+    <div class="monthly-time-item">
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="text"
+               placeholder="From"
+               formControlName="startsAtTime" [textMask]="{mask: mask}">
+        <i matSuffix class="icofont-stopwatch"></i>
+      </mat-form-field>
+    </div>
+    <div class="monthly-multiselect-item-actions">
+      <button mat-flat-button type="button" (click)="remove()"><i class="icofont-close"></i></button>
+    </div>
+  </div>
+
+</form>

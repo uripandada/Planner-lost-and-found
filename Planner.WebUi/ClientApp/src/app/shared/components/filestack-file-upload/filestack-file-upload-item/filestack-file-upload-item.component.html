@@ -1,0 +1,11 @@
+<div class="cmp-fsfu-item">
+  <img [src]="fileUrl$ | async" />
+  <button *ngIf="(isUploaded$ | async); else uploadingSection" type="button" (click)="remove()">&times;</button>
+  <ng-template #uploadingSection>
+    <div class="fsfu-overlay"></div>
+    <div class="fsfu-in-progress">
+      <div class="fusfu-progress">{{progress$ | async}}%</div>
+      <mat-progress-bar mode="determinate" [value]="progress$ | async"></mat-progress-bar>
+    </div>
+  </ng-template>
+</div>

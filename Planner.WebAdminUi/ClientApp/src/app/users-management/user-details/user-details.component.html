@@ -1,0 +1,67 @@
+
+<div class="component-box user-details-component-box">
+  <div class="component-box-title">
+    <div class="left-side">
+      <ng-container *ngIf="isCreateNew">
+        <div class="major-column-title"><b>New user</b></div>
+        <div class="major-column-subtitle">Create a new user</div>
+      </ng-container>
+      <ng-container *ngIf="!isCreateNew">
+        <div class="major-column-title">Edit <b>{{user.username}}</b></div>
+        <div class="major-column-subtitle">Edit existing user's data</div>
+      </ng-container>
+
+    </div>
+    <div class="right-side">
+    </div>
+  </div>
+  <div class="component-box-form">
+    <form [formGroup]="userForm">
+      <div>
+        <div class="form-field-wrapper">
+          <label>Username</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="username" matInput>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Email</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="email" matInput>
+          </mat-form-field>
+        </div>
+        <div class="two-column-grid">
+          <div class="form-field-wrapper">
+            <label>Password</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input formControlName="password" matInput type="password">
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Same password</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input formControlName="passwordConfirmation" type="password" matInput>
+              <mat-hint>Type the same password again</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="edit-actions">
+        <div class="edit-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+            <i class="icofont-check-alt"></i>
+            <ng-container *ngIf="isCreateNew">Save</ng-container>
+            <ng-container *ngIf="!isCreateNew">Update</ng-container>
+          </button>
+        </div>
+        <div class="edit-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>

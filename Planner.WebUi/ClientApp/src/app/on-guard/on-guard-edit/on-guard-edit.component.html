@@ -1,0 +1,90 @@
+<ng-container *ngIf="item">
+  <div class="major-column-title">
+    <ng-container *ngIf="isCreateNew">Create a <b>new item</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit the <b>{{item.itemName}}</b></ng-container>
+  </div>
+  <div class="item-component-wrapper component-wrapper component-box">
+    <div class="item-edit-wrapper">
+      <form [formGroup]="itemForm">
+        <div class="item-edit">
+          <div class="item-fields-wrapper">
+            <div class="form-field-wrapper">
+              <label>First Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="firstName" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Last Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="lastName" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Phone Number</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="phoneNumber" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Address</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="address" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Reference Number</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="referenceNumber" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Identification</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input matInput formControlName="identification" type="text">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Description</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <textarea matInput formControlName="description" type="text" multiple></textarea>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Status</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="status">
+                  <mat-option *ngFor="let statusValue of statuses | enumToArray; let statusIndex=index"
+                    [value]="statusIndex">{{statusValue}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Photos and files</label>
+              <div>
+                <app-file-upload (filesChanged)="uploadedFilesChanged($event)"
+                  [currentlyUploadingFiles]="currentlyUploadingFiles$ | async"
+                  [temporaryUploadedFiles]="temporaryUploadedFiles$ | async" [uploadedFiles]="uploadedFiles$ | async">
+                </app-file-upload>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item-configuration-edit-actions">
+          <div class="edit-confirm-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()">
+              <i class="icofont-check-alt"></i>
+              <ng-container *ngIf="isCreateNew">Save</ng-container>
+              <ng-container *ngIf="!isCreateNew">Update</ng-container>
+            </button>
+          </div>
+          <div class="edit-cancel-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i
+                class="icofont-undo"></i> Cancel</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</ng-container>

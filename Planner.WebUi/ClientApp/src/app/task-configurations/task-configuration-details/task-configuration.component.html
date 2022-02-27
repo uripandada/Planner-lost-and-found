@@ -1,0 +1,505 @@
+<ng-container *ngIf="!(showTaskConfigSavePreview$ | async) && !(showTaskConfigCancelPreview$ | async)">
+  <form [formGroup]="taskConfigurationForm">
+    <div class="popup-content">
+      <div class="form-groups" *ngIf="!isCreateNew">
+        <div class="inline-form-row current-tasks-form-row">
+          <div class="current-tasks-form-group">
+            <div class="task-statistics-item TOTAL"><span>Total</span><span class="task-statistics-number">0</span></div>
+            <div class="task-statistics-item PENDING"><span>Pending</span><span class="task-statistics-number">0</span></div>
+            <div class="task-statistics-item WAITING"><span>Waiting</span><span class="task-statistics-number">0</span></div>
+            <div class="task-statistics-item STARTED"><span>Started</span><span class="task-statistics-number">0</span></div>
+            <div class="task-statistics-item PAUSED"><span>Paused</span><span class="task-statistics-number">0</span></div>
+            <div class="task-statistics-item FINISHED"><span>Finished</span><span class="task-statistics-number">0</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-groups">
+        <ng-container *ngIf="isCreateNew">
+          <div class="two-column-grid">
+            <div>
+
+              <app-what-multiselect [whatsFormArray]="taskConfigurationForm.controls.whats" [allWhats]="filteredTaskActions$ | async"></app-what-multiselect>
+              <!--<div class="inline-form-row">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="assetQuantity" matInput placeholder="0" class="text-right">
+                </mat-form-field>
+              </div>
+              <div>&times;</div>
+              <div class="inline-form-row">
+                <mat-form-field class="full-width" appearance="outline">
+                  <input type="text"
+                         placeholder="What to do?"
+                         aria-label="Number"
+                         matInput
+                         formControlName="selectedAction"
+                         [matAutocomplete]="taskActionsAutocomplete">
+                  <mat-autocomplete #taskActionsAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayTaskAction">
+                    <mat-option *ngFor="let action of filteredTaskActions$ | async" [value]="action">
+                      <div class="faa-title">{{action.actionName}} {{action.assetName}}</div>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>-->
+
+
+
+
+
+
+
+              <div class="inline-form-row who-form-row">
+                <div>
+                  <app-who-multiselect [allWhos]="allWhos" [isRequired]="true" formControlName="whos" [selectedWhos]="taskConfiguration.whos" [placeholderText]="'Who will do it?'"></app-who-multiselect>
+                  <div class="complete-by-everyone-check">
+                    <span class="complete-by-label">Must be completed by</span>
+                    <mat-radio-group aria-labelledby=""
+                                     class=""
+                                     formControlName="mustBeFinishedByAllWhos">
+                      <mat-radio-button class="" [value]="true">Everyone</mat-radio-button>
+                      <mat-radio-button class="" [value]="false">Anyone</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+              <div class="inline-form-row where-form-row" *ngIf="showMultiselectWheres$ | async">
+                <div>
+                  <app-where-multiselect [allWheres]="allWheres" [isRequired]="taskConfigurationForm.controls.whatsTypeKey.value === 'LIST'" formControlName="wheres" [selectedWheres]="taskConfiguration.wheres" [placeholderText]="'Where to do it?'"></app-where-multiselect>
+                </div>
+              </div>
+              <div class="inline-form-row where-from-to-form-row" *ngIf="showFromToWhere$ | async">
+                <div>
+                  <app-where-select [allWheres]="allWheres" [whereFormControl]="taskConfigurationForm.controls.whereFrom" [placeholderText]="'Where from?'"></app-where-select>
+                </div>
+                <div>
+                  <i class="icofont-arrow-right"></i>
+                </div>
+                <div>
+                  <app-where-select [allWheres]="allWheres" [whereFormControl]="taskConfigurationForm.controls.whereTo" [placeholderText]="'Where to?'"></app-where-select>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="two-column-grid">
+                <div>
+                  <div class="two-column-grid">
+                    <div class="inline-form-row what-form-group">
+                      <mat-form-field appearance="outline" class="full-width text-right">
+                        <input matInput formControlName="credits" />
+                        <span matSuffix>credits</span>
+                      </mat-form-field>
+                    </div>
+                    <div class="inline-form-row what-form-group">
+                      <mat-form-field appearance="outline" class="full-width text-right">
+                        <input matInput formControlName="price" />
+                        <span matSuffix>€</span>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="inline-form-row what-form-group">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-select formControlName="priorityKey">
+                        <mat-option value="HIGH">High priority</mat-option>
+                        <mat-option value="NORMAL">Normal priority</mat-option>
+                        <mat-option value="LOW">Low priority</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="inline-form-row comment-padding-fix">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <textarea matInput rows="9" formControlName="comment" placeholder="Write a comment"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="tc-additional-properties-column">
+                  <div class="inline-form-row vertical-check-boxes">
+                    <mat-checkbox formControlName="isGuestRequest">Guest request</mat-checkbox>
+                    <!--<mat-checkbox formControlName="isShownInNewsFeed">Show in news feed</mat-checkbox>
+                    <mat-checkbox formControlName="isRescheduledEveryDayUntilFinished">Reschedule every day until finished</mat-checkbox>
+                    <mat-checkbox formControlName="isMajorNotificationRaisedWhenFinished">Notify when finished</mat-checkbox>
+                    <mat-checkbox formControlName="isBlockingCleaningUntilFinished">Block cleaning until finished</mat-checkbox>-->
+                  </div>
+                  <div class="inline-form-row inline-file-upload-row">
+                    <div>
+                      <app-file-upload (filesChanged)="uploadedFilesChanged($event)"
+                        [currentlyUploadingFiles]="currentlyUploadingFiles"
+                        [temporaryUploadedFiles]="temporaryUploadedFiles"
+                        [uploadedFiles]="uploadedFiles">
+                      </app-file-upload>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+
+
+        <ng-container *ngIf="!isCreateNew">
+
+          <div class="two-column-grid">
+            <div>
+              <div class="selected-whats-list">
+                <div *ngFor="let whatFormGroup of whatsFormArray.controls; let whatFormGroupIndex = index" class="selected-what-item">
+                  <div class="what-index-label">
+                    <span>
+                      {{whatFormGroupIndex + 1}}
+                    </span>
+                  </div>
+                  <div>
+                    <div class="selected-what-title">{{whatFormGroup.controls.actionName.value}} <b>{{whatFormGroup.controls.assetQuantity.value}}</b>&times;{{whatFormGroup.controls.assetName.value}}</div>
+                    <!--<div class="faa-label">{{who.typeDescription}}</div>-->
+                  </div>
+                  <div>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <!--<div class="major-column-title">{{taskConfiguration.what.actionName}} {{taskConfiguration.what.assetQuantity}}&times;{{taskConfiguration.what.assetName}}</div>-->
+
+
+              <div class="inline-form-row from-to-wheres-display" *ngIf="taskConfiguration.whatsTypeKey === 'FROM_TO'">
+                <div><b>From</b> {{taskConfiguration.fromReferenceName}}</div>
+                <div>
+                  <i class="icofont-arrow-right"></i>
+                </div>
+                <div><b>To</b> {{taskConfiguration.toReferenceName}}</div>
+              </div>
+
+
+              <div class="inline-form-row where-form-row" *ngIf="taskConfiguration.whatsTypeKey === 'LIST'">
+                <div class="selected-wheres-list">
+                  <div *ngFor="let where of taskConfiguration.wheres" class="selected-where-item">
+                    <div>
+                      <div class="faa-title">{{where.referenceName}}</div>
+                      <div class="faa-label">{{where.typeDescription}}</div>
+                    </div>
+                    <div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="inline-form-row who-form-row">
+                <div>
+                  <app-who-multiselect [allWhos]="allWhos" [isRequired]="true" formControlName="whos" [selectedWhos]="taskConfiguration.whos" [placeholderText]="'Who will do it?'"></app-who-multiselect>
+                  <div class="complete-by-everyone-check" *ngIf="taskConfigurationForm.controls.whos.value.length > 1">
+                    <span class="complete-by-label">Must be completed by</span>
+                    <mat-radio-group aria-labelledby=""
+                                     class=""
+                                     formControlName="mustBeFinishedByAllWhos">
+                      <mat-radio-button class="" [value]="true">Everyone</mat-radio-button>
+                      <mat-radio-button class="" [value]="false">Anyone</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="two-column-grid">
+                <div>
+                  <div class="two-column-grid">
+                    <div class="inline-form-row what-form-group">
+                      <mat-form-field appearance="outline" class="full-width text-right">
+                        <input matInput formControlName="credits" [disabled]="true" />
+                        <span matSuffix>credits</span>
+                      </mat-form-field>
+                    </div>
+                    <div class="inline-form-row what-form-group">
+                      <mat-form-field appearance="outline" class="full-width text-right">
+                        <input matInput formControlName="price" [disabled]="true" />
+                        <span matSuffix>€</span>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="inline-form-row what-form-group">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-select formControlName="priorityKey" [disabled]="true">
+                        <mat-option value="HIGH">High priority</mat-option>
+                        <mat-option value="NORMAL">Normal priority</mat-option>
+                        <mat-option value="LOW">Low priority</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="inline-form-row comment-padding-fix">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <textarea matInput rows="9" formControlName="comment" placeholder="Write a comment"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="tc-additional-properties-column">
+                  <div class="inline-form-row vertical-check-boxes">
+                    <mat-checkbox formControlName="isGuestRequest">Guest request</mat-checkbox>
+                    <!--<mat-checkbox formControlName="isShownInNewsFeed">Show in news feed</mat-checkbox>
+                    <mat-checkbox formControlName="isRescheduledEveryDayUntilFinished">Reschedule every day until finished</mat-checkbox>
+                    <mat-checkbox formControlName="isMajorNotificationRaisedWhenFinished">Notify when finished</mat-checkbox>
+                    <mat-checkbox formControlName="isBlockingCleaningUntilFinished">Block cleaning until finished</mat-checkbox>-->
+                  </div>
+                  <div class="inline-form-row inline-file-upload-row">
+                    <div class="photos-management-wrapper">
+                      <div class="full-width task-details-images">
+                        <ng-container *ngFor="let taskImage of taskConfiguration.files">
+                          <div class="task-details-image" [ngStyle]="{'background-image': 'url(' + taskImage.fileUrl + ')'}">
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          <!--<div class="inline-form-row">
+            <label>What?</label>
+            <div class="what-form-group form-group-display">
+              <div></div>
+              <div></div>
+              <div>{{taskConfiguration.what.actionName}} {{taskConfiguration.what.assetQuantity}}&times;{{taskConfiguration.what.assetName}}</div>
+            </div>
+          </div>-->
+          <div class="two-column-grid">
+            <!--<div class="inline-form-row">
+              <label>Who?</label>
+              <div>
+                <app-who-multiselect [allWhos]="allWhos" [isRequired]="true" formControlName="whos" [selectedWhos]="taskConfiguration.whos"></app-who-multiselect>
+                <div class="complete-by-everyone-check" *ngIf="taskConfigurationForm.controls.whos.value.length > 1">
+                  <span class="complete-by-label">Must be completed by</span>
+                  <mat-radio-group aria-labelledby=""
+                                   class=""
+                                   formControlName="mustBeFinishedByAllWhos">
+                    <mat-radio-button class="" [value]="true">Everyone</mat-radio-button>
+                    <mat-radio-button class="" [value]="false">Anyone</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>-->
+            <!--<div class="inline-form-row">
+              <label>Where?</label>
+              <div>
+                <div class="selected-wheres-list">
+                  <div *ngFor="let where of taskConfiguration.wheres" class="selected-where-item">
+                    <div>
+                      <div class="faa-title">{{where.referenceName}}</div>
+                      <div class="faa-label">{{where.typeDescription}}</div>
+                    </div>
+                    <div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+          </div>
+          <div class="two-column-grid">
+            <!--<div class="inline-form-row comment-padding-fix">
+              <label>Comments</label>
+              <mat-form-field appearance="outline">
+                <textarea matInput rows="5" formControlName="comment"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="inline-form-row inline-file-upload-row">
+              <label>Photos and files</label>
+              <div class="photos-management-wrapper">
+                <div class="full-width task-details-images">
+                  <ng-container *ngFor="let taskImage of taskConfiguration.files">
+                    <div class="task-details-image" [ngStyle]="{'background-image': 'url(' + taskImage.fileUrl + ')'}">
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>-->
+          </div>
+
+        </ng-container>
+      </div>
+
+
+      <div class="form-groups">
+        <!--<div class="form-group-title">Task duration options</div>-->
+        <div class="inline-form-row">
+          <div>
+            <mat-radio-group class="task-type-radio-group primary-colored-label" formControlName="typeKey">
+              <mat-radio-button *ngFor="let taskType of allTaskTypes" [value]="taskType.key" [class.gray-task-type-active]="taskType.key === 'RECURRING'">
+                {{taskType.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div *ngIf="taskConfigurationForm.controls.typeKey.value === 'SINGLE'">
+          <div class="inline-form-row">
+            <div>
+              <app-task-single [taskSingleForm]="taskConfigurationForm.controls.taskSingleForm"></app-task-single>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="taskConfigurationForm.controls.typeKey.value === 'RECURRING'">
+          <div class="inline-form-row">
+            <div>
+              <app-task-recurring [allRecurringTaskTypes]="allRecurringTaskTypes" [taskRecurringForm]="taskConfigurationForm.controls.taskRecurringForm"></app-task-recurring>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="taskConfigurationForm.controls.typeKey.value === 'EVENT'">
+          <div class="inline-form-row">
+            <div>
+              <app-task-event [taskEventForm]="taskConfigurationForm.controls.taskEventForm" [allEventTaskTypes]="allEventTaskTypes" [allEventTaskModifierTypes]="allEventTaskModifierTypes"></app-task-event>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="taskConfigurationForm.controls.typeKey.value === 'BALANCED'">
+          <div class="inline-form-row">
+            <div>
+              <app-task-balanced [taskBalancedForm]="taskConfigurationForm.controls.taskBalancedForm"></app-task-balanced>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup-actions">
+      <div class="popup-actions-warning" *ngIf="!isCreateNew">
+        <i class="icofont-warning"></i> Recreating already existing tasks will first cancel all previously created tasks and then create new ones.
+      </div>
+      <div class="popup-actions-buttons">
+        <div class="popup-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()"><i class="icofont-check-alt"></i> <ng-container *ngIf="isCreateNew">Create</ng-container><ng-container *ngIf="!isCreateNew">Recreate</ng-container> tasks</button>
+        </div>
+        <div class="popup-cancel-actions">
+          <button mat-stroked-button type="button" class="button-with-icon" color="warn" *ngIf="!isCreateNew" (click)="showCancelTasksPreview()"><i class="icofont-close-line"></i> Cancel all created tasks</button>
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Close without saving</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+</ng-container>
+<ng-container *ngIf="(showTaskConfigSavePreview$ | async)">
+  <ng-container *ngIf="(taskConfigSavePreview$ | async) as taskConfig">
+
+    <div class="popup-content task-configuration-preview">
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.manuallyConfiguredTasks.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.manuallyConfiguredTasks.length}}</b> manually edited</div>
+        <app-tasks-preview-list [tasks]="taskConfig.manuallyConfiguredTasks"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.passedTasks.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.passedTasks.length}}</b> tasks already passed</div>
+        <app-tasks-preview-list [tasks]="taskConfig.passedTasks"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.startedTasks.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.startedTasks.length}}</b> tasks already started</div>
+        <app-tasks-preview-list [tasks]="taskConfig.startedTasks"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.tasksToCancel.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.tasksToCancel.length}}</b> tasks that will be cancelled</div>
+        <app-tasks-preview-list [tasks]="taskConfig.tasksToCancel"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.passedTasksToCreate.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.passedTasksToCreate.length}}</b> tasks to create but are already passed</div>
+        <app-tasks-preview-list [tasks]="taskConfig.passedTasksToCreate"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.tasksToCreate.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.tasksToCreate.length}}</b> tasks that will be created</div>
+        <app-tasks-preview-list [tasks]="taskConfig.tasksToCreate"></app-tasks-preview-list>
+      </div>
+    </div>
+
+    <div class="popup-actions">
+      <div class="task-config-diff-items">
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.manuallyConfiguredTasks.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.manuallyConfiguredTasks.length}}</div>
+          <div class="task-config-diff-description">manually edited</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.passedTasks.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.passedTasks.length}}</div>
+          <div class="task-config-diff-description">already passed</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.startedTasks.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.startedTasks.length}}</div>
+          <div class="task-config-diff-description">already started</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.passedTasksToCreate.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.passedTasksToCreate.length}}</div>
+          <div class="task-config-diff-description">should be created but are already passed</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.tasksToCancel.length === 0">
+          <div class="task-config-diff-title diff-title-to-cancel">{{taskConfig.tasksToCancel.length}}</div>
+          <div class="task-config-diff-description">will be cancelled</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.tasksToCreate.length === 0">
+          <div class="task-config-diff-title diff-title-to-create">{{taskConfig.tasksToCreate.length}}</div>
+          <div class="task-config-diff-description">will be created</div>
+        </div>
+      </div>
+      <div class="popup-actions-buttons">
+        <div class="popup-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="confirmSaveTaskConfiguration(false)"><i class="icofont-check-alt"></i> Confirm tasks</button>
+          <button mat-stroked-button type="button" class="button-with-icon secondary-button outlined-button" (click)="confirmSaveTaskConfiguration(true)" *ngIf="isCreateNew"><i class="icofont-arrow-right"></i> Confirm and continue</button>
+        </div>
+        <div class="popup-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="backToTaskConfigurationEdit()"><i class="icofont-arrow-left"></i> Back</button>
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Close without saving</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<ng-container *ngIf="(showTaskConfigCancelPreview$ | async)">
+  <ng-container *ngIf="(taskConfigCancelPreview$ | async) as taskConfig">
+
+    <div class="popup-content task-configuration-preview">
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.alreadyCancelledTasks.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.alreadyCancelledTasks.length}}</b> already cancelled tasks</div>
+        <app-tasks-preview-list [tasks]="taskConfig.alreadyCancelledTasks"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.alreadyFinishedTasks.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.alreadyFinishedTasks.length}}</b> already finished tasks</div>
+        <app-tasks-preview-list [tasks]="taskConfig.alreadyFinishedTasks"></app-tasks-preview-list>
+      </div>
+      <div class="form-groups tasks-preview-list" *ngIf="taskConfig.tasksToCancel.length > 0">
+        <div class="list-title-large"><b>{{taskConfig.tasksToCancel.length}}</b> tasks that will be cancelled</div>
+        <app-tasks-preview-list [tasks]="taskConfig.tasksToCancel"></app-tasks-preview-list>
+      </div>
+    </div>
+
+    <div class="popup-actions">
+      <div class="task-config-diff-items">
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.alreadyCancelledTasks.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.alreadyCancelledTasks.length}}</div>
+          <div class="task-config-diff-description">already cancelled</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.alreadyFinishedTasks.length === 0">
+          <div class="task-config-diff-title">{{taskConfig.alreadyFinishedTasks.length}}</div>
+          <div class="task-config-diff-description">already finished</div>
+        </div>
+        <div class="task-config-diff-item" [class.empty-diff-item]="taskConfig.tasksToCancel.length === 0">
+          <div class="task-config-diff-title diff-title-to-cancel">{{taskConfig.tasksToCancel.length}}</div>
+          <div class="task-config-diff-description">will be cancelled</div>
+        </div>
+      </div>
+      <div class="popup-actions-buttons">
+        <div class="popup-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="confirmCancelTasks()"><i class="icofont-check-alt"></i> Confirm cancelling</button>
+        </div>
+        <div class="popup-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Close without saving</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

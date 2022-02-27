@@ -1,0 +1,320 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+<div class="component-box hotel-group-details-component-box">
+  <div class="component-box-title">
+    <div class="left-side">
+      <ng-container *ngIf="isCreateNew">
+        <div class="major-column-title"><b>New hotel group</b></div>
+        <div class="major-column-subtitle">Create a new hotel group</div>
+      </ng-container>
+      <ng-container *ngIf="!isCreateNew">
+        <div class="major-column-title">Edit <b>{{hotelGroup.name}}</b></div>
+        <div class="major-column-subtitle">Edit existing hotel group's data</div>
+      </ng-container>
+    </div>
+    <div class="right-side">
+    </div>
+  </div>
+  <div class="component-box-form">
+    <form [formGroup]="hotelGroupForm">
+      <div class="two-column-grid">
+        <div class="form-field-wrapper">
+          <label>Key (Hotel group "Username")</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="key" matInput>
+            <mat-error *ngIf="hotelGroupForm.controls.key.invalid && (hotelGroupForm.controls.key.dirty || hotelGroupForm.controls.key.touched)">
+              <div *ngIf="hotelGroupForm.controls.key.errors.required">Required</div>
+              <div *ngIf="hotelGroupForm.controls.key.errors.DATABASE_KEY_ALREADY_EXISTS">Already taken</div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Display name</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input formControlName="name" matInput>
+            <mat-error *ngIf="hotelGroupForm.controls.name.invalid && (hotelGroupForm.controls.name.dirty || hotelGroupForm.controls.name.touched)">
+              <div *ngIf="hotelGroupForm.controls.name.errors.required">Required</div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <ng-container *ngIf="isCreateNew">
+        <div class="">
+          <mat-radio-group class="hotel-group-connection-type-group" formControlName="connectionKey">
+            <mat-radio-button value="TEST_SERVER">Testing DB server</mat-radio-button>
+            <mat-radio-button value="DEV_SERVER">Development DB server</mat-radio-button>
+            <mat-radio-button value="CUSTOM_SERVER">Custom DB server</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="hotelGroupForm.controls.connectionKey.value !== 'CUSTOM_SERVER'">
+          <div class="form-field-wrapper">
+            <label>Database name</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input formControlName="connectionStringDatabase" matInput>
+              <mat-error *ngIf="hotelGroupForm.controls.connectionStringDatabase.invalid && (hotelGroupForm.controls.connectionStringDatabase.dirty || hotelGroupForm.controls.connectionStringDatabase.touched)">
+                <div *ngIf="hotelGroupForm.controls.connectionStringDatabase.errors.required">Required</div>
+                <div *ngIf="hotelGroupForm.controls.connectionStringDatabase.errors.DATABASE_NAME_ALREADY_EXISTS">Already taken</div>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="hotelGroupForm.controls.connectionKey.value === 'CUSTOM_SERVER'">
+          <div class="two-column-grid">
+            <div class="two-column-grid-1fr-100px">
+              <div class="form-field-wrapper">
+                <label>Host</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input formControlName="connectionStringHost" matInput>
+                  <mat-error *ngIf="hotelGroupForm.controls.connectionStringHost.invalid && (hotelGroupForm.controls.connectionStringHost.dirty || hotelGroupForm.controls.connectionStringHost.touched)">
+                    <div *ngIf="hotelGroupForm.controls.connectionStringHost.errors.required">Required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Port</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input formControlName="connectionStringPort" matInput>
+                  <mat-error *ngIf="hotelGroupForm.controls.connectionStringPort.invalid && (hotelGroupForm.controls.connectionStringPort.dirty || hotelGroupForm.controls.connectionStringPort.touched)">
+                    <div *ngIf="hotelGroupForm.controls.connectionStringPort.errors.required">Required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Database</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input formControlName="connectionStringDatabase" matInput>
+                <mat-error *ngIf="hotelGroupForm.controls.connectionStringDatabase.invalid && (hotelGroupForm.controls.connectionStringDatabase.dirty || hotelGroupForm.controls.connectionStringDatabase.touched)">
+                  <div *ngIf="hotelGroupForm.controls.connectionStringDatabase.errors.required">Required</div>
+                  <div *ngIf="hotelGroupForm.controls.connectionStringDatabase.errors.DATABASE_NAME_ALREADY_EXISTS">Already taken</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>DB Username</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input formControlName="connectionStringUserId" matInput>
+                <mat-error *ngIf="hotelGroupForm.controls.connectionStringUserId.invalid && (hotelGroupForm.controls.connectionStringUserId.dirty || hotelGroupForm.controls.connectionStringUserId.touched)">
+                  <div *ngIf="hotelGroupForm.controls.connectionStringUserId.errors.required">Required</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>DB Password</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input formControlName="connectionStringPassword" matInput>
+                <mat-error *ngIf="hotelGroupForm.controls.connectionStringPassword.invalid && (hotelGroupForm.controls.connectionStringPassword.dirty || hotelGroupForm.controls.connectionStringPassword.touched)">
+                  <div *ngIf="hotelGroupForm.controls.connectionStringPassword.errors.required">Required</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+        <div class="alert new-hotel-group-alert">
+          <div class=""><b>Warning</b> New database will be created once you save the hotel group.</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isCreateNew">
+        <div>
+          <div class="form-field-wrapper">
+            <label>Database connection string</label>
+            <div class="connection-string-display-value">
+              <span>Host=</span>
+              <b>{{hotelGroup.connectionStringHost}};</b>
+              <span>Port=</span>
+              <b>{{hotelGroup.connectionStringPort}};</b>
+              <span>Database=</span>
+              <b>{{hotelGroup.connectionStringDatabase}};</b>
+              <span>User ID=</span>
+              <b>{{hotelGroup.connectionStringUserId}};</b>
+              <span>Password=</span>
+              <b>********;</b>
+              <span>Pooling=</span>
+              <b>{{hotelGroup.connectionStringPooling}};</b>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="edit-actions">
+        <div class="edit-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="loading.isLoading$ | async">
+            <i class="icofont-check-alt"></i>
+            <ng-container *ngIf="isCreateNew">Save</ng-container>
+            <ng-container *ngIf="!isCreateNew">Update</ng-container>
+          </button>
+        </div>
+        <div class="edit-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="hotel-group-details-sub-grid" *ngIf="!isCreateNew">
+  <ng-container *ngIf="(selectedTabKey$ | async) as selectedTabKey">
+    <div class="hotel-group-details-sub-nav">
+      <div class="hg-nav-item" (click)="selectTab('HOTELS')" [class.hg-nav-item-active]="selectedTabKey === 'HOTELS'">Hotels</div>
+      <div class="hg-nav-item" (click)="selectTab('USER_ROLES')" [class.hg-nav-item-active]="selectedTabKey === 'USER_ROLES'">User roles</div>
+      <div class="hg-nav-item" (click)="selectTab('USERS')" [class.hg-nav-item-active]="selectedTabKey === 'USERS'">Users</div>
+      <div class="hg-nav-item" (click)="selectTab('ROOM_CATEGORIES')" [class.hg-nav-item-active]="selectedTabKey === 'ROOM_CATEGORIES'">Room categories</div>
+      <div class="hg-nav-item" (click)="selectTab('ROOMS')" [class.hg-nav-item-active]="selectedTabKey === 'ROOMS'">Rooms</div>
+      <div class="hg-nav-item" (click)="selectTab('ASSETS')" [class.hg-nav-item-active]="selectedTabKey === 'ASSETS'">Assets</div>
+      <div class="hg-nav-item" (click)="selectTab('TASKS')" [class.hg-nav-item-active]="selectedTabKey === 'TASKS'">Tasks</div>
+      <div class="hg-nav-item" (click)="selectTab('RESERVATIONS')" [class.hg-nav-item-active]="selectedTabKey === 'RESERVATIONS'">Reservations</div>
+    </div>
+    <div class="hotel-group-details-sub-content" *ngIf="selectedTabKey === 'HOTELS'">
+      <div class="component-box" *ngIf="!(showHotelDetails$ | async)">
+        <div class="component-box-title">
+          <div class="left-side">
+            <div class="major-column-title"><b>Hotels</b></div>
+            <div class="major-column-subtitle">Available hotels for {{hotelGroup.name}}</div>
+          </div>
+          <div class="right-side">
+            <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-upload-alt"></i> <span>Import</span></button> &nbsp;
+            <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-download"></i> <span>Export</span></button> &nbsp;
+            <button mat-flat-button type="button" class="button-with-icon default-button" (click)="newHotel()"><i class="icofont-plus"></i> <span>Create a new hotel</span></button>
+          </div>
+        </div>
+        <div class="component-box-filter-row">
+          <form [formGroup]="hotelsFilterForm">
+            <div class="component-filter-row two-column-filter-row">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="keywords" matInput placeholder="Filter by keywords">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="sortKey" name="food">
+                    <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                      {{sort.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <div *ngIf="(totalNumberOfHotels$ | async) === 0">
+            <div class="empty-list-results">
+              <div class="empty-alert">
+                No hotels found for selected filter values...
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="(totalNumberOfHotels$ | async) > 0">
+            <table class="list-view-table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Time zone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="list-view-items-row" *ngFor="let hotel of hotels$ | async" (click)="selectHotel(hotel)">
+                  <td class="id-cell">
+                    <div class="cell-value">{{hotel.id}}</div>
+                  </td>
+                  <td class="name-cell">
+                    <div class="cell-value">{{hotel.name}}</div>
+                  </td>
+                  <td class="time-zone-cell">
+                    <div class="cell-value">{{hotel.windowsTimeZoneId}}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div class="list-totals">
+                <span>Showing</span>
+                <span>{{loadedNumberOfHotels$ | async}}</span>
+                <span>/</span>
+                <span>{{totalNumberOfHotels$ | async}}</span>
+                <span>hotels</span>
+              </div>
+              <div class="load-more-actions" *ngIf="showLoadMoreHotels | async">
+                <button mat-flat-button type="button" (click)="loadMoreHotels()">Load 20 more</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="component-box" *ngIf="(showHotelDetails$ | async)">
+        <div class="component-box-title">
+          <div class="left-side">
+            <ng-container *ngIf="(isNewHotel$ | async)">
+              <div class="major-column-title"><b>New hotel</b></div>
+              <div class="major-column-subtitle">Create a new hotel for {{hotelGroup.name}}</div>
+            </ng-container>
+            <ng-container *ngIf="!(isNewHotel$ | async)">
+              <div class="major-column-title">Edit <b>{{hotelDetailsForm.controls.name.value}}</b></div>
+              <div class="major-column-subtitle">Edit hotel for {{hotelGroup.name}}</div>
+            </ng-container>
+          </div>
+          <div class="right-side">
+          </div>
+        </div>
+        <div class="component-box-form">
+          <form [formGroup]="hotelDetailsForm">
+            <div class="">
+              <div class="form-field-wrapper">
+                <label>Id</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input formControlName="id" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Name</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input formControlName="name" matInput>
+                </mat-form-field>
+              </div>
+              <!--<div class="form-field-wrapper">
+                <label>Time zone</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input formControlName="windowsTimeZoneId" matInput>
+                </mat-form-field>
+              </div>-->
+
+
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input type="text" placeholder="Select the time zone" matInput formControlName="windowsTimeZone" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTimeZoneName">
+                    <mat-option *ngFor="let timeZone of filteredTimeZones$ | async" [value]="timeZone">
+                      {{timeZone.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+
+
+
+
+            </div>
+          </form>
+          <div class="edit-actions">
+            <div class="edit-confirm-actions">
+              <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveHotel()" [disabled]="loading.isLoading$ | async">
+                <i class="icofont-check-alt"></i>
+                <ng-container *ngIf="(isNewHotel$ | async)">Save hotel</ng-container>
+                <ng-container *ngIf="!(isNewHotel$ | async)">Update hotel</ng-container>
+              </button>
+            </div>
+            <div class="edit-cancel-actions">
+              <button mat-flat-button type="button" class="button-with-icon" (click)="cancelSaveHotel()"><i class="icofont-undo"></i> Cancel</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+  
+</div>

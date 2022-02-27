@@ -1,0 +1,39 @@
+<mat-form-field class="full-width no-bottom-padding-input" appearance="outline">
+  <input type="text"
+         [placeholder]="placeholderText"
+         aria-label="Number"
+         matInput
+         #multiselectInputOne
+         [formControl]="selectedRoomControl"
+         [matAutocomplete]="roomAutocomplete">
+  <mat-autocomplete #roomAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayRoom" 
+              (optionSelected)="blurAutocomplete()">
+    <mat-option *ngFor="let room of filteredRooms$ | async" [value]="room">
+      <div class="faa-title">{{room.name}}</div>
+      <div class="faa-label">{{room.building}} - {{room.floor}} - {{room.section}} - {{room.subSection}}</div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div class="selected-wheres-list">
+  <div *ngFor="let room of rooms; let roomIndex = index" class="selected-where-item">
+    <div>
+      <div class="faa-title">{{room.name}}</div>
+      <div class="faa-label">{{room.building}} - {{room.floor}} - {{room.section}} - {{room.subSection}}</div>
+    </div>
+    <div>
+      <button mat-flat-button type="button" class="delete-button"
+
+              (click)="removeSelectedRoom(roomIndex)">
+        <i class="icofont-close"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!(isValid$ | async) && isRequired" class="selected-where-item empty-selected-where-item">
+    <div>
+      <div class="faa-label">Select at least one "room"</div>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>

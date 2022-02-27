@@ -1,0 +1,317 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="rooms-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>Room management</b></div>
+    <div class="major-column-buttons">
+      <button mat-flat-button class="button-with-icon" type="button" (click)="openRoomImportPreview()"><i class="icofont-upload-alt"></i> <span>Import rooms</span></button>
+      <button mat-flat-button class="button-with-icon" type="button" (click)="initiateRoomExport()"><i class="icofont-download"></i> <span>Export rooms</span></button>
+    </div>
+  </div>
+  <div class="component-filter-wrapper">
+    <div class="component-box">
+      <form [formGroup]="filterForm">
+        <div class="component-filter-row">
+          <div class="rooms-filter-row-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="Find by keywords...">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="roomSortKey" name="food">
+                  <mat-option *ngFor="let sort of roomSorts" [value]="sort.key">
+                    {{sort.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="select-hotel-wrapper">
+            <div class="select-hotel-label">
+              Hotel:
+            </div>
+            <div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="hotelId" name="hotelId">
+                    <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                      {{hotel.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <ng-container *ngIf="!(isHierarchyLoaded$ | async)">
+    <div>
+      Select hotel to see rooms
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(isHierarchyLoaded$ | async)">
+    <div class="list-actions">
+      <div class="major-column-title">
+        <div><b>Central</b> warehouses</div>
+        <div class="major-column-subtitle">
+          <b class="secondary-title-em">{{ numberOfCentralWarehouses$ | async }}</b> warehouses
+        </div>
+      </div>
+      <div class="major-column-buttons">
+        <button mat-flat-button type="button" class="secondary-button button-with-icon" [routerLink]="['/warehouses', 'new-central-warehouse', selectedHotel$.value.id]"><i class="icofont-plus"></i> Add a central warehouse</button>
+      </div>
+    </div>
+    <div class="central-warehouses">
+      <div class="room-item warehouse-item" *ngFor="let centralWarehouse of centralWarehouses$ | async; index as centralWarehouseIndex;" (click)="goToWarehouseDetails(centralWarehouse.id)">
+        <div class="room-item-grid">
+          <div class="room-label">Central warehouse</div>
+          <div class="room-title">
+            <div>{{ centralWarehouse.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-actions">
+      <div class="major-column-title">
+        <div>Buildings, floors, and rooms of <b *ngIf="selectedHotel$ | async as selectedHotel">{{selectedHotel.name}}</b></div>
+        <div class="major-column-subtitle">
+          <b class="secondary-title-em">{{ numberOfBuildings$ | async }}</b> buildings,
+          <b class="secondary-title-em">{{ numberOfFloors$ | async }}</b> floors,
+          <b class="secondary-title-em">{{ numberOfRooms$ | async }}</b> rooms,
+          <b class="secondary-title-em">{{ numberOfUnassignedRooms$ | async }}</b> temporary rooms
+        </div>
+      </div>
+      <div class="major-column-buttons">
+        <button mat-flat-button type="button" class="secondary-button button-with-icon" (click)="addBuilding(true)"><i class="icofont-plus"></i> Add a building</button>
+      </div>
+    </div>
+
+    <div *ngIf="hasUnassignedRooms$ | async" class="unassigned-rooms-wrapper">
+      <div class="building-wrapper unassigned-rooms-building-wrapper">
+        <div class="floor-wrapper">
+          <ng-container *ngIf="!(isEditMode$ | async)">
+            <div class="floor-header">
+              <div class="floor-title">
+                <div><i class="svg-icon icofont-not-allowed"></i> <span>Temporary rooms</span></div>
+                <div class="major-column-subtitle"><b>{{ numberOfUnassignedRooms$ | async }}</b> rooms</div>
+              </div>
+              <div>
+              </div>
+              <div>
+              </div>
+              <div>
+                <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleUnassignedRoomsCollapse()">
+                  <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="areUnassignedRoomsCollapsed$ | async"></i>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!(areUnassignedRoomsCollapsed$ | async)">
+            <div (scroll)="updateScroll()">
+              <dts-select-container (select)="unassignedRoomsSelected($event)" #selectUnassignedRoomsContainer>
+
+                <div class="unassigned-rooms">
+
+                  <div class="room-item" *ngFor="let room of unassignedRooms$ | async; index as roomIndex"  [dtsSelectItem]="room">
+                    <app-temporary-room [room]="room"></app-temporary-room>
+
+                  </div>
+
+                  <!--<div class="room-item-with-beds" *ngFor="let room of unassignedRooms$ | async; index as roomIndex" [dtsSelectItem]="room">
+    <div class="room-item-grid">
+      <div class="room-label-wrapper">
+        <div class="room-label">Unknown type</div>
+      </div>
+      <div class="room-title">
+        <div>{{ room.name }}</div>
+      </div>-->
+                  <!--<div class="room-description">{{ roomForm.controls.categoryName.value }}</div>-->
+                  <!--</div>
+    <div *ngIf="room.beds.length > 0" class="room-item-beds-grid">
+      <div *ngFor="let bed of room.beds" class="room-item-bed">
+        {{bed.name}}
+      </div>
+      <div *ngIf="showHiddenBedsLabel" class="room-item-bed beds-hidden">
+        +{{numberOfHiddenBeds}} more
+      </div>
+    </div>
+  </div>-->
+
+
+
+
+
+
+                  <!--<div class="room-item" *ngFor="let room of unassignedRooms$ | async; index as roomIndex" [dtsSelectItem]="room">
+                    <div class="room-item-grid">
+                      <div class="room-label">Unknown type</div>
+                      <div class="room-title">
+                        <div>{{ room.name }}</div>
+                      </div>
+                      <div class="room-description">Temporary</div>
+                    </div>
+                  </div>-->
+                </div>
+
+              </dts-select-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+      <ng-container *ngIf="selectedUnassignedRooms$ | async as selectedUnassignedRooms">
+        <div class="building-wrapper unassigned-rooms-assign-wrapper" *ngIf="selectedUnassignedRooms.length > 0">
+          <div class="floor-wrapper">
+            <div class="unassigned-rooms">
+              <div class="component-box full-width">
+                <div>
+                  <div class="major-column-title">Where do you want to assign the <b>{{selectedUnassignedRooms.length}}</b> selected rooms?</div>
+                </div>
+                <div>
+                  <form [formGroup]="roomsAssignmentForm">
+
+                    <div class="two-column-grid">
+                      <div class="form-field-wrapper">
+                        <label>Building</label>
+                        <mat-form-field appearance="outline" color="accent" class="full-width">
+                          <mat-select formControlName="buildingId">
+                            <mat-option *ngFor="let building of buildings$ | async" [value]="building.id">
+                              {{building.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-field-wrapper">
+                        <label>Floor</label>
+                        <mat-form-field appearance="outline" color="accent" class="full-width">
+                          <mat-select formControlName="floorId">
+                            <mat-option *ngFor="let floor of floors$ | async" [value]="floor.id">
+                              {{floor.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="two-column-grid">
+                      <div class="radio-button-group">
+                        <mat-radio-group aria-labelledby=""
+                                         class=""
+                                         formControlName="typeKey">
+                          <mat-radio-button class="" *ngFor="let roomType of roomTypes" [value]="roomType.key">
+                            {{roomType.value}}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                      <div class="form-field-wrapper">
+                        <label>Category</label>
+                        <mat-form-field appearance="outline" color="accent" class="full-width">
+                          <mat-select formControlName="categoryId">
+                            <mat-option *ngFor="let roomCategory of roomCategories" [value]="roomCategory.id">
+                              {{roomCategory.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="rooms-assignment-form-content">
+                    </div>
+
+                    <div class="default-actions room-assignment-actions">
+                      <div class="left-side-actions">
+                        <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="saveRoomAssignments()"><i class="icofont-check-alt"></i> Assign the {{selectedUnassignedRooms.length}} rooms</button>
+                      </div>
+                      <div class="right-side-actions">
+                        <button mat-flat-button type="button" class="button-with-icon" (click)="cancelRoomAssignment()"><i class="icofont-undo"></i> Cancel</button>
+                      </div>
+                    </div>
+
+
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+
+    </div>
+    <div class="component-content-row">
+      <app-building *ngFor="let buildingFormArray of buildingsFormArray.controls; index as buildingIndex"
+                    [buildingForm]="buildingFormArray"
+                    [buildingIndex]="buildingIndex"
+                    (roomAdded)="onRoomAdded($event)"
+                    (unsavedBuildingRemoved)="removeBuildingForm($event)"
+                    (buildingAdded)="onBuildingAdded($event)"
+                    (buildingUpdated)="onBuildingUpdated($event)"
+                    (floorAdded)="onFloorAdded(buildingFormArray.controls.id.value, $event)"
+                    (floorUpdated)="onFloorUpdated(buildingFormArray.controls.id.value, $event)"
+                    (buildingDeleted)="deleteBuilding($event)"></app-building>
+      <div class="add-building-wrapper">
+        <button mat-flat-button type="button" class="primary-button button-with-icon" (click)="addBuilding()"><i class="icofont-plus"></i> Add a building</button>
+        <!--<div class="add-building-button" (click)="addBuilding()">+ Add building</div>-->
+      </div>
+    </div>
+  </ng-container>
+</div>
+<ng-container *ngIf="showCreateNewRoomPopup$ | async as showCreateNewRoomPopup">
+  <app-popup [isOpen]="showCreateNewRoomPopup" (closed)="hideCreateNewRoomPopup()">
+    <div class="popup-header">
+      <h2>Create new room</h2>
+    </div>
+    <app-room-edit-form [room]="roomDetails$ | async"
+                        [roomCategories]="roomCategories"
+                        (inserted)="onRoomInserted($event, false)"
+                        (insertedWithContinue)="onRoomInserted($event, true)"
+                        (updated)="onRoomUpdated($event)"
+                        (cancelled)="onRoomCancelled()"></app-room-edit-form>
+  </app-popup>
+</ng-container>

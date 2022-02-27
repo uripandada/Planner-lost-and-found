@@ -1,0 +1,63 @@
+<form [formGroup]="taskRecurringDailyForm">
+
+  <div class="task-recurring-daily-component">
+    <div>
+      <div class="inline-form-row">
+        <label>Starts at</label>
+        <div>
+          <app-date-time [dateControl]="taskRecurringDailyForm.controls.startsAtDate" [timeControl]="taskRecurringDailyForm.controls.startsAtTime"></app-date-time>
+        </div>
+      </div>
+      <div class="inline-form-row at-times-daily-wrapper">
+        <label>Repeats at</label>
+        <div>
+          <app-time-multiselect [timesArray]="taskRecurringDailyForm.controls.startsAtTimesArray"></app-time-multiselect>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-groups task-recurring-until-wrapper">
+    <!--<div class="form-group-title">Task repeats</div>-->
+    <div class="">
+      <div class="inline-form-row">
+        <label>Repeats for</label>
+        <div>
+          <mat-radio-group aria-labelledby=""
+                           class="task-recurrence-radio-group"
+                           formControlName="repeatsForKey">
+            <div class="radio-button-list-item">
+              <mat-radio-button class="" value="NUMBER_OF_DAYS">
+                Number of days
+              </mat-radio-button>
+              <mat-form-field appearance="outline" class="short-number-input text-right" *ngIf="taskRecurringDailyForm.controls.repeatsForKey.value === 'NUMBER_OF_DAYS'">
+                <input type="text" matInput placeholder="X" formControlName="repeatsForNrDays" />
+                <span matSuffix>days</span>
+              </mat-form-field>
+            </div>
+            <div class="radio-button-list-item">
+              <mat-radio-button class="" value="NUMBER_OF_OCCURENCES">
+                Number of occurences
+              </mat-radio-button>
+              <mat-form-field appearance="outline" class="short-number-input text-right" *ngIf="taskRecurringDailyForm.controls.repeatsForKey.value === 'NUMBER_OF_OCCURENCES'">
+                <input type="text" matInput placeholder="X" formControlName="repeatsForNrOccurences" />
+                <span matSuffix>times</span>
+              </mat-form-field>
+            </div>
+            <div class="radio-button-list-item">
+              <mat-radio-button class="" value="SPECIFIC_DATE">
+                Until date
+              </mat-radio-button>
+              <div *ngIf="taskRecurringDailyForm.controls.repeatsForKey.value === 'SPECIFIC_DATE'">
+                <app-date-time [dateControl]="taskRecurringDailyForm.controls.repeatsUntilDate" [timeControl]="taskRecurringDailyForm.controls.repeatsUntilTime"></app-date-time>
+              </div>
+            </div>
+          </mat-radio-group>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</form>

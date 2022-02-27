@@ -1,0 +1,33 @@
+<!--<div class="fa-filter-wrapper">
+  <form [formGroup]="filterAffinitiesForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <input type="text"
+             [id]="elementId"
+             placeholder="Select preferred floor..."
+             matInput
+             formControlName="keywords"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="floorSelected($event)" [classList]="'floor-affinities-autocomplete'">
+        <mat-option *ngFor="let floorAffinity of filteredFloorAffinities$ | async" [value]="floorAffinity">
+          <div class="faa-title">[{{floorAffinity.floorNumber}}] {{floorAffinity.floorName}}</div>
+          <div class="faa-label">{{floorAffinity.buildingName}}</div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+<div>
+  <div *ngFor="let building of selectedBuildings$ | async" class="affinity-building-group">
+    <div class="affinity-building-name">
+      {{building.name}}
+    </div>
+    <div class="affinity-floors">
+      <div *ngFor="let floor of building.floors" class="affinity-floor-tag">
+        <button type="button" (click)="remove(building.id, floor.id)"><span>{{floor.name}}</span> <i class="icofont-close-line"></i></button>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+

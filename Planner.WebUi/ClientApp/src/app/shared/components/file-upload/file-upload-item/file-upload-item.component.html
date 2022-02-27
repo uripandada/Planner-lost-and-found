@@ -1,0 +1,8 @@
+
+<ng-container *ngIf="file">
+    <div class="photo-item" [class.is-processing-photo-item]="isUploadInProgress" [ngStyle]="{'background-image': file.isImage ? 'url(' + file.imageUrl + ')' : ''}">
+      <div *ngIf="!file.isImage" class="display-text">{{file.displayText}}</div>
+      <button type="button" class="button-only-icon" (click)="delete()"><i class="icofont-close"></i></button>
+      <mat-progress-bar mode="indeterminate" *ngIf="isUploadInProgress"></mat-progress-bar>
+    </div>
+</ng-container>

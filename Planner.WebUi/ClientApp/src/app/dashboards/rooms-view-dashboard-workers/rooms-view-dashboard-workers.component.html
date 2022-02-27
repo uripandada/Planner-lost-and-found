@@ -1,0 +1,17 @@
+<div class="worker-cell">
+  <div *ngFor="let worker of room.workers" class="worker-cell-item">
+    <div class="worker-cell-item-grid">
+      <div>
+        <div class="task-chat-avatar-wrapper">
+          <div class="task-chat-avatar" *ngIf="!worker.avatarImageUrl" [ngStyle]="{'background-color': worker.defaultAvatarColorHex }">{{worker.initials}}</div>
+          <div class="task-chat-avatar-image" *ngIf="worker.avatarImageUrl" [ngStyle]="{'background-image': 'url(' + worker.avatarImageUrl + ')'}"></div>
+        </div>
+      </div>
+      <div>
+        <div class="res-desc">{{worker.workDescription}}</div>
+        <!--<div class="res-worker">{{worker.fullName}}</div>-->
+        <div class="res-cstatus"><span [class.color-red]="worker.workStatusDescription === 'REFUSED'">{{worker.workStatusDescription}}</span> - <span>{{worker.fullName}}</span></div>
+      </div>
+    </div>
+  </div>
+</div>

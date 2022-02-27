@@ -1,0 +1,593 @@
+<div class="list-actions">
+  <div class="two-column-grid-21 full-width">
+    <div class="major-column-title">
+      <ng-container *ngIf="isCreateNewUser">Create <b>new user</b></ng-container>
+      <ng-container *ngIf="!isCreateNewUser">Edit user <b>{{userDetails.firstName}} {{userDetails.lastName}}</b></ng-container>
+    </div>
+    <div class="major-column-title">
+      Hotel access
+    </div>
+  </div>
+</div>
+<div class="user-details-wrapper">
+  <div class="user-edit-form">
+    <form [formGroup]="userForm" class="user-edit-form">
+
+      <div class="two-column-grid-21">
+        <div class="component-box">
+          <div class="major-column-title"><b>{{userForm.controls.firstName.value}} {{userForm.controls.lastName.value}}</b><span *ngIf="!userForm.controls.firstName.value && !userForm.controls.lastName.value">New user</span></div>
+
+          <div>
+
+            <div class="avatar-row-wrapper">
+              <div>
+                <app-avatar-upload [initialAvatarUrl]="userDetails.avatarImageUrl" (selected)="onAvatarImageSelected($event)" (removed)="onAvatarImageRemoved()"></app-avatar-upload>
+              </div>
+              <div>
+                <div class="two-column-grid">
+                  <div class="">
+                    <mat-checkbox class="example-margin" formControlName="isActive">Is user active?</mat-checkbox>
+                  </div>
+                  <div></div>
+                  <div class="form-field-wrapper">
+                    <label>First Name</label>
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <input formControlName="firstName" matInput>
+                      <mat-error *ngIf="userForm.controls.firstName.invalid && (userForm.controls.firstName.dirty || userForm.controls.firstName.touched)">
+                        <div *ngIf="userForm.controls.firstName.errors.required">Required</div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-field-wrapper">
+                    <label>Last Name</label>
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <input formControlName="lastName" matInput>
+                      <mat-error *ngIf="userForm.controls.lastName.invalid && (userForm.controls.lastName.dirty || userForm.controls.lastName.touched)">
+                        <div *ngIf="userForm.controls.lastName.errors.required">Required</div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-field-wrapper">
+                    <label>Role</label>
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <mat-select formControlName="roleId">
+                        <mat-option *ngFor="let role of roles" [value]="role.id">
+                          {{role.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.controls.roleId.invalid && (userForm.controls.roleId.dirty || userForm.controls.roleId.touched)">
+                        <div *ngIf="userForm.controls.roleId.errors.required">Required</div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-field-wrapper">
+                    <label>Username</label>
+                    <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <input formControlName="userName" matInput>
+                      <mat-error *ngIf="userForm.controls.userName.invalid && (userForm.controls.userName.dirty || userForm.controls.userName.touched)">
+                        <div *ngIf="userForm.controls.userName.errors.required">Required</div>
+                        <div *ngIf="userForm.controls.userName.errors.USER_USERNAME_ALREADY_EXISTS">Already exists</div>
+                      </mat-error>
+                    </mat-form-field>
+
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="major-column-title"><b>Grouping</b></div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Group</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="groupId">
+                  <mat-option [value]="null">Ungrouped</mat-option>
+                  <mat-option *ngFor="let group of groups" [value]="group.id">
+                    {{group.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Subgroup</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="subGroupId">
+                  <mat-option [value]="null">Ungrouped</mat-option>
+                  <mat-option *ngFor="let subGroup of subGroups | async" [value]="subGroup.id">
+                    {{subGroup.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div></div>
+            <div class="" *ngIf="userForm.controls.subGroupId.value">
+              <mat-checkbox class="example-margin" formControlName="isSubGroupLeader">Is sub group leader?</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="major-column-title"><b>Contact info</b></div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Email</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="email" matInput>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper">
+              <label>Phone Number</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="phoneNumber" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="major-column-title"><b>Password change</b></div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>New password</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="password" matInput type="password">
+                <mat-error *ngIf="userForm.controls.password.invalid && (userForm.controls.password.dirty || userForm.controls.password.touched)">
+                  <div *ngIf="userForm.controls.password.errors.PASSWORDS_DONT_MATCH">Don't match</div>
+                  <div *ngIf="userForm.controls.password.errors.PASSWORD_TOO_SHORT">Too short</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>New password repeated</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="passwordConfirmation" type="password" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="major-column-title"><b>System settings</b></div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Language</label>
+              <!--<mat-form-field appearance="outline" color="accent" class="full-width">
+    <input formControlName="language" matInput>
+  </mat-form-field>-->
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="language">
+                  <!--<mat-option [value]="null">Ungrouped</mat-option>-->
+                  <mat-option *ngFor="let lang of languages" [value]="lang.key">
+                    <span>{{ lang.value }} ({{lang.eng}}, {{lang.key}})</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="major-column-title"><b>Additional information</b></div>
+          <div class="two-column-grid">
+            <div class="form-field-wrapper">
+              <label>Connection Name</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="connectionName" matInput>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <label>Registration Number</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="registrationNumber" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="form-left-side-actions">
+              <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+                <i class="icofont-check-alt"></i>
+                Save
+              </button>
+            </div>
+            <div class="form-right-side-actions">
+              <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="component-box">
+          <ng-container *ngIf="(isHotelMultipleMode$ | async) && !(hasAccessToAllHotels$ | async)">
+            <div class="form-field-wrapper">
+              <label>Hotels</label>
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="hotelIds" multiple (selectionChange)="hotelMultiSelectChanged($event)" [placeholder]="'Choose accessible hotels'">
+                  <mat-select-trigger>
+                    <span *ngIf="userForm.controls.hotelIds.value?.length > 0">
+                      User has access to <b>{{userForm.controls.hotelIds.value.length}} hotels</b>
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                    {{hotel.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div *ngIf="!userForm.controls.hotelIds.value?.length" class="empty-results">
+              <div>{{userForm.controls.firstName.value}} {{userForm.controls.lastName.value}} can't access any hotel.</div>
+            </div>
+          </ng-container>
+
+
+          <div class="form-field-wrapper" *ngIf="!(isHotelMultipleMode$ | async) && !(hasAccessToAllHotels$ | async)">
+            <label>Hotel</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="hotelId" (selectionChange)="hotelSingleSelectChanged($event)" [placeholder]="'Choose accessible hotel'">
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="(hasAccessToAllHotels$ | async)">
+            <div class="empty-results">
+              <div>{{userForm.controls.firstName.value}} {{userForm.controls.lastName.value}} has access to all hotels.</div>
+            </div>
+          </div>
+
+          <div class="accessible-hotels-wrapper" *ngIf="!(hasAccessToAllHotels$ | async) && (isHotelMultipleMode$ | async)">
+            <ng-container *ngIf="selectedHotels$ | async as selectedHotels">
+              <div class="accessible-hotel" *ngFor="let hotel of selectedHotels; index as hotelIndex">
+                <div>{{ hotelIndex + 1 }}.</div>
+                <div class="accessible-hotel-name">{{hotel.name}}</div>
+                <div>
+                  <button mat-flat-button type="button" (click)="removeSelectedHotel(hotelIndex)"><i class="icofont-close"></i></button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+
+        <div class="two-column-grid">
+          <!--<div class="form-field-wrapper">
+            <label>Last Name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="lastName" matInput>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>First Name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="firstName" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Connection Name</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="connectionName" matInput>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Registration Number</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="registrationNumber" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Username</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="userName" matInput>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Email</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="email" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Password</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="password" matInput type="password">
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Password Confirmation</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="passwordConfirmation" type="password" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Original Hotel</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="originalHotel" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Phone Number</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="firstName" matInput>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Group</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="groupId">
+                <mat-option [value]="null">Ungrouped</mat-option>
+                <mat-option *ngFor="let group of groups" [value]="group.id">
+                  {{group.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Subgroup</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="subGroupId">
+                <mat-option [value]="null">Ungrouped</mat-option>
+                <mat-option *ngFor="let subGroup of subGroups | async" [value]="subGroup.id">
+                  {{subGroup.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <label>Role</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="roleId">
+                <mat-option *ngFor="let role of roles" [value]="role.id">
+                  {{role.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper" *ngIf="(isHotelMultipleMode$ | async)">
+            <label>Hotels</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="hotelIds" multiple>
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper" *ngIf="!(isHotelMultipleMode$ | async)">
+            <label>Hotels</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <mat-select formControlName="hotelIds">
+                <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                  {{hotel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>-->
+          <!--<div class="form-field-wrapper">
+            <label>Language</label>
+            <mat-form-field appearance="outline" color="accent" class="full-width">
+              <input formControlName="language" matInput>
+            </mat-form-field>
+          </div>-->
+          <div></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<!--<div class="user-details-wrapper">
+  <div class="user-details-header-card">
+    <ng-container *ngIf="(isEditMode$ | async)">
+      <div class="user-details-edit-title">
+        <ng-container *ngIf="isCreateNewUser">Create new user</ng-container>
+        <ng-container *ngIf="!isCreateNewUser">Edit user</ng-container>
+      </div>
+      <div class="user-edit-form-wrapper">
+        <form [formGroup]="userForm" class="user-edit-form">
+          <div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Last Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="lastName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>First Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Connection Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="connectionName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Registration Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="registrationNumber" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Username</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="userName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Email</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="email" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Password</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="password" matInput type="password">
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Password Confirmation</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="passwordConfirmation" type="password" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Original Hotel</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="originalHotel" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Phone Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Group</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="groupId">
+                    <mat-option [value]="null">Ungrouped</mat-option>
+                    <mat-option *ngFor="let group of groups" [value]="group.id">
+                      {{group.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Subgroup</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="subGroupId">
+                    <mat-option [value]="null">Ungrouped</mat-option>
+                    <mat-option *ngFor="let subGroup of subGroups | async" [value]="subGroup.id">
+                      {{subGroup.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Role</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="roleId">
+                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                      {{role.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper" *ngIf="(isHotelMultipleMode$ | async)">
+                <label>Hotels</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="hotelIds" multiple>
+                    <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                      {{hotel.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper" *ngIf="!(isHotelMultipleMode$ | async)">
+                <label>Hotels</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="hotelIds">
+                    <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                      {{hotel.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Language</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input formControlName="language" matInput>
+                </mat-form-field>
+              </div>
+              <div></div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <button type="button" mat-flat-button class="button-round-with-svg-icon" (click)="save()"><i class="svg-icon icon-check-red"></i></button>
+            </div>
+            <div>
+              <button type="button" mat-flat-button class="button-round-with-svg-icon no-border" (click)="cancel()"><i class="svg-icon icon-back-red"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!(isEditMode$ | async)">
+      <div class="user-header-wrapper">
+        <div class="user-details-title-wrapper">
+          <div class="user-details-title">
+            <span class="muted">User </span>{{  userDetails.lastName userDetails.firstName }}
+          </div>
+          <div class="user-edit-form-wrapper">
+            <div>
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>Last Name</label>
+                  <div>{{userDetails.lastName }} </div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>First Name</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Connection Name</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Registration Number</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Username</label>
+                  <div>{{userDetails.userName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Email</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Original Hotel</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Phone Number</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Language</label>
+                  <div>{{userDetails.lastName}}</div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <button type="button" mat-flat-button class="button-round-with-svg-icon" (click)="save()"><i class="svg-icon icon-check-red"></i></button>
+              </div>
+              <div>
+                <button type="button" mat-flat-button class="button-round-with-svg-icon no-border" (click)="cancel()"><i class="svg-icon icon-back-red"></i></button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button class="button-round-with-svg-icon" (click)="edit()"><i class="svg-icon icon-pen-red"></i></button>
+          </div>-->
+<!-- <div>
+  <button mat-flat-button class="button-round-with-svg-icon"
+          mwlConfirmationPopover
+          [popoverMessage]="'Are you sure you want to delete the user?'"
+          placement="left"
+          (confirm)="delete()">
+    <i class="svg-icon icon-trash-red"></i>
+  </button>
+</div> -->
+<!--</div>
+      </div>
+    </ng-container>
+  </div>
+</div>-->

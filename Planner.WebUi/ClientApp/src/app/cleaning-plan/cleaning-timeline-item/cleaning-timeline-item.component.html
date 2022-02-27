@@ -1,0 +1,49 @@
+<ng-container *ngIf="data.itemTypeKey === 'CLEANING'">
+  <div style="height: 100%; width: 100%;pointer-events: none;" (ondrag)="drag()" [class]="itemClass">
+    <div class="" style="height:100%;width:100%;position:relative;z-index:0;" #cleaningItem>
+      <div class="ti-content">
+        <div class="ti-first-row">
+          <span><i [class]="priorityIconClass"></i><i [class]="statusIconClass"></i> {{ data.title }}</span>
+          <span *ngIf="isCleaningCancelled" class="ti-cs-tag">Cancelled</span>
+          <span *ngIf="isCleaningDelayed" class="ti-cs-tag">Delayed</span>
+          <span *ngIf="isCleaningRefused" class="ti-cs-tag">Refused</span>
+          <span *ngIf="isCleaningPaused" class="ti-cs-tag">Paused</span>
+          <span *ngIf="isDnd" class="ti-dnd-tag">DND</span>
+          <span *ngIf="isOutOfOrder" class="ti-oos-tag">OOO</span>
+          <span *ngIf="isOutOfService" class="ti-oos-tag">OOS</span>
+          <span *ngIf="isChangeSheets" class="ti-sheets-tag">Sheets</span>
+          <span *ngIf="hasVipReservation" class="ti-vip-tag">VIP</span>
+          <span *ngIf="data.isCustom" class="ti-cs-tag">Custom</span>
+        </div>
+        <div class="ti-second-row">
+          <i *ngIf="isPostponed" class="icofont-rounded-double-right postponed-cleaning-indicator" title="Postponed for tomorrow"></i>
+          <ng-container *ngIf="data.plannedAttendantTasks && data.plannedAttendantTasks.length > 0">
+            <div class="ti-row-item ti-task-icon-rows" >
+              <ng-container *ngFor="let task of data.plannedAttendantTasks; index as taskIndex">
+                <div class="ti-task-icon ti-task-icon-completed" *ngIf="task.isCompleted"><i class="icofont-check"></i></div>
+                <div class="ti-task-icon" *ngIf="!task.isCompleted">*</div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <span class="ti-cleaning-name">[{{data.credits}}] {{data.cleaningDescription}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="data.itemTypeKey === 'TASK'">
+  <div style="height: 100%; width: 100%;pointer-events: none;" (ondrag)="drag()" class="ti-task-wrapper">
+    <div class="" style="height: 100%; width: 100%;position:relative;z-index:0;align-items:center;display:flex;" #cleaningItem>
+      <div class="ti-task-content">
+        <div class="ti-title">
+          <span>{{ data.title }}</span>
+        </div>
+        <div>
+          <div class="ti-row">
+            <div class="ti-row-item">{{data.taskDescription}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

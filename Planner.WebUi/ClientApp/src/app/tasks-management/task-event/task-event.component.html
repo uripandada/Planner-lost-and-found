@@ -1,0 +1,149 @@
+<form [formGroup]="taskEventForm">
+  <div class="task-event-component">
+    <div class="form-groups">
+      <!--<div class="form-group-title">Event configuration</div>-->
+      <div class="inline-form-row task-event-choice-wrapper">
+        <!--<label>Event</label>-->
+        <div class="task-event-choice">
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <mat-select formControlName="modifierTypeKey" name="modifierTypeKey">
+              <mat-option *ngFor="let modifierType of allEventTaskModifierTypes" [value]="modifierType.key">
+                {{modifierType.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <mat-select formControlName="typeKey" name="typeKey">
+              <mat-option *ngFor="let taskType of allEventTaskTypes" [value]="taskType.key">
+                {{taskType.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="inline-form-row vertical-radio-group-wrapper">
+        <div class="">
+          <mat-radio-group aria-labelledby=""
+                           class="task-recurrence-radio-group"
+                           formControlName="whenKey">
+
+            <mat-radio-button class="" value="ON_NEXT">
+              <div>
+                <div class="radio-inline-label">
+                  <b>On next</b> {{modifierTypeName$ | async}} {{typeName$ | async}}
+                </div>
+                <div>
+                </div>
+              </div>
+            </mat-radio-button>
+            <mat-radio-button class="" value="ON_DATE">
+              <div>
+                <div class="radio-inline-label">
+                  <b>On</b> {{modifierTypeName$ | async}} {{typeName$ | async}} <b>at</b>:
+                </div>
+                <div>
+                  <app-date-time [dateControl]="taskEventForm.controls.onEventAtDate" [timeControl]="taskEventForm.controls.onEventAtTime"></app-date-time>
+                </div>
+              </div>
+            </mat-radio-button>
+            <mat-radio-button class="" value="EVERY_TIME">
+              <div>
+                <div class="radio-inline-label">
+                  <b>Every</b> {{modifierTypeName$ | async}} {{typeName$ | async}} <b>after</b>:
+                </div>
+                <div>
+                  <app-date-time [dateControl]="taskEventForm.controls.onEventAtDate" [timeControl]="taskEventForm.controls.onEventAtTime"></app-date-time>
+                </div>
+              </div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+
+      <div class="form-groups task-event-repeats-form-group" *ngIf="taskEventForm.controls.whenKey.value === 'EVERY_TIME'">
+        <div class="">
+          <div class="inline-form-row">
+            <label>Repeats for</label>
+            <div>
+              <mat-radio-group aria-labelledby=""
+                               class="task-recurrence-radio-group"
+                               formControlName="repeatsForKey">
+                <div class="radio-button-list-item">
+                  <mat-radio-button class="" value="NUMBER_OF_DAYS">
+                    Number of days
+                  </mat-radio-button>
+                  <mat-form-field appearance="outline" class="short-number-input text-right" *ngIf="taskEventForm.controls.repeatsForKey.value === 'NUMBER_OF_DAYS'">
+                    <input type="text" matInput placeholder="X" formControlName="repeatsForNrDays" />
+                    <span matSuffix>days</span>
+                  </mat-form-field>
+                </div>
+                <div class="radio-button-list-item">
+                  <mat-radio-button class="" value="NUMBER_OF_OCCURENCES">
+                    Number of occurences
+                  </mat-radio-button>
+                  <mat-form-field appearance="outline" class="short-number-input text-right" *ngIf="taskEventForm.controls.repeatsForKey.value === 'NUMBER_OF_OCCURENCES'">
+                    <input type="text" matInput placeholder="X" formControlName="repeatsForNrOccurences" />
+                    <span matSuffix>times</span>
+                  </mat-form-field>
+                </div>
+                <div class="radio-button-list-item">
+                  <mat-radio-button class="" value="SPECIFIC_DATE">
+                    Until date
+                  </mat-radio-button>
+                  <div *ngIf="taskEventForm.controls.repeatsForKey.value === 'SPECIFIC_DATE'">
+                    <app-date-time [dateControl]="taskEventForm.controls.repeatsUntilDate" [timeControl]="taskEventForm.controls.repeatsUntilTime"></app-date-time>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </div>
+          </div>
+          <!--<div class="inline-form-row  vertical-radio-group-wrapper">
+            <label>Repeats for</label>
+            <div>
+              <mat-radio-group aria-labelledby=""
+                               class="task-recurrence-radio-group"
+                               formControlName="repeatsForKey">
+
+                <mat-radio-button class="" value="NUMBER_OF_DAYS">
+                  <div>
+                    <div class="radio-inline-label">
+                      Number of days
+                    </div>
+                    <div>
+                      <mat-form-field appearance="outline">
+                        <input type="text" matInput placeholder="# days" formControlName="repeatsForNrDays" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button class="" value="NUMBER_OF_OCCURENCES">
+                  <div>
+                    <div class="radio-inline-label">
+                      Number of occurences
+                    </div>
+                    <div>
+                      <mat-form-field appearance="outline">
+                        <input type="text" matInput placeholder="# occurences" formControlName="repeatsForNrOccurences" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button class="" value="SPECIFIC_DATE">
+                  <div>
+                    <div class="radio-inline-label">
+                      Until date
+                    </div>
+                    <div>
+                      <app-date-time [dateControl]="taskEventForm.controls.repeatsUntilDate" [timeControl]="taskEventForm.controls.repeatsUntilTime"></app-date-time>
+                    </div>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

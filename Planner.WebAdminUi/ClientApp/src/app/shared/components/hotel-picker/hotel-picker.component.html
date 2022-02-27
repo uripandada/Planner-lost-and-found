@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" class="full-width">
+  <input type="text" placeholder="Select the hotel" matInput [formControl]="hotelControl" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayHotelName">
+    <mat-option *ngFor="let hotel of filteredHotels$ | async" [value]="hotel">
+      {{hotel.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

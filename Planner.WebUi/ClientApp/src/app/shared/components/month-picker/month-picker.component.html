@@ -1,0 +1,13 @@
+
+<mat-form-field appearance="outline" class="full-width">
+  <input matInput [matDatepicker]="dp" [formControl]="date" (click)="dp.open()" (focus)="dp.open()">
+  <mat-datepicker-toggle matSuffix [for]="dp">
+    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+  </mat-datepicker-toggle>
+  <mat-datepicker #dp
+                  startView="multi-year"
+                  (yearSelected)="chosenYearHandler($event)"
+                  (monthSelected)="chosenMonthHandler($event, dp)"
+                  panelClass="example-month-picker">
+  </mat-datepicker>
+</mat-form-field>

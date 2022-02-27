@@ -1,0 +1,11 @@
+<div class="date-time-multiselect-item">
+  <div class="date-time-multiselect-item-content">
+    <app-date-time [dateControl]="dateTimeForm.controls.date" [timeControl]="dateTimeForm.controls.time"></app-date-time>
+    <!--<app-time-interval-input class="tim-item" *ngFor="let dateTimeFormGroup of dateTimesFormArray.controls; let dateTimeFormIndex = index" [dateTimeFormGroup]="dateTimeFormGroup" [dateTimeFormIndex]="dateTimeFormIndex"></app-time-interval-input>-->
+  </div>
+  <div class="date-time-multiselect-item-actions">
+    <button mat-flat-button type="button" (click)="remove()"><i class="icofont-close"></i></button>
+  </div>
+</div>
+
+

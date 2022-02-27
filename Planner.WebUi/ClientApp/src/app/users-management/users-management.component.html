@@ -1,0 +1,129 @@
+<div class="users-component-wrapper component-wrapper">
+  <div class="list-actions">
+    <div class="major-column-title"><b>User management</b></div>
+    <div class="major-column-buttons">
+      <button mat-flat-button class="button-with-icon" type="button" (click)="openUserImportPreview()"><i class="icofont-upload-alt"></i> <span>Import users</span></button>
+      <button mat-flat-button class="button-with-icon" type="button" (click)="initiateUserExport()"><i class="icofont-download"></i> <span>Export users</span></button>
+      <!--<button mat-flat-button class="button-with-icon" type="button" (click)="toggleOnDutyStatus()"><i class="icofont-check"></i> <span>Toggle on duty</span></button>-->
+    </div>
+  </div>
+
+  <div class="component-filter-wrapper">
+    <div class="component-box">
+      <div class="component-filter-row">
+        <form [formGroup]="filterForm">
+          <div class="users-filter-row-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <input formControlName="keywords" matInput placeholder="Find by keywords...">
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="statusKey" name="statuses">
+                  <mat-option *ngFor="let status of statuses" [value]="status.key">
+                    {{status.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" color="accent" class="full-width">
+                <mat-select formControlName="sortKey" name="sorts">
+                  <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                    {{sort.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox class="example-margin" formControlName="showEmptyGroupsAndSubGroups">Show empty groups?</mat-checkbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="list-actions">
+    <div class="major-column-title">
+      <div>
+        User groups, sub groups, and users <b>for all hotels</b>
+      </div>
+      <div class="major-column-subtitle">
+        <b>{{ numberOfUserGroups$ | async }}</b> groups,
+        <b>{{ numberOfUserSubGroups$ | async }}</b> sub groups,
+        <b>{{ numberOfUsers$ | async }}</b> users
+      </div>
+    </div>
+    <div class="major-column-buttons">
+      <button mat-flat-button type="button" class="secondary-button button-with-icon" (click)="addGroup(true)"><i class="icofont-plus"></i> <span>Add a new user group</span></button>
+    </div>
+  </div>
+  <div class="component-content-row">
+    <div class="group-wrapper">
+      <div class="component-box group-box ungrouped-users-box">
+        <div class="group-header">
+          <div class="group-title">
+            <div class="ungrouped-users-title">Ungrouped users</div>
+            <div class="major-column-subtitle">
+              <b>{{ ungroupedUsersFormArray.length }}</b> users are without a group
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button class="button-round-with-svg-icon transparent-button" (click)="toggleUngroupedUsersCollapse()">
+              <i class="svg-icon icon-collapse-black" [class.button-icon-collapsed]="areUngroupedUsersCollapsed$ | async"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="list-view-table-wrapper" *ngIf="!(areUngroupedUsersCollapsed$ | async)">
+          <table class="list-view-table">
+            <tbody>
+              <tr class="list-view-items-row" [class.inactive-user]="!userFormGroup.controls.isActive.value"
+                  *ngFor="let userFormGroup of ungroupedUsersFormArray.controls; index as userFormGroupIndex">
+                <td class="avatar-cell">
+                  <div class="task-chat-avatar-wrapper">
+                    <div class="task-chat-avatar" *ngIf="!userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-color': userFormGroup.controls.defaultAvatarColorHex.value }">{{userFormGroup.controls.initials.value}}</div>
+                    <div class="task-chat-avatar-image" *ngIf="userFormGroup.controls.avatarImageUrl.value" [ngStyle]="{'background-image': 'url(' + userFormGroup.controls.avatarImageUrl.value + ')'}"></div>
+                  </div>
+                </td>
+                <td class="name-cell">
+                  <span>
+                    {{ userFormGroup.controls.firstName.value }} {{ userFormGroup.controls.lastName.value }}
+                  </span>
+                </td>
+                <td class="username-cell"><span>{{ userFormGroup.controls.username.value }}</span></td>
+                <td class="role-cell"><span>{{ userFormGroup.controls.userRole.value }}</span></td>
+                <td class="user-actions-cell">
+                  <button mat-flat-button class="button-round-with-svg-icon"
+                          (click)="editUser(userFormGroup.controls.id.value, userFormGroupIndex)">
+                    <i class="svg-icon icon-pen-red"></i>
+                  </button>
+                  <button mat-flat-button class="button-round-with-svg-icon" mwlConfirmationPopover
+                          [popoverMessage]="'Are you sure you want to delete the user?'"
+                          (confirm)="deleteUser(userFormGroupIndex)"
+                          placement="left">
+                    <i class="svg-icon icon-trash-red"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <app-group *ngFor="let groupFormArray of groupsFormArray.controls; index as groupIndex"
+               [groupForm]='groupFormArray'
+               [groupIndex]='groupIndex'
+               (unsavedGroupRemoved)='removeGroupForm($event)'
+               (subGroupAdded)="onSubGroupAdded()"
+               (subGroupRemoved)="onSubGroupRemoved()"
+               (groupAdded)="onGroupAdded()"
+               (groupRemoved)='deleteGroup($event)'></app-group>
+    <div class="add-group-wrapper">
+      <button mat-flat-button type="button" class="add-group-button button-with-icon" (click)="addGroup()"><i class="icofont-plus"></i> Add a new user group</button>
+    </div>
+  </div>
+</div>

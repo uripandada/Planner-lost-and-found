@@ -1,0 +1,42 @@
+.roles-component-wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  padding: 8px 15px 15px 15px;
+  font-size: 14px;
+  color: #434343;
+}
+
+.role-edit-wrapper {
+  background-color: white;
+  height: 100%;
+
+  .role-edit {
+    .component-title {
+      padding: 16px 0px 12px 0px;
+    }
+  }
+
+  .role-claims {
+    .component-title {
+      padding: 16px 0px 12px 0px;
+    }
+  }
+
+  .button-right {
+    float: right;
+    button {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.claims-list {
+  display: flex;
+  flex-direction: column;
+}
+.claims-list + .major-column-title{
+    margin-top: 10px;
+}
+

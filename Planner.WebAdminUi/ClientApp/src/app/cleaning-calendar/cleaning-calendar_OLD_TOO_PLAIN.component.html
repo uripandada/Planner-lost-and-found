@@ -1,0 +1,1036 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading.isLoading$ | async"></mat-progress-bar>
+
+<div class="reservations-calendar-component-wrapper component-wrapper">
+  <div class="cleaning-planner-header">
+    <div class="major-column-title"><b>Cleaning calendar</b></div>
+    <div class="component-box">
+      <div class="component-box-filter-row">
+        <form [formGroup]="selectCalendarForm" class="cleaning-calendar-filter-grid">
+          <div class="two-column-grid">
+            <div class="select-plan-date-wrapper">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="fromPicker" formControlName="dateFrom" (click)="fromPicker.open()" (focus)="fromPicker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="fromPicker" [disableRipple]="true">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #fromPicker></mat-datepicker>
+                </mat-form-field>
+                <!--<mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="pickerFrom" formControlName="dateFrom" (click)="pickerFrom.open()">
+                  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>-->
+              </div>
+            </div>
+            <div class="select-plan-date-wrapper">
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput [matDatepicker]="toPicker" formControlName="dateTo" (click)="toPicker.open()" (focus)="toPicker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="toPicker" [disableRipple]="true">
+                    <i class="icofont-calendar" matDatepickerToggleIcon></i>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #toPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="select-hotel-wrapper">
+            <div class="select-hotel-label">
+              Hotel:
+            </div>
+            <div>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="hotelId" name="hotelId">
+                    <mat-option *ngFor="let hotel of hotelService.hotels" [value]="hotel.id">
+                      {{hotel.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+  <ng-container *ngIf="(isCalendarLoading$ | async)">
+    <div>
+      Calendar is loading
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!(isCalendarLoading$ | async)">
+    <div class="component-content-row">
+      <div class="component-box">
+        <div>
+          <table class="table-cleaning-calendar-2">
+            <thead>
+              <tr>
+                <th class="c-room text-left">
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Monday</div>
+                  <div class="cv-date">08.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Tuesday</div>
+                  <div class="cv-date">09.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Wednesday</div>
+                  <div class="cv-date">10.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Thursday</div>
+                  <div class="cv-date">11.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Friday</div>
+                  <div class="cv-date">12.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Saturday</div>
+                  <div class="cv-date">13.02.2021.</div>
+                </th>
+                <th class="cd2">
+                  <div class="cv-day-name">Sunday</div>
+                  <div class="cv-date">14.02.2021.</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">110</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                      <div>Jim Blue</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">111</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">112</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                      <div>James Turk</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Turk</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">113</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2 cl2">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>16:30-17:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Miles Doubles</div>
+                      <div>Alan Brooks</div>
+                      <div>Bob Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">114</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>16:30-17:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Chester Towerton</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln VACANT">
+                        <div>Vacant</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">110</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>John Doe</div>
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Brown</div>
+                      <div>Jim Blue</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">111</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">112</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Jack Farris</div>
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Ana Orange</div>
+                      <div>James Turk</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>James Turk</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">113</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2 cl2">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>16:30-17:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Miles Doubles</div>
+                      <div>Alan Brooks</div>
+                      <div>Bob Smith</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln STAY">
+                        <div>Stay</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Alan Brooks</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rrow frow">
+                <td class="c-room">
+                  <div class="cv-title">114</div>
+                  <div>Deluxe</div>
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln DEPARTURE">
+                        <div>Departure</div>
+                        <div>16:30-17:30 <i class="icofont-clock-time"></i></div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                      <div>Chester Towerton</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2 cl1">
+                  <div>
+                    <div class="clns">
+                      <div class="ccln VACANT">
+                        <div>Vacant</div>
+                      </div>
+                    </div>
+                    <div class="cres">
+                    </div>
+                  </div>
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+                <td class="cd2">
+                </td>
+              </tr>
+              <!--<tr class="rrow frow">
+    <td class="c-room">
+      <div class="cv-title">111</div>
+      <div>Deluxe</div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln VACANT">
+        <div>Vacant</div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+  </tr>
+  <tr class="rrow frow">
+    <td class="c-room">
+      <div class="cv-title">112</div>
+      <div>Deluxe</div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div class="cclnt">
+          <div>Stay</div>
+        </div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl2">
+      <div class="ccln DEPARTURE">
+        <div class="cclnt">
+          <div>Departure</div>
+        </div>
+        <div>10:00-12:00 <i class="icofont-clock-time"></i></div>
+      </div>
+      <div class="ccln DEPARTURE">
+        <div class="cclnt">
+          <div>Departure</div>
+        </div>
+        <div>16:00-18:00 <i class="icofont-clock-time"></i></div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+  </tr>
+  <tr class="rrow frow">
+    <td class="c-room">
+      <div class="cv-title">113</div>
+      <div>Deluxe</div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln DEPARTURE">
+          <div>Departure</div>
+        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln VACANT">
+        <div>Vacant</div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+  </tr>
+  <tr class="rrow frow">
+    <td class="c-room">
+      <div class="cv-title">201</div>
+      <div>Regular</div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln OUT_OF_SERVICE">
+          <div>Out of service</div>
+        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+  </tr>
+  <tr class="rrow frow">
+    <td class="c-room">
+      <div class="cv-title">202</div>
+      <div>Regular</div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln STAY">
+        <div>Stay</div>
+      </div>
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln DEPARTURE">
+          <div>Departure</div>
+        <div>13:30-14:30 <i class="icofont-clock-time"></i></div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2">
+    </td>
+    <td class="cd2 cl1">
+      <div class="ccln VACANT">
+        <div>Vacant</div>
+      </div>
+    </td>
+    <td class="cd2">
+    </td>
+  </tr>-->
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

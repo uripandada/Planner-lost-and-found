@@ -1,0 +1,46 @@
+<div class="asset-model-edit-form-content">
+  <form [formGroup]="assetModelForm">
+    <div class="two-column-grid">
+      <div>
+
+        <div class="form-field-wrapper">
+          <label>Name</label>
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <label>Available quantity</label>
+          <mat-form-field appearance="outline" color="accent" class="full-width">
+            <input formControlName="availableQuantity" matInput>
+          </mat-form-field>
+        </div>
+        <!--<div class="form-field-wrapper">
+          <label>Options</label>
+          <div class="horizontal-checkbox-list">
+            <mat-checkbox class="checkbox-item" formControlName="isAvailableToMaintenance">
+              Available to maintenance
+            </mat-checkbox>
+            <mat-checkbox class="checkbox-item" formControlName="isAvailableToHousekeeping">
+              Available to housekeeping
+            </mat-checkbox>
+          </div>
+        </div>-->
+      </div>
+      <div>
+        <!--<div>
+          <app-tags-multiselect [tags]="tags" [tagsFormArray]="assetForm.controls.tags" (tagAdded)="addTag($event)" (tagRemoved)="removeTag($event)"></app-tags-multiselect>
+        </div>-->
+        <div class="form-field-wrapper">
+          <label>Photos and files</label>
+          <div>
+            <app-file-upload (filesChanged)="uploadedFilesChanged($event)"
+                             [currentlyUploadingFiles]="currentlyUploadingFiles"
+                             [temporaryUploadedFiles]="temporaryUploadedFiles"
+                             [uploadedFiles]="uploadedFiles"></app-file-upload>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
