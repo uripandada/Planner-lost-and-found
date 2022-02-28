@@ -38,16 +38,13 @@
               <div class="form-field-wrapper">
                 <label>Where was it found?</label>
                   <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"
-                    [displayProperty]="'typeDescription'">
+                    [displayProperty]="'typeDescription'" (getSelection)="getSelection($event)" >
                   </app-where-select>
               </div>
               <div class="form-field-wrapper">
                 <label>Client name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="description" type="text" />
-                  <mat-error class="error" *ngIf="canShowErrorMessage('clientname')">
-                    <span *ngIf="f.description.errors.required">Required</span>
-                  </mat-error>
+                  <input matInput formControlName="clientName" type="text" />
                 </mat-form-field>
               </div>
             </div>

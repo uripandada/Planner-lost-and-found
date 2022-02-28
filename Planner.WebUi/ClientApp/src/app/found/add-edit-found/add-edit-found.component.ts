@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
+  ExtendedWhereData,
   HotelItemData,
   InsertLostAndFoundCommand,
   LostAndFoundClient,
@@ -81,6 +82,9 @@ export class AddEditFoundComponent implements OnInit {
 
   ngOnInit(): void {
     this.allWheres = this._route.snapshot.data.allWheres;
+    this.allWheres = this.allWheres.filter(value => {
+      return !value.typeDescription.includes("Unknown building");
+    })
     this.initForm();
 
     //this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
@@ -123,6 +127,7 @@ export class AddEditFoundComponent implements OnInit {
       city: [this.item.city],
       postalCode: [this.item.postalCode],
       country: [this.item.country],
+      clientName: [this.item.reservationId],
 
       description: [this.item.description, Validators.required],
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
@@ -252,7 +257,7 @@ export class AddEditFoundComponent implements OnInit {
     });
 
     if (this.item.id === null) {
-      
+
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
           if (response.isSuccess) {
@@ -333,8 +338,13 @@ export class AddEditFoundComponent implements OnInit {
     }
   }
 
+  getSelection(data: ExtendedWhereData) {
+    this.foundForm.controls.whereFrom.setValue(data.roomName);
+    this.foundForm.controls.clientName.setValue(data.guestName);
+  }
+
   ngOnDestroy(): void {
-    if(this.statusChange$) this.statusChange$.unsubscribe();
+    if (this.statusChange$) this.statusChange$.unsubscribe();
   }
 
 }

@@ -40535,6 +40535,8 @@ export interface IGetMonthlyTasksQuery {
 
 export class ExtendedWhereData extends TaskWhereData implements IExtendedWhereData {
     hotelId?: string | null;
+    guestName?: string | null;
+    roomName?: string | null;
 
     constructor(data?: IExtendedWhereData) {
         super(data);
@@ -40544,6 +40546,8 @@ export class ExtendedWhereData extends TaskWhereData implements IExtendedWhereDa
         super.init(_data);
         if (_data) {
             this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
+            this.guestName = _data["guestName"] !== undefined ? _data["guestName"] : <any>null;
+            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
         }
     }
 
@@ -40557,6 +40561,8 @@ export class ExtendedWhereData extends TaskWhereData implements IExtendedWhereDa
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
+        data["guestName"] = this.guestName !== undefined ? this.guestName : <any>null;
+        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
         super.toJSON(data);
         return data; 
     }
@@ -40564,6 +40570,8 @@ export class ExtendedWhereData extends TaskWhereData implements IExtendedWhereDa
 
 export interface IExtendedWhereData extends ITaskWhereData {
     hotelId?: string | null;
+    guestName?: string | null;
+    roomName?: string | null;
 }
 
 export class GetAllWheresQuery implements IGetAllWheresQuery {

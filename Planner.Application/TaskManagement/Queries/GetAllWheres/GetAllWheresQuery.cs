@@ -16,6 +16,8 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 	public class ExtendedWhereData: TaskWhereData
 	{
 		public string HotelId { get; set; }
+		public string GuestName { get; set; }
+		public string RoomName { get; set; }
 	}
 
 	public class GetAllWheresQuery: IRequest<IEnumerable<ExtendedWhereData>>
@@ -81,6 +83,8 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 					TypeDescription = $"Room - {buildingName}, {hotelName}",
 					TypeKey = TaskWhereType.ROOM.ToString(),
 					HotelId = room.HotelId,
+					GuestName = "",
+					RoomName = room.Name
 				});
 
 				if (room.TypeKey == RoomTypeEnum.HOSTEL.ToString() && room.RoomBeds != null)
@@ -94,6 +98,8 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 							TypeDescription = $"Bed - {room.Name}, {hotelName}",
 							TypeKey = TaskWhereType.BED.ToString(),
 							HotelId = room.HotelId,
+							GuestName = "",
+							RoomName = room.Name
 						});
 					}
 				}
@@ -166,6 +172,8 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 					TypeDescription = $"{(reservation.CheckIn.HasValue ? reservation.CheckIn.Value.ToString("dddd dd MMM") : "?")} - {(reservation.CheckOut.HasValue ? reservation.CheckOut.Value.ToString("dddd dd MMM") : "?")} at {hotelName}",
 					TypeKey = TaskWhereType.RESERVATION.ToString(),
 					HotelId = reservation.HotelId,
+					GuestName = reservation.GuestName,
+					RoomName = reservation.RoomName
 				});
 			}
 

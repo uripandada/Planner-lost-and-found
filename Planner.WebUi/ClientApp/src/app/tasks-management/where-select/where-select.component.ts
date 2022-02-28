@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -14,6 +14,7 @@ export class WhereSelectComponent implements OnInit, OnChanges {
   @Input() whereFormControl: FormControl = null;
   @Input() placeholderText: string = "Where...";
   @Input() displayProperty: string = "referenceName";
+  @Output() getSelection = new EventEmitter();
   //selectedWhereControl: FormControl;
   filteredWheres$: Observable<TaskWhereData[]>;
   displayProperty$: string
@@ -39,6 +40,10 @@ export class WhereSelectComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  getPosts(value: TaskWhereData) : void {
+    this.getSelection.emit(value);
   }
 
   displayWhere(where: any): string {
