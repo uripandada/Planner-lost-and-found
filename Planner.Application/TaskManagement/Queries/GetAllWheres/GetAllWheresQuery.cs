@@ -61,12 +61,12 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 			if (!request.IncludeReservationsWithoutRooms)
 			{
 				reservationsQuery = reservationsQuery.Where(r => r.RoomId != null);
-				reservationsQuery = reservationsQuery.Where(r => r.Room.BuildingId.HasValue && r.Room.FloorId.HasValue);
 			}
 
 			if (request.IgnoreFeatureReservations)
             {
 				reservationsQuery = reservationsQuery.Where(r => r.CheckIn < DateTime.Today && r.CheckOut >= DateTime.Today);
+				reservationsQuery = reservationsQuery.Where(r => r.Room.BuildingId.HasValue && r.Room.FloorId.HasValue);
 			}
 
 			var reservations = await reservationsQuery.Select(r => new { ReservationId = r.Id, r.GuestName, StatusKey = r.RccReservationStatusKey, RoomName = r.Room.Name, HotelId = r.HotelId, r.CheckIn, r.CheckOut }).ToArrayAsync();
