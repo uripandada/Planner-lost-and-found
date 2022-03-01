@@ -40580,6 +40580,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
     ignoreBuildingsMap!: boolean;
     ignoreWarehouses!: boolean;
     ignoreTemporaryRooms!: boolean;
+    ignoreFeatureReservations!: boolean;
 
     constructor(data?: IGetAllWheresQuery) {
         if (data) {
@@ -40597,6 +40598,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
             this.ignoreBuildingsMap = _data["ignoreBuildingsMap"] !== undefined ? _data["ignoreBuildingsMap"] : <any>null;
             this.ignoreWarehouses = _data["ignoreWarehouses"] !== undefined ? _data["ignoreWarehouses"] : <any>null;
             this.ignoreTemporaryRooms = _data["ignoreTemporaryRooms"] !== undefined ? _data["ignoreTemporaryRooms"] : <any>null;
+            this.ignoreFeatureReservations = _data["ignoreFeatureReservations"] !== undefined ? _data["ignoreFeatureReservations"] : <any>null;
         }
     }
 
@@ -40614,6 +40616,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
         data["ignoreBuildingsMap"] = this.ignoreBuildingsMap !== undefined ? this.ignoreBuildingsMap : <any>null;
         data["ignoreWarehouses"] = this.ignoreWarehouses !== undefined ? this.ignoreWarehouses : <any>null;
         data["ignoreTemporaryRooms"] = this.ignoreTemporaryRooms !== undefined ? this.ignoreTemporaryRooms : <any>null;
+        data["ignoreFeatureReservations"] = this.ignoreFeatureReservations !== undefined ? this.ignoreFeatureReservations : <any>null;
         return data; 
     }
 }
@@ -40624,6 +40627,7 @@ export interface IGetAllWheresQuery {
     ignoreBuildingsMap: boolean;
     ignoreWarehouses: boolean;
     ignoreTemporaryRooms: boolean;
+    ignoreFeatureReservations: boolean;
 }
 
 export class ClaimTaskCommand implements IClaimTaskCommand {
