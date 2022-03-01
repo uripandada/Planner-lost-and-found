@@ -28,6 +28,7 @@ export class FoundComponent implements OnInit {
   showLoadMore$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   hotels: HotelItemData[] = [];
 
+
   public statuses: any;
   statusMappings: { [index: number]: string } = {};
 

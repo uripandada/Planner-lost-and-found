@@ -64,29 +64,26 @@
               <table class="list-view-table">
                 <thead>
                   <tr>
+                    <th>Found On</th>
                     <th>Description</th>
-                    <th>Notes</th>
                     <th>Place</th>
-                    <th>Status</th>
                     <th>First name</th>
                     <th>Last name</th>
-                    <th>Found On</th>
+                    <th>Notes</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="list-view-items-row" *ngFor="let item of items" (click)="selectItem(item)"
                       [class.list-view-items-row-selected]="item.id === selectedItem.value?.id">
                     <td class="name-cell">
+                      <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>
+                    </td>
+                    <td class="name-cell">
                       <div class="cell-value">{{item.description}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.notes}}</div>
-                    </td>
-                    <td class="name-cell">
                       <div class="cell-value">{{item.place}}</div>
-                    </td>
-                    <td class="name-cell">
-                      <div class="cell-value">{{statusMappings[item.status]}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.firstName}}</div>
@@ -95,7 +92,10 @@
                       <div class="cell-value">{{item.lastName}}</div>
                     </td>
                     <td class="name-cell">
-                      <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>
+                      <div class="cell-value">{{item.notes}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{statusMappings[item.status]}}</div>
                     </td>
                   </tr>
                 </tbody>
