@@ -65,11 +65,14 @@
                 <thead>
                   <tr>
                     <th>Found On</th>
+                    <th>Photo</th>
                     <th>Description</th>
-                    <th>Place</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Notes</th>
+                    <th>Place found</th>
+                    <th>Client name</th>
+                    <th>Category</th>
+                    <th>Found by</th>
+                    <th>Reference</th>
+                    <th>Storage place</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -80,19 +83,30 @@
                       <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>
                     </td>
                     <td class="name-cell">
+                      <div class="cell-value">
+                        <img src="../../assets/images/Minion.jpg" style = "width: 15px; height: 20px;">
+                      </div>
+                    </td>
+                    <td class="name-cell">
                       <div class="cell-value">{{item.description}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.place}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.firstName}}</div>
+                      <div class="cell-value"></div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.lastName}}</div>
+                      <div class="cell-value"></div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value"></div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.notes}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value"></div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{statusMappings[item.status]}}</div>
