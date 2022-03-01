@@ -82,9 +82,6 @@ export class AddEditFoundComponent implements OnInit {
 
   ngOnInit(): void {
     this.allWheres = this._route.snapshot.data.allWheres;
-    this.allWheres = this.allWheres.filter(value => {
-      return !value.typeDescription.includes("Unknown building");
-    })
     this.initForm();
 
     //this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {

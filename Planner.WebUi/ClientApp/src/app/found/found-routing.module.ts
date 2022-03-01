@@ -13,7 +13,9 @@ const routes: Routes = [
     data: {
       ignoreUnAllocatedReservations: true,
       ignoreBuildingsMap: true,
-      ignoreWarehouses: true
+      ignoreWarehouses: true,
+      ignoreTemporaryRooms: true,
+      ignoreFeatureReservations: true,
     }
   }
 ];

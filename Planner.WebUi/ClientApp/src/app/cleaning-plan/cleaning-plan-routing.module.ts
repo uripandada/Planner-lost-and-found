@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoleListDataResolver } from '../core/resolvers/role-list.resolver';
-import { WheresListResolver, WheresListWithReservationsWithRoomsResolver } from '../core/resolvers/wheres-list.resolver';
+import { WheresListWithReservationsWithRoomsResolver } from '../core/resolvers/wheres-list.resolver';
 import { CleaningPlanComponent } from './cleaning-plan.component';
 
 const routes: Routes = [

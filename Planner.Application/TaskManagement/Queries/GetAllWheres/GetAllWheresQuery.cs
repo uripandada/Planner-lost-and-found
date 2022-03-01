@@ -29,6 +29,7 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 
 		public bool IgnoreWarehouses { get; set; }
 		public bool IgnoreTemporaryRooms { get; set; }
+		public bool IgnoreFeatureReservations { get; set; }
 	}
 
 	public class GetAllWheresQueryHandler: IRequestHandler<GetAllWheresQuery, IEnumerable<ExtendedWhereData>>, IAmWebApplicationHandler
@@ -60,6 +61,12 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 			if (!request.IncludeReservationsWithoutRooms)
 			{
 				reservationsQuery = reservationsQuery.Where(r => r.RoomId != null);
+				reservationsQuery = reservationsQuery.Where(r => r.Room.BuildingId.HasValue && r.Room.FloorId.HasValue);
+			}
+
+			if (request.IgnoreFeatureReservations)
+            {
+				reservationsQuery = reservationsQuery.Where(r => r.CheckIn < DateTime.Today && r.CheckOut >= DateTime.Today);
 			}
 
 			var reservations = await reservationsQuery.Select(r => new { ReservationId = r.Id, r.GuestName, StatusKey = r.RccReservationStatusKey, RoomName = r.Room.Name, HotelId = r.HotelId, r.CheckIn, r.CheckOut }).ToArrayAsync();
