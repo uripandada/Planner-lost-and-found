@@ -63,6 +63,7 @@ export class SidebarMenuComponent implements OnInit {
         '/users-management',
         '/reservations',
         '/role-management',
+        '/categories',
         '/room-categories',
         '/hotels-management',
         '/colors-management',
