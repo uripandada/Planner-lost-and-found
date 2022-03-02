@@ -1,5 +1,5 @@
 <ng-container *ngIf="data.itemTypeKey === 'CLEANING'">
-  <div style="height: 100%; width: 100%;pointer-events: none;" (ondrag)="drag()" [class]="itemClass">
+  <div style="height: 100%; width: 100%;pointer-events: none;" (ondrag)="drag()" [class]="itemClass" [style.borderColor]="borderColorHex">
     <div class="" style="height:100%;width:100%;position:relative;z-index:0;" #cleaningItem>
       <div class="ti-content">
         <div class="ti-first-row">

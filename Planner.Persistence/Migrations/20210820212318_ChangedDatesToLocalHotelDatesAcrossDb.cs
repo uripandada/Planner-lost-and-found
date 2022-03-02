@@ -12,7 +12,7 @@ namespace Planner.Persistence.Migrations
                 table: "cleaning_plan_items",
                 type: "timestamp without time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
             migrationBuilder.AlterColumn<DateTime>(
@@ -20,13 +20,13 @@ namespace Planner.Persistence.Migrations
                 table: "cleaning_plan_items",
                 type: "timestamp without time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "starts_at",
                 table: "cleaning_plan_items",
                 type: "timestamp with time zone",
@@ -34,7 +34,7 @@ namespace Planner.Persistence.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp without time zone");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "ends_at",
                 table: "cleaning_plan_items",
                 type: "timestamp with time zone",

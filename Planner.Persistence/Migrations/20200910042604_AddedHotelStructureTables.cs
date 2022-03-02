@@ -7,36 +7,36 @@ namespace Planner.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_sub_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(9353), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_sub_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(9014), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(2490), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(2181), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
             migrationBuilder.CreateTable(
@@ -44,9 +44,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 3, 999, DateTimeKind.Unspecified).AddTicks(1971), new TimeSpan(0, 0, 0, 0, 0))),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 3, 999, DateTimeKind.Unspecified).AddTicks(1971), new TimeSpan(0, 0, 0, 0, 0))),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 0, DateTimeKind.Unspecified).AddTicks(845), new TimeSpan(0, 0, 0, 0, 0))),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 0, DateTimeKind.Unspecified).AddTicks(845), new TimeSpan(0, 0, 0, 0, 0))),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     name = table.Column<string>(nullable: true)
                 },
@@ -72,9 +72,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(2063), new TimeSpan(0, 0, 0, 0, 0))),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(2063), new TimeSpan(0, 0, 0, 0, 0))),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(2425), new TimeSpan(0, 0, 0, 0, 0))),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(2425), new TimeSpan(0, 0, 0, 0, 0))),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     name = table.Column<string>(nullable: true),
                     address = table.Column<string>(nullable: true),
@@ -103,9 +103,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(8822), new TimeSpan(0, 0, 0, 0, 0))),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(8822), new TimeSpan(0, 0, 0, 0, 0))),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(9117), new TimeSpan(0, 0, 0, 0, 0))),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 2, DateTimeKind.Unspecified).AddTicks(9117), new TimeSpan(0, 0, 0, 0, 0))),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     name = table.Column<string>(nullable: true),
                     number = table.Column<int>(nullable: false)
@@ -133,8 +133,8 @@ namespace Planner.Persistence.Migrations
                 {
                     id = table.Column<string>(nullable: false),
                     name = table.Column<string>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false)
+                    created_at = table.Column<DateTimeOffset>(nullable: false),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,9 +146,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 6, DateTimeKind.Unspecified).AddTicks(5150), new TimeSpan(0, 0, 0, 0, 0))),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 6, DateTimeKind.Unspecified).AddTicks(5150), new TimeSpan(0, 0, 0, 0, 0))),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 6, DateTimeKind.Unspecified).AddTicks(5472), new TimeSpan(0, 0, 0, 0, 0))),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 6, DateTimeKind.Unspecified).AddTicks(5472), new TimeSpan(0, 0, 0, 0, 0))),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: true),
                     external_id = table.Column<string>(nullable: true),
@@ -319,36 +319,36 @@ namespace Planner.Persistence.Migrations
                 name: "ix_user_groups_hotel_id",
                 table: "user_groups");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_sub_groups",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(9353), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_sub_groups",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(9014), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_groups",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(2490), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_groups",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 4, 26, 4, 7, DateTimeKind.Unspecified).AddTicks(2181), new TimeSpan(0, 0, 0, 0, 0)));
         }
     }

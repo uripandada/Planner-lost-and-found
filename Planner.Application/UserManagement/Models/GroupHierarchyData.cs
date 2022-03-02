@@ -9,7 +9,7 @@ namespace Planner.Application.UserManagement.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public List<UserHierarchyData> Users { get; set; }
 
         public List<SubGroupHierarchyData> SubGroups { get; set; }

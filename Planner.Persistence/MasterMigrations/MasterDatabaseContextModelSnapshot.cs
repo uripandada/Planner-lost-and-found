@@ -542,6 +542,14 @@ namespace Planner.Persistence.MasterMigrations
                         .HasColumnType("text")
                         .HasColumnName("key");
 
+                    b.Property<bool>("HasAccessToListOfHotelGroups")
+                        .HasColumnType("boolean")
+                        .HasColumnName("has_access_to_list_of_hotel_groups");
+
+                    b.Property<bool>("HasAccessToListOfHotels")
+                        .HasColumnType("boolean")
+                        .HasColumnName("has_access_to_list_of_hotels");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
                         .HasColumnName("is_active");
@@ -556,6 +564,8 @@ namespace Planner.Persistence.MasterMigrations
                         {
                             ClientId = "RCC",
                             Key = "testing-rcc-secret-key",
+                            HasAccessToListOfHotelGroups = false,
+                            HasAccessToListOfHotels = false,
                             IsActive = true
                         });
                 });
@@ -668,7 +678,7 @@ namespace Planner.Persistence.MasterMigrations
                         .HasColumnType("boolean")
                         .HasColumnName("lockout_enabled");
 
-                    b.Property<DateTime?>("LockoutEnd")
+                    b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("lockout_end");
 

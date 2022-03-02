@@ -46,7 +46,7 @@ namespace Planner.Application.Export.Commands.ExportAssets
 				.Include(a => a.AssetTags)
 				.ToArrayAsync();
 
-			if (assets != null && assets.Length > 0)
+			if (assets != null)
 			{
 				using (ExcelEngine excelEngine = new ExcelEngine())
 				{

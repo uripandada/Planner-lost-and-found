@@ -39,7 +39,7 @@ namespace Planner.Persistence.MasterMigrations
                     phone_number = table.Column<string>(nullable: true),
                     phone_number_confirmed = table.Column<bool>(nullable: false),
                     two_factor_enabled = table.Column<bool>(nullable: false),
-                    lockout_end = table.Column<DateTime>(nullable: true),
+                    lockout_end = table.Column<DateTimeOffset>(nullable: true),
                     lockout_enabled = table.Column<bool>(nullable: false),
                     access_failed_count = table.Column<int>(nullable: false)
                 },

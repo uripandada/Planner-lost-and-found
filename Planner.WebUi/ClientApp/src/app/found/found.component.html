@@ -5,19 +5,16 @@
           <div class="major-column-title">
             <b>Found</b>
           </div>
-          <div class="major-column-matform">
-            <form [formGroup]="filterForm">
-              <mat-form-field appearance="outline" color="accent" class="full-width">
-                <mat-select name="hotelId">
-                  <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
-                    {{hotel.name}}
-                  </mat-option>
-                </mat-select>
-                <!-- <mat-error class="error" *ngIf="canShowErrorMessage('hotelId')">
-                  <span *ngIf="f.hotelId.errors.required">Required</span>
-                </mat-error> -->
-              </mat-form-field>
-            </form>
+          <div class="major-column-matform">            
+            <form [formGroup]="filterForm">                            
+              <mat-form-field appearance="outline" color="accent" class="full-width">                                
+                <mat-select name="hotelId">                                    
+                  <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">                        
+                    {{hotel.name}}                                    
+                  </mat-option>                                
+                </mat-select>                                            
+              </mat-form-field>                        
+            </form>        
           </div>
           <div class="major-column-buttons">
             <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="createNewFound()">
@@ -64,15 +61,15 @@
               <table class="list-view-table">
                 <thead>
                   <tr>
-                    <th>Found On</th>
-                    <th>Photo</th>
+                    <th>Found On</th> 
+                    <th>Photo</th>                   
                     <th>Description</th>
-                    <th>Place found</th>
-                    <th>Client name</th>
-                    <th>Category</th>
-                    <th>Found by</th>
-                    <th>Reference</th>
-                    <th>Storage place</th>
+                    <th>Place found</th>                                        
+                    <th>Client name</th>                                        
+                    <th>Category</th>                                        
+                    <th>Found by</th>                                        
+                    <th>Reference</th>                                        
+                    <th>Storage place</th>                   
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -82,10 +79,10 @@
                     <td class="name-cell">
                       <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>
                     </td>
-                    <td class="name-cell">
-                      <div class="cell-value">
-                        <img src="../../assets/images/Minion.jpg" style = "width: 15px; height: 20px;">
-                      </div>
+                    <td class="name-cell">                                            
+                      <div class="cell-value">                                                
+                        <img src="../../assets/images/Minion.jpg" style = "width: 15px; height: 20px;">                                         
+                      </div>                                        
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.description}}</div>
@@ -94,21 +91,21 @@
                       <div class="cell-value">{{item.place}}</div>
                     </td>
                     <td class="name-cell">
+                      <div class="cell-value"></div>                                        
+                    </td>                                        
+                    <td class="name-cell">                                            
                       <div class="cell-value"></div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value"></div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>
-                    </td>
-                    <td class="name-cell">
-                      <div class="cell-value">{{item.notes}}</div>
-                    </td>
-                    <td class="name-cell">
-                      <div class="cell-value"></div>
-                    </td>
-                    <td class="name-cell">
+                      <div class="cell-value">{{item.notes}}</div>                    
+                    </td>     
+                    <td class="name-cell">                                            
+                      <div class="cell-value"></div>                                        
+                    </td>               
+                    <td class="name-cell">                      
                       <div class="cell-value">{{statusMappings[item.status]}}</div>
                     </td>
                   </tr>

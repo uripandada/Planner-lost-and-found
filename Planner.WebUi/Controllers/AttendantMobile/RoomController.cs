@@ -19,6 +19,7 @@ using Planner.Application.MobileApi.Rooms.Queries.GetListOfRoomMessagesForMobile
 using Planner.Application.MobileApi.Rooms.Commands.SendRoomMessageForMobile;
 using System;
 using Planner.Application.MobileApi.Rooms.Queries.GetListOfAllRoomMessagesForMobile;
+using Planner.Application.MobileApi.Rooms.Commands.ChangeRoomPriorityForMobile;
 
 namespace Planner.WebUi.Controllers.AttendantMobile
 {
@@ -106,6 +107,12 @@ namespace Planner.WebUi.Controllers.AttendantMobile
 
 		[HttpPost]
 		public async Task<ProcessResponse<Guid>> SendMessage([FromBody] SendRoomMessageForMobileCommand request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[HttpPost]
+		public async Task<ProcessResponseSimple> ChangeCleaningPriority([FromBody] ChangeRoomPriorityForMobileCommand request)
 		{
 			return await this.Mediator.Send(request);
 		}

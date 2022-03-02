@@ -215,7 +215,7 @@ namespace Planner.Application.TaskManagement.Commands.ReassignTask
 				Data = newTask.Id,
 				HasError = false,
 				IsSuccess = true,
-				Message = "Task updated."
+				Message = "Task reassigned."
 			};
 		}
 	}

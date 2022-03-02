@@ -204,8 +204,8 @@ namespace Planner.Application.TaskManagement.Queries.GetTaskConfigurationSavePre
 							WhereDescription = "TO-SET"
 						};
 
-						var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName);
-						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName);
+						var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelId, d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName);
+						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelId, d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName);
 						item.Where = $"{fromWhere.Where} -> {toWhere.Where}";
 						item.WhereDescription = $"{fromWhere.Description} -> {toWhere.Description}";
 
@@ -283,8 +283,8 @@ namespace Planner.Application.TaskManagement.Queries.GetTaskConfigurationSavePre
 				WhereDescription = "TO-SET"
 			};
 
-			var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName);
-			var toWhere = TaskDescriptions.GetWhere2(d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName);
+			var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelId, d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName);
+			var toWhere = TaskDescriptions.GetWhere2(d.ToHotelId, d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName);
 			item.Where = $"{fromWhere.Where} -> {toWhere.Where}";
 			item.WhereDescription = $"{fromWhere.Description} -> {toWhere.Description}";
 

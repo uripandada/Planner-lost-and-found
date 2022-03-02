@@ -6,7 +6,7 @@
          #multiselectInput
          [formControl]="whereFormControl"
          [matAutocomplete]="whereAutocomplete">
-  <mat-autocomplete #whereAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWhere" (optionSelected)='getPosts($event.option.value)'>
+         <mat-autocomplete #whereAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayWhere" (optionSelected)='getPosts($event.option.value)'>
     <mat-option *ngFor="let where of filteredWheres$ | async" [value]="where">
       <div class="faa-title">{{where.referenceName}}</div>
       <div class="faa-label">{{where.typeDescription}}</div>

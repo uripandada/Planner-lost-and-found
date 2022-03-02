@@ -47,8 +47,8 @@ namespace Planner.Application.Reservations.Commands.SynchronizeReservations
 		public string HotelId { get; set; }
 		public bool IsActive { get; set; }
 		public bool IsSynchronizedFromRcc { get; set; }
-		public DateTime? LastTimeModifiedBySynchronization { get; set; }
-		public DateTime? SynchronizedAt { get; set; }
+		public DateTimeOffset? LastTimeModifiedBySynchronization { get; set; }
+		public DateTimeOffset? SynchronizedAt { get; set; }
 	}
 
 	public class ReservationRoomData

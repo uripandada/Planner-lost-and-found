@@ -29,8 +29,8 @@ export class AddEditFoundComponent implements OnInit {
 
   @Input() item: LostAndFoundModel;
   @Input() allWheres: Array<TaskWhereData> = [];
-  @Input() currentlyUploadingFiles: Array<FileDetails> = [];
-  @Input() temporaryUploadedFiles: Array<FileDetails> = [];
+  @Input() currentlyUploadingFiles: Array<FileDetails> = [];  
+  @Input() temporaryUploadedFiles: Array<FileDetails> = [];  
   @Input() uploadedFiles: Array<FileDetails> = [];
 
   @Output() reloadList: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -125,7 +125,6 @@ export class AddEditFoundComponent implements OnInit {
       postalCode: [this.item.postalCode],
       country: [this.item.country],
       clientName: [this.item.reservationId],
-
       description: [this.item.description, Validators.required],
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
@@ -254,7 +253,7 @@ export class AddEditFoundComponent implements OnInit {
     });
 
     if (this.item.id === null) {
-
+      
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
           if (response.isSuccess) {
@@ -335,9 +334,9 @@ export class AddEditFoundComponent implements OnInit {
     }
   }
 
-  getSelection(data: ExtendedWhereData) {
-    this.foundForm.controls.whereFrom.setValue(data.roomName);
-    this.foundForm.controls.clientName.setValue(data.guestName);
+  getSelection(data: ExtendedWhereData) {        
+    this.foundForm.controls.whereFrom.setValue(data.roomName);        
+    this.foundForm.controls.clientName.setValue(data.guestName);    
   }
 
   ngOnDestroy(): void {

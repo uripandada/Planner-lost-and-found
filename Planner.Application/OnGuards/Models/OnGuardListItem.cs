@@ -15,7 +15,7 @@ namespace Planner.Application.OnGuards.Models
         public string Identification { get; set; }
         public string ReferenceNumber { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public OnGuardStatus Status { get; set; }
 
     }

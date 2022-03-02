@@ -92,7 +92,7 @@ export class RoomImportPreviewComponent implements OnInit {
           this.fileUpload.nativeElement.value = "";
           this.isLoading$.next(false);
         },
-        (error: Error) => { this._toastr.error(error.message); },
+        (error: Error) => { this._toastr.error(error.message); this.isLoading$.next(false); },
         () => { this.isLoading$.next(false); }
       );
     }

@@ -3974,7 +3974,7 @@ app-task-single {
   padding: 15px;
 
 
-  .task-details-header-actions {
+  .task-details-header-buttons {
     button {
       font-size: 18px;
     }
@@ -4204,7 +4204,10 @@ td.task-status-cell {
   border: none;
   min-height: 30px;
   background-color: #f4f8ff;
+  align-items: end;
+}
 
+.task-details-header-buttons {
   button {
     background: none;
     min-width: unset;
@@ -4222,14 +4225,20 @@ td.task-status-cell {
 
     &.active-button {
       color: $color-primary;
-      border-bottom: 2px solid;
+      /*border-bottom: 2px solid;*/
       border-radius: 0;
       color: #29437F;
       padding: 5px 20px 5px 20px;
     }
   }
 }
-
+// tasks management component header
+.task-details-header-new button {
+  line-height: 32px;
+  height: 32px;
+  position: relative;
+  top: -10px;
+}
 .form-field-wrapper.ts-who-filter-grid {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -10833,7 +10842,7 @@ span, label{
 
 // TASKS MANAGEMENT
 .guest-request-tag {
-  display: block;
+  display: inline-block;
   background-color: #ffc7001c;
   border-radius: 2px;
   border: 1px solid #ffc700;
@@ -10842,10 +10851,11 @@ span, label{
   padding: 2px 4px 2px 2px;
   text-align: center;
   color: #d3a500;
+  white-space: nowrap;
 }
 // TASKS MANAGEMENT
 .high-priority-tag {
-  display: block;
+  display: inline-block;
   background-color: #f6b1b1;
   border-radius: 2px;
   border: 1px solid rgba(255, 0, 0, 0.2);
@@ -10854,14 +10864,12 @@ span, label{
   padding: 2px 4px 2px 2px;
   text-align: center;
   color: #c90f0f;
+  white-space: nowrap;
 }
-// TASKS MANAGEMENT
-.guest-request-tag + .high-priority-tag {
-  margin-top: 3px;
-}
+
 // TASKS MANAGEMENT
 td.priority-cell {
-  width: 109px;
+  width: 141px;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
@@ -11240,11 +11248,10 @@ td.priority-cell {
     padding: 5px 15px 0px 0px;
   }
 
-  .major-column-matform {
-    margin-top: 10px;
-    margin-right: 10px;
+  .major-column-matform {    
+    margin-top: 10px;    
+    margin-right: 10px;  
   }
-
 }
 
 // global styles
@@ -11365,4 +11372,595 @@ td.priority-cell {
 // reservations
 .reservation-inactive{
     color: red;
+}
+
+// task configurations grid component
+.list-view-table.tc-grid-opened {
+  background-color: mintcream;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+// task configurations grid component
+.list-view-items-row.tc-grid.tc-grid-opened {
+  background-color: mintcream;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+// task configurations grid component
+.tc-tasks-grid {
+  margin-bottom: 15px;
+  border-left: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  padding: 5px;
+  background-color: mintcream;
+}
+// task configurations grid component
+.task-configurations-grid {
+  .list-view-items-row.tc-grid > div {
+    padding: 0 10px;
+  }
+
+  .tasks-filter-row-grid .filter-row {
+    margin-top: 0px;
+  }
+
+  .component-filter-row {
+    padding: 10px 10px 10px 10px;
+  }
+
+  .when-cell {
+    width: unset;
+  }
+
+  .tc-configs {
+    border-bottom: 1px solid #eee;
+  }
+
+  .tc-grid {
+    display: grid;
+    grid-template-columns: 10% 1fr 15% 122px 25% 109px 150px;
+    column-gap: 10px;
+
+    &.tc-header-row {
+      font-size: 12px;
+      color: #999;
+
+      & > div {
+        padding: 0 10px;
+      }
+    }
+
+    .when-cell {
+      width: unset;
+
+      .cell-value {
+        font-size: 12px;
+      }
+    }
+
+    .cell-value {
+      font-size: 14px;
+      color: #343434;
+      line-height: normal;
+    }
+
+    &.list-view-items-row {
+      border-top: 1px solid #eee;
+      align-items: center;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  }
+
+  .cv-compl-factor {
+    text-align: right;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .cv-status-label {
+    text-align: right;
+    color: #999;
+
+    &.cell-value {
+      font-size: 11px;
+    }
+  }
+
+  .cv-compl-counts {
+    text-align: right;
+    font-size: 18px;
+    color: #454545;
+    font-weight: 500;
+  }
+
+  .priority-cell {
+    width: 110px;
+    text-align: center;
+  }
+
+  .cv-status-desc {
+    text-align: right;
+    font-weight: 500;
+    color: #454545;
+  }
+
+  .icofont {
+    color: #9ab3ed;
+    width: 18px;
+    display: inline-flex;
+    font-family: 'IcoFont' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    line-height: 1;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+
+    &.USER {
+      &:before {
+        content: "\ed05";
+      }
+    }
+
+    &.GROUP, &.SUBGROUP {
+      &:before {
+        content: "\ed0d";
+      }
+    }
+
+    &.PLANNED_ATTENDANT {
+      &:before {
+        content: "\f006";
+      }
+    }
+
+    &.ROOM {
+      &:before {
+        content: "\ef58";
+      }
+    }
+
+    &.BUILDING {
+      &:before {
+        content: "\e98a";
+      }
+    }
+
+    &.FLOOR {
+      &:before {
+        content: "\eec8";
+      }
+    }
+
+    &.HOTEL {
+      &:before {
+        content: "\ee41";
+      }
+    }
+
+    &.RESERVATION {
+      &:before {
+        content: "\ee4e";
+      }
+    }
+
+    &.WAREHOUSE {
+      &:before {
+        content: "\eef8";
+      }
+    }
+  }
+}
+
+// global style
+button.close-details-button {
+  padding: 0;
+  display: block;
+  min-width: auto;
+  min-height: auto;
+  line-height: normal;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 19px;
+  color: #777;
+  background: none;
+}
+
+// tasks component
+.list-view-wrapper.tasks-tab-wrapper {
+  padding: 0px;
+}
+
+// tasks component
+.my-tasks-tab-wrapper {
+  .major-column-title {
+    padding-left: 5px;
+  }
+
+  .when-cell {
+    width: 110px;
+    text-align: right;
+  }
+
+  .date-cell {
+    width: 110px;
+    text-align: right;
+  }
+  // TASKS MANAGEMENT
+  .guest-request-tag {
+    display: inline-block;
+    white-space: nowrap;
+    width: 76px;
+  }
+  // TASKS MANAGEMENT
+  .high-priority-tag {
+    display: inline-block;
+    white-space: nowrap;
+    width: 49px;
+  }
+
+  .priority-cell {
+    width: 163px;
+  }
+
+  .task-status-cell {
+    width: 110px !important;
+  }
+
+  .where-cell {
+    width: 200px !important;
+  }
+
+  .created-by-cell {
+    width: 200px;
+  }
+
+  td.created-by-cell, td.when-cell {
+    .cell-value {
+      color: #454545;
+    }
+  }
+
+  .filter-row {
+    display: grid;
+    grid-template-columns: 230px 230px 1fr 1fr 1fr;
+    column-gap: 15px;
+  }
+  // TASKS MANAGEMENT
+  .guest-request-tag + .high-priority-tag {
+    margin-left: 6px
+  }
+
+
+  table.list-view-table .list-view-items-row td {
+    padding: 8px 5px 8px 5px;
+  }
+
+  table.list-view-table .cell-value {
+    margin-bottom: 0px;
+  }
+
+  td.task-status-cell > div {
+    display: inline-flex;
+    vertical-align: top;
+  }
+
+  tr.list-view-items-row {
+    line-height: normal;
+  }
+}
+
+.user-group-tab-wrapper {
+  .major-column-title {
+    padding-left: 5px;
+  }
+
+  table.list-view-table .list-view-items-row td.who-cell {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 5px !important;
+  }
+
+  table.list-view-table .list-view-items-row td {
+    padding: 5px 5px 5px 5px;
+  }
+
+  .td-user-avatar-grid .task-details-avatar {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+  }
+}
+// tasks management component
+.my-tasks-top-stripe {
+  background-color: #efefef;
+  color: white;
+  font-size: 14px;
+
+  span.mtsi-tag {
+    display: inline-block;
+    border: none;
+    border-radius: 2px;
+    padding: 0px 4px;
+    white-space: nowrap;
+    font-size: 12px !important;
+    font-weight: 100 !important;
+    text-transform: uppercase;
+    line-height: 16px !important;
+    align-self: center;
+
+    .mtsi-paused {
+      background-color: #999;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-ontime {
+      background-color: #07b707;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-pending {
+      background-color: #f8c753;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-waiting {
+      background-color: #eb7e30;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-started {
+      background-color: #049587;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-finished {
+      background-color: #1553b6;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-cancelled {
+      background-color: #999;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-late {
+      background-color: #ff4949;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-verified {
+      background-color: #c545b6;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+  }
+
+  .toggle-button {
+    line-height: 14px;
+    background-color: #ef7373;
+    color: #ffffff;
+    padding: 6px;
+    font-weight: 400;
+    padding-right: 15px;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    border-radius: 4px;
+  }
+
+  .my-tasks-summary {
+    display: flex;
+  }
+
+  .my-tasks-summary-items {
+    color: #555;
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-right: 5px;
+    column-gap: 15px;
+    row-gap: 6px;
+  }
+}
+
+// tasks grouped component
+.tasks-groped-component {
+
+  .when-cell {
+    width: 110px;
+    text-align: right;
+  }
+
+  .date-cell {
+    width: 110px;
+    text-align: right;
+  }
+
+  .created-by-cell {
+    width: 200px;
+  }
+
+  .major-column-title {
+    padding-bottom: 0px;
+  }
+
+  .major-column-subtitle {
+    font-size: 12px;
+    padding-left: 5px;
+    margin-bottom: 7px;
+    line-height: normal;
+  }
+}
+// calendar component
+.tasks-calendar-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  .tc-month-day-labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+  }
+
+  .tc-month-days {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+  }
+
+  .tc-month {
+    padding: 5px;
+  }
+
+  .tc-day-header {
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+  }
+
+  .tc-day {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+    height: 116px;
+
+    &.tc-inactive-day {
+      background-color: #f2f2f2;
+      color: #999;
+    }
+  }
+
+  .today-tag {
+    background-color: #eee;
+    border-radius: 2px;
+    color: #454545;
+    padding: 3px 5px;
+  }
+
+  .tc-day-task {
+    background-color: #eeeeee;
+    border-radius: 4px;
+    line-height: normal;
+    padding: 1px 3px;
+    height: 16px;
+    overflow-y: hidden;
+    word-break: break-all;
+    color: #262626;
+  }
+
+  .tc-day-task + .tc-day-task {
+    margin-top: 2px;
+  }
+
+  .more-actions-tag {
+    white-space: nowrap;
+  }
+
+  .tc-day-tasks {
+    margin-top: 3px;
+  }
+
+  .tc-tasks-hidden-tag {
+    text-align: right;
+    line-height: 14px;
+  }
+
+  .tc-month-title {
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    color: #454545;
+    justify-content: center;
+    column-gap: 50px;
+  }
+
+  .tc-prev-month {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    align-self: center;
+    text-decoration: underline;
+    color: #777;
+
+    &:hover {
+      cursor: pointer;
+      color: $color-secondary;
+    }
+  }
+
+  .tc-next-month {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    align-self: center;
+    text-decoration: underline;
+    color: #777;
+
+    &:hover {
+      cursor: pointer;
+      color: $color-secondary;
+    }
+  }
+}
+
+.tgg-filter-form {
+  .tasks-grouped-grid-filter-row {
+    display: flex;
+    align-items: center;
+    column-gap: 25px;
+    padding: 0 5px;
+    margin-top: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .tasks-grouped-grid-sub-groups-row {
+    display: flex;
+    column-gap: 25px;
+    padding: 5px;
+    background-color: #d7d7d7;
+    font-size: 14px;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+    margin: 0 !important;
+  }
+
+  label {
+    margin-bottom: 0px;
+  }
 }

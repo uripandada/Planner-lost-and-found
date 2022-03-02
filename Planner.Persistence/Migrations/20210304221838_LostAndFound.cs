@@ -12,9 +12,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false),
+                    created_at = table.Column<DateTimeOffset>(nullable: false),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     first_name = table.Column<string>(nullable: true),
                     last_name = table.Column<string>(nullable: true),

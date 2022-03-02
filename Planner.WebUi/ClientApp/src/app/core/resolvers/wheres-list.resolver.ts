@@ -12,8 +12,8 @@ export class WheresListResolver implements Resolve<Observable<Array<ExtendedWher
     let ignoreUnAllocatedReservations: boolean = false;
     let ignoreBuildingsMap: boolean = false;
     let ignoreWarehouses: boolean = false;
-    let ignoreTemporaryRooms: boolean = false;
-    let ignoreFeatureReservations: boolean = false;
+    let ignoreTemporaryRooms: boolean = false;        
+    let ignoreFutureReservations: boolean = false;
 
     if (routeSnapshot.data['ignoreUnAllocatedReservations']) {
       ignoreUnAllocatedReservations = routeSnapshot.data['ignoreUnAllocatedReservations'];
@@ -27,15 +27,17 @@ export class WheresListResolver implements Resolve<Observable<Array<ExtendedWher
       ignoreWarehouses = routeSnapshot.data['ignoreWarehouses'];
     }
 
-    if (routeSnapshot.data['ignoreTemporaryRooms']) {
-      ignoreTemporaryRooms = routeSnapshot.data['ignoreTemporaryRooms'];
-    }
+    if (routeSnapshot.data['ignoreTemporaryRooms'])     
+    {            
+      ignoreTemporaryRooms = routeSnapshot.data['ignoreTemporaryRooms'];        
+    }        
+    
+    if (routeSnapshot.data['ignoreFutureReservations'])     
+    {            
+      ignoreFutureReservations = routeSnapshot.data['ignoreFutureReservations'];        
+    }          
 
-    if (routeSnapshot.data['ignoreFeatureReservations']) {
-      ignoreFeatureReservations = routeSnapshot.data['ignoreFeatureReservations'];
-    }
-
-    return this.tasksManagementClient.getAllWheres(new GetAllWheresQuery({ includeReservationsWithoutRooms: includeReservationsWithoutRooms, ignoreUnAllocatedReservations: ignoreUnAllocatedReservations, ignoreBuildingsMap: ignoreBuildingsMap, ignoreWarehouses: ignoreWarehouses, ignoreTemporaryRooms: ignoreTemporaryRooms, ignoreFeatureReservations: ignoreFeatureReservations }));
+    return this.tasksManagementClient.getAllWheres(new GetAllWheresQuery({ includeReservationsWithoutRooms: includeReservationsWithoutRooms, ignoreUnAllocatedReservations: ignoreUnAllocatedReservations, ignoreBuildingsMap: ignoreBuildingsMap, ignoreWarehouses: ignoreWarehouses, ignoreTemporaryRooms: ignoreTemporaryRooms, ignoreFutureReservations: ignoreFutureReservations }));
   }
 }
 
@@ -44,6 +46,6 @@ export class WheresListWithReservationsWithRoomsResolver implements Resolve<Obse
   constructor(private tasksManagementClient: TasksManagementClient) { }
 
   resolve(routeSnapshot: ActivatedRouteSnapshot) {
-    return this.tasksManagementClient.getAllWheres(new GetAllWheresQuery({ includeReservationsWithoutRooms: false, ignoreUnAllocatedReservations: false, ignoreBuildingsMap: false, ignoreWarehouses: false, ignoreTemporaryRooms: true, ignoreFeatureReservations: false }));
+    return this.tasksManagementClient.getAllWheres(new GetAllWheresQuery({ includeReservationsWithoutRooms: false, ignoreUnAllocatedReservations: false, ignoreBuildingsMap: false, ignoreWarehouses: false, ignoreTemporaryRooms: true, ignoreFutureReservations: false }));
   }
 }

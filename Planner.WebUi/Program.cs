@@ -65,7 +65,7 @@ namespace Planner.WebUi
 					var masterContext = scope.ServiceProvider.GetService<IMasterDatabaseContext>();
 					await masterContext.Database.MigrateAsync();
 
-					await DataSeed.SeedMultitenantAsync(masterContext, webHost.Services);
+					//await DataSeed.SeedMultitenantAsync(masterContext, webHost.Services);
 					await DataSeed.MigrateMultitenantAsync(masterContext, webHost.Services);
 
 				}

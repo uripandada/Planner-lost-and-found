@@ -1,0 +1,43 @@
+<div class="tasks-calendar-wrapper" *ngIf="calendar$ | async as calendar">
+  <div class="tc-month" *ngFor="let month of calendar.months">
+    <div class="tc-month-title">
+      <div class="tc-prev-month" (click)="previousMonth()"><i class="icofont-simple-left"></i> Previous month</div>
+      <div class="tc-current-month">{{month.monthName}} {{month.year}}</div>
+      <div class="tc-next-month" (click)="nextMonth()">Next month <i class="icofont-simple-right"></i></div>
+    </div>
+    <div class="tc-month-day-labels">
+      <div class="tc-day-header">MON</div>
+      <div class="tc-day-header">TUE</div>
+      <div class="tc-day-header">WED</div>
+      <div class="tc-day-header">THU</div>
+      <div class="tc-day-header">FRI</div>
+      <div class="tc-day-header">SAT</div>
+      <div class="tc-day-header">SUN</div>
+    </div>
+    <div class="tc-month-days">
+      <div class="tc-day" *ngFor="let day of month.days" [class.tc-inactive-day]="!day.isActive">
+        <div class="left-right">
+          <div>{{day.day}}</div>
+          <div><span class="today-tag" *ngIf="day.isToday">Today</span></div>
+        </div>
+        <div class="tc-day-tasks">
+          <ng-container *ngFor="let task of day.tasks">
+            <div *ngIf="task.isVisible" class="tc-day-task">
+              <div *ngFor="let action of task.actions" class="left-right">
+                <div>
+                  {{action.assetQuantity}} &times; {{action.actionName}} {{action.assetName}}
+                </div>
+                <div *ngIf="action.showMoreActions">
+                  <div class="more-actions-tag">
+                    +{{action.numberOfMoreActions}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngIf="day.areSomeTasksHidden" class="tc-tasks-hidden-tag">+{{day.numberOfHiddenTasks}} more</div>
+      </div>
+    </div>
+  </div>
+</div>

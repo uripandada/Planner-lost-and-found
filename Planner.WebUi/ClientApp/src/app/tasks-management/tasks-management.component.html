@@ -4,360 +4,31 @@
   <div class="component-content-row">
     <div class="tasks-list-details-grid component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
       <div class="tasks-grid component-list-wrapper">
-        <!--<div class="major-column-title-grid">
-          <div class="major-column-title"><b>Tasks</b></div>
-  
-        </div>-->
-
         <div class="task-details-header-actions">
           <div class="task-details-header-buttons">
-            <button mat-flat-button type="button" [class.active-button]="isListViewActive$ | async" (click)="changeView('LIST')">Tasks</button>
-            <button mat-flat-button type="button" [class.active-button]="isWeeklyViewActive$ | async" (click)="changeView('WEEKLY')">Calendar</button>
-            <!--<button mat-flat-button type="button" [class.active-button]="isMonthlyViewActive$ | async" (click)="changeView('MONTHLY')">Monthly view</button>-->
+            <button *ngFor="let tabHeader of tabHeaders" mat-flat-button type="button"[class.active-button]="tabHeader.isActive" (click)="changeView(tabHeader.key, tabHeader.id, tabHeader)">{{tabHeader.title}}</button>
+          </div>
+          <div class="task-details-header-new">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="createNewTaskConfiguration()"><i class="icofont-plus"></i> <span>Create tasks</span></button>
           </div>
         </div>
-
-
         <div class="component-box">
-
-          <div class="list-actions">
-            <div class="left-side-actions">
-              <!--<button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-upload-alt"></i> <span>Import data</span></button>
-              <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-download"></i> <span>Export data</span></button>-->
-
-            </div>
-            <div class="right-side-actions">
-              <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="createNewTaskConfiguration()"><i class="icofont-plus"></i> <span>Create tasks</span></button>
-
-            </div>
+          <div class="list-view-wrapper tasks-tab-wrapper" *ngFor="let tabHeader of tabHeaders">
+            <ng-container *ngIf="tabHeader.isActive">
+              <div class="tasks-tab-wrapper" *ngIf="tabHeader.key === '_#TASKS#_'">
+                <app-task-configurations-grid [allWhos]="tasksData.allWhos" [allWheres]="tasksData.allWheres" [allActions]="tasksData.allTaskActions" [selectedTaskId]="selectedTaskId$ | async" [selectedTaskConfigurationId]="selectedTaskConfigurationId$ | async" (taskSelected)="onTaskSelected($event)"></app-task-configurations-grid>
+              </div>
+              <div class="my-tasks-tab-wrapper" *ngIf="tabHeader.key === '_#MY_TASKS#_'">
+                <app-tasks-grouped-grid [onlyMyTasks]="true" [availableUserSubGroups]="tasksData.availableUserSubGroups" [selectedTaskId]="selectedTaskId$ | async" (taskSelected)="onTaskSelected($event)"></app-tasks-grouped-grid>
+              </div>
+              <div class="user-group-tab-wrapper" *ngIf="tabHeader.key === '_#USERGROUP#_'">
+                <app-tasks-grouped-grid [userGroupId]="tabHeader.id" [availableUserSubGroups]="tasksData.availableUserSubGroups" [selectedTaskId]="selectedTaskId$ | async" (taskSelected)="onTaskSelected($event)"></app-tasks-grouped-grid>
+              </div>
+              <div class="user-group-tab-wrapper" *ngIf="tabHeader.key === '_#USERSUBGROUP#_'">
+                <app-tasks-grouped-grid [userSubGroupId]="tabHeader.id" [availableUserSubGroups]="[]" [selectedTaskId]="selectedTaskId$ | async" (taskSelected)="onTaskSelected($event)"></app-tasks-grouped-grid>
+              </div>
+            </ng-container>
           </div>
-
-          <div class="component-filter-row">
-            <form [formGroup]="filterForm">
-              <div class="tasks-filter-row-grid">
-                <div class="filter-row monthly-filter-row" *ngIf="isMonthlyViewActive$ | async">
-                  <div class="form-field-wrapper">
-                    <!--<label>Choose a month</label>-->
-                    <div>
-                      <app-month-picker [initialDate]="filterForm.controls.monthDate.value" (monthChanged)="onMonthFilterValueChanged($event)"></app-month-picker>
-                    </div>
-                  </div>
-                  <div class="filter-form-field-wrapper">
-                    <div class="monthly-view-title">Tasks and workers</div>
-                    <div class="monthly-view-title"><b>{{ filterForm.controls.monthDate.value.format('MMMM YYYY') }}</b></div>
-                  </div>
-                </div>
-                <ng-container *ngIf="!(isMonthlyViewActive$ | async)">
-                  <div class="filter-row">
-                    <ng-container *ngIf="isListViewActive$ | async">
-                      <div class="form-field-wrapper">
-                        <!--<label>From</label>-->
-                        <mat-form-field appearance="outline" class="full-width">
-                          <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" (click)="fromPicker.open()" (focus)="fromPicker.open()">
-                          <mat-datepicker-toggle matSuffix [for]="fromPicker" [disableRipple]="true">
-                            <i class="icofont-calendar" matDatepickerToggleIcon></i>
-                          </mat-datepicker-toggle>
-                          <mat-datepicker #fromPicker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                      <div class="form-field-wrapper">
-                        <!--<label>To</label>-->
-                        <mat-form-field appearance="outline" class="full-width">
-                          <input matInput [matDatepicker]="toPicker" formControlName="toDate" (click)="toPicker.open()" (focus)="toPicker.open()">
-                          <mat-datepicker-toggle matSuffix [for]="toPicker" [disableRipple]="true">
-                            <i class="icofont-calendar" matDatepickerToggleIcon></i>
-                          </mat-datepicker-toggle>
-                          <mat-datepicker #toPicker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="isWeeklyViewActive$ | async">
-                      <div class="form-field-wrapper">
-                        <!--<label>Choose a week</label>-->
-                        <div>
-                          <app-week-picker [startDateControl]="filterForm.controls.weekStartDate" [endDateControl]="filterForm.controls.weekEndDate" (weekChanged)="onWeekFilterValueChanged($event)"></app-week-picker>
-                        </div>
-                      </div>
-                    </ng-container>
-
-                    <div class="form-field-wrapper">
-                      <!--<label>Search tasks</label>-->
-                      <mat-form-field appearance="outline" color="accent" class="full-width">
-                        <input formControlName="keywords" matInput placeholder="Find by keywords">
-                      </mat-form-field>
-                    </div>
-                    <div class="form-field-wrapper">
-                      <!--<label>Task status</label>-->
-                      <mat-form-field appearance="outline" color="accent" class="full-width">
-                        <mat-select formControlName="statusKey" name="sort">
-                          <mat-option *ngFor="let status of statuses" [value]="status.key">
-                            {{status.value}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                    <div class="form-field-wrapper">
-                      <!--<label>Sort by</label>-->
-                      <mat-form-field appearance="outline" color="accent" class="full-width">
-                        <mat-select formControlName="sortKey" name="sort">
-                          <mat-option *ngFor="let sort of sorts" [value]="sort.key">
-                            {{sort.value}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                  </div>
-
-                  <div class="filter-row">
-                    <div class="form-field-wrapper ts-who-filter-grid">
-                      <!--<label>Who</label>-->
-                      <div>
-                        <app-who-multiselect [allWhos]="tasksData.allWhos" [isRequired]="false" [showMiniTags]="true" formControlName="whos"></app-who-multiselect>
-                      </div>
-                      <div>
-                        <!--<mat-checkbox formControlName="onlyMyTasks">Only my tasks</mat-checkbox>-->
-                      </div>
-                    </div>
-                    <div class="form-field-wrapper">
-                      <!--<label>What</label>-->
-                      <mat-form-field class="full-width" appearance="outline">
-                        <input type="text"
-                               placeholder="What..."
-                               aria-label="Number"
-                               matInput
-                               formControlName="action"
-                               [matAutocomplete]="taskActionsAutocomplete">
-                        <mat-autocomplete #taskActionsAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayTaskAction">
-                          <mat-option *ngFor="let action of filteredTaskActions$ | async" [value]="action">
-                            <div class="faa-title">{{action.actionName}} {{action.assetName}}</div>
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
-                    </div>
-                    <div class="form-field-wrapper">
-                      <!--<label>Where</label>-->
-                      <div>
-                        <app-where-multiselect [allWheres]="tasksData.allWheres" [isRequired]="false" [showMiniTags]="true" formControlName="wheres"></app-where-multiselect>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
-            </form>
-          </div>
-
-
-
-
-
-
-
-
-          <div class="list-view-wrapper" *ngIf="isListViewActive$ | async">
-            <table class="list-view-table">
-              <thead>
-                <tr>
-                  <th class="who-cell">User</th>
-                  <th class="what-cell">What</th>
-                  <th class="where-cell">Where</th>
-                  <th class="when-cell">When</th>
-                  <th class="priority-cell">Priority</th>
-                  <th class="task-status-cell">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="list-view-items-row" *ngFor="let task of tasks$ | async" (click)="selectTask(task)" [class.list-view-items-row-selected]="task.id === (selectedTaskItemId$ | async)">
-                  <td class="who-cell">
-                    <div class="td-user-avatar-grid">
-                      <div class="task-details-avatar-wrapper">
-                        <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
-                        <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
-                      </div>
-                      <div>
-                        <div class="cell-value">{{task.userFullName}}</div>
-                        <div class="sub-cell-value">{{task.userUsername}}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="what-cell">
-                    <ng-container *ngFor="let action of task.actions">
-                      <div class="cell-value">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</div>
-                    </ng-container>
-                    <div class="sub-cell-value">{{task.typeDescription}}</div>
-                  </td>
-                  <td class="where-cell">
-                    <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
-                    <div class="sub-cell-value">{{task.whereDescription}}</div>
-                  </td>
-                  <td class="when-cell">
-                    <div class="cell-value">{{task.when}}</div>
-                    <div class="sub-cell-value">{{task.whenDescription}}</div>
-                  </td>
-                  <td class="priority-cell">
-                    <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest request</span>
-                    <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High priority</span>
-                  </td>
-                  <td class="task-status-cell">
-                    <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div>
-              <div class="tasks-list-totals-description">
-                <span>Showing</span>
-                <span>{{loadedNumberOfTasks$ | async}}</span>
-                <span>/</span>
-                <span>{{totalNumberOfTasks$ | async}}</span>
-                <span>tasks</span>
-              </div>
-              <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
-                <button mat-flat-button type="button" (click)="loadMoreDailyTasks()">Load 20 more</button>
-              </div>
-            </div>
-          </div>
-
-
-
-
-
-
-          <div class="weekly-view-wrapper" *ngIf="isWeeklyViewActive$ | async">
-            <table class="weekly-table list-view-table">
-              <thead>
-                <tr>
-                  <th class="weekly-username-column"></th>
-                  <th class="weekly-weekday-column" *ngFor="let weekDay of weekDays$ | async">
-                    <div>{{weekDay.dayName}}</div>
-                    <div class="small-subtext">{{weekDay.dateString}}</div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr *ngFor="let userGroup of weeklyTasks$ | async">
-                  <td class="who-cell">
-                    <div class="td-user-avatar-grid">
-                      <div class="task-details-avatar-wrapper">
-                        <div class="task-details-avatar" *ngIf="!userGroup.userAvatarUrl" [ngStyle]="{'background-color': userGroup.defaultUserAvatarColorHex }">{{userGroup.userFullNameInitials}}</div>
-                        <div class="task-details-avatar-image" *ngIf="userGroup.userAvatarUrl" [ngStyle]="{'background-image': 'url(' + userGroup.userAvatarUrl + ')'}"></div>
-                      </div>
-                      <div>
-                        <div class="cell-value">{{userGroup.userFullName}}</div>
-                        <div class="sub-cell-value"><span>{{userGroup.userGroupName}}</span><span *ngIf="userGroup.userSubGroupName">, {{userGroup.userSubGroupName}}</span></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td *ngFor="let dayGroup of userGroup.dayGroups" class="weekly-weekday-column">
-                    <div class="wt-cell-box" *ngIf="dayGroup.tasks.length > 0">
-                      <div class="weekly-tasks">
-                        <div *ngFor="let task of dayGroup.tasks | slice:0:2" (click)="selectWeeklyTask(task.id)" class="wtt-item"><i class="wt-indicator" [class]="task.statusKey"></i><span *ngFor="let action of task.actions">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</span></div>
-                      </div>
-                      <div>
-                        <div class="weekly-tasks-nr-hidden" *ngIf="dayGroup.showMoreTasks">
-                          <span>+{{dayGroup.numberOfHiddenTasks}}</span>
-                        </div>
-                      </div>
-                      <div class="wt-cell-box-tooltip">
-                        <div class="wtt-title"><b>{{dayGroup.tasks.length}}</b> tasks for the day:</div>
-                        <div class="wtt-items">
-                          <div class="wtt-item" *ngFor="let task of dayGroup.tasks">
-                            <i class="wt-indicator" [class]="task.statusKey"></i>
-                            <div>
-                              <span *ngFor="let action of task.actions">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div>
-              <div class="tasks-list-totals-description">
-                <span>Showing</span>
-                <span>{{loadedNumberOfWeeklyTasks$ | async}}</span>
-                <span>/</span>
-                <span>{{totalNumberOfWeeklyTasks$ | async}}</span>
-                <span>tasks</span>
-              </div>
-              <div class="tasks-list-load-more-actions" *ngIf="showLoadMoreWeekly$ | async">
-                <button mat-flat-button type="button">Load 20 more</button>
-              </div>
-            </div>
-          </div>
-
-          <!--<div class="monthly-view-wrapper" [hidden]="!(isMonthlyViewActive$ | async)">
-
-            <app-tasks-monthly-graphs [monthlyTasksGraphs]="monthlyTasksGraphs$ | async" (dayOfMonthSelected)="onDayOfMonthSelected($event)"></app-tasks-monthly-graphs>
-
-            <ng-continer *ngIf="(isLoadingDayInMonthTasks$ | async)">
-              <div class="empty-monthly-date-tasks">
-                <div class="empty-alert">
-                  Loading tasks
-                </div>
-              </div>
-            </ng-continer>
-
-            <ng-continer *ngIf="!(isLoadingDayInMonthTasks$ | async)">
-              <ng-container *ngIf="dayInMonthTasks$ | async as dayInMonthTasks">
-                <div class="empty-monthly-date-tasks" *ngIf="!(areDayInMonthTasksLoaded$ | async)">
-                  <div class="empty-alert">
-                    Choose a date on the graphs to see tasks for that date!
-                  </div>
-                </div>
-                <div class="empty-monthly-date-tasks" *ngIf="(areDayInMonthTasksLoaded$ | async) && dayInMonthTasks.length === 0">
-                  <div class="empty-alert">
-                    There are not tasks at <b>{{filterForm.controls.monthDate.value.format('Do MMMM YYYY')}}</b>
-                  </div>
-                </div>
-                <div class="monthly-date-tasks" *ngIf="dayInMonthTasks.length > 0">
-                  <div class="list-view-table-title">
-                    <b>{{ dayInMonthTasks.length }}</b>
-                    tasks at
-                    <b>{{filterForm.controls.monthDate.value.format('Do MMMM YYYY')}}</b>
-
-                  </div>
-                  <table class="list-view-table">
-                    <tbody>
-                      <tr class="list-view-items-row" *ngFor="let task of dayInMonthTasks" (click)="selectTask(task)" [class.list-view-items-row-selected]="task.id === (selectedTaskItemId$ | async)">
-                        <td class="who-cell">
-                          <div class="td-user-avatar-grid">
-                            <div class="task-details-avatar-wrapper">
-                              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl">{{task.userInitials}}</div>
-                              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
-                            </div>
-                            <div>
-                              <div class="cell-value">{{task.userFullName}}</div>
-                              <div class="sub-cell-value">{{task.userUsername}}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="when-cell">
-                          <div class="cell-value">{{task.when}}</div>
-                          <div class="sub-cell-value">{{task.whenDescription}}</div>
-                        </td>
-                        <td class="what-cell">
-                          <div class="cell-value">{{task.actionName}} {{task.assetName}}</div>
-                          <div class="sub-cell-value">{{task.typeDescription}}</div>
-                        </td>
-                        <td class="where-cell">
-                          <div class="cell-value">{{task.where}}</div>
-                          <div class="sub-cell-value">{{task.whereDescription}}</div>
-                        </td>
-                        <td class="task-status-cell">
-                          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </ng-container>
-            </ng-continer>
-          </div>-->
         </div>
       </div>
       <div class="details-view-wrapper component-details-wrapper">
@@ -368,7 +39,12 @@
           <ng-container *ngIf="!(this.isLoadingTaskDetails$ | async) && (this.taskDetails$ | async) as taskDetails">
             <div class="major-column-title">
               <ng-container *ngIf="(taskDetailsMode$ | async) === taskDetailsModes.DETAILS">
-                Task Details
+                <div class="left-right">
+                  <div>Task details</div>
+                  <div>
+                      <button mat-flat-button type="button" class="close-details-button" (click)="closeDetails()">&times;</button>
+                  </div>
+                </div>
               </ng-container>
               <ng-container *ngIf="(taskDetailsMode$ | async) === taskDetailsModes.CHAT">
                 Task Messages
@@ -379,7 +55,6 @@
               <ng-container *ngIf="(taskDetailsMode$ | async) === taskDetailsModes.EDIT_FORM">
                 Reassign Task
               </ng-container>
-              <!--<b>{{taskDetails.actionName}} {{taskDetails.assetQuantity}}x"{{taskDetails.assetName}}"</b>-->
             </div>
             <div class="task-details-header-actions">
               <div class="task-details-header-buttons">
@@ -410,8 +85,6 @@
                     </div>
                   </div>
                 </div>
-
-
                 <div class="task-statuses-wrapper" *ngIf="taskDetails.statusKey !== 'CANCELLED' && taskDetails.statusKey !== 'CLAIMED_BY_SOMEONE_ELSE'">
                   <div class="task-details-statuses">
                     <div class="task-details-status-item PAUSED" [class.status-item-active]="taskDetails.statusKey === 'PAUSED'">
@@ -497,41 +170,10 @@
                       </button>
                     </div>
                   </ng-container>
-
                 </div>
-               
-
                 <div class="">
                   <div class="task-details-properties">
-                    <!--<div class="task-details-properties-grid">
-  <div class="task-details-avatar-asset-images">-->
-                    <!--<div class="asset-image">
-    <ng-container *ngIf="!taskDetails.assetMainImageUrl">
-      <i _ngcontent-pjd-c346="" class="svg-icon icon-box"></i>
-    </ng-container>
-    <ng-container *ngIf="taskDetails.assetMainImageUrl">
-      <div class="asset-image-background" [ngStyle]="{'background-image': 'url(' + taskDetails.assetMainImageUrl + ')' }"></div>
-    </ng-container>
-  </div>-->
-                    <!--<div class="avatar-image">-->
-                    <!--<div class="task-details-avatar-wrapper"><div class="task-details-avatar">AR</div></div>-->
-                    <!--<div class="task-details-avatar-wrapper">
-          <div class="task-details-avatar" *ngIf="!taskDetails.userAvatarImageUrl">{{taskDetails.userInitials}}</div>
-          <div class="task-details-avatar-image" *ngIf="taskDetails.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + taskDetails.userAvatarImageUrl + ')'}"></div>
-        </div>
-      </div>
-    </div>
-    <div>
-
-      <div class="task-details-sub-text"><b>{{taskDetails.when}}</b> - {{taskDetails.startsAt | date:'MMMM d, y, HH:mm'}} - {{taskDetails.eventKey}}</div>
-      <div class="task-details-sub-text"><b>{{taskDetails.roomName}}</b>, {{taskDetails.floorName}}, {{taskDetails.buildingName}}, {{taskDetails.hotelName}}</div>
-      <div class="task-details-sub-text"><b>{{taskDetails.userFullName}}</b> - {{taskDetails.userUsername}}</div>
-    </div>
-  </div>-->
-
-
                     <div class="task-details-properties-grid">
-
                       <div>
                         <div class="property-box">
                           <div class="property-box-icon">
@@ -595,28 +237,6 @@
 
                               <div *ngIf="taskDetails.fromFloorId" class="content-sub-text"><label>Floor</label> {{taskDetails.fromFloorName}}</div>
                               <div *ngIf="taskDetails.fromHotelId" class="content-sub-text"><label>Hotel</label> {{taskDetails.fromHotelName}}</div>
-
-
-
-                              <!--<ng-container *ngIf="taskDetails.whereTypeKey === 'HOTEL'">
-              <div class="content-text"><label>Hotel</label> {{taskDetails.hotelName}}</div>
-              <div class="content-sub-text"></div>
-            </ng-container>
-            <ng-container *ngIf="taskDetails.whereTypeKey === 'BUILDING'">
-              <div class="content-text"><label>Building</label> {{taskDetails.buildingName}}</div>
-              <div class="content-sub-text"><label>Hotel</label> {{taskDetails.hotelName}}</div>
-            </ng-container>
-            <ng-container *ngIf="taskDetails.whereTypeKey === 'FLOOR'">
-              <div class="content-text"><label>Floor</label> {{taskDetails.floorName}}</div>
-              <div class="content-sub-text"><label>Building</label> {{taskDetails.buildingName}}</div>
-              <div class="content-sub-text"><label>Hotel</label> {{taskDetails.hotelName}}</div>
-            </ng-container>
-            <ng-container *ngIf="taskDetails.whereTypeKey === 'ROOM' || taskDetails.whereTypeKey === 'RESERVATION'">
-              <div class="content-text"><label>Room</label> {{taskDetails.roomName}}</div>
-              <div class="content-sub-text"><label>Floor</label> {{taskDetails.floorName}}</div>
-              <div class="content-sub-text"><label>Building</label> {{taskDetails.buildingName}}</div>
-              <div class="content-sub-text"><label>Hotel</label> {{taskDetails.hotelName}}</div>
-            </ng-container>-->
                             </div>
                           </div>
                         </div>
@@ -655,38 +275,12 @@
                         </div>
 
                       </div>
-
-
-                      <!--<div class="task-details-avatar-asset-images">
-      <div class="avatar-image">
-        <div class="task-details-avatar-wrapper"><div class="task-details-avatar">AR</div></div>
-        <div class="task-details-avatar-wrapper">
-          <div class="task-details-avatar" *ngIf="!taskDetails.userAvatarImageUrl">{{taskDetails.userInitials}}</div>
-          <div class="task-details-avatar-image" *ngIf="taskDetails.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + taskDetails.userAvatarImageUrl + ')'}"></div>
-        </div>
-      </div>
-    </div>-->
-                      <!--<div>
-
-      <div class="task-details-sub-text"><b>{{taskDetails.when}}</b> - {{taskDetails.startsAt | date:'MMMM d, y, HH:mm'}} - {{taskDetails.eventKey}}</div>
-      <div class="task-details-sub-text"><b>{{taskDetails.roomName}}</b>, {{taskDetails.floorName}}, {{taskDetails.buildingName}}, {{taskDetails.hotelName}}</div>
-      <div class="task-details-sub-text"><b>{{taskDetails.userFullName}}</b> - {{taskDetails.userUsername}}</div>
-    </div>-->
                     </div>
 
                     <div class="task-details-item task-details-comment" *ngIf="taskDetails.comment">
                       <div class="task-details-comment-icon"><i class="icofont-comment"></i></div>
                       <div class="task-details-comment-text">{{taskDetails.comment}}</div>
                     </div>
-
-                    <!--<div class="task-details-item" *ngIf="taskDetails.images.length > 0">
-                      <div class="full-width task-details-images">
-                        <ng-container *ngFor="let taskImage of taskDetails.images">
-                          <div class="task-details-image" [ngStyle]="{'background-image': 'url(' + taskImage.imageUrl + ')'}">
-                          </div>
-                        </ng-container>
-                      </div>
-                    </div>-->
                     <div class="task-details-item" *ngIf="taskDetails.filestackImageUrls.length > 0">
                       <div class="full-width task-details-images">
                         <ng-container *ngFor="let taskImageUrl of taskDetails.filestackImageUrls">
@@ -726,57 +320,6 @@
                         <button mat-flat-button type="button" (click)="openEditTaskConfigurationPopup()" class="full-width"><i class="icofont icofont-settings-alt"></i> Edit configuration</button>
                       </div>
                     </div>
-
-
-
-
-
-
-
-                    <!--<div class="">
-        <div class="full-width">
-          <div class="task-details-actions">
-            <div>
-              <div class="task-details-action">
-                <button mat-flat-button type="button" disabled="disabled">Move to departure</button>
-              </div>
-              <div class="inline-button-list">
-                <button mat-flat-button type="button" (click)="duplicateTask()"><i class="icofont icofont-papers"></i> Duplicate task</button>
-                <button mat-flat-button type="button" (click)="openEditTaskConfigurationPopup()"><i class="icofont icofont-settings-alt"></i> Edit configuration</button>
-              </div>
-            </div>
-            <div>
-              <div>
-                <button mat-stroked-button type="button"
-                        class="button-with-icon button-stroked-cancel"
-                        mwlConfirmationPopover
-                        [popoverMessage]="'Are you sure you want to cancel the task?'"
-                        placement="bottom"
-                        (confirm)="cancelTask()">
-                  <i class="icofont icofont-close-circled"></i>
-                  Cancel task
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   </div>
 
                   <div class="task-details-brief-history" *ngIf="taskDetails.briefHistory.length > 0">
@@ -784,18 +327,6 @@
                       <div class="bhi-title">{{historyItem.message}}</div>
                       <div class="bhi-description">{{historyItem.createdAt | date:'MMMM d, y, HH:mm'}} by {{historyItem.userName}}</div>
                     </div>
-                    <!--<div class="brief-history-item">
-        <div class="bhi-title">Task paused</div>
-        <div class="bhi-description">13.03.2021. 14:25 by John Doe</div>
-      </div>
-      <div class="brief-history-item">
-        <div class="bhi-title">Task started</div>
-        <div class="bhi-description">13.03.2021. 14:11 by John Doe</div>
-      </div>
-      <div class="brief-history-item">
-        <div class="bhi-title">Task created</div>
-        <div class="bhi-description">13.03.2021. 13:30 by John Doe</div>
-      </div>-->
                   </div>
                 </div>
 

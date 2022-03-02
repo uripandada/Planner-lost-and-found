@@ -65,7 +65,7 @@ namespace Planner.Application.RoomManagement.Commands.UpdateIsCleaningPriority
 			{
 				HasError = false,
 				IsSuccess = true,
-				Message = "Guest status updated.",
+				Message = "Cleaning priority updated.",
 			};
 		}
 

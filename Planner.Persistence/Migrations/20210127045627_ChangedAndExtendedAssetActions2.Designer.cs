@@ -263,7 +263,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -278,7 +278,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("hotel_id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -321,7 +321,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(0);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -339,7 +339,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_available_to_maintenance")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -383,7 +383,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("asset_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -417,7 +417,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_system_defined")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -501,7 +501,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("available_quantity")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -519,7 +519,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_available_to_maintenance")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -583,7 +583,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("area_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -606,7 +606,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("longitude")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -657,7 +657,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -680,7 +680,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_sent")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -690,7 +690,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("modified_by_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("SentAt")
+                    b.Property<DateTimeOffset?>("SentAt")
                         .HasColumnName("sent_at")
                         .HasColumnType("timestamp with time zone");
 
@@ -825,7 +825,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("duration_sec")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("EndsAt")
+                    b.Property<DateTimeOffset>("EndsAt")
                         .HasColumnName("ends_at")
                         .HasColumnType("timestamp with time zone");
 
@@ -837,7 +837,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("room_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("StartsAt")
+                    b.Property<DateTimeOffset>("StartsAt")
                         .HasColumnName("starts_at")
                         .HasColumnType("timestamp with time zone");
 
@@ -860,7 +860,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -887,7 +887,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnType("text")
                         .HasDefaultValue("UNKNOWN");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -920,7 +920,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("building_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -935,7 +935,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("hotel_id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -984,13 +984,13 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1130,7 +1130,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("category_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1165,7 +1165,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("hotel_id1")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1274,7 +1274,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1296,7 +1296,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_public")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1354,7 +1354,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("clean_vacants")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1406,7 +1406,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("hotel_id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1495,7 +1495,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("building_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1530,7 +1530,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("is_manually_modified")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1624,7 +1624,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1639,7 +1639,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("data")
                         .HasColumnType("jsonb");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1673,7 +1673,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("changed_by_key")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone");
 
@@ -1719,7 +1719,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1734,7 +1734,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("message")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1769,7 +1769,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("key")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1779,7 +1779,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("created_by_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1851,7 +1851,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("lockout_enabled")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("LockoutEnd")
+                    b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnName("lockout_end")
                         .HasColumnType("timestamp with time zone");
 
@@ -1925,7 +1925,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1935,7 +1935,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("created_by_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")
@@ -1968,7 +1968,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp with time zone")
@@ -1978,7 +1978,7 @@ namespace Planner.Persistence.Migrations
                         .HasColumnName("created_by_id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTimeOffset>("ModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("modified_at")
                         .HasColumnType("timestamp with time zone")

@@ -42,8 +42,8 @@ export class WhereSelectComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
 
-  getPosts(value: TaskWhereData) : void {
-    this.getSelection.emit(value);
+  getPosts(value: TaskWhereData) : void {        
+    this.getSelection.emit(value);    
   }
 
   displayWhere(where: any): string {

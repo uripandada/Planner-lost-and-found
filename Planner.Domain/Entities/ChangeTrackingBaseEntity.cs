@@ -10,6 +10,5 @@ namespace Planner.Domain.Entities
 		public DateTime ModifiedAt { get; set; }
 		public User ModifiedBy { get; set; }
 		public Guid? ModifiedById { get; set; }
-
 	}
 }

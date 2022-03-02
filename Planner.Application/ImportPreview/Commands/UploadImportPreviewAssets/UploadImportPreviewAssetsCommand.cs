@@ -64,6 +64,7 @@ namespace Planner.Application.ImportPreview.Commands.UploadImportPreviewAssets
 					application.CSVSeparator = ";";
 
 					application.DefaultVersion = ExcelVersion.Excel2016;
+					
 
 					using (var ms = new MemoryStream())
 					{
@@ -71,7 +72,7 @@ namespace Planner.Application.ImportPreview.Commands.UploadImportPreviewAssets
 
 						ms.Position = 0;
 
-						IWorkbook workbook = application.Workbooks.Open(ms, ExcelOpenType.Automatic);
+						IWorkbook workbook = application.Workbooks.Open(ms, ";", System.Text.Encoding.UTF8);
 						IWorksheet worksheet = workbook.Worksheets[0];
 
 						if (worksheet.Rows.Length > 0)
@@ -83,7 +84,9 @@ namespace Planner.Application.ImportPreview.Commands.UploadImportPreviewAssets
 			}
 			catch (Exception)
 			{
-				throw;
+				importPreview.HasError = true;
+				importPreview.Message = "Invalid file format.";
+				return importPreview;
 			}
 
 

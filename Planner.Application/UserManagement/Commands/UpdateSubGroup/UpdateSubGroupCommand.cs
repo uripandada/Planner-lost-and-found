@@ -41,7 +41,7 @@ namespace Planner.Application.UserManagement.Commands.UpdateSubGroup
 
             subGroupToUpdate.Name = request.Name;
             subGroupToUpdate.UserGroupId = request.GroupId;
-            subGroupToUpdate.ModifiedAt = DateTime.Now;
+            subGroupToUpdate.ModifiedAt = DateTime.UtcNow;
             subGroupToUpdate.ModifiedById = this.httpContextAccessor.UserId();
 
             await this.databaseContext.SaveChangesAsync(cancellationToken);

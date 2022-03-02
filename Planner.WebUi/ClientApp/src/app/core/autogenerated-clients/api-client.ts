@@ -3257,6 +3257,58 @@ export class HotelClient {
         return _observableOf<RccHotel[]>(<any>null);
     }
 
+    getListOfHotels(hotelGroupId: string | null | undefined, hotelGroupKey: string | null | undefined): Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotel> {
+        let url_ = this.baseUrl + "/external-api/Hotel/GetListOfHotels?";
+        if (hotelGroupId !== undefined && hotelGroupId !== null)
+            url_ += "HotelGroupId=" + encodeURIComponent("" + hotelGroupId) + "&";
+        if (hotelGroupKey !== undefined && hotelGroupKey !== null)
+            url_ += "HotelGroupKey=" + encodeURIComponent("" + hotelGroupKey) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfHotels(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfHotels(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfHotels(response: HttpResponseBase): Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfIEnumerableOfExternalHotel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfIEnumerableOfExternalHotel>(<any>null);
+    }
+
     getHotelDetails(request: GetHotelDetailsForMobileQuery): Observable<MobileHotelDetails> {
         let url_ = this.baseUrl + "/mobile-api/Hotel/GetHotelDetails";
         url_ = url_.replace(/[?&]$/, "");
@@ -3309,7 +3361,7 @@ export class HotelClient {
         return _observableOf<MobileHotelDetails>(<any>null);
     }
 
-    getListOfHotels(request: GetListOfHotelsForMobileQuery): Observable<MobileHotel[]> {
+    getListOfHotels2(request: GetListOfHotelsForMobileQuery): Observable<MobileHotel[]> {
         let url_ = this.baseUrl + "/mobile-api/Hotel/GetListOfHotels";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3326,11 +3378,11 @@ export class HotelClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetListOfHotels(response_);
+            return this.processGetListOfHotels2(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetListOfHotels(<any>response_);
+                    return this.processGetListOfHotels2(<any>response_);
                 } catch (e) {
                     return <Observable<MobileHotel[]>><any>_observableThrow(e);
                 }
@@ -3339,7 +3391,7 @@ export class HotelClient {
         }));
     }
 
-    protected processGetListOfHotels(response: HttpResponseBase): Observable<MobileHotel[]> {
+    protected processGetListOfHotels2(response: HttpResponseBase): Observable<MobileHotel[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4768,6 +4820,58 @@ export class RoleClient {
             }));
         }
         return _observableOf<ProcessResponse>(<any>null);
+    }
+
+    getListOfRoles(hotelGroupId: string | null | undefined, hotelGroupKey: string | null | undefined): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserRole> {
+        let url_ = this.baseUrl + "/external-api/Role/GetListOfRoles?";
+        if (hotelGroupId !== undefined && hotelGroupId !== null)
+            url_ += "HotelGroupId=" + encodeURIComponent("" + hotelGroupId) + "&";
+        if (hotelGroupKey !== undefined && hotelGroupKey !== null)
+            url_ += "HotelGroupKey=" + encodeURIComponent("" + hotelGroupKey) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfRoles(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfRoles(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserRole>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserRole>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfRoles(response: HttpResponseBase): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserRole> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfIEnumerableOfExternalUserRole.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfIEnumerableOfExternalUserRole>(<any>null);
     }
 }
 
@@ -7593,6 +7697,162 @@ export class TasksManagementClient {
         }
         return _observableOf<ProcessResponse>(<any>null);
     }
+
+    getPageOfTaskConfigurationsForGrid(request: GetPageOfTaskConfigurationsForGridQuery): Observable<PageOfOfTaskConfigurationGridItem> {
+        let url_ = this.baseUrl + "/api/TasksManagement/GetPageOfTaskConfigurationsForGrid";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPageOfTaskConfigurationsForGrid(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPageOfTaskConfigurationsForGrid(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfTaskConfigurationGridItem>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfTaskConfigurationGridItem>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPageOfTaskConfigurationsForGrid(response: HttpResponseBase): Observable<PageOfOfTaskConfigurationGridItem> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfTaskConfigurationGridItem.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfTaskConfigurationGridItem>(<any>null);
+    }
+
+    getPageOfTasksForGrid(request: GetPageOfTasksForGridQuery): Observable<PageOfOfTaskGridItem> {
+        let url_ = this.baseUrl + "/api/TasksManagement/GetPageOfTasksForGrid";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPageOfTasksForGrid(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPageOfTasksForGrid(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfTaskGridItem>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfTaskGridItem>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPageOfTasksForGrid(response: HttpResponseBase): Observable<PageOfOfTaskGridItem> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfTaskGridItem.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfTaskGridItem>(<any>null);
+    }
+
+    getCalendarTasks(request: GetCalendarTasksQuery): Observable<TasksCalendar> {
+        let url_ = this.baseUrl + "/api/TasksManagement/GetCalendarTasks";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCalendarTasks(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCalendarTasks(<any>response_);
+                } catch (e) {
+                    return <Observable<TasksCalendar>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TasksCalendar>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCalendarTasks(response: HttpResponseBase): Observable<TasksCalendar> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TasksCalendar.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TasksCalendar>(<any>null);
+    }
 }
 
 @Injectable({
@@ -9003,6 +9263,56 @@ export class HotelGroupClient {
         }
         return _observableOf<RccHotelGroup[]>(<any>null);
     }
+
+    getListOfHotelGroups2(request: ExternalGetListOfHotelGroupsQuery | null | undefined): Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup> {
+        let url_ = this.baseUrl + "/external-api/HotelGroup/GetListOfHotelGroups?";
+        if (request !== undefined && request !== null)
+            url_ += "request=" + encodeURIComponent("" + request) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfHotelGroups2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfHotelGroups2(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfHotelGroups2(response: HttpResponseBase): Observable<ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup>(<any>null);
+    }
 }
 
 @Injectable({
@@ -9240,7 +9550,7 @@ export class TaskClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    create(request: ExternalInsertCompactTaskCommand): Observable<ProcessResponseOfGuid> {
+    create(request: ExternalInsertCompactTaskCommand): Observable<ProcessResponseSimpleOfGuid> {
         let url_ = this.baseUrl + "/external-api/Task/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -9263,14 +9573,14 @@ export class TaskClient {
                 try {
                     return this.processCreate(<any>response_);
                 } catch (e) {
-                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
+                    return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
+                return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
+    protected processCreate(response: HttpResponseBase): Observable<ProcessResponseSimpleOfGuid> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9281,7 +9591,7 @@ export class TaskClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProcessResponseOfGuid.fromJS(resultData200);
+            result200 = ProcessResponseSimpleOfGuid.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9289,7 +9599,7 @@ export class TaskClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ProcessResponseOfGuid>(<any>null);
+        return _observableOf<ProcessResponseSimpleOfGuid>(<any>null);
     }
 
     insertTask(request: InsertTaskForMobileCommand): Observable<ProcessResponse> {
@@ -9503,12 +9813,116 @@ export class TaskClient {
         }
         return _observableOf<MobileTask[]>(<any>null);
     }
+
+    reassignTask(request: ReassignTaskForMobileCommand): Observable<ProcessResponseSimpleOfGuid> {
+        let url_ = this.baseUrl + "/mobile-api/Task/ReassignTask";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processReassignTask(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processReassignTask(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processReassignTask(response: HttpResponseBase): Observable<ProcessResponseSimpleOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfGuid>(<any>null);
+    }
+
+    moveTaskToDeparture(request: MoveTaskToDepartureForMobileCommand): Observable<ProcessResponseSimple> {
+        let url_ = this.baseUrl + "/mobile-api/Task/MoveTaskToDeparture";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMoveTaskToDeparture(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMoveTaskToDeparture(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimple>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimple>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processMoveTaskToDeparture(response: HttpResponseBase): Observable<ProcessResponseSimple> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimple.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimple>(<any>null);
+    }
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class DndClient {
+export class UserClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -9518,8 +9932,60 @@ export class DndClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    on(request: ExternalDndOnCommand): Observable<ProcessResponse> {
-        let url_ = this.baseUrl + "/external-api/Dnd/On";
+    getListOfUsers(hotelGroupId: string | null | undefined, hotelGroupKey: string | null | undefined): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUser> {
+        let url_ = this.baseUrl + "/external-api/User/GetListOfUsers?";
+        if (hotelGroupId !== undefined && hotelGroupId !== null)
+            url_ += "HotelGroupId=" + encodeURIComponent("" + hotelGroupId) + "&";
+        if (hotelGroupKey !== undefined && hotelGroupKey !== null)
+            url_ += "HotelGroupKey=" + encodeURIComponent("" + hotelGroupKey) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUser>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUser>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfUsers(response: HttpResponseBase): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUser> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfIEnumerableOfExternalUser.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfIEnumerableOfExternalUser>(<any>null);
+    }
+
+    insertUser(request: ExternalInsertUserCommand): Observable<ProcessResponseSimpleOfGuid> {
+        let url_ = this.baseUrl + "/external-api/User/InsertUser";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
@@ -9534,21 +10000,21 @@ export class DndClient {
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOn(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertUser(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processOn(<any>response_);
+                    return this.processInsertUser(<any>response_);
                 } catch (e) {
-                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                    return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+                return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(response_);
         }));
     }
 
-    protected processOn(response: HttpResponseBase): Observable<ProcessResponse> {
+    protected processInsertUser(response: HttpResponseBase): Observable<ProcessResponseSimpleOfGuid> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9559,7 +10025,7 @@ export class DndClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProcessResponse.fromJS(resultData200);
+            result200 = ProcessResponseSimpleOfGuid.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9567,11 +10033,11 @@ export class DndClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ProcessResponse>(<any>null);
+        return _observableOf<ProcessResponseSimpleOfGuid>(<any>null);
     }
 
-    off(request: ExternalDndOffCommand): Observable<ProcessResponse> {
-        let url_ = this.baseUrl + "/external-api/Dnd/Off";
+    getAvailableUsers(request: GetListOfHotelGroupUsersForMobileQuery): Observable<MobileUsersPreview> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetAvailableUsers";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
@@ -9586,21 +10052,21 @@ export class DndClient {
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOff(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAvailableUsers(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processOff(<any>response_);
+                    return this.processGetAvailableUsers(<any>response_);
                 } catch (e) {
-                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                    return <Observable<MobileUsersPreview>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+                return <Observable<MobileUsersPreview>><any>_observableThrow(response_);
         }));
     }
 
-    protected processOff(response: HttpResponseBase): Observable<ProcessResponse> {
+    protected processGetAvailableUsers(response: HttpResponseBase): Observable<MobileUsersPreview> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9611,7 +10077,7 @@ export class DndClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProcessResponse.fromJS(resultData200);
+            result200 = MobileUsersPreview.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9619,7 +10085,741 @@ export class DndClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ProcessResponse>(<any>null);
+        return _observableOf<MobileUsersPreview>(<any>null);
+    }
+
+    getAvailableUsersForHotel(request: GetListOfHotelGroupUsersForHotelForMobileQuery): Observable<MobileUsersPreview> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetAvailableUsersForHotel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAvailableUsersForHotel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAvailableUsersForHotel(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileUsersPreview>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileUsersPreview>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAvailableUsersForHotel(response: HttpResponseBase): Observable<MobileUsersPreview> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MobileUsersPreview.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileUsersPreview>(<any>null);
+    }
+
+    getDetails(request: GetUserDetailsForMobileQuery): Observable<UserDetailsForMobile> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<UserDetailsForMobile>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserDetailsForMobile>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetDetails(response: HttpResponseBase): Observable<UserDetailsForMobile> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDetailsForMobile.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserDetailsForMobile>(<any>null);
+    }
+
+    getMyDetails(request: GetMyUserDetailsForMobileQuery): Observable<UserDetailsForMobile> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetMyDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMyDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMyDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<UserDetailsForMobile>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserDetailsForMobile>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetMyDetails(response: HttpResponseBase): Observable<UserDetailsForMobile> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDetailsForMobile.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserDetailsForMobile>(<any>null);
+    }
+
+    getListOfUsers2(request: GetListOfUsersForMobileQuery): Observable<MobileUser[]> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetListOfUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfUsers2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfUsers2(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileUser[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileUser[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfUsers2(response: HttpResponseBase): Observable<MobileUser[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MobileUser.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileUser[]>(<any>null);
+    }
+
+    updateOnDutyStatus(request: UpdateOnDutyStatusForMobileCommand): Observable<MobileUser> {
+        let url_ = this.baseUrl + "/mobile-api/User/UpdateOnDutyStatus";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateOnDutyStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateOnDutyStatus(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileUser>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileUser>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateOnDutyStatus(response: HttpResponseBase): Observable<MobileUser> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MobileUser.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileUser>(<any>null);
+    }
+
+    getListOfUserGroups(request: GetListOfUserGroupsForMobileQuery): Observable<MobileUserGroup[]> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetListOfUserGroups";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfUserGroups(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfUserGroups(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileUserGroup[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileUserGroup[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfUserGroups(response: HttpResponseBase): Observable<MobileUserGroup[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MobileUserGroup.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileUserGroup[]>(<any>null);
+    }
+
+    getUserGroupDetails(request: GetUserGroupDetailsForMobileQuery): Observable<MobileUserGroupDetails> {
+        let url_ = this.baseUrl + "/mobile-api/User/GetUserGroupDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUserGroupDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUserGroupDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileUserGroupDetails>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileUserGroupDetails>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetUserGroupDetails(response: HttpResponseBase): Observable<MobileUserGroupDetails> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MobileUserGroupDetails.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileUserGroupDetails>(<any>null);
+    }
+
+    insertUser2(request: InsertUserForMobileCommand): Observable<ProcessResponseSimpleOfGuid> {
+        let url_ = this.baseUrl + "/mobile-api/User/InsertUser";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertUser2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertUser2(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertUser2(response: HttpResponseBase): Observable<ProcessResponseSimpleOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfGuid>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UserGroupClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getListOfUserGroups(hotelGroupId: string | null | undefined, hotelGroupKey: string | null | undefined): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserGroup> {
+        let url_ = this.baseUrl + "/external-api/UserGroup/GetListOfUserGroups?";
+        if (hotelGroupId !== undefined && hotelGroupId !== null)
+            url_ += "HotelGroupId=" + encodeURIComponent("" + hotelGroupId) + "&";
+        if (hotelGroupKey !== undefined && hotelGroupKey !== null)
+            url_ += "HotelGroupKey=" + encodeURIComponent("" + hotelGroupKey) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfUserGroups(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfUserGroups(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserGroup>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserGroup>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfUserGroups(response: HttpResponseBase): Observable<ProcessResponseSimpleOfIEnumerableOfExternalUserGroup> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseSimpleOfIEnumerableOfExternalUserGroup.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseSimpleOfIEnumerableOfExternalUserGroup>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AppConfigurationClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getAttendantMobileAppConfiguration(request: GetAttendantMobileAppConfigurationQuery): Observable<AttendantMobileAppConfiguration> {
+        let url_ = this.baseUrl + "/mobile-api/AppConfiguration/GetAttendantMobileAppConfiguration";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAttendantMobileAppConfiguration(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAttendantMobileAppConfiguration(<any>response_);
+                } catch (e) {
+                    return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAttendantMobileAppConfiguration(response: HttpResponseBase): Observable<AttendantMobileAppConfiguration> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AttendantMobileAppConfiguration.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AttendantMobileAppConfiguration>(<any>null);
+    }
+
+    getAttendantMobileAppConfigurationForHotel(request: GetAttendantMobileAppConfigurationForHotelQuery): Observable<AttendantMobileAppConfiguration> {
+        let url_ = this.baseUrl + "/mobile-api/AppConfiguration/GetAttendantMobileAppConfigurationForHotel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAttendantMobileAppConfigurationForHotel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAttendantMobileAppConfigurationForHotel(<any>response_);
+                } catch (e) {
+                    return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAttendantMobileAppConfigurationForHotel(response: HttpResponseBase): Observable<AttendantMobileAppConfiguration> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AttendantMobileAppConfiguration.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AttendantMobileAppConfiguration>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AssetClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getListOfAssets(request: GetListOfAssetsForMobileQuery): Observable<MobileAsset[]> {
+        let url_ = this.baseUrl + "/mobile-api/Asset/GetListOfAssets";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfAssets(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfAssets(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileAsset[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileAsset[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfAssets(response: HttpResponseBase): Observable<MobileAsset[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MobileAsset.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileAsset[]>(<any>null);
+    }
+
+    getListOfAssetActions(request: GetListOfAssetActionsForMobileQuery): Observable<MobileAssetAction[]> {
+        let url_ = this.baseUrl + "/mobile-api/Asset/GetListOfAssetActions";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListOfAssetActions(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListOfAssetActions(<any>response_);
+                } catch (e) {
+                    return <Observable<MobileAssetAction[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MobileAssetAction[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListOfAssetActions(response: HttpResponseBase): Observable<MobileAssetAction[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MobileAssetAction.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MobileAssetAction[]>(<any>null);
     }
 }
 
@@ -9634,58 +10834,6 @@ export class CleaningClient {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    requestNewCleaning(request: ExternalRequestCleaningCommand): Observable<ProcessResponseOfGuid> {
-        let url_ = this.baseUrl + "/external-api/Cleaning/RequestNewCleaning";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRequestNewCleaning(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processRequestNewCleaning(<any>response_);
-                } catch (e) {
-                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processRequestNewCleaning(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProcessResponseOfGuid.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ProcessResponseOfGuid>(<any>null);
     }
 
     insertCleaning(request: CreateCustomCleaningForMobileCommand): Observable<ProcessResponseOfGuid> {
@@ -10006,250 +11154,6 @@ export class CleaningClient {
             }));
         }
         return _observableOf<ExtendedMobileRoomDetails>(<any>null);
-    }
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class AppConfigurationClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    getAttendantMobileAppConfiguration(request: GetAttendantMobileAppConfigurationQuery): Observable<AttendantMobileAppConfiguration> {
-        let url_ = this.baseUrl + "/mobile-api/AppConfiguration/GetAttendantMobileAppConfiguration";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAttendantMobileAppConfiguration(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAttendantMobileAppConfiguration(<any>response_);
-                } catch (e) {
-                    return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAttendantMobileAppConfiguration(response: HttpResponseBase): Observable<AttendantMobileAppConfiguration> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = AttendantMobileAppConfiguration.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<AttendantMobileAppConfiguration>(<any>null);
-    }
-
-    getAttendantMobileAppConfigurationForHotel(request: GetAttendantMobileAppConfigurationForHotelQuery): Observable<AttendantMobileAppConfiguration> {
-        let url_ = this.baseUrl + "/mobile-api/AppConfiguration/GetAttendantMobileAppConfigurationForHotel";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAttendantMobileAppConfigurationForHotel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAttendantMobileAppConfigurationForHotel(<any>response_);
-                } catch (e) {
-                    return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<AttendantMobileAppConfiguration>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAttendantMobileAppConfigurationForHotel(response: HttpResponseBase): Observable<AttendantMobileAppConfiguration> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = AttendantMobileAppConfiguration.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<AttendantMobileAppConfiguration>(<any>null);
-    }
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class AssetClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    getListOfAssets(request: GetListOfAssetsForMobileQuery): Observable<MobileAsset[]> {
-        let url_ = this.baseUrl + "/mobile-api/Asset/GetListOfAssets";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetListOfAssets(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetListOfAssets(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileAsset[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileAsset[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetListOfAssets(response: HttpResponseBase): Observable<MobileAsset[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(MobileAsset.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileAsset[]>(<any>null);
-    }
-
-    getListOfAssetActions(request: GetListOfAssetActionsForMobileQuery): Observable<MobileAssetAction[]> {
-        let url_ = this.baseUrl + "/mobile-api/Asset/GetListOfAssetActions";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetListOfAssetActions(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetListOfAssetActions(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileAssetAction[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileAssetAction[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetListOfAssetActions(response: HttpResponseBase): Observable<MobileAssetAction[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(MobileAssetAction.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileAssetAction[]>(<any>null);
     }
 }
 
@@ -11539,23 +12443,9 @@ export class RoomClient {
         }
         return _observableOf<ProcessResponseOfGuid>(<any>null);
     }
-}
 
-@Injectable({
-    providedIn: 'root'
-})
-export class UserClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    getAvailableUsers(request: GetListOfHotelGroupUsersForMobileQuery): Observable<MobileUsersPreview> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetAvailableUsers";
+    changeCleaningPriority(request: ChangeRoomPriorityForMobileCommand): Observable<ProcessResponseSimple> {
+        let url_ = this.baseUrl + "/mobile-api/Room/ChangeCleaningPriority";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
@@ -11571,20 +12461,20 @@ export class UserClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAvailableUsers(response_);
+            return this.processChangeCleaningPriority(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAvailableUsers(<any>response_);
+                    return this.processChangeCleaningPriority(<any>response_);
                 } catch (e) {
-                    return <Observable<MobileUsersPreview>><any>_observableThrow(e);
+                    return <Observable<ProcessResponseSimple>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<MobileUsersPreview>><any>_observableThrow(response_);
+                return <Observable<ProcessResponseSimple>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAvailableUsers(response: HttpResponseBase): Observable<MobileUsersPreview> {
+    protected processChangeCleaningPriority(response: HttpResponseBase): Observable<ProcessResponseSimple> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -11595,7 +12485,7 @@ export class UserClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = MobileUsersPreview.fromJS(resultData200);
+            result200 = ProcessResponseSimple.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -11603,379 +12493,7 @@ export class UserClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<MobileUsersPreview>(<any>null);
-    }
-
-    getAvailableUsersForHotel(request: GetListOfHotelGroupUsersForHotelForMobileQuery): Observable<MobileUsersPreview> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetAvailableUsersForHotel";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAvailableUsersForHotel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAvailableUsersForHotel(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileUsersPreview>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileUsersPreview>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAvailableUsersForHotel(response: HttpResponseBase): Observable<MobileUsersPreview> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = MobileUsersPreview.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileUsersPreview>(<any>null);
-    }
-
-    getDetails(request: GetUserDetailsForMobileQuery): Observable<UserDetailsForMobile> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetDetails";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetDetails(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetDetails(<any>response_);
-                } catch (e) {
-                    return <Observable<UserDetailsForMobile>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<UserDetailsForMobile>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetDetails(response: HttpResponseBase): Observable<UserDetailsForMobile> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserDetailsForMobile.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<UserDetailsForMobile>(<any>null);
-    }
-
-    getMyDetails(request: GetMyUserDetailsForMobileQuery): Observable<UserDetailsForMobile> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetMyDetails";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetMyDetails(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetMyDetails(<any>response_);
-                } catch (e) {
-                    return <Observable<UserDetailsForMobile>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<UserDetailsForMobile>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetMyDetails(response: HttpResponseBase): Observable<UserDetailsForMobile> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserDetailsForMobile.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<UserDetailsForMobile>(<any>null);
-    }
-
-    getListOfUsers(request: GetListOfUsersForMobileQuery): Observable<MobileUser[]> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetListOfUsers";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetListOfUsers(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetListOfUsers(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileUser[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileUser[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetListOfUsers(response: HttpResponseBase): Observable<MobileUser[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(MobileUser.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileUser[]>(<any>null);
-    }
-
-    updateOnDutyStatus(request: UpdateOnDutyStatusForMobileCommand): Observable<MobileUser> {
-        let url_ = this.baseUrl + "/mobile-api/User/UpdateOnDutyStatus";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateOnDutyStatus(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdateOnDutyStatus(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileUser>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileUser>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdateOnDutyStatus(response: HttpResponseBase): Observable<MobileUser> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = MobileUser.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileUser>(<any>null);
-    }
-
-    getListOfUserGroups(request: GetListOfUserGroupsForMobileQuery): Observable<MobileUserGroup[]> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetListOfUserGroups";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetListOfUserGroups(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetListOfUserGroups(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileUserGroup[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileUserGroup[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetListOfUserGroups(response: HttpResponseBase): Observable<MobileUserGroup[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(MobileUserGroup.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileUserGroup[]>(<any>null);
-    }
-
-    getUserGroupDetails(request: GetUserGroupDetailsForMobileQuery): Observable<MobileUserGroupDetails> {
-        let url_ = this.baseUrl + "/mobile-api/User/GetUserGroupDetails";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetUserGroupDetails(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetUserGroupDetails(<any>response_);
-                } catch (e) {
-                    return <Observable<MobileUserGroupDetails>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<MobileUserGroupDetails>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetUserGroupDetails(response: HttpResponseBase): Observable<MobileUserGroupDetails> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = MobileUserGroupDetails.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<MobileUserGroupDetails>(<any>null);
+        return _observableOf<ProcessResponseSimple>(<any>null);
     }
 }
 
@@ -15071,6 +15589,7 @@ export class CleaningTimelineItemData implements ICleaningTimelineItemData {
     inspectedByFullName?: string | null;
     isInspectionSuccess!: boolean;
     isFilteredOut!: boolean;
+    borderColorHex?: string | null;
 
     constructor(data?: ICleaningTimelineItemData) {
         if (data) {
@@ -15153,6 +15672,7 @@ export class CleaningTimelineItemData implements ICleaningTimelineItemData {
             this.inspectedByFullName = _data["inspectedByFullName"] !== undefined ? _data["inspectedByFullName"] : <any>null;
             this.isInspectionSuccess = _data["isInspectionSuccess"] !== undefined ? _data["isInspectionSuccess"] : <any>null;
             this.isFilteredOut = _data["isFilteredOut"] !== undefined ? _data["isFilteredOut"] : <any>null;
+            this.borderColorHex = _data["borderColorHex"] !== undefined ? _data["borderColorHex"] : <any>null;
         }
     }
 
@@ -15235,6 +15755,7 @@ export class CleaningTimelineItemData implements ICleaningTimelineItemData {
         data["inspectedByFullName"] = this.inspectedByFullName !== undefined ? this.inspectedByFullName : <any>null;
         data["isInspectionSuccess"] = this.isInspectionSuccess !== undefined ? this.isInspectionSuccess : <any>null;
         data["isFilteredOut"] = this.isFilteredOut !== undefined ? this.isFilteredOut : <any>null;
+        data["borderColorHex"] = this.borderColorHex !== undefined ? this.borderColorHex : <any>null;
         return data; 
     }
 }
@@ -15294,6 +15815,7 @@ export interface ICleaningTimelineItemData {
     inspectedByFullName?: string | null;
     isInspectionSuccess: boolean;
     isFilteredOut: boolean;
+    borderColorHex?: string | null;
 }
 
 export class PlannedCleaningTimelineItemData extends CleaningTimelineItemData implements IPlannedCleaningTimelineItemData {
@@ -35220,6 +35742,8 @@ export class TasksData implements ITasksData {
     allRecurringTaskTypes?: EnumData[] | null;
     allEventTaskTypes?: EnumData[] | null;
     allEventTaskModifierTypes?: EnumData[] | null;
+    availableUserGroups?: AvailableUserGroup[] | null;
+    availableUserSubGroups?: AvailableUserGroup[] | null;
 
     constructor(data?: ITasksData) {
         if (data) {
@@ -35266,6 +35790,16 @@ export class TasksData implements ITasksData {
                 this.allEventTaskModifierTypes = [] as any;
                 for (let item of _data["allEventTaskModifierTypes"])
                     this.allEventTaskModifierTypes!.push(EnumData.fromJS(item));
+            }
+            if (Array.isArray(_data["availableUserGroups"])) {
+                this.availableUserGroups = [] as any;
+                for (let item of _data["availableUserGroups"])
+                    this.availableUserGroups!.push(AvailableUserGroup.fromJS(item));
+            }
+            if (Array.isArray(_data["availableUserSubGroups"])) {
+                this.availableUserSubGroups = [] as any;
+                for (let item of _data["availableUserSubGroups"])
+                    this.availableUserSubGroups!.push(AvailableUserGroup.fromJS(item));
             }
         }
     }
@@ -35314,6 +35848,16 @@ export class TasksData implements ITasksData {
             for (let item of this.allEventTaskModifierTypes)
                 data["allEventTaskModifierTypes"].push(item.toJSON());
         }
+        if (Array.isArray(this.availableUserGroups)) {
+            data["availableUserGroups"] = [];
+            for (let item of this.availableUserGroups)
+                data["availableUserGroups"].push(item.toJSON());
+        }
+        if (Array.isArray(this.availableUserSubGroups)) {
+            data["availableUserSubGroups"] = [];
+            for (let item of this.availableUserSubGroups)
+                data["availableUserSubGroups"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -35326,6 +35870,8 @@ export interface ITasksData {
     allRecurringTaskTypes?: EnumData[] | null;
     allEventTaskTypes?: EnumData[] | null;
     allEventTaskModifierTypes?: EnumData[] | null;
+    availableUserGroups?: AvailableUserGroup[] | null;
+    availableUserSubGroups?: AvailableUserGroup[] | null;
 }
 
 export class TaskActionData implements ITaskActionData {
@@ -35547,6 +36093,50 @@ export class EnumData implements IEnumData {
 export interface IEnumData {
     key?: string | null;
     name?: string | null;
+}
+
+export class AvailableUserGroup implements IAvailableUserGroup {
+    id!: string;
+    name?: string | null;
+    isSubGroup!: boolean;
+
+    constructor(data?: IAvailableUserGroup) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.isSubGroup = _data["isSubGroup"] !== undefined ? _data["isSubGroup"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AvailableUserGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new AvailableUserGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["isSubGroup"] = this.isSubGroup !== undefined ? this.isSubGroup : <any>null;
+        return data; 
+    }
+}
+
+export interface IAvailableUserGroup {
+    id: string;
+    name?: string | null;
+    isSubGroup: boolean;
 }
 
 export class GetTasksDataQuery implements IGetTasksDataQuery {
@@ -40580,7 +41170,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
     ignoreBuildingsMap!: boolean;
     ignoreWarehouses!: boolean;
     ignoreTemporaryRooms!: boolean;
-    ignoreFeatureReservations!: boolean;
+    ignoreFutureReservations!: boolean;
 
     constructor(data?: IGetAllWheresQuery) {
         if (data) {
@@ -40598,7 +41188,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
             this.ignoreBuildingsMap = _data["ignoreBuildingsMap"] !== undefined ? _data["ignoreBuildingsMap"] : <any>null;
             this.ignoreWarehouses = _data["ignoreWarehouses"] !== undefined ? _data["ignoreWarehouses"] : <any>null;
             this.ignoreTemporaryRooms = _data["ignoreTemporaryRooms"] !== undefined ? _data["ignoreTemporaryRooms"] : <any>null;
-            this.ignoreFeatureReservations = _data["ignoreFeatureReservations"] !== undefined ? _data["ignoreFeatureReservations"] : <any>null;
+            this.ignoreFutureReservations = _data["ignoreFutureReservations"] !== undefined ? _data["ignoreFutureReservations"] : <any>null;
         }
     }
 
@@ -40616,7 +41206,7 @@ export class GetAllWheresQuery implements IGetAllWheresQuery {
         data["ignoreBuildingsMap"] = this.ignoreBuildingsMap !== undefined ? this.ignoreBuildingsMap : <any>null;
         data["ignoreWarehouses"] = this.ignoreWarehouses !== undefined ? this.ignoreWarehouses : <any>null;
         data["ignoreTemporaryRooms"] = this.ignoreTemporaryRooms !== undefined ? this.ignoreTemporaryRooms : <any>null;
-        data["ignoreFeatureReservations"] = this.ignoreFeatureReservations !== undefined ? this.ignoreFeatureReservations : <any>null;
+        data["ignoreFutureReservations"] = this.ignoreFutureReservations !== undefined ? this.ignoreFutureReservations : <any>null;
         return data; 
     }
 }
@@ -40627,7 +41217,7 @@ export interface IGetAllWheresQuery {
     ignoreBuildingsMap: boolean;
     ignoreWarehouses: boolean;
     ignoreTemporaryRooms: boolean;
-    ignoreFeatureReservations: boolean;
+    ignoreFutureReservations: boolean;
 }
 
 export class ClaimTaskCommand implements IClaimTaskCommand {
@@ -40700,6 +41290,1130 @@ export class RejectTaskCommand implements IRejectTaskCommand {
 
 export interface IRejectTaskCommand {
     taskId: string;
+}
+
+export class PageOfOfTaskConfigurationGridItem implements IPageOfOfTaskConfigurationGridItem {
+    items?: TaskConfigurationGridItem[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfTaskConfigurationGridItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(TaskConfigurationGridItem.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfTaskConfigurationGridItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfTaskConfigurationGridItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfTaskConfigurationGridItem {
+    items?: TaskConfigurationGridItem[] | null;
+    totalNumberOfItems: number;
+}
+
+export class TaskConfigurationGridItem implements ITaskConfigurationGridItem {
+    id!: string;
+    whats?: TaskConfigurationGridWhat[] | null;
+    whos?: TaskConfigurationGridWho[] | null;
+    wheres?: TaskConfigurationGridWhere[] | null;
+    typeKey?: string | null;
+    progress?: TaskConfigurationGridProgress | null;
+    isHighPriority!: boolean;
+    isGuestRequest!: boolean;
+    mustBeCompletedByEveryone!: boolean;
+    comment?: string | null;
+    createdAt!: moment.Moment;
+    taskTypeDescription?: string | null;
+    taskTimeDescription?: string | null;
+    taskRepeatsForDescription?: string | null;
+
+    constructor(data?: ITaskConfigurationGridItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            if (Array.isArray(_data["whats"])) {
+                this.whats = [] as any;
+                for (let item of _data["whats"])
+                    this.whats!.push(TaskConfigurationGridWhat.fromJS(item));
+            }
+            if (Array.isArray(_data["whos"])) {
+                this.whos = [] as any;
+                for (let item of _data["whos"])
+                    this.whos!.push(TaskConfigurationGridWho.fromJS(item));
+            }
+            if (Array.isArray(_data["wheres"])) {
+                this.wheres = [] as any;
+                for (let item of _data["wheres"])
+                    this.wheres!.push(TaskConfigurationGridWhere.fromJS(item));
+            }
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.progress = _data["progress"] ? TaskConfigurationGridProgress.fromJS(_data["progress"]) : <any>null;
+            this.isHighPriority = _data["isHighPriority"] !== undefined ? _data["isHighPriority"] : <any>null;
+            this.isGuestRequest = _data["isGuestRequest"] !== undefined ? _data["isGuestRequest"] : <any>null;
+            this.mustBeCompletedByEveryone = _data["mustBeCompletedByEveryone"] !== undefined ? _data["mustBeCompletedByEveryone"] : <any>null;
+            this.comment = _data["comment"] !== undefined ? _data["comment"] : <any>null;
+            this.createdAt = _data["createdAt"] ? moment(_data["createdAt"].toString()) : <any>null;
+            this.taskTypeDescription = _data["taskTypeDescription"] !== undefined ? _data["taskTypeDescription"] : <any>null;
+            this.taskTimeDescription = _data["taskTimeDescription"] !== undefined ? _data["taskTimeDescription"] : <any>null;
+            this.taskRepeatsForDescription = _data["taskRepeatsForDescription"] !== undefined ? _data["taskRepeatsForDescription"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskConfigurationGridItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskConfigurationGridItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        if (Array.isArray(this.whats)) {
+            data["whats"] = [];
+            for (let item of this.whats)
+                data["whats"].push(item.toJSON());
+        }
+        if (Array.isArray(this.whos)) {
+            data["whos"] = [];
+            for (let item of this.whos)
+                data["whos"].push(item.toJSON());
+        }
+        if (Array.isArray(this.wheres)) {
+            data["wheres"] = [];
+            for (let item of this.wheres)
+                data["wheres"].push(item.toJSON());
+        }
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["progress"] = this.progress ? this.progress.toJSON() : <any>null;
+        data["isHighPriority"] = this.isHighPriority !== undefined ? this.isHighPriority : <any>null;
+        data["isGuestRequest"] = this.isGuestRequest !== undefined ? this.isGuestRequest : <any>null;
+        data["mustBeCompletedByEveryone"] = this.mustBeCompletedByEveryone !== undefined ? this.mustBeCompletedByEveryone : <any>null;
+        data["comment"] = this.comment !== undefined ? this.comment : <any>null;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>null;
+        data["taskTypeDescription"] = this.taskTypeDescription !== undefined ? this.taskTypeDescription : <any>null;
+        data["taskTimeDescription"] = this.taskTimeDescription !== undefined ? this.taskTimeDescription : <any>null;
+        data["taskRepeatsForDescription"] = this.taskRepeatsForDescription !== undefined ? this.taskRepeatsForDescription : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskConfigurationGridItem {
+    id: string;
+    whats?: TaskConfigurationGridWhat[] | null;
+    whos?: TaskConfigurationGridWho[] | null;
+    wheres?: TaskConfigurationGridWhere[] | null;
+    typeKey?: string | null;
+    progress?: TaskConfigurationGridProgress | null;
+    isHighPriority: boolean;
+    isGuestRequest: boolean;
+    mustBeCompletedByEveryone: boolean;
+    comment?: string | null;
+    createdAt: moment.Moment;
+    taskTypeDescription?: string | null;
+    taskTimeDescription?: string | null;
+    taskRepeatsForDescription?: string | null;
+}
+
+export class TaskConfigurationGridWhat implements ITaskConfigurationGridWhat {
+    assetQuantity!: number;
+    actionName?: string | null;
+    assetName?: string | null;
+
+    constructor(data?: ITaskConfigurationGridWhat) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetQuantity = _data["assetQuantity"] !== undefined ? _data["assetQuantity"] : <any>null;
+            this.actionName = _data["actionName"] !== undefined ? _data["actionName"] : <any>null;
+            this.assetName = _data["assetName"] !== undefined ? _data["assetName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskConfigurationGridWhat {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskConfigurationGridWhat();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetQuantity"] = this.assetQuantity !== undefined ? this.assetQuantity : <any>null;
+        data["actionName"] = this.actionName !== undefined ? this.actionName : <any>null;
+        data["assetName"] = this.assetName !== undefined ? this.assetName : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskConfigurationGridWhat {
+    assetQuantity: number;
+    actionName?: string | null;
+    assetName?: string | null;
+}
+
+export class TaskConfigurationGridWho implements ITaskConfigurationGridWho {
+    id?: string | null;
+    typeKey?: string | null;
+    name?: string | null;
+    typeDescription?: string | null;
+
+    constructor(data?: ITaskConfigurationGridWho) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.typeDescription = _data["typeDescription"] !== undefined ? _data["typeDescription"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskConfigurationGridWho {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskConfigurationGridWho();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["typeDescription"] = this.typeDescription !== undefined ? this.typeDescription : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskConfigurationGridWho {
+    id?: string | null;
+    typeKey?: string | null;
+    name?: string | null;
+    typeDescription?: string | null;
+}
+
+export class TaskConfigurationGridWhere implements ITaskConfigurationGridWhere {
+    id?: string | null;
+    typeKey?: string | null;
+    name?: string | null;
+    typeDescription?: string | null;
+
+    constructor(data?: ITaskConfigurationGridWhere) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.typeDescription = _data["typeDescription"] !== undefined ? _data["typeDescription"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskConfigurationGridWhere {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskConfigurationGridWhere();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["typeDescription"] = this.typeDescription !== undefined ? this.typeDescription : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskConfigurationGridWhere {
+    id?: string | null;
+    typeKey?: string | null;
+    name?: string | null;
+    typeDescription?: string | null;
+}
+
+export class TaskConfigurationGridProgress implements ITaskConfigurationGridProgress {
+    statusKey?: string | null;
+    statusDescription?: string | null;
+    numberOfTasks!: number;
+    numberOfCompletedTasks!: number;
+    completionFactor!: number;
+
+    constructor(data?: ITaskConfigurationGridProgress) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.statusKey = _data["statusKey"] !== undefined ? _data["statusKey"] : <any>null;
+            this.statusDescription = _data["statusDescription"] !== undefined ? _data["statusDescription"] : <any>null;
+            this.numberOfTasks = _data["numberOfTasks"] !== undefined ? _data["numberOfTasks"] : <any>null;
+            this.numberOfCompletedTasks = _data["numberOfCompletedTasks"] !== undefined ? _data["numberOfCompletedTasks"] : <any>null;
+            this.completionFactor = _data["completionFactor"] !== undefined ? _data["completionFactor"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskConfigurationGridProgress {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskConfigurationGridProgress();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statusKey"] = this.statusKey !== undefined ? this.statusKey : <any>null;
+        data["statusDescription"] = this.statusDescription !== undefined ? this.statusDescription : <any>null;
+        data["numberOfTasks"] = this.numberOfTasks !== undefined ? this.numberOfTasks : <any>null;
+        data["numberOfCompletedTasks"] = this.numberOfCompletedTasks !== undefined ? this.numberOfCompletedTasks : <any>null;
+        data["completionFactor"] = this.completionFactor !== undefined ? this.completionFactor : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskConfigurationGridProgress {
+    statusKey?: string | null;
+    statusDescription?: string | null;
+    numberOfTasks: number;
+    numberOfCompletedTasks: number;
+    completionFactor: number;
+}
+
+export class GetPageOfTaskConfigurationsForGridQuery implements IGetPageOfTaskConfigurationsForGridQuery {
+    sortKey?: string | null;
+    skip?: number | null;
+    take?: number | null;
+    actionName?: string | null;
+    assetId?: string | null;
+    assetGroupId?: string | null;
+    whos?: TaskWhoData[] | null;
+    wheres?: TaskWhereData[] | null;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+
+    constructor(data?: IGetPageOfTaskConfigurationsForGridQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
+            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
+            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
+            this.actionName = _data["actionName"] !== undefined ? _data["actionName"] : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.assetGroupId = _data["assetGroupId"] !== undefined ? _data["assetGroupId"] : <any>null;
+            if (Array.isArray(_data["whos"])) {
+                this.whos = [] as any;
+                for (let item of _data["whos"])
+                    this.whos!.push(TaskWhoData.fromJS(item));
+            }
+            if (Array.isArray(_data["wheres"])) {
+                this.wheres = [] as any;
+                for (let item of _data["wheres"])
+                    this.wheres!.push(TaskWhereData.fromJS(item));
+            }
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageOfTaskConfigurationsForGridQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageOfTaskConfigurationsForGridQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
+        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
+        data["take"] = this.take !== undefined ? this.take : <any>null;
+        data["actionName"] = this.actionName !== undefined ? this.actionName : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["assetGroupId"] = this.assetGroupId !== undefined ? this.assetGroupId : <any>null;
+        if (Array.isArray(this.whos)) {
+            data["whos"] = [];
+            for (let item of this.whos)
+                data["whos"].push(item.toJSON());
+        }
+        if (Array.isArray(this.wheres)) {
+            data["wheres"] = [];
+            for (let item of this.wheres)
+                data["wheres"].push(item.toJSON());
+        }
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetPageOfTaskConfigurationsForGridQuery {
+    sortKey?: string | null;
+    skip?: number | null;
+    take?: number | null;
+    actionName?: string | null;
+    assetId?: string | null;
+    assetGroupId?: string | null;
+    whos?: TaskWhoData[] | null;
+    wheres?: TaskWhereData[] | null;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+}
+
+export class PageOfOfTaskGridItem implements IPageOfOfTaskGridItem {
+    items?: TaskGridItem[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfTaskGridItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(TaskGridItem.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfTaskGridItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfTaskGridItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfTaskGridItem {
+    items?: TaskGridItem[] | null;
+    totalNumberOfItems: number;
+}
+
+export class TaskGridItem implements ITaskGridItem {
+    id!: string;
+    taskConfigurationId!: string;
+    userId?: string | null;
+    isForPlannedAttendant!: boolean;
+    userFullName?: string | null;
+    userUsername?: string | null;
+    userInitials?: string | null;
+    userAvatarImageUrl?: string | null;
+    defaultUserAvatarColorHex?: string | null;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+    actions?: TaskGridItemAction[] | null;
+    statusKey?: string | null;
+    statusDescription?: string | null;
+    whereId?: string | null;
+    where?: string | null;
+    whereDescription?: string | null;
+    whereTypeKey?: string | null;
+    when?: string | null;
+    whenDescription?: string | null;
+    startsAt!: moment.Moment;
+    startsAtString?: string | null;
+    typeKey?: string | null;
+    recurringTypeKey?: string | null;
+    typeDescription?: string | null;
+    isRoomOccupied!: boolean;
+    isGuestRequest!: boolean;
+    priorityKey?: string | null;
+    createdByUserName?: string | null;
+    createdAt!: moment.Moment;
+    createdAtString?: string | null;
+    modifiedAt!: moment.Moment;
+    modifiedAtString?: string | null;
+
+    constructor(data?: ITaskGridItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.taskConfigurationId = _data["taskConfigurationId"] !== undefined ? _data["taskConfigurationId"] : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.isForPlannedAttendant = _data["isForPlannedAttendant"] !== undefined ? _data["isForPlannedAttendant"] : <any>null;
+            this.userFullName = _data["userFullName"] !== undefined ? _data["userFullName"] : <any>null;
+            this.userUsername = _data["userUsername"] !== undefined ? _data["userUsername"] : <any>null;
+            this.userInitials = _data["userInitials"] !== undefined ? _data["userInitials"] : <any>null;
+            this.userAvatarImageUrl = _data["userAvatarImageUrl"] !== undefined ? _data["userAvatarImageUrl"] : <any>null;
+            this.defaultUserAvatarColorHex = _data["defaultUserAvatarColorHex"] !== undefined ? _data["defaultUserAvatarColorHex"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            if (Array.isArray(_data["actions"])) {
+                this.actions = [] as any;
+                for (let item of _data["actions"])
+                    this.actions!.push(TaskGridItemAction.fromJS(item));
+            }
+            this.statusKey = _data["statusKey"] !== undefined ? _data["statusKey"] : <any>null;
+            this.statusDescription = _data["statusDescription"] !== undefined ? _data["statusDescription"] : <any>null;
+            this.whereId = _data["whereId"] !== undefined ? _data["whereId"] : <any>null;
+            this.where = _data["where"] !== undefined ? _data["where"] : <any>null;
+            this.whereDescription = _data["whereDescription"] !== undefined ? _data["whereDescription"] : <any>null;
+            this.whereTypeKey = _data["whereTypeKey"] !== undefined ? _data["whereTypeKey"] : <any>null;
+            this.when = _data["when"] !== undefined ? _data["when"] : <any>null;
+            this.whenDescription = _data["whenDescription"] !== undefined ? _data["whenDescription"] : <any>null;
+            this.startsAt = _data["startsAt"] ? moment(_data["startsAt"].toString()) : <any>null;
+            this.startsAtString = _data["startsAtString"] !== undefined ? _data["startsAtString"] : <any>null;
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.recurringTypeKey = _data["recurringTypeKey"] !== undefined ? _data["recurringTypeKey"] : <any>null;
+            this.typeDescription = _data["typeDescription"] !== undefined ? _data["typeDescription"] : <any>null;
+            this.isRoomOccupied = _data["isRoomOccupied"] !== undefined ? _data["isRoomOccupied"] : <any>null;
+            this.isGuestRequest = _data["isGuestRequest"] !== undefined ? _data["isGuestRequest"] : <any>null;
+            this.priorityKey = _data["priorityKey"] !== undefined ? _data["priorityKey"] : <any>null;
+            this.createdByUserName = _data["createdByUserName"] !== undefined ? _data["createdByUserName"] : <any>null;
+            this.createdAt = _data["createdAt"] ? moment(_data["createdAt"].toString()) : <any>null;
+            this.createdAtString = _data["createdAtString"] !== undefined ? _data["createdAtString"] : <any>null;
+            this.modifiedAt = _data["modifiedAt"] ? moment(_data["modifiedAt"].toString()) : <any>null;
+            this.modifiedAtString = _data["modifiedAtString"] !== undefined ? _data["modifiedAtString"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskGridItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskGridItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["taskConfigurationId"] = this.taskConfigurationId !== undefined ? this.taskConfigurationId : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["isForPlannedAttendant"] = this.isForPlannedAttendant !== undefined ? this.isForPlannedAttendant : <any>null;
+        data["userFullName"] = this.userFullName !== undefined ? this.userFullName : <any>null;
+        data["userUsername"] = this.userUsername !== undefined ? this.userUsername : <any>null;
+        data["userInitials"] = this.userInitials !== undefined ? this.userInitials : <any>null;
+        data["userAvatarImageUrl"] = this.userAvatarImageUrl !== undefined ? this.userAvatarImageUrl : <any>null;
+        data["defaultUserAvatarColorHex"] = this.defaultUserAvatarColorHex !== undefined ? this.defaultUserAvatarColorHex : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        if (Array.isArray(this.actions)) {
+            data["actions"] = [];
+            for (let item of this.actions)
+                data["actions"].push(item.toJSON());
+        }
+        data["statusKey"] = this.statusKey !== undefined ? this.statusKey : <any>null;
+        data["statusDescription"] = this.statusDescription !== undefined ? this.statusDescription : <any>null;
+        data["whereId"] = this.whereId !== undefined ? this.whereId : <any>null;
+        data["where"] = this.where !== undefined ? this.where : <any>null;
+        data["whereDescription"] = this.whereDescription !== undefined ? this.whereDescription : <any>null;
+        data["whereTypeKey"] = this.whereTypeKey !== undefined ? this.whereTypeKey : <any>null;
+        data["when"] = this.when !== undefined ? this.when : <any>null;
+        data["whenDescription"] = this.whenDescription !== undefined ? this.whenDescription : <any>null;
+        data["startsAt"] = this.startsAt ? this.startsAt.toISOString() : <any>null;
+        data["startsAtString"] = this.startsAtString !== undefined ? this.startsAtString : <any>null;
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["recurringTypeKey"] = this.recurringTypeKey !== undefined ? this.recurringTypeKey : <any>null;
+        data["typeDescription"] = this.typeDescription !== undefined ? this.typeDescription : <any>null;
+        data["isRoomOccupied"] = this.isRoomOccupied !== undefined ? this.isRoomOccupied : <any>null;
+        data["isGuestRequest"] = this.isGuestRequest !== undefined ? this.isGuestRequest : <any>null;
+        data["priorityKey"] = this.priorityKey !== undefined ? this.priorityKey : <any>null;
+        data["createdByUserName"] = this.createdByUserName !== undefined ? this.createdByUserName : <any>null;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>null;
+        data["createdAtString"] = this.createdAtString !== undefined ? this.createdAtString : <any>null;
+        data["modifiedAt"] = this.modifiedAt ? this.modifiedAt.toISOString() : <any>null;
+        data["modifiedAtString"] = this.modifiedAtString !== undefined ? this.modifiedAtString : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskGridItem {
+    id: string;
+    taskConfigurationId: string;
+    userId?: string | null;
+    isForPlannedAttendant: boolean;
+    userFullName?: string | null;
+    userUsername?: string | null;
+    userInitials?: string | null;
+    userAvatarImageUrl?: string | null;
+    defaultUserAvatarColorHex?: string | null;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+    actions?: TaskGridItemAction[] | null;
+    statusKey?: string | null;
+    statusDescription?: string | null;
+    whereId?: string | null;
+    where?: string | null;
+    whereDescription?: string | null;
+    whereTypeKey?: string | null;
+    when?: string | null;
+    whenDescription?: string | null;
+    startsAt: moment.Moment;
+    startsAtString?: string | null;
+    typeKey?: string | null;
+    recurringTypeKey?: string | null;
+    typeDescription?: string | null;
+    isRoomOccupied: boolean;
+    isGuestRequest: boolean;
+    priorityKey?: string | null;
+    createdByUserName?: string | null;
+    createdAt: moment.Moment;
+    createdAtString?: string | null;
+    modifiedAt: moment.Moment;
+    modifiedAtString?: string | null;
+}
+
+export class TaskGridItemAction implements ITaskGridItemAction {
+    assetQuantity!: number;
+    actionName?: string | null;
+    assetName?: string | null;
+
+    constructor(data?: ITaskGridItemAction) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetQuantity = _data["assetQuantity"] !== undefined ? _data["assetQuantity"] : <any>null;
+            this.actionName = _data["actionName"] !== undefined ? _data["actionName"] : <any>null;
+            this.assetName = _data["assetName"] !== undefined ? _data["assetName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TaskGridItemAction {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskGridItemAction();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetQuantity"] = this.assetQuantity !== undefined ? this.assetQuantity : <any>null;
+        data["actionName"] = this.actionName !== undefined ? this.actionName : <any>null;
+        data["assetName"] = this.assetName !== undefined ? this.assetName : <any>null;
+        return data; 
+    }
+}
+
+export interface ITaskGridItemAction {
+    assetQuantity: number;
+    actionName?: string | null;
+    assetName?: string | null;
+}
+
+export class GetPageOfTasksForGridQuery implements IGetPageOfTasksForGridQuery {
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+    onlyMyTasks!: boolean;
+    taskConfigurationId?: string | null;
+    sortKey?: string | null;
+    skip?: number | null;
+    take?: number | null;
+    loadOnlyCurrentTasks!: boolean;
+    loadMissedUnfinishedTasks!: boolean;
+    currentDateString?: string | null;
+
+    constructor(data?: IGetPageOfTasksForGridQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            this.onlyMyTasks = _data["onlyMyTasks"] !== undefined ? _data["onlyMyTasks"] : <any>null;
+            this.taskConfigurationId = _data["taskConfigurationId"] !== undefined ? _data["taskConfigurationId"] : <any>null;
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
+            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
+            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
+            this.loadOnlyCurrentTasks = _data["loadOnlyCurrentTasks"] !== undefined ? _data["loadOnlyCurrentTasks"] : <any>null;
+            this.loadMissedUnfinishedTasks = _data["loadMissedUnfinishedTasks"] !== undefined ? _data["loadMissedUnfinishedTasks"] : <any>null;
+            this.currentDateString = _data["currentDateString"] !== undefined ? _data["currentDateString"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageOfTasksForGridQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageOfTasksForGridQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        data["onlyMyTasks"] = this.onlyMyTasks !== undefined ? this.onlyMyTasks : <any>null;
+        data["taskConfigurationId"] = this.taskConfigurationId !== undefined ? this.taskConfigurationId : <any>null;
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
+        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
+        data["take"] = this.take !== undefined ? this.take : <any>null;
+        data["loadOnlyCurrentTasks"] = this.loadOnlyCurrentTasks !== undefined ? this.loadOnlyCurrentTasks : <any>null;
+        data["loadMissedUnfinishedTasks"] = this.loadMissedUnfinishedTasks !== undefined ? this.loadMissedUnfinishedTasks : <any>null;
+        data["currentDateString"] = this.currentDateString !== undefined ? this.currentDateString : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetPageOfTasksForGridQuery {
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+    onlyMyTasks: boolean;
+    taskConfigurationId?: string | null;
+    sortKey?: string | null;
+    skip?: number | null;
+    take?: number | null;
+    loadOnlyCurrentTasks: boolean;
+    loadMissedUnfinishedTasks: boolean;
+    currentDateString?: string | null;
+}
+
+export class TasksCalendar implements ITasksCalendar {
+    firstDateOfCalendar!: moment.Moment;
+    months?: TasksCalendarMonth[] | null;
+
+    constructor(data?: ITasksCalendar) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.firstDateOfCalendar = _data["firstDateOfCalendar"] ? moment(_data["firstDateOfCalendar"].toString()) : <any>null;
+            if (Array.isArray(_data["months"])) {
+                this.months = [] as any;
+                for (let item of _data["months"])
+                    this.months!.push(TasksCalendarMonth.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TasksCalendar {
+        data = typeof data === 'object' ? data : {};
+        let result = new TasksCalendar();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["firstDateOfCalendar"] = this.firstDateOfCalendar ? this.firstDateOfCalendar.toISOString() : <any>null;
+        if (Array.isArray(this.months)) {
+            data["months"] = [];
+            for (let item of this.months)
+                data["months"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITasksCalendar {
+    firstDateOfCalendar: moment.Moment;
+    months?: TasksCalendarMonth[] | null;
+}
+
+export class TasksCalendarMonth implements ITasksCalendarMonth {
+    month!: number;
+    year!: number;
+    monthName?: string | null;
+    days?: TasksCalendarDay[] | null;
+
+    constructor(data?: ITasksCalendarMonth) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.month = _data["month"] !== undefined ? _data["month"] : <any>null;
+            this.year = _data["year"] !== undefined ? _data["year"] : <any>null;
+            this.monthName = _data["monthName"] !== undefined ? _data["monthName"] : <any>null;
+            if (Array.isArray(_data["days"])) {
+                this.days = [] as any;
+                for (let item of _data["days"])
+                    this.days!.push(TasksCalendarDay.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TasksCalendarMonth {
+        data = typeof data === 'object' ? data : {};
+        let result = new TasksCalendarMonth();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["month"] = this.month !== undefined ? this.month : <any>null;
+        data["year"] = this.year !== undefined ? this.year : <any>null;
+        data["monthName"] = this.monthName !== undefined ? this.monthName : <any>null;
+        if (Array.isArray(this.days)) {
+            data["days"] = [];
+            for (let item of this.days)
+                data["days"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITasksCalendarMonth {
+    month: number;
+    year: number;
+    monthName?: string | null;
+    days?: TasksCalendarDay[] | null;
+}
+
+export class TasksCalendarDay implements ITasksCalendarDay {
+    day!: number;
+    date!: moment.Moment;
+    isActive!: boolean;
+    isToday!: boolean;
+    tasks?: TasksCalendarTask[] | null;
+    areSomeTasksHidden!: boolean;
+    numberOfHiddenTasks!: number;
+
+    constructor(data?: ITasksCalendarDay) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.day = _data["day"] !== undefined ? _data["day"] : <any>null;
+            this.date = _data["date"] ? moment(_data["date"].toString()) : <any>null;
+            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
+            this.isToday = _data["isToday"] !== undefined ? _data["isToday"] : <any>null;
+            if (Array.isArray(_data["tasks"])) {
+                this.tasks = [] as any;
+                for (let item of _data["tasks"])
+                    this.tasks!.push(TasksCalendarTask.fromJS(item));
+            }
+            this.areSomeTasksHidden = _data["areSomeTasksHidden"] !== undefined ? _data["areSomeTasksHidden"] : <any>null;
+            this.numberOfHiddenTasks = _data["numberOfHiddenTasks"] !== undefined ? _data["numberOfHiddenTasks"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TasksCalendarDay {
+        data = typeof data === 'object' ? data : {};
+        let result = new TasksCalendarDay();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["day"] = this.day !== undefined ? this.day : <any>null;
+        data["date"] = this.date ? this.date.toISOString() : <any>null;
+        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
+        data["isToday"] = this.isToday !== undefined ? this.isToday : <any>null;
+        if (Array.isArray(this.tasks)) {
+            data["tasks"] = [];
+            for (let item of this.tasks)
+                data["tasks"].push(item.toJSON());
+        }
+        data["areSomeTasksHidden"] = this.areSomeTasksHidden !== undefined ? this.areSomeTasksHidden : <any>null;
+        data["numberOfHiddenTasks"] = this.numberOfHiddenTasks !== undefined ? this.numberOfHiddenTasks : <any>null;
+        return data; 
+    }
+}
+
+export interface ITasksCalendarDay {
+    day: number;
+    date: moment.Moment;
+    isActive: boolean;
+    isToday: boolean;
+    tasks?: TasksCalendarTask[] | null;
+    areSomeTasksHidden: boolean;
+    numberOfHiddenTasks: number;
+}
+
+export class TasksCalendarTask implements ITasksCalendarTask {
+    isVisible!: boolean;
+    id!: string;
+    userId?: string | null;
+    userName?: string | null;
+    actions?: TasksCalendarTaskAction[] | null;
+
+    constructor(data?: ITasksCalendarTask) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isVisible = _data["isVisible"] !== undefined ? _data["isVisible"] : <any>null;
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.userName = _data["userName"] !== undefined ? _data["userName"] : <any>null;
+            if (Array.isArray(_data["actions"])) {
+                this.actions = [] as any;
+                for (let item of _data["actions"])
+                    this.actions!.push(TasksCalendarTaskAction.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TasksCalendarTask {
+        data = typeof data === 'object' ? data : {};
+        let result = new TasksCalendarTask();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isVisible"] = this.isVisible !== undefined ? this.isVisible : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["userName"] = this.userName !== undefined ? this.userName : <any>null;
+        if (Array.isArray(this.actions)) {
+            data["actions"] = [];
+            for (let item of this.actions)
+                data["actions"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITasksCalendarTask {
+    isVisible: boolean;
+    id: string;
+    userId?: string | null;
+    userName?: string | null;
+    actions?: TasksCalendarTaskAction[] | null;
+}
+
+export class TasksCalendarTaskAction implements ITasksCalendarTaskAction {
+    assetQuantity!: number;
+    assetName?: string | null;
+    actionName?: string | null;
+    showMoreActions!: boolean;
+    numberOfMoreActions!: number;
+
+    constructor(data?: ITasksCalendarTaskAction) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetQuantity = _data["assetQuantity"] !== undefined ? _data["assetQuantity"] : <any>null;
+            this.assetName = _data["assetName"] !== undefined ? _data["assetName"] : <any>null;
+            this.actionName = _data["actionName"] !== undefined ? _data["actionName"] : <any>null;
+            this.showMoreActions = _data["showMoreActions"] !== undefined ? _data["showMoreActions"] : <any>null;
+            this.numberOfMoreActions = _data["numberOfMoreActions"] !== undefined ? _data["numberOfMoreActions"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): TasksCalendarTaskAction {
+        data = typeof data === 'object' ? data : {};
+        let result = new TasksCalendarTaskAction();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetQuantity"] = this.assetQuantity !== undefined ? this.assetQuantity : <any>null;
+        data["assetName"] = this.assetName !== undefined ? this.assetName : <any>null;
+        data["actionName"] = this.actionName !== undefined ? this.actionName : <any>null;
+        data["showMoreActions"] = this.showMoreActions !== undefined ? this.showMoreActions : <any>null;
+        data["numberOfMoreActions"] = this.numberOfMoreActions !== undefined ? this.numberOfMoreActions : <any>null;
+        return data; 
+    }
+}
+
+export interface ITasksCalendarTaskAction {
+    assetQuantity: number;
+    assetName?: string | null;
+    actionName?: string | null;
+    showMoreActions: boolean;
+    numberOfMoreActions: number;
+}
+
+export class GetCalendarTasksQuery implements IGetCalendarTasksQuery {
+    currentDate!: moment.Moment;
+    monthFrom!: number;
+    yearFrom!: number;
+    monthTo!: number;
+    yearTo!: number;
+    onlyMyTasks!: boolean;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
+
+    constructor(data?: IGetCalendarTasksQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.currentDate = _data["currentDate"] ? moment(_data["currentDate"].toString()) : <any>null;
+            this.monthFrom = _data["monthFrom"] !== undefined ? _data["monthFrom"] : <any>null;
+            this.yearFrom = _data["yearFrom"] !== undefined ? _data["yearFrom"] : <any>null;
+            this.monthTo = _data["monthTo"] !== undefined ? _data["monthTo"] : <any>null;
+            this.yearTo = _data["yearTo"] !== undefined ? _data["yearTo"] : <any>null;
+            this.onlyMyTasks = _data["onlyMyTasks"] !== undefined ? _data["onlyMyTasks"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetCalendarTasksQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCalendarTasksQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currentDate"] = this.currentDate ? this.currentDate.toISOString() : <any>null;
+        data["monthFrom"] = this.monthFrom !== undefined ? this.monthFrom : <any>null;
+        data["yearFrom"] = this.yearFrom !== undefined ? this.yearFrom : <any>null;
+        data["monthTo"] = this.monthTo !== undefined ? this.monthTo : <any>null;
+        data["yearTo"] = this.yearTo !== undefined ? this.yearTo : <any>null;
+        data["onlyMyTasks"] = this.onlyMyTasks !== undefined ? this.onlyMyTasks : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetCalendarTasksQuery {
+    currentDate: moment.Moment;
+    monthFrom: number;
+    yearFrom: number;
+    monthTo: number;
+    yearTo: number;
+    onlyMyTasks: boolean;
+    userGroupId?: string | null;
+    userSubGroupId?: string | null;
 }
 
 export class FullGroupHierarchyData implements IFullGroupHierarchyData {
@@ -43532,6 +45246,368 @@ export interface ISendFullRoomStatusChangesQuery {
     hotelGroupKey?: string | null;
 }
 
+export class ProcessResponseSimple implements IProcessResponseSimple {
+    isSuccess!: boolean;
+    message?: string | null;
+
+    constructor(data?: IProcessResponseSimple) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"] !== undefined ? _data["isSuccess"] : <any>null;
+            this.message = _data["message"] !== undefined ? _data["message"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimple {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimple();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess !== undefined ? this.isSuccess : <any>null;
+        data["message"] = this.message !== undefined ? this.message : <any>null;
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimple {
+    isSuccess: boolean;
+    message?: string | null;
+}
+
+export class ProcessResponseSimpleOfIEnumerableOfExternalHotel extends ProcessResponseSimple implements IProcessResponseSimpleOfIEnumerableOfExternalHotel {
+    data?: ExternalHotel[] | null;
+
+    constructor(data?: IProcessResponseSimpleOfIEnumerableOfExternalHotel) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["data"])) {
+                this.data = [] as any;
+                for (let item of _data["data"])
+                    this.data!.push(ExternalHotel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfIEnumerableOfExternalHotel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfIEnumerableOfExternalHotel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.data)) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfIEnumerableOfExternalHotel extends IProcessResponseSimple {
+    data?: ExternalHotel[] | null;
+}
+
+export class ExternalHotel implements IExternalHotel {
+    id?: string | null;
+    name?: string | null;
+    ianaTimeZoneId?: string | null;
+    windowsTimeZoneId?: string | null;
+
+    constructor(data?: IExternalHotel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.ianaTimeZoneId = _data["ianaTimeZoneId"] !== undefined ? _data["ianaTimeZoneId"] : <any>null;
+            this.windowsTimeZoneId = _data["windowsTimeZoneId"] !== undefined ? _data["windowsTimeZoneId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExternalHotel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExternalHotel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["ianaTimeZoneId"] = this.ianaTimeZoneId !== undefined ? this.ianaTimeZoneId : <any>null;
+        data["windowsTimeZoneId"] = this.windowsTimeZoneId !== undefined ? this.windowsTimeZoneId : <any>null;
+        return data; 
+    }
+}
+
+export interface IExternalHotel {
+    id?: string | null;
+    name?: string | null;
+    ianaTimeZoneId?: string | null;
+    windowsTimeZoneId?: string | null;
+}
+
+export class ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup extends ProcessResponseSimple implements IProcessResponseSimpleOfIEnumerableOfExternalHotelGroup {
+    data?: ExternalHotelGroup[] | null;
+
+    constructor(data?: IProcessResponseSimpleOfIEnumerableOfExternalHotelGroup) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["data"])) {
+                this.data = [] as any;
+                for (let item of _data["data"])
+                    this.data!.push(ExternalHotelGroup.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfIEnumerableOfExternalHotelGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.data)) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfIEnumerableOfExternalHotelGroup extends IProcessResponseSimple {
+    data?: ExternalHotelGroup[] | null;
+}
+
+export class ExternalHotelGroup implements IExternalHotelGroup {
+    id!: string;
+    name?: string | null;
+    key?: string | null;
+
+    constructor(data?: IExternalHotelGroup) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.key = _data["key"] !== undefined ? _data["key"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExternalHotelGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExternalHotelGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["key"] = this.key !== undefined ? this.key : <any>null;
+        return data; 
+    }
+}
+
+export interface IExternalHotelGroup {
+    id: string;
+    name?: string | null;
+    key?: string | null;
+}
+
+export class ExternalGetListOfHotelGroupsQuery implements IExternalGetListOfHotelGroupsQuery {
+
+    constructor(data?: IExternalGetListOfHotelGroupsQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+    }
+
+    static fromJS(data: any): ExternalGetListOfHotelGroupsQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExternalGetListOfHotelGroupsQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        return data; 
+    }
+}
+
+export interface IExternalGetListOfHotelGroupsQuery {
+}
+
+export class ProcessResponseSimpleOfIEnumerableOfExternalUserRole extends ProcessResponseSimple implements IProcessResponseSimpleOfIEnumerableOfExternalUserRole {
+    data?: ExternalUserRole[] | null;
+
+    constructor(data?: IProcessResponseSimpleOfIEnumerableOfExternalUserRole) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["data"])) {
+                this.data = [] as any;
+                for (let item of _data["data"])
+                    this.data!.push(ExternalUserRole.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfIEnumerableOfExternalUserRole {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfIEnumerableOfExternalUserRole();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.data)) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfIEnumerableOfExternalUserRole extends IProcessResponseSimple {
+    data?: ExternalUserRole[] | null;
+}
+
+export class ExternalUserRole implements IExternalUserRole {
+    id!: string;
+    name?: string | null;
+    hotelAccessTypeKey?: string | null;
+
+    constructor(data?: IExternalUserRole) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.hotelAccessTypeKey = _data["hotelAccessTypeKey"] !== undefined ? _data["hotelAccessTypeKey"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExternalUserRole {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExternalUserRole();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["hotelAccessTypeKey"] = this.hotelAccessTypeKey !== undefined ? this.hotelAccessTypeKey : <any>null;
+        return data; 
+    }
+}
+
+export interface IExternalUserRole {
+    id: string;
+    name?: string | null;
+    hotelAccessTypeKey?: string | null;
+}
+
+export class ProcessResponseSimpleOfGuid extends ProcessResponseSimple implements IProcessResponseSimpleOfGuid {
+    data!: string;
+
+    constructor(data?: IProcessResponseSimpleOfGuid) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.data = _data["data"] !== undefined ? _data["data"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfGuid {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfGuid();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["data"] = this.data !== undefined ? this.data : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfGuid extends IProcessResponseSimple {
+    data: string;
+}
+
 export class ExternalInsertCompactTaskCommand implements IExternalInsertCompactTaskCommand {
     hotelGroupId?: string | null;
     hotelGroupKey?: string | null;
@@ -43700,17 +45776,161 @@ export interface IExternalInsertCompactTaskAssetAction {
     actionName?: string | null;
 }
 
-export class ExternalDndOnCommand implements IExternalDndOnCommand {
+export class ProcessResponseSimpleOfIEnumerableOfExternalUser extends ProcessResponseSimple implements IProcessResponseSimpleOfIEnumerableOfExternalUser {
+    data?: ExternalUser[] | null;
+
+    constructor(data?: IProcessResponseSimpleOfIEnumerableOfExternalUser) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["data"])) {
+                this.data = [] as any;
+                for (let item of _data["data"])
+                    this.data!.push(ExternalUser.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfIEnumerableOfExternalUser {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfIEnumerableOfExternalUser();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.data)) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfIEnumerableOfExternalUser extends IProcessResponseSimple {
+    data?: ExternalUser[] | null;
+}
+
+export class ExternalUser implements IExternalUser {
+    id!: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    originalHotel?: string | null;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    isGroupLeader!: boolean;
+    isSubGroupLeader!: boolean;
+    isActive!: boolean;
+    defaultAvatarColorHex?: string | null;
+    avatarUrl?: string | null;
+    isOnDuty!: boolean;
+
+    constructor(data?: IExternalUser) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
+            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.connectionName = _data["connectionName"] !== undefined ? _data["connectionName"] : <any>null;
+            this.registrationNumber = _data["registrationNumber"] !== undefined ? _data["registrationNumber"] : <any>null;
+            this.language = _data["language"] !== undefined ? _data["language"] : <any>null;
+            this.originalHotel = _data["originalHotel"] !== undefined ? _data["originalHotel"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.isGroupLeader = _data["isGroupLeader"] !== undefined ? _data["isGroupLeader"] : <any>null;
+            this.isSubGroupLeader = _data["isSubGroupLeader"] !== undefined ? _data["isSubGroupLeader"] : <any>null;
+            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
+            this.defaultAvatarColorHex = _data["defaultAvatarColorHex"] !== undefined ? _data["defaultAvatarColorHex"] : <any>null;
+            this.avatarUrl = _data["avatarUrl"] !== undefined ? _data["avatarUrl"] : <any>null;
+            this.isOnDuty = _data["isOnDuty"] !== undefined ? _data["isOnDuty"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExternalUser {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExternalUser();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["connectionName"] = this.connectionName !== undefined ? this.connectionName : <any>null;
+        data["registrationNumber"] = this.registrationNumber !== undefined ? this.registrationNumber : <any>null;
+        data["language"] = this.language !== undefined ? this.language : <any>null;
+        data["originalHotel"] = this.originalHotel !== undefined ? this.originalHotel : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["isGroupLeader"] = this.isGroupLeader !== undefined ? this.isGroupLeader : <any>null;
+        data["isSubGroupLeader"] = this.isSubGroupLeader !== undefined ? this.isSubGroupLeader : <any>null;
+        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
+        data["defaultAvatarColorHex"] = this.defaultAvatarColorHex !== undefined ? this.defaultAvatarColorHex : <any>null;
+        data["avatarUrl"] = this.avatarUrl !== undefined ? this.avatarUrl : <any>null;
+        data["isOnDuty"] = this.isOnDuty !== undefined ? this.isOnDuty : <any>null;
+        return data; 
+    }
+}
+
+export interface IExternalUser {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    originalHotel?: string | null;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    isGroupLeader: boolean;
+    isSubGroupLeader: boolean;
+    isActive: boolean;
+    defaultAvatarColorHex?: string | null;
+    avatarUrl?: string | null;
+    isOnDuty: boolean;
+}
+
+export class ExternalInsertUserCommand implements IExternalInsertUserCommand {
     hotelGroupId?: string | null;
     hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+    email?: string | null;
+    userName?: string | null;
+    password?: string | null;
+    passwordConfirmation?: string | null;
+    phoneNumber?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    hotelIds?: string[] | null;
+    roleId!: string;
+    isSubGroupLeader!: boolean;
+    isActive!: boolean;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    avatarImageUrl?: string | null;
 
-    constructor(data?: IExternalDndOnCommand) {
+    constructor(data?: IExternalInsertUserCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -43723,18 +45943,33 @@ export class ExternalDndOnCommand implements IExternalDndOnCommand {
         if (_data) {
             this.hotelGroupId = _data["hotelGroupId"] !== undefined ? _data["hotelGroupId"] : <any>null;
             this.hotelGroupKey = _data["hotelGroupKey"] !== undefined ? _data["hotelGroupKey"] : <any>null;
-            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
-            this.roomBedId = _data["roomBedId"] !== undefined ? _data["roomBedId"] : <any>null;
-            this.roomBedName = _data["roomBedName"] !== undefined ? _data["roomBedName"] : <any>null;
-            this.requestedBy = _data["requestedBy"] !== undefined ? _data["requestedBy"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.userName = _data["userName"] !== undefined ? _data["userName"] : <any>null;
+            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
+            this.passwordConfirmation = _data["passwordConfirmation"] !== undefined ? _data["passwordConfirmation"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
+            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.connectionName = _data["connectionName"] !== undefined ? _data["connectionName"] : <any>null;
+            this.registrationNumber = _data["registrationNumber"] !== undefined ? _data["registrationNumber"] : <any>null;
+            this.language = _data["language"] !== undefined ? _data["language"] : <any>null;
+            if (Array.isArray(_data["hotelIds"])) {
+                this.hotelIds = [] as any;
+                for (let item of _data["hotelIds"])
+                    this.hotelIds!.push(item);
+            }
+            this.roleId = _data["roleId"] !== undefined ? _data["roleId"] : <any>null;
+            this.isSubGroupLeader = _data["isSubGroupLeader"] !== undefined ? _data["isSubGroupLeader"] : <any>null;
+            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.avatarImageUrl = _data["avatarImageUrl"] !== undefined ? _data["avatarImageUrl"] : <any>null;
         }
     }
 
-    static fromJS(data: any): ExternalDndOnCommand {
+    static fromJS(data: any): ExternalInsertUserCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new ExternalDndOnCommand();
+        let result = new ExternalInsertUserCommand();
         result.init(data);
         return result;
     }
@@ -43743,38 +45978,100 @@ export class ExternalDndOnCommand implements IExternalDndOnCommand {
         data = typeof data === 'object' ? data : {};
         data["hotelGroupId"] = this.hotelGroupId !== undefined ? this.hotelGroupId : <any>null;
         data["hotelGroupKey"] = this.hotelGroupKey !== undefined ? this.hotelGroupKey : <any>null;
-        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
-        data["roomBedId"] = this.roomBedId !== undefined ? this.roomBedId : <any>null;
-        data["roomBedName"] = this.roomBedName !== undefined ? this.roomBedName : <any>null;
-        data["requestedBy"] = this.requestedBy !== undefined ? this.requestedBy : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["userName"] = this.userName !== undefined ? this.userName : <any>null;
+        data["password"] = this.password !== undefined ? this.password : <any>null;
+        data["passwordConfirmation"] = this.passwordConfirmation !== undefined ? this.passwordConfirmation : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["connectionName"] = this.connectionName !== undefined ? this.connectionName : <any>null;
+        data["registrationNumber"] = this.registrationNumber !== undefined ? this.registrationNumber : <any>null;
+        data["language"] = this.language !== undefined ? this.language : <any>null;
+        if (Array.isArray(this.hotelIds)) {
+            data["hotelIds"] = [];
+            for (let item of this.hotelIds)
+                data["hotelIds"].push(item);
+        }
+        data["roleId"] = this.roleId !== undefined ? this.roleId : <any>null;
+        data["isSubGroupLeader"] = this.isSubGroupLeader !== undefined ? this.isSubGroupLeader : <any>null;
+        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["avatarImageUrl"] = this.avatarImageUrl !== undefined ? this.avatarImageUrl : <any>null;
         return data; 
     }
 }
 
-export interface IExternalDndOnCommand {
+export interface IExternalInsertUserCommand {
     hotelGroupId?: string | null;
     hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+    email?: string | null;
+    userName?: string | null;
+    password?: string | null;
+    passwordConfirmation?: string | null;
+    phoneNumber?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    hotelIds?: string[] | null;
+    roleId: string;
+    isSubGroupLeader: boolean;
+    isActive: boolean;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    avatarImageUrl?: string | null;
 }
 
-export class ExternalDndOffCommand implements IExternalDndOffCommand {
-    hotelGroupId?: string | null;
-    hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+export class ProcessResponseSimpleOfIEnumerableOfExternalUserGroup extends ProcessResponseSimple implements IProcessResponseSimpleOfIEnumerableOfExternalUserGroup {
+    data?: ExternalUserGroup[] | null;
 
-    constructor(data?: IExternalDndOffCommand) {
+    constructor(data?: IProcessResponseSimpleOfIEnumerableOfExternalUserGroup) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["data"])) {
+                this.data = [] as any;
+                for (let item of _data["data"])
+                    this.data!.push(ExternalUserGroup.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseSimpleOfIEnumerableOfExternalUserGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseSimpleOfIEnumerableOfExternalUserGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.data)) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseSimpleOfIEnumerableOfExternalUserGroup extends IProcessResponseSimple {
+    data?: ExternalUserGroup[] | null;
+}
+
+export class ExternalUserGroup implements IExternalUserGroup {
+    id!: string;
+    name?: string | null;
+    subGroups?: ExternalUserSubGroup[] | null;
+
+    constructor(data?: IExternalUserGroup) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -43785,60 +46082,47 @@ export class ExternalDndOffCommand implements IExternalDndOffCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.hotelGroupId = _data["hotelGroupId"] !== undefined ? _data["hotelGroupId"] : <any>null;
-            this.hotelGroupKey = _data["hotelGroupKey"] !== undefined ? _data["hotelGroupKey"] : <any>null;
-            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
-            this.roomBedId = _data["roomBedId"] !== undefined ? _data["roomBedId"] : <any>null;
-            this.roomBedName = _data["roomBedName"] !== undefined ? _data["roomBedName"] : <any>null;
-            this.requestedBy = _data["requestedBy"] !== undefined ? _data["requestedBy"] : <any>null;
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            if (Array.isArray(_data["subGroups"])) {
+                this.subGroups = [] as any;
+                for (let item of _data["subGroups"])
+                    this.subGroups!.push(ExternalUserSubGroup.fromJS(item));
+            }
         }
     }
 
-    static fromJS(data: any): ExternalDndOffCommand {
+    static fromJS(data: any): ExternalUserGroup {
         data = typeof data === 'object' ? data : {};
-        let result = new ExternalDndOffCommand();
+        let result = new ExternalUserGroup();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["hotelGroupId"] = this.hotelGroupId !== undefined ? this.hotelGroupId : <any>null;
-        data["hotelGroupKey"] = this.hotelGroupKey !== undefined ? this.hotelGroupKey : <any>null;
-        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
-        data["roomBedId"] = this.roomBedId !== undefined ? this.roomBedId : <any>null;
-        data["roomBedName"] = this.roomBedName !== undefined ? this.roomBedName : <any>null;
-        data["requestedBy"] = this.requestedBy !== undefined ? this.requestedBy : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        if (Array.isArray(this.subGroups)) {
+            data["subGroups"] = [];
+            for (let item of this.subGroups)
+                data["subGroups"].push(item.toJSON());
+        }
         return data; 
     }
 }
 
-export interface IExternalDndOffCommand {
-    hotelGroupId?: string | null;
-    hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+export interface IExternalUserGroup {
+    id: string;
+    name?: string | null;
+    subGroups?: ExternalUserSubGroup[] | null;
 }
 
-export class ExternalRequestCleaningCommand implements IExternalRequestCleaningCommand {
-    hotelGroupId?: string | null;
-    hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+export class ExternalUserSubGroup implements IExternalUserSubGroup {
+    id!: string;
+    name?: string | null;
 
-    constructor(data?: IExternalRequestCleaningCommand) {
+    constructor(data?: IExternalUserSubGroup) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -43849,47 +46133,29 @@ export class ExternalRequestCleaningCommand implements IExternalRequestCleaningC
 
     init(_data?: any) {
         if (_data) {
-            this.hotelGroupId = _data["hotelGroupId"] !== undefined ? _data["hotelGroupId"] : <any>null;
-            this.hotelGroupKey = _data["hotelGroupKey"] !== undefined ? _data["hotelGroupKey"] : <any>null;
-            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
-            this.roomBedId = _data["roomBedId"] !== undefined ? _data["roomBedId"] : <any>null;
-            this.roomBedName = _data["roomBedName"] !== undefined ? _data["roomBedName"] : <any>null;
-            this.requestedBy = _data["requestedBy"] !== undefined ? _data["requestedBy"] : <any>null;
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
         }
     }
 
-    static fromJS(data: any): ExternalRequestCleaningCommand {
+    static fromJS(data: any): ExternalUserSubGroup {
         data = typeof data === 'object' ? data : {};
-        let result = new ExternalRequestCleaningCommand();
+        let result = new ExternalUserSubGroup();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["hotelGroupId"] = this.hotelGroupId !== undefined ? this.hotelGroupId : <any>null;
-        data["hotelGroupKey"] = this.hotelGroupKey !== undefined ? this.hotelGroupKey : <any>null;
-        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
-        data["roomBedId"] = this.roomBedId !== undefined ? this.roomBedId : <any>null;
-        data["roomBedName"] = this.roomBedName !== undefined ? this.roomBedName : <any>null;
-        data["requestedBy"] = this.requestedBy !== undefined ? this.requestedBy : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         return data; 
     }
 }
 
-export interface IExternalRequestCleaningCommand {
-    hotelGroupId?: string | null;
-    hotelGroupKey?: string | null;
-    hotelId?: string | null;
-    roomId?: string | null;
-    roomName?: string | null;
-    roomBedId?: string | null;
-    roomBedName?: string | null;
-    requestedBy?: string | null;
+export interface IExternalUserSubGroup {
+    id: string;
+    name?: string | null;
 }
 
 export class AttendantMobileAppConfiguration implements IAttendantMobileAppConfiguration {
@@ -45904,6 +48170,7 @@ export class MobileRoomDetails implements IMobileRoomDetails {
     hotelId?: string | null;
     roomAccessId?: string | null;
     roomCategoryId?: string | null;
+    roomCategoryName?: string | null;
     roomStatusId?: string | null;
     roomMaintenanceId?: string | null;
     roomHousekeepingId?: string | null;
@@ -45956,6 +48223,7 @@ export class MobileRoomDetails implements IMobileRoomDetails {
             this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
             this.roomAccessId = _data["roomAccessId"] !== undefined ? _data["roomAccessId"] : <any>null;
             this.roomCategoryId = _data["roomCategoryId"] !== undefined ? _data["roomCategoryId"] : <any>null;
+            this.roomCategoryName = _data["roomCategoryName"] !== undefined ? _data["roomCategoryName"] : <any>null;
             this.roomStatusId = _data["roomStatusId"] !== undefined ? _data["roomStatusId"] : <any>null;
             this.roomMaintenanceId = _data["roomMaintenanceId"] !== undefined ? _data["roomMaintenanceId"] : <any>null;
             this.roomHousekeepingId = _data["roomHousekeepingId"] !== undefined ? _data["roomHousekeepingId"] : <any>null;
@@ -46020,6 +48288,7 @@ export class MobileRoomDetails implements IMobileRoomDetails {
         data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
         data["roomAccessId"] = this.roomAccessId !== undefined ? this.roomAccessId : <any>null;
         data["roomCategoryId"] = this.roomCategoryId !== undefined ? this.roomCategoryId : <any>null;
+        data["roomCategoryName"] = this.roomCategoryName !== undefined ? this.roomCategoryName : <any>null;
         data["roomStatusId"] = this.roomStatusId !== undefined ? this.roomStatusId : <any>null;
         data["roomMaintenanceId"] = this.roomMaintenanceId !== undefined ? this.roomMaintenanceId : <any>null;
         data["roomHousekeepingId"] = this.roomHousekeepingId !== undefined ? this.roomHousekeepingId : <any>null;
@@ -46077,6 +48346,7 @@ export interface IMobileRoomDetails {
     hotelId?: string | null;
     roomAccessId?: string | null;
     roomCategoryId?: string | null;
+    roomCategoryName?: string | null;
     roomStatusId?: string | null;
     roomMaintenanceId?: string | null;
     roomHousekeepingId?: string | null;
@@ -47973,6 +50243,7 @@ export class MobileRoom implements IMobileRoom {
     hotelId?: string | null;
     roomAccessId?: string | null;
     roomCategoryId?: string | null;
+    roomCategoryName?: string | null;
     roomStatusId?: string | null;
     roomMaintenanceId?: string | null;
     roomHousekeepingId?: string | null;
@@ -48026,6 +50297,7 @@ export class MobileRoom implements IMobileRoom {
             this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
             this.roomAccessId = _data["roomAccessId"] !== undefined ? _data["roomAccessId"] : <any>null;
             this.roomCategoryId = _data["roomCategoryId"] !== undefined ? _data["roomCategoryId"] : <any>null;
+            this.roomCategoryName = _data["roomCategoryName"] !== undefined ? _data["roomCategoryName"] : <any>null;
             this.roomStatusId = _data["roomStatusId"] !== undefined ? _data["roomStatusId"] : <any>null;
             this.roomMaintenanceId = _data["roomMaintenanceId"] !== undefined ? _data["roomMaintenanceId"] : <any>null;
             this.roomHousekeepingId = _data["roomHousekeepingId"] !== undefined ? _data["roomHousekeepingId"] : <any>null;
@@ -48091,6 +50363,7 @@ export class MobileRoom implements IMobileRoom {
         data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
         data["roomAccessId"] = this.roomAccessId !== undefined ? this.roomAccessId : <any>null;
         data["roomCategoryId"] = this.roomCategoryId !== undefined ? this.roomCategoryId : <any>null;
+        data["roomCategoryName"] = this.roomCategoryName !== undefined ? this.roomCategoryName : <any>null;
         data["roomStatusId"] = this.roomStatusId !== undefined ? this.roomStatusId : <any>null;
         data["roomMaintenanceId"] = this.roomMaintenanceId !== undefined ? this.roomMaintenanceId : <any>null;
         data["roomHousekeepingId"] = this.roomHousekeepingId !== undefined ? this.roomHousekeepingId : <any>null;
@@ -48149,6 +50422,7 @@ export interface IMobileRoom {
     hotelId?: string | null;
     roomAccessId?: string | null;
     roomCategoryId?: string | null;
+    roomCategoryName?: string | null;
     roomStatusId?: string | null;
     roomMaintenanceId?: string | null;
     roomHousekeepingId?: string | null;
@@ -49133,6 +51407,54 @@ export interface ISendRoomMessageForMobileCommand {
     hotelId?: string | null;
 }
 
+export class ChangeRoomPriorityForMobileCommand implements IChangeRoomPriorityForMobileCommand {
+    hotelId?: string | null;
+    roomId?: string | null;
+    bedId?: string | null;
+    isPriority!: boolean;
+
+    constructor(data?: IChangeRoomPriorityForMobileCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.bedId = _data["bedId"] !== undefined ? _data["bedId"] : <any>null;
+            this.isPriority = _data["isPriority"] !== undefined ? _data["isPriority"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ChangeRoomPriorityForMobileCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangeRoomPriorityForMobileCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["bedId"] = this.bedId !== undefined ? this.bedId : <any>null;
+        data["isPriority"] = this.isPriority !== undefined ? this.isPriority : <any>null;
+        return data; 
+    }
+}
+
+export interface IChangeRoomPriorityForMobileCommand {
+    hotelId?: string | null;
+    roomId?: string | null;
+    bedId?: string | null;
+    isPriority: boolean;
+}
+
 export class InsertTaskForMobileCommand implements IInsertTaskForMobileCommand {
     hotelId?: string | null;
     roomIds?: string[] | null;
@@ -49758,7 +52080,12 @@ export interface IMobileTaskMetaActionBody {
 }
 
 export class MobileTaskGuestInfo implements IMobileTaskGuestInfo {
+    reservation_id?: string | null;
     guest_name?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    actualCheckIn?: moment.Moment | null;
+    actualCheckOut?: moment.Moment | null;
 
     constructor(data?: IMobileTaskGuestInfo) {
         if (data) {
@@ -49771,7 +52098,12 @@ export class MobileTaskGuestInfo implements IMobileTaskGuestInfo {
 
     init(_data?: any) {
         if (_data) {
+            this.reservation_id = _data["reservation_id"] !== undefined ? _data["reservation_id"] : <any>null;
             this.guest_name = _data["guest_name"] !== undefined ? _data["guest_name"] : <any>null;
+            this.checkIn = _data["checkIn"] ? moment(_data["checkIn"].toString()) : <any>null;
+            this.checkOut = _data["checkOut"] ? moment(_data["checkOut"].toString()) : <any>null;
+            this.actualCheckIn = _data["actualCheckIn"] ? moment(_data["actualCheckIn"].toString()) : <any>null;
+            this.actualCheckOut = _data["actualCheckOut"] ? moment(_data["actualCheckOut"].toString()) : <any>null;
         }
     }
 
@@ -49784,13 +52116,23 @@ export class MobileTaskGuestInfo implements IMobileTaskGuestInfo {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["reservation_id"] = this.reservation_id !== undefined ? this.reservation_id : <any>null;
         data["guest_name"] = this.guest_name !== undefined ? this.guest_name : <any>null;
+        data["checkIn"] = this.checkIn ? this.checkIn.toISOString() : <any>null;
+        data["checkOut"] = this.checkOut ? this.checkOut.toISOString() : <any>null;
+        data["actualCheckIn"] = this.actualCheckIn ? this.actualCheckIn.toISOString() : <any>null;
+        data["actualCheckOut"] = this.actualCheckOut ? this.actualCheckOut.toISOString() : <any>null;
         return data; 
     }
 }
 
 export interface IMobileTaskGuestInfo {
+    reservation_id?: string | null;
     guest_name?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    actualCheckIn?: moment.Moment | null;
+    actualCheckOut?: moment.Moment | null;
 }
 
 export class MobileTaskAssigned implements IMobileTaskAssigned {
@@ -49975,6 +52317,90 @@ export class GetListOfTasksForMobileQuery implements IGetListOfTasksForMobileQue
 
 export interface IGetListOfTasksForMobileQuery {
     hotelId?: string | null;
+}
+
+export class ReassignTaskForMobileCommand implements IReassignTaskForMobileCommand {
+    taskId!: string;
+    startsAtString?: string | null;
+    userId?: string | null;
+    isForPlannedAttendant!: boolean;
+
+    constructor(data?: IReassignTaskForMobileCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.taskId = _data["taskId"] !== undefined ? _data["taskId"] : <any>null;
+            this.startsAtString = _data["startsAtString"] !== undefined ? _data["startsAtString"] : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.isForPlannedAttendant = _data["isForPlannedAttendant"] !== undefined ? _data["isForPlannedAttendant"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ReassignTaskForMobileCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReassignTaskForMobileCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["taskId"] = this.taskId !== undefined ? this.taskId : <any>null;
+        data["startsAtString"] = this.startsAtString !== undefined ? this.startsAtString : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["isForPlannedAttendant"] = this.isForPlannedAttendant !== undefined ? this.isForPlannedAttendant : <any>null;
+        return data; 
+    }
+}
+
+export interface IReassignTaskForMobileCommand {
+    taskId: string;
+    startsAtString?: string | null;
+    userId?: string | null;
+    isForPlannedAttendant: boolean;
+}
+
+export class MoveTaskToDepartureForMobileCommand implements IMoveTaskToDepartureForMobileCommand {
+    taskId!: string;
+
+    constructor(data?: IMoveTaskToDepartureForMobileCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.taskId = _data["taskId"] !== undefined ? _data["taskId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): MoveTaskToDepartureForMobileCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new MoveTaskToDepartureForMobileCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["taskId"] = this.taskId !== undefined ? this.taskId : <any>null;
+        return data; 
+    }
+}
+
+export interface IMoveTaskToDepartureForMobileCommand {
+    taskId: string;
 }
 
 export class MobileUsersPreview implements IMobileUsersPreview {
@@ -50868,6 +53294,114 @@ export interface IGetUserGroupDetailsForMobileQuery {
     hotelId?: string | null;
     id: string;
     isSubGroup: boolean;
+}
+
+export class InsertUserForMobileCommand implements IInsertUserForMobileCommand {
+    email?: string | null;
+    userName?: string | null;
+    password?: string | null;
+    passwordConfirmation?: string | null;
+    phoneNumber?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    hotelIds?: string[] | null;
+    roleId?: string | null;
+    isSubGroupLeader!: boolean;
+    isActive!: boolean;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    avatarImageUrl?: string | null;
+
+    constructor(data?: IInsertUserForMobileCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.userName = _data["userName"] !== undefined ? _data["userName"] : <any>null;
+            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
+            this.passwordConfirmation = _data["passwordConfirmation"] !== undefined ? _data["passwordConfirmation"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
+            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.connectionName = _data["connectionName"] !== undefined ? _data["connectionName"] : <any>null;
+            this.registrationNumber = _data["registrationNumber"] !== undefined ? _data["registrationNumber"] : <any>null;
+            this.language = _data["language"] !== undefined ? _data["language"] : <any>null;
+            if (Array.isArray(_data["hotelIds"])) {
+                this.hotelIds = [] as any;
+                for (let item of _data["hotelIds"])
+                    this.hotelIds!.push(item);
+            }
+            this.roleId = _data["roleId"] !== undefined ? _data["roleId"] : <any>null;
+            this.isSubGroupLeader = _data["isSubGroupLeader"] !== undefined ? _data["isSubGroupLeader"] : <any>null;
+            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.avatarImageUrl = _data["avatarImageUrl"] !== undefined ? _data["avatarImageUrl"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InsertUserForMobileCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsertUserForMobileCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["userName"] = this.userName !== undefined ? this.userName : <any>null;
+        data["password"] = this.password !== undefined ? this.password : <any>null;
+        data["passwordConfirmation"] = this.passwordConfirmation !== undefined ? this.passwordConfirmation : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["connectionName"] = this.connectionName !== undefined ? this.connectionName : <any>null;
+        data["registrationNumber"] = this.registrationNumber !== undefined ? this.registrationNumber : <any>null;
+        data["language"] = this.language !== undefined ? this.language : <any>null;
+        if (Array.isArray(this.hotelIds)) {
+            data["hotelIds"] = [];
+            for (let item of this.hotelIds)
+                data["hotelIds"].push(item);
+        }
+        data["roleId"] = this.roleId !== undefined ? this.roleId : <any>null;
+        data["isSubGroupLeader"] = this.isSubGroupLeader !== undefined ? this.isSubGroupLeader : <any>null;
+        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["avatarImageUrl"] = this.avatarImageUrl !== undefined ? this.avatarImageUrl : <any>null;
+        return data; 
+    }
+}
+
+export interface IInsertUserForMobileCommand {
+    email?: string | null;
+    userName?: string | null;
+    password?: string | null;
+    passwordConfirmation?: string | null;
+    phoneNumber?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    hotelIds?: string[] | null;
+    roleId?: string | null;
+    isSubGroupLeader: boolean;
+    isActive: boolean;
+    userSubGroupId?: string | null;
+    userGroupId?: string | null;
+    avatarImageUrl?: string | null;
 }
 
 export interface FileParameter {

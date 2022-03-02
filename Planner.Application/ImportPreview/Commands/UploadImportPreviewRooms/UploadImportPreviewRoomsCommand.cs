@@ -78,7 +78,7 @@ namespace Planner.Application.ImportPreview.Commands.UploadImportPreviewRooms
 
 						ms.Position = 0;
 
-						IWorkbook workbook = application.Workbooks.Open(ms, ExcelOpenType.Automatic);
+						IWorkbook workbook = application.Workbooks.Open(ms, ";", System.Text.Encoding.UTF8);
 
 						IWorksheet worksheet = workbook.Worksheets[0];
 
@@ -91,7 +91,9 @@ namespace Planner.Application.ImportPreview.Commands.UploadImportPreviewRooms
 			}
 			catch (Exception)
 			{
-				throw;
+				importPreview.HasError = true;
+				importPreview.Message = "Invalid file format.";
+				return importPreview;
 			}
 
 			await this._ValidateExtractedData(importPreview);

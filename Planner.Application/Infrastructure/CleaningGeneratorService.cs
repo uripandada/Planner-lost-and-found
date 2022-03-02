@@ -490,6 +490,8 @@ namespace Planner.Application.Infrastructure
 			var cleaningsPerRoom = new Dictionary<Guid, int>();
 			var cleaningsPerBed = new Dictionary<Guid, int>();
 
+			var pluginsMap = this._cleaningPlugins == null ? new Dictionary<Guid, CleaningPlugin>() : this._cleaningPlugins.ToDictionary(cp => cp.Id);
+
 			foreach (var results in this._cleaningResults)
 			{
 				if (results.IsSuccess)
@@ -579,7 +581,8 @@ namespace Planner.Application.Infrastructure
 							IsChangeSheets = result.IsChangeSheets,
 
 							IsPriority = result.IsPriority,
-							
+
+							BorderColorHex = result.PluginId != Guid.Empty && pluginsMap.ContainsKey(result.PluginId) ? pluginsMap[result.PluginId].Data?.Color : null,
 						};
 						cleaning.RefreshCleaningStatus(cleaningDateUtc, timeZoneId, room);
 
@@ -594,6 +597,8 @@ namespace Planner.Application.Infrastructure
 		public IEnumerable<CleaningTimelineItemData> CreateTimelineCleanings(IEnumerable<CleaningPlanItem> items, DateTime cleaningDateUtc, string timeZoneId)
 		{
 			var cleanings = new List<CleaningTimelineItemData>();
+			var pluginsMap = this._cleaningPlugins == null ? new Dictionary<Guid, CleaningPlugin>() : this._cleaningPlugins.ToDictionary(cp => cp.Id);
+
 			foreach (var result in items)
 			{
 				var room = this._roomsMap[result.RoomId];
@@ -653,7 +658,9 @@ namespace Planner.Application.Infrastructure
 					IsChangeSheets = result.IsChangeSheets,
 					IsPriority = result.IsPriority,
 
-					IsSent = result.CleaningId.HasValue
+					IsSent = result.CleaningId.HasValue,
+
+					BorderColorHex = result.CleaningPluginId.HasValue && pluginsMap.ContainsKey(result.CleaningPluginId.Value) ? pluginsMap[result.CleaningPluginId.Value].Data?.Color : null,
 				};
 				cleaning.RefreshCleaningStatus(cleaningDateUtc, timeZoneId, room);
 
@@ -666,6 +673,8 @@ namespace Planner.Application.Infrastructure
 		public IEnumerable<PlannedCleaningTimelineItemData> CreatePlannedTimelineCleanings(IEnumerable<CleaningPlanItem> items, DateTime cleaningDateUtc, string timeZoneId)
 		{
 			var cleanings = new List<PlannedCleaningTimelineItemData>();
+			var pluginsMap = this._cleaningPlugins == null ? new Dictionary<Guid, CleaningPlugin>() : this._cleaningPlugins.ToDictionary(cp => cp.Id);
+
 			foreach (var result in items)
 			{
 				var room = this._roomsMap[result.RoomId];
@@ -726,6 +735,8 @@ namespace Planner.Application.Infrastructure
 					IsPriority = result.IsPriority,
 
 					IsSent = result.CleaningId.HasValue,
+
+					BorderColorHex = result.CleaningPluginId.HasValue && pluginsMap.ContainsKey(result.CleaningPluginId.Value) ? pluginsMap[result.CleaningPluginId.Value].Data?.Color : null,
 
 					End = result.EndsAt.Value,
 					Start = result.StartsAt.Value,

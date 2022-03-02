@@ -56,9 +56,9 @@ namespace Planner.Persistence.Migrations
                     parent_asset_group_id = table.Column<Guid>(type: "uuid", nullable: true),
                     name = table.Column<string>(type: "text", nullable: false),
                     type_key = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    modified_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

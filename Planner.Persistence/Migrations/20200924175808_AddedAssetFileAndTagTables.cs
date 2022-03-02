@@ -12,9 +12,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: false),
                     name = table.Column<string>(nullable: false),
@@ -49,9 +49,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     key = table.Column<string>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: false),
                     value = table.Column<string>(nullable: false)
@@ -84,9 +84,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: false),
                     file_name = table.Column<string>(nullable: false),

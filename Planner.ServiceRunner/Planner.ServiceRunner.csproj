@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Planner.Application\Planner.Application.csproj" />
     <ProjectReference Include="..\Planner.Persistence\Planner.Persistence.csproj" />
-    <ProjectReference Include="..\Planner.WebAdminUi\Planner.WebAdminUi.csproj" />
   </ItemGroup>
 
 </Project>

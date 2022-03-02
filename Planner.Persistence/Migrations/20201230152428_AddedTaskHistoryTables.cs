@@ -21,7 +21,7 @@ namespace Planner.Persistence.Migrations
                     id = table.Column<Guid>(nullable: false),
                     system_task_id = table.Column<Guid>(nullable: false),
                     created_by_id = table.Column<Guid>(nullable: true),
-                    created_at = table.Column<DateTime>(nullable: false),
+                    created_at = table.Column<DateTimeOffset>(nullable: false),
                     changed_by_key = table.Column<string>(nullable: false),
                     message = table.Column<string>(nullable: false),
                     old_data = table.Column<SystemTaskHistoryData>(type: "jsonb", nullable: false),

@@ -31,7 +31,7 @@ namespace Planner.Application.RoomManagement.Queries.GetFullRoomHierarchy
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 	}
 	
 	public class FullRoomHierarchyBuildingData
@@ -43,7 +43,7 @@ namespace Planner.Application.RoomManagement.Queries.GetFullRoomHierarchy
 		public string Address { get; set; }
 		public long? Latitude { get; set; }
 		public long? Longitude { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 		public int OrdinalNumber { get; set; }
 		public string TypeKey { get; set; }
 		public List<FullRoomHierarchyFloorData> Floors { get; set; }
@@ -54,7 +54,7 @@ namespace Planner.Application.RoomManagement.Queries.GetFullRoomHierarchy
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int Number { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 		public int OrdinalNumber { get; set; }
 		public List<FullRoomHierarchyRoomData> Rooms { get; set; }
 		public List<HierarchyWarehouseData> Warehouses { get; set; }
@@ -69,7 +69,7 @@ namespace Planner.Application.RoomManagement.Queries.GetFullRoomHierarchy
 		public string Name { get; set; }
 		public string TypeKey { get; set; }
 		public string Description { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 		public int OrdinalNumber { get; set; }
 
 		public string FloorSectionName { get; set; }

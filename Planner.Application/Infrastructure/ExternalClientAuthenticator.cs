@@ -14,24 +14,35 @@ namespace Planner.Application.Infrastructure
 
 	public class ExternalClientAuthenticator
 	{
-		public async Task<ProcessResponse> AuthenticateUser(IMasterDatabaseContext masterDatabaseContext, IHeaderDictionary requestHeaders)
+		public class ExternalClientAuthenticationResult: ProcessResponseSimple
+		{
+			public string ClientId { get; set; }
+			public bool HasAccessToListOfHotelGroups { get; set; }
+			public bool HasAccessToListOfHotels { get; set; }
+		}
+
+		public async Task<ExternalClientAuthenticationResult> AuthenticateExternalClient(IMasterDatabaseContext masterDatabaseContext, IHeaderDictionary requestHeaders)
 		{
 			if (!requestHeaders.ContainsKey("ClientId"))
 			{
-				return new ProcessResponse
+				return new ExternalClientAuthenticationResult
 				{
+					ClientId = null,
 					IsSuccess = false,
-					HasError = true,
 					Message = $"Unauthorized. Id missing.",
+					HasAccessToListOfHotelGroups = false,
+					HasAccessToListOfHotels = false,
 				};
 			}
 			if (!requestHeaders.ContainsKey("ClientKey"))
 			{
-				return new ProcessResponse
+				return new ExternalClientAuthenticationResult
 				{
+					ClientId = null,
 					IsSuccess = false,
-					HasError = true,
 					Message = $"Unauthorized. Key missing.",
+					HasAccessToListOfHotelGroups = false,
+					HasAccessToListOfHotels = false,
 				};
 			}
 
@@ -39,22 +50,24 @@ namespace Planner.Application.Infrastructure
 			var clientKey = requestHeaders["ClientKey"].FirstOrDefault();
 			if (clientId.IsNull())
 			{
-				return new ProcessResponse<Guid>
+				return new ExternalClientAuthenticationResult
 				{
-					Data = Guid.Empty,
+					ClientId = null,
 					IsSuccess = false,
-					HasError = true,
 					Message = $"Unauthorized. Id missing.",
+					HasAccessToListOfHotelGroups = false,
+					HasAccessToListOfHotels = false,
 				};
 			}
 			if (clientKey.IsNull())
 			{
-				return new ProcessResponse<Guid>
+				return new ExternalClientAuthenticationResult
 				{
-					Data = Guid.Empty,
+					ClientId = null,
 					IsSuccess = false,
-					HasError = true,
 					Message = $"Unauthorized. Key missing.",
+					HasAccessToListOfHotelGroups = false,
+					HasAccessToListOfHotels = false,
 				};
 			}
 
@@ -62,19 +75,23 @@ namespace Planner.Application.Infrastructure
 
 			if (client == null)
 			{
-				return new ProcessResponse
+				return new ExternalClientAuthenticationResult
 				{
+					ClientId = null,
 					IsSuccess = false,
-					HasError = true,
 					Message = $"Unauthorized.",
+					HasAccessToListOfHotelGroups = false,
+					HasAccessToListOfHotels = false,
 				};
 			}
 
-			return new ProcessResponse
+			return new ExternalClientAuthenticationResult
 			{
+				ClientId = null,
 				IsSuccess = true,
-				HasError = false,
 				Message = $"Authorized.",
+				HasAccessToListOfHotelGroups = client.HasAccessToListOfHotelGroups,
+				HasAccessToListOfHotels = client.HasAccessToListOfHotels,
 			};
 		}
 	}

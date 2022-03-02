@@ -30,8 +30,8 @@ namespace Planner.Persistence.Migrations
                     hotel_id = table.Column<string>(nullable: false),
                     is_active = table.Column<bool>(nullable: false),
                     is_synchronized_from_rcc = table.Column<bool>(nullable: false),
-                    last_time_modified_by_synchronization = table.Column<DateTime>(nullable: true),
-                    synchronized_at = table.Column<DateTime>(nullable: true)
+                    last_time_modified_by_synchronization = table.Column<DateTimeOffset>(nullable: true),
+                    synchronized_at = table.Column<DateTimeOffset>(nullable: true)
                 },
                 constraints: table =>
                 {

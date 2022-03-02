@@ -51,9 +51,9 @@ namespace Planner.Application.ExternalApi.LostAndFound.Queries
 		public async Task<IEnumerable<ExternalLostItem>> Handle(GetListOfLostsQuery request, CancellationToken cancellationToken)
 		{
 			var externalClientAuthenticator = new ExternalClientAuthenticator();
-			var authResult = await externalClientAuthenticator.AuthenticateUser(this._masterDatabaseContext, this._contextAccessor.HttpContext.Request.Headers);
+			var authResult = await externalClientAuthenticator.AuthenticateExternalClient(this._masterDatabaseContext, this._contextAccessor.HttpContext.Request.Headers);
 
-			if (authResult.HasError)
+			if (!authResult.IsSuccess)
 			{
 				return new ExternalLostItem[0];
 			}
@@ -133,9 +133,9 @@ namespace Planner.Application.ExternalApi.LostAndFound.Queries
 		public async Task<IEnumerable<ExternalFoundItem>> Handle(GetListOfFoundsQuery request, CancellationToken cancellationToken)
 		{
 			var externalClientAuthenticator = new ExternalClientAuthenticator();
-			var authResult = await externalClientAuthenticator.AuthenticateUser(this._masterDatabaseContext, this._contextAccessor.HttpContext.Request.Headers);
+			var authResult = await externalClientAuthenticator.AuthenticateExternalClient(this._masterDatabaseContext, this._contextAccessor.HttpContext.Request.Headers);
 
-			if (authResult.HasError)
+			if (!authResult.IsSuccess)
 			{
 				return new ExternalFoundItem[0];
 			}

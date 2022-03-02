@@ -305,40 +305,40 @@ namespace Planner.Persistence.DataSeed
 					await databaseContext.Database.MigrateAsync();
 
 #if DEBUG
-                    //DATA CREATION PART
-                    var hotels = _NewTenantHotels(globalHotelCounter, 5);
-                    	globalHotelCounter += hotels.Count();
+					// DATA CREATION PART
+					//var hotels = _NewTenantHotels(globalHotelCounter, 5);
+					//	globalHotelCounter += hotels.Count();
 
-                    	var roles = _NewTenantRoles();
+					//	var roles = _NewTenantRoles();
 
-                    	var adminUser = _NewTenantUser("Admin", "Roomchecking", "admin@email.com", "rcadmin");
-                    	var adminUserClaims = _NewTenantUserClaims(adminUser, tenant.Id);
-                    	var adminUserPassword = "admintest123123";
-                    	var adminUserRole = "Admin";
+					//	var adminUser = _NewTenantUser("Admin", "Roomchecking", "admin@email.com", "rcadmin");
+					//	var adminUserClaims = _NewTenantUserClaims(adminUser, tenant.Id);
+					//	var adminUserPassword = "admintest123123";
+					//	var adminUserRole = "Admin";
 
-                    	var regularUser1 = _NewTenantUser("User1", "Roomchecking", "user1@email.com", "rcuser1");
-                    	var regularUser1Claims = _NewTenantUserClaims(regularUser1, tenant.Id);
-                    	var regularUser1Password = "usertest123123";
-                    	var regularUser1Role = "Tech";
+					//	var regularUser1 = _NewTenantUser("User1", "Roomchecking", "user1@email.com", "rcuser1");
+					//	var regularUser1Claims = _NewTenantUserClaims(regularUser1, tenant.Id);
+					//	var regularUser1Password = "usertest123123";
+					//	var regularUser1Role = "Tech";
 
-                    	var regularUser2 = _NewTenantUser("User2", "Roomchecking", "user2@email.com", "rcuser2");
-                    	var regularUser2Claims = _NewTenantUserClaims(regularUser2, tenant.Id);
-                    	var regularUser2Password = "usertest123123";
-                    	var regularUser2Role = "Cleaner";
+					//	var regularUser2 = _NewTenantUser("User2", "Roomchecking", "user2@email.com", "rcuser2");
+					//	var regularUser2Claims = _NewTenantUserClaims(regularUser2, tenant.Id);
+					//	var regularUser2Password = "usertest123123";
+					//	var regularUser2Role = "Cleaner";
 
-                    	// DATA SEED PART
+					//	// DATA SEED PART
 
-                    	await _SeedTenantRoles(roleManager, roles);
-                    	await _SeedTenantUser(userManager, adminUser, adminUserPassword, adminUserRole, adminUserClaims);
-                    	await _SeedTenantUser(userManager, regularUser1, regularUser1Password, regularUser1Role, regularUser1Claims);
-                    	await _SeedTenantUser(userManager, regularUser2, regularUser2Password, regularUser2Role, regularUser2Claims);
-                    	await _SeedTenantHotels(databaseContext, hotels);
+					//	await _SeedTenantRoles(roleManager, roles);
+					//	await _SeedTenantUser(userManager, adminUser, adminUserPassword, adminUserRole, adminUserClaims);
+					//	await _SeedTenantUser(userManager, regularUser1, regularUser1Password, regularUser1Role, regularUser1Claims);
+					//	await _SeedTenantUser(userManager, regularUser2, regularUser2Password, regularUser2Role, regularUser2Claims);
+					//	await _SeedTenantHotels(databaseContext, hotels);
 
-                    	await databaseContext.SaveChangesAsync();
+					//	await databaseContext.SaveChangesAsync();
 #endif
-                    // DISPOSE PART
+					// DISPOSE PART
 
-                    databaseContext.Dispose();
+					databaseContext.Dispose();
 					userManager.Dispose();
 					roleManager.Dispose();
 				}
@@ -478,7 +478,7 @@ namespace Planner.Persistence.DataSeed
 			return new Hotel
 			{
 				Id = hotelId,
-				CreatedAt = DateTime.UtcNow,
+				CreatedAt = DateTimeOffset.UtcNow,
 				ModifiedAt = DateTime.UtcNow,
 				Name = $"Hotel {hotelNumber}",
 				//HotelPlugins = null,

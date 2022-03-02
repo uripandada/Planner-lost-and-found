@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Planner.Application.MobileApi.Users.Commands.InsertUserForMobile;
 using Planner.Application.MobileApi.Users.Commands.UpdateOnDutyStatusForMobile;
 using Planner.Application.MobileApi.Users.Queries.GetListOfHotelGroupUsersForHotelForMobile;
 using Planner.Application.MobileApi.Users.Queries.GetListOfHotelGroupUsersForMobile;
@@ -8,7 +9,9 @@ using Planner.Application.MobileApi.Users.Queries.GetListOfUserGroupsForMobile;
 using Planner.Application.MobileApi.Users.Queries.GetListOfUsersForMobile;
 using Planner.Application.MobileApi.Users.Queries.GetUserDetailsForMobile;
 using Planner.Application.MobileApi.Users.Queries.GetUserGroupDetailsForMobile;
+using Planner.Common.Data;
 using Planner.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -73,6 +76,13 @@ namespace Planner.WebUi.Controllers.AttendantMobile
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		[HttpPost]
 		public async Task<MobileUserGroupDetails> GetUserGroupDetails([FromBody] GetUserGroupDetailsForMobileQuery request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		[HttpPost]
+		public async Task<ProcessResponseSimple<Guid>> InsertUser([FromBody] InsertUserForMobileCommand request)
 		{
 			return await this.Mediator.Send(request);
 		}

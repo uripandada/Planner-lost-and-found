@@ -54,7 +54,6 @@
 	  <Folder Include="ExternalApi\LostAndFound\Commands\" />
 	  <Folder Include="MobileApi\Tasks\Commands\InsertTasksForMobile\" />
 	  <Folder Include="MobileApi\Tasks\Commands\AddPhotoToTaskForMobile\" />
-	  <Folder Include="MobileApi\Tasks\Commands\ReassignTasksForMobile\" />
 	  <Folder Include="MobileApi\Tasks\Commands\UpdateTasksForMobile\" />
 	  <Folder Include="OnGuards\Commands\" />
 	  <Folder Include="OnGuards\Models\" />

@@ -16,9 +16,9 @@ namespace Planner.Persistence.Migrations
                     is_central_storage = table.Column<bool>(type: "boolean", nullable: false),
                     floor_id = table.Column<Guid>(type: "uuid", nullable: true),
                     hotel_id = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     created_by_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    modified_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    modified_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     modified_by_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

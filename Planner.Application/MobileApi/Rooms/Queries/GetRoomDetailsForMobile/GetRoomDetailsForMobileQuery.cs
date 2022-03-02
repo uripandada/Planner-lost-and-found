@@ -25,6 +25,7 @@ namespace Planner.Application.MobileApi.Rooms.Queries.GetRoomDetailsForMobile
 		public string HotelId { get; set; } = null; // hotelId: { type: ObjectId, ref: 'Hotel', index: true },
 		public Guid? RoomAccessId { get; set; } = null; // roomAccess: { type: ObjectId, ref: 'RoomAccess' },
 		public Guid? RoomCategoryId { get; set; } = null; // roomCategory: { type: ObjectId, ref: 'RoomCategory' },
+		public string RoomCategoryName { get; set; } = "";
 		public Guid? RoomStatusId { get; set; } = null; // roomStatus: { type: ObjectId, ref: 'RoomStatus' },
 		public Guid? RoomMaintenanceId { get; set; } = null; // roomMaintenance: { type: ObjectId, ref: 'RoomMaintenance' },
 		public Guid? RoomHousekeepingId { get; set; } = null; // roomHousekeeping: { type: ObjectId, ref: 'RoomHousekeeping' },
@@ -166,6 +167,9 @@ namespace Planner.Application.MobileApi.Rooms.Queries.GetRoomDetailsForMobile
 		private async Task<MobileRoomDetails> _LoadMobileRoomDetails(Guid roomId)
 		{
 			var r = await this._databaseContext.Rooms
+				.Include(r => r.Category)
+				.Include(r => r.Building)
+				.Include(r => r.Floor)
 				.Include(r => r.RoomNotes.Where(rn => !rn.IsArchived).ToArray())
 				.FirstOrDefaultAsync(r => r.Id == roomId);
 			if (r == null) throw new Exception("Unable to find room details.");
@@ -216,6 +220,8 @@ namespace Planner.Application.MobileApi.Rooms.Queries.GetRoomDetailsForMobile
 				UpdateUsername = d.UpdateUsername,
 
 				TypeKey = r.TypeKey,
+
+				RoomCategoryName = r.Category?.Name ?? "",
 			};
 
 			//var dateProvider = new HotelLocalDateProvider();

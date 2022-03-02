@@ -12,9 +12,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     system_task_id = table.Column<Guid>(nullable: false),
                     message = table.Column<string>(nullable: false)

@@ -60,20 +60,20 @@ namespace Planner.Persistence.Migrations
                 table: "rooms",
                 nullable: true);
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "hotels",
                 nullable: false,
                 defaultValueSql: "now()",
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "hotels",
                 nullable: false,
                 defaultValueSql: "now()",
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
             migrationBuilder.AlterColumn<int>(
@@ -219,20 +219,20 @@ namespace Planner.Persistence.Migrations
                 nullable: true,
                 oldClrType: typeof(string));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "hotels",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValueSql: "now()");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "hotels",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValueSql: "now()");
 
             migrationBuilder.AlterColumn<int>(

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Planner.Application.Admin.Interfaces;
+using Planner.Application.ExternalApi.Infrastructure;
 using Planner.Application.Infrastructure;
 using Planner.Application.Interfaces;
 using Planner.Common.Data;
@@ -41,7 +42,7 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 		public string ActionName { get; set; }
 	}
 
-	public class ExternalInsertCompactTaskCommand: IRequest<ProcessResponse<Guid>>
+	public class ExternalInsertCompactTaskCommand: IRequest<ProcessResponseSimple<Guid>>
 	{
 		/// <summary>
 		/// You can choose to set either hotelGroupId or hotelGroupKey
@@ -97,13 +98,9 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 		public DateTime? StartsAt { get; set; }
 	}
 
-	public class ExternalInsertCompactTaskCommandHandler : IRequestHandler<ExternalInsertCompactTaskCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
+	public class ExternalInsertCompactTaskCommandHandler : ExternalApiBaseHandler, IRequestHandler<ExternalInsertCompactTaskCommand, ProcessResponseSimple<Guid>>, IAmWebApplicationHandler
 	{
-		private IMasterDatabaseContext _masterDatabaseContext;
-		private IDatabaseContext _databaseContext;
 		private readonly ISystemEventsService _systemEventsService;
-		private Guid _hotelGroupId;
-		private IHttpContextAccessor _contextAccessor;
 
 		public ExternalInsertCompactTaskCommandHandler(IMasterDatabaseContext masterDatabaseContext, IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor, ISystemEventsService systemEventsService)
 		{
@@ -113,74 +110,15 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 			this._contextAccessor = contextAccessor;
 		}
 
-		public async Task<ProcessResponse<Guid>> Handle(ExternalInsertCompactTaskCommand request, CancellationToken cancellationToken)
+		public async Task<ProcessResponseSimple<Guid>> Handle(ExternalInsertCompactTaskCommand request, CancellationToken cancellationToken)
 		{
-			var externalClientAuthenticator = new ExternalClientAuthenticator();
-			var authResult = await externalClientAuthenticator.AuthenticateUser(this._masterDatabaseContext, this._contextAccessor.HttpContext.Request.Headers);
-
-			if (authResult.HasError)
+			var initResult = await this._Initialize(request.HotelGroupId, request.HotelGroupKey);
+			if (initResult != null)
 			{
-				return new ProcessResponse<Guid>
-				{
-					Data = Guid.Empty,
-					HasError = true,
-					IsSuccess = false,
-					Message = authResult.Message
-				};
+				return initResult;
 			}
 
 			var isForPlannedAttendant = request.IsForPlannedAttendant ?? false;
-
-			if (request.HotelGroupId.HasValue)
-			{
-				if (this._databaseContext.DoesHotelGroupExist(request.HotelGroupId.Value))
-				{
-					this._databaseContext.SetTenantId(request.HotelGroupId.Value);
-					this._hotelGroupId = this._databaseContext.HotelGroupTenant.Id;
-				}
-				else
-				{
-					return new ProcessResponse<Guid>
-					{
-						Data = Guid.Empty,
-						IsSuccess = false,
-						HasError = true,
-						Message = $"Hotel group with ID {request.HotelGroupId.Value} doesn't exist.",
-					};
-				}
-			}
-			else if (request.HotelGroupKey.IsNotNull())
-			{
-				if (this._databaseContext.DoesHotelGroupExist(request.HotelGroupKey))
-				{
-					var hotelGroupId = this._databaseContext.GetTenantId(request.HotelGroupKey);
-					request.HotelGroupId = hotelGroupId;
-					this._databaseContext.SetTenantId(hotelGroupId);
-					this._hotelGroupId = this._databaseContext.HotelGroupTenant.Id;
-				}
-				else
-				{
-					return new ProcessResponse<Guid>
-					{
-						Data = Guid.Empty,
-						IsSuccess = false,
-						HasError = true,
-						Message = $"Hotel group with key {request.HotelGroupKey} doesn't exist.",
-					};
-				}
-			}
-			else
-			{
-				return new ProcessResponse<Guid>
-				{
-					Data = Guid.Empty,
-					IsSuccess = false,
-					HasError = true,
-					Message = "Either HotelGroupId or HotelGroupKey must be set.",
-				};
-			}
-
-			
 
 			var hotel = (Domain.Entities.Hotel)null;
 
@@ -192,27 +130,25 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 
 				if (hotel == null)
 				{
-					return new ProcessResponse<Guid>
+					return new ProcessResponseSimple<Guid>
 					{
 						Data = Guid.Empty,
 						IsSuccess = false,
-						HasError = true,
 						Message = $"Unable to find hotel with id: {request.HotelId}",
 					};
 				}
 			}
 			else
 			{
-				return new ProcessResponse<Guid>
+				return new ProcessResponseSimple<Guid>
 				{
 					Data = Guid.Empty,
 					IsSuccess = false,
-					HasError = true,
 					Message = "Hotel id is not set.",
 				};
 			}
 
-			var timeZoneId = Infrastructure.HotelLocalDateProvider.GetAvailableTimeZoneId(hotel.WindowsTimeZoneId, hotel.IanaTimeZoneId);
+			var timeZoneId = HotelLocalDateProvider.GetAvailableTimeZoneId(hotel.WindowsTimeZoneId, hotel.IanaTimeZoneId);
 			var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
 			var localHotelDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
 
@@ -220,10 +156,9 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 
 			if (insertData.HasErrors)
 			{
-				return new ProcessResponse<Guid>
+				return new ProcessResponseSimple<Guid>
 				{
 					Data = Guid.Empty,
-					HasError = true,
 					IsSuccess = false,
 					Message = String.Join(" ", insertData.ErrorMessages)
 				};
@@ -438,11 +373,10 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 
 			await this._systemEventsService.TasksChanged(this._hotelGroupId, userIds, new Guid[] { systemTask.Id }, "You have new tasks.");
 
-			return new ProcessResponse<Guid>
+			return new ProcessResponseSimple<Guid>
 			{
 				Data = systemTask.Id,
 				IsSuccess = true,
-				HasError = false,
 				Message = "Task created.",
 			};
 		}
@@ -834,6 +768,19 @@ namespace Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTa
 			}
 		}
 
+
+		private async Task<ProcessResponseSimple<Guid>> _Initialize(Guid? hotelGroupId, string hotelGroupKey)
+		{
+			var authResult = await this.AuthorizeExternalClient();
+			if (!authResult.IsSuccess)
+				return new ProcessResponseSimple<Guid> { IsSuccess = false, Message = authResult.Message, Data = Guid.Empty };
+
+			var initResult = this.InitializeHotelGroupContext(hotelGroupId, hotelGroupKey);
+			if (!initResult.IsSuccess)
+				return new ProcessResponseSimple<Guid> { IsSuccess = false, Message = initResult.Message, Data = Guid.Empty };
+
+			return null;
+		}
 	}
 }
 

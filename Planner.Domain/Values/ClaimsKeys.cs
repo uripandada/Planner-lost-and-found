@@ -21,7 +21,6 @@ namespace Planner.Domain.Values
             public const string Users = "users";
             public const string RoleManagement = "role_management";
             public const string RoomCategories = "room_categories";
-            public const string Categories = "categories";
             public const string HotelSettings = "hotel_settings";
             public const string Colors = "colors";
         }

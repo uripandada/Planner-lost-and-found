@@ -12,14 +12,14 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: false),
                     date = table.Column<DateTime>(nullable: false),
                     is_sent = table.Column<bool>(nullable: false),
-                    sent_at = table.Column<DateTime>(nullable: true)
+                    sent_at = table.Column<DateTimeOffset>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,8 +52,8 @@ namespace Planner.Persistence.Migrations
                     cleaning_plan_id = table.Column<Guid>(nullable: false),
                     cleaner_id = table.Column<Guid>(nullable: false),
                     room_id = table.Column<Guid>(nullable: false),
-                    starts_at = table.Column<DateTime>(nullable: false),
-                    ends_at = table.Column<DateTime>(nullable: false),
+                    starts_at = table.Column<DateTimeOffset>(nullable: false),
+                    ends_at = table.Column<DateTimeOffset>(nullable: false),
                     duration_sec = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

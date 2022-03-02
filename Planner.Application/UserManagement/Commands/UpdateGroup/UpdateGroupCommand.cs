@@ -33,7 +33,7 @@ namespace Planner.Application.UserManagement.Commands.UpdateGroup
             var groupToUpdate = await this.databaseContext.UserGroups.SingleAsync(e => e.Id == request.Id);
 
             groupToUpdate.Name = request.Name;
-            groupToUpdate.ModifiedAt = DateTime.Now;
+            groupToUpdate.ModifiedAt = DateTime.UtcNow;
             groupToUpdate.ModifiedById = this.httpContextAccessor.UserId();
 
             await this.databaseContext.SaveChangesAsync(cancellationToken);

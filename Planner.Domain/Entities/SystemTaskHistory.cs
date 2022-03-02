@@ -9,7 +9,7 @@ namespace Planner.Domain.Entities
 		public SystemTask SystemTask { get; set; }
 		public Guid? CreatedById { get; set; }
 		public User CreatedBy { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 		public string ChangedByKey { get; set; }
 		public string Message { get; set; }
 		public SystemTaskHistoryData OldData { get; set; }

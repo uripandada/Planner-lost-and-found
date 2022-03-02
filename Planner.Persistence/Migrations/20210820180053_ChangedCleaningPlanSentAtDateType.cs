@@ -12,14 +12,14 @@ namespace Planner.Persistence.Migrations
                 table: "cleaning_plans",
                 type: "timestamp without time zone",
                 nullable: true,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldNullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "sent_at",
                 table: "cleaning_plans",
                 type: "timestamp with time zone",

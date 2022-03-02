@@ -158,13 +158,15 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 			}
 		}
 
-		public static WhereDescription GetWhere2(string hotelName, Guid? warehouseId, string reservationId, Guid? roomId, string name, string additionalDescription = "Reservation")
+		public static WhereDescription GetWhere2(string hotelId, string hotelName, Guid? warehouseId, string reservationId, Guid? roomId, string name, string additionalDescription = "Reservation")
 		{
 			if (reservationId.IsNotNull())
 			{
 				return new WhereDescription
 				{
+					WhereId = reservationId,
 					Where = $"{name}",
+					WhereTypeKey = "RESERVATION",
 					Description = $"{additionalDescription} at {hotelName}"
 				};
 			}
@@ -172,7 +174,9 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 			{
 				return new WhereDescription
 				{
+					WhereId = warehouseId.Value.ToString(),
 					Where = $"{name}",
+					WhereTypeKey = "WAREHOUSE",
 					Description = $"Warehouse at {hotelName}"
 				};
 			}
@@ -180,7 +184,9 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 			{
 				return new WhereDescription
 				{
+					WhereId = roomId.Value.ToString(),
 					Where = $"{name}",
+					WhereTypeKey = "ROOM",
 					Description = $"Room at {hotelName}"
 				};
 			}
@@ -188,7 +194,9 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 			{
 				return new WhereDescription
 				{
+					WhereId = hotelId,
 					Where = $"{hotelName}",
+					WhereTypeKey = "HOTEL",
 					Description = "Hotel"
 				};
 			}
@@ -263,7 +271,12 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 
 	public class WhereDescription
 	{
+		public string WhereId { get; set; }
 		public string Where { get; set; }
+		/// <summary>
+		/// RESERVATION, ROOM, WAREHOUSE, HOTEL
+		/// </summary>
+		public string WhereTypeKey { get; set; }
 		public string Description { get; set; }
 	}
 	
@@ -286,6 +299,14 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 		public IEnumerable<EnumData> AllEventTaskTypes { get; set; }
 		public IEnumerable<EnumData> AllEventTaskModifierTypes { get; set; }
 
+		/// <summary>
+		/// Used for generating tab headers on the tasks management page.
+		/// </summary>
+		public IEnumerable<AvailableUserGroup> AvailableUserGroups { get; set; }
+		/// <summary>
+		/// Used for generating filter options.
+		/// </summary>
+		public IEnumerable<AvailableUserGroup> AvailableUserSubGroups { get; set; }
 	}
 	public class TaskActionData
 	{
@@ -356,6 +377,13 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 		public string TypeDescription { get; set; }
 		public string ReferenceId { get; set; }
 		public string ReferenceName { get; set; }
+	}
+
+	public class AvailableUserGroup
+	{
+		public Guid Id { get; set; }
+		public string Name { get; set; }
+		public bool IsSubGroup { get; set; }
 	}
 
 	public class GetTasksDataQuery : IRequest<TasksData>
@@ -477,8 +505,19 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 				TypeKey = TaskWhoType.PLANNED_ATTENDANT.ToString()
 			});
 
+			var userGroupId = (Guid?)null;
+			var userSubGroupId = (Guid?)null;
+			var availableUserGroups = new List<AvailableUserGroup>();
+			var availableUserSubGroups = new List<AvailableUserGroup>();
+
 			foreach (var user in users)
 			{
+				if(user.Id == this._userId)
+				{
+					userGroupId = user.UserGroupId;
+					userSubGroupId = user.UserSubGroupId;
+				}
+					
 				var typeDescription = "User";
 				if (user.UserSubGroup != null)
 				{
@@ -501,6 +540,29 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 
 			foreach (var userGroup in userGroups)
 			{
+				if(userGroupId.HasValue && userGroup.Id == userGroupId.Value)
+				{
+                    if (userSubGroupId.HasValue)
+                    {
+                        var subGroup = userGroup.UserSubGroups.FirstOrDefault(sg => sg.Id == userSubGroupId.Value);
+                        if (subGroup != null)
+                        {
+                            availableUserGroups.Add(new AvailableUserGroup { Id = subGroup.Id, IsSubGroup = true, Name = subGroup.Name + " tasks"});
+                        }
+					}
+					else
+                    {
+						// current user's group
+						availableUserGroups.Add(new AvailableUserGroup { Id = userGroup.Id, IsSubGroup = false, Name = userGroup.Name + " tasks" });
+					}
+
+                    if (!userSubGroupId.HasValue)
+                    {
+                        // then the user can see all subgroups!
+                        availableUserSubGroups.AddRange(userGroup.UserSubGroups.Select(sg => new AvailableUserGroup { Id = sg.Id, IsSubGroup = true, Name = sg.Name }));
+                    }
+                }
+
 				whos.Add(new TaskWhoData
 				{
 					ImageUrl = null, // TODO: IMPLEMENT USER AVATAR IMAGES
@@ -630,6 +692,8 @@ namespace Planner.Application.TaskManagement.Queries.GetTasksData
 				AllTaskActions = taskActions,
 				AllWhos = whos,
 				AllWheres = wheres,
+				AvailableUserGroups = availableUserGroups,
+				AvailableUserSubGroups = availableUserSubGroups,
 				AllTaskTypes = new EnumData[] {
 					new EnumData { Key = TaskType.SINGLE.ToString(), Name = "Single task" },
 					new EnumData { Key = TaskType.RECURRING.ToString(), Name = "Recurring task" },

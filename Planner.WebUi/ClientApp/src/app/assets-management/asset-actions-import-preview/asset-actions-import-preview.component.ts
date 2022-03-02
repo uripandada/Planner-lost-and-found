@@ -136,7 +136,7 @@ export class AssetActionsImportPreviewComponent implements OnInit {
             });
           }
         },
-        (error: Error) => { this._toastr.error(error.message); },
+        (error: Error) => { this._toastr.error(error.message); this.isLoading$.next(false); },
         () => { this.isLoading$.next(false); }
       );
     }

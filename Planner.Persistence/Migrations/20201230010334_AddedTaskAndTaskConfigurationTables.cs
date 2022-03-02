@@ -13,9 +13,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     data = table.Column<SystemTaskConfigurationData>(type: "jsonb", nullable: false)
                 },
@@ -41,9 +41,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     action_name = table.Column<string>(nullable: false),
                     asset_name = table.Column<string>(nullable: false),

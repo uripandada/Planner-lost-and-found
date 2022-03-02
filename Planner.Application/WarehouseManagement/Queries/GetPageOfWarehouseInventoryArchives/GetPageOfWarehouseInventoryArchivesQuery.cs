@@ -15,7 +15,7 @@ namespace Planner.Application.WarehouseManagement.Queries.GetPageOfWarehouseInve
 	public class WarehouseInventoryArchiveItem
 	{
 		public Guid Id { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 		public string CreatedAtString { get; set; }
 		public string CreatedByName { get; set; }
 		public string CreatedByUsername { get; set; }

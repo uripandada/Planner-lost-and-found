@@ -292,6 +292,8 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 		/// This property is used only by the frontend. The backend will always set this as false.
 		/// </summary>
 		public bool IsFilteredOut { get; set; }
+
+		public string BorderColorHex { get; set; }
 	}
 
 	public class CleaningTimelineItemReservationData
@@ -607,7 +609,7 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 
 				cleaningPlanResponse.PlannedNonEventTasks = nonCleaningTasks;
 
-				var planItems = await this._LoadCleaningPlanItems(cleaningPlan.Id, plannedAttendantTasksMap);
+				var planItems = await this._LoadCleaningPlanItems(cleaningPlan.Id, cleaningPlan.HotelId, plannedAttendantTasksMap);
 
 				cleaningPlanResponse.PlannedCleanings = planItems.plannedItems;
 				cleaningPlanResponse.PlannableCleanings = planItems.plannableItems;
@@ -1033,7 +1035,7 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 			return groups;
 		}
 
-		private async Task<(IEnumerable<PlannedCleaningTimelineItemData> plannedItems, IEnumerable<CleaningTimelineItemData> plannableItems)> _LoadCleaningPlanItems(Guid cleaningPlanId, Dictionary<Guid, List<CleaningTimelineItemTaskData>> plannedAttendantTasksMap)
+		private async Task<(IEnumerable<PlannedCleaningTimelineItemData> plannedItems, IEnumerable<CleaningTimelineItemData> plannableItems)> _LoadCleaningPlanItems(Guid cleaningPlanId, string hotelId, Dictionary<Guid, List<CleaningTimelineItemTaskData>> plannedAttendantTasksMap)
 		{
 			var items = await this._databaseContext
 				.CleaningPlanItems
@@ -1070,6 +1072,8 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 					 }
 				)
 				.ToArrayAsync();
+
+			var pluginsMap = await this._databaseContext.CleaningPlugins.Where(cp => cp.HotelId == hotelId).ToDictionaryAsync(cp => cp.Id);
 
 			var userIds = items.Where(i => i.Cleaning != null && i.Cleaning.InspectedById != null).Select(i => i.Cleaning.InspectedById.Value).Distinct().ToArray();
 			var usersMap = await this._databaseContext.Users.Where(u => userIds.Contains(u.Id)).Select(u => new { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName }).ToDictionaryAsync(u => u.Id);
@@ -1108,6 +1112,7 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 						PlannedAttendantTasks = plannedAttendantTasks,
 						BedId = i.RoomBedId,
 						IsPriority = i.IsPriority,
+						BorderColorHex = i.CleaningPluginId.HasValue && pluginsMap.ContainsKey(i.CleaningPluginId.Value) ? pluginsMap[i.CleaningPluginId.Value].Data?.Color : null,
 						Tasks = new List<CleaningTimelineItemTaskData>()
 					};
 					plannedItems.Add(plannedItem);
@@ -1153,6 +1158,7 @@ namespace Planner.Application.CleaningPlans.Queries.GetCleaningPlanDetails
 						IsInspectionRequired = false,
 						IsInspectionSuccess = false,
 						IsReadyForInspection = false,
+						BorderColorHex = i.CleaningPluginId.HasValue && pluginsMap.ContainsKey(i.CleaningPluginId.Value) ? pluginsMap[i.CleaningPluginId.Value].Data?.Color : null,
 
 						CleaningStatus = CleaningProcessStatus.UNKNOWN,
 

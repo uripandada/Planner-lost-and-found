@@ -22,7 +22,7 @@ namespace Planner.Application.RoomManagement.Commands.InsertBuilding
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 	}
 
 	public class InsertBuildingCommand : IRequest<ProcessResponse<InsertBuildingResponse>>

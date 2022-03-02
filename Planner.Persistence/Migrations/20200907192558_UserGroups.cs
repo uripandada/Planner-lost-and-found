@@ -47,9 +47,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false),
+                    created_at = table.Column<DateTimeOffset>(nullable: false),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true)
@@ -76,9 +76,9 @@ namespace Planner.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    created_at = table.Column<DateTime>(nullable: false),
+                    created_at = table.Column<DateTimeOffset>(nullable: false),
                     created_by_id = table.Column<Guid>(nullable: false),
-                    modified_at = table.Column<DateTime>(nullable: false),
+                    modified_at = table.Column<DateTimeOffset>(nullable: false),
                     modified_by_id = table.Column<Guid>(nullable: false),
                     hotel_id = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true),

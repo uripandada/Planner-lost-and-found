@@ -381,7 +381,7 @@ namespace Planner.Persistence.MasterMigrations
                         .HasColumnType("boolean")
                         .HasColumnName("lockout_enabled");
 
-                    b.Property<DateTime?>("LockoutEnd")
+                    b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("lockout_end");
 

@@ -67,10 +67,8 @@ namespace Planner.WebUi
 				options.UseNpgsql(Configuration.GetConnectionString("DefaultTenantConnection"), b => b.MigrationsAssembly("Planner.Persistence"));
 			});
 
-			services.AddIdentity<User,Role>()
-				//.AddRoles<Role>()
-				.AddDefaultUI()
-				.AddDefaultTokenProviders()
+			services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<Role>()
 				.AddEntityFrameworkStores<DatabaseContext>();
 
 			services

@@ -7,7 +7,6 @@ using Planner.Application.ExternalApi.Rooms.Commands.ExternalDndOn;
 using Planner.Application.ExternalApi.Tasks.Commands.ExternalInsertCompactTask;
 using Planner.Common.Data;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Planner.WebUi.Controllers.External
@@ -15,35 +14,33 @@ namespace Planner.WebUi.Controllers.External
 	public class TaskController : BaseExternalApiController
 	{
 		[HttpPost]
-		public async Task<ProcessResponse<Guid>> Create([FromBody] ExternalInsertCompactTaskCommand request)
+		public async Task<ProcessResponseSimple<Guid>> Create([FromBody] ExternalInsertCompactTaskCommand request)
 		{
 			return await this.Mediator.Send(request);
 		}
 	}
 
-	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	public class DndController : BaseExternalApiController
-	{
-		[HttpGet]
-		public async Task<ProcessResponse> On(ExternalDndOnCommand request)
-		{
-			return await this.Mediator.Send(request);
-		}
+	//public class DndController : BaseExternalApiController
+	//{
+	//	[HttpGet]
+	//	public async Task<ProcessResponse> On(ExternalDndOnCommand request)
+	//	{
+	//		return await this.Mediator.Send(request);
+	//	}
 
-		[HttpGet]
-		public async Task<ProcessResponse> Off(ExternalDndOffCommand request)
-		{
-			return await this.Mediator.Send(request);
-		}
-	}
+	//	[HttpGet]
+	//	public async Task<ProcessResponse> Off(ExternalDndOffCommand request)
+	//	{
+	//		return await this.Mediator.Send(request);
+	//	}
+	//}
 
-	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	public class CleaningController : BaseExternalApiController
-	{
-		[HttpGet]
-		public async Task<ProcessResponse<Guid>> RequestNewCleaning(ExternalRequestCleaningCommand request)
-		{
-			return await this.Mediator.Send(request);
-		}
-	}
+	//public class CleaningController : BaseExternalApiController
+	//{
+	//	[HttpGet]
+	//	public async Task<ProcessResponse<Guid>> RequestNewCleaning(ExternalRequestCleaningCommand request)
+	//	{
+	//		return await this.Mediator.Send(request);
+	//	}
+	//}
 }

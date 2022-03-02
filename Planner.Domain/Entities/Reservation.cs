@@ -34,8 +34,8 @@ namespace Planner.Domain.Entities
 
 		public bool IsActive { get; set; }
 		public bool IsSynchronizedFromRcc { get; set; }
-		public DateTime? LastTimeModifiedBySynchronization { get; set; }
-		public DateTime? SynchronizedAt { get; set; }
+		public DateTimeOffset? LastTimeModifiedBySynchronization { get; set; }
+		public DateTimeOffset? SynchronizedAt { get; set; }
 
 
 		public bool IsActiveToday { get; set; }

@@ -18,6 +18,7 @@ export class CleaningTimelineItemComponent implements OnInit, OnChanges {
   itemClass: string = "";
   statusIconClass: string = "";
   priorityIconClass: string = "";
+  borderColorHex: string = "initial";
 
   isDnd: boolean = false;
   isOutOfService: boolean = false;
@@ -69,12 +70,15 @@ export class CleaningTimelineItemComponent implements OnInit, OnChanges {
 
     if (this.data.isInspected) {
       itemClasses += "room-inspected ";
+      this.borderColorHex = "#2ecc40";
     }
     else if (this.data.isClean) {
       itemClasses += "room-clean ";
+      this.borderColorHex = "#0074d9";
     }
     else {
       itemClasses += "room-dirty ";
+      this.borderColorHex = "#ff4136";
     }
 
     if (this.data.isOutOfOrder) {
@@ -83,10 +87,12 @@ export class CleaningTimelineItemComponent implements OnInit, OnChanges {
 
     if (this.data.isPostponed) {
       itemClasses += "room-cleaning-postponed ";
+      this.borderColorHex = "#aaaaaa";
     }
 
     if (!this.data.isActive) {
       itemClasses += "room-cleaning-inactive ";
+      this.borderColorHex = "#aaaaaa";
     }
 
     if (this.isCleaningInProgress) {
@@ -95,6 +101,10 @@ export class CleaningTimelineItemComponent implements OnInit, OnChanges {
 
     if (this.data.isFilteredOut) {
       itemClasses += "semtrans "
+    }
+
+    if (!!this.data.borderColorHex) {
+      this.borderColorHex = this.data.borderColorHex;
     }
 
     this.itemClass = itemClasses;

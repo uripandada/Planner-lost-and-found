@@ -71,7 +71,7 @@ namespace Planner.ServiceRunner
 #if DEBUG
                     trigger.StartNow().WithSimpleSchedule(x => x.WithIntervalInSeconds(600).RepeatForever());
 #else
-                    trigger.WithSchedule(CronScheduleBuilder.CronSchedule("0 0/5 * 1/1 * ? *").WithMisfireHandlingInstructionDoNothing())
+                    trigger.WithSchedule(CronScheduleBuilder.CronSchedule("0 0/15 * 1/1 * ? *").WithMisfireHandlingInstructionDoNothing())
                                  .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Second));
 #endif
                 });

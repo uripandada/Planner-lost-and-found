@@ -16,7 +16,7 @@ namespace Planner.Application.OnGuards.Models
         public string ReferenceNumber { get; set; }
         public string Description { get; set; }
         public OnGuardStatus Status { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public IList<OnGuardFileModel> Files { get; set; }
     }
 }

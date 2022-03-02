@@ -53,7 +53,7 @@ namespace Planner.Application.Export.Commands.ExportRooms
 				.OrderBy(r => r.OrdinalNumber)
 				.ToArrayAsync();
 
-			if (rooms.Any())
+			if (rooms != null)
 			{
 				using (ExcelEngine excelEngine = new ExcelEngine())
 				{

@@ -11,8 +11,8 @@ namespace Planner.Domain.Entities
 		public string WindowsTimeZoneId { get; set; }
 		public string IanaTimeZoneId { get; set; }
 
-		public DateTime CreatedAt { get; set; }
-		public DateTime ModifiedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
+		public DateTimeOffset ModifiedAt { get; set; }
 
 		public IEnumerable<Room> Rooms { get; set; }
 		public IEnumerable<Building> Buildings { get; set; }

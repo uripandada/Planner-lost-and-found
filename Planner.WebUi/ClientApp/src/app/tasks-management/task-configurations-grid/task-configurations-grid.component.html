@@ -1,0 +1,60 @@
+<div *ngIf="taskConfigurations$ | async as configurations" class="task-configurations-grid">
+  <div class="component-filter-row">
+    <form [formGroup]="filterForm">
+      <div class="tasks-filter-row-grid">
+        <div class="filter-row">
+          <div class="form-field-wrapper">
+            <app-who-multiselect [allWhos]="allWhos" [isRequired]="false" [showMiniTags]="true" formControlName="whos"></app-who-multiselect>
+          </div>
+          <div class="form-field-wrapper">
+            <mat-form-field class="full-width" appearance="outline">
+              <input type="text"
+                     placeholder="What..."
+                     aria-label="Number"
+                     matInput
+                     formControlName="action"
+                     [matAutocomplete]="taskActionsAutocomplete">
+              <mat-autocomplete #taskActionsAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayTaskAction">
+                <mat-option *ngFor="let action of filteredTaskActions$ | async" [value]="action">
+                  <div class="faa-title">{{action.actionName}} {{action.assetName}}</div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="form-field-wrapper">
+            <app-where-multiselect [allWheres]="allWheres" [isRequired]="false" [showMiniTags]="true" formControlName="wheres"></app-where-multiselect>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="list-view-table-grid">
+    <div class="tc-grid tc-header-row">
+      <div class="where-cell">Where</div>
+      <div class="who-cell">What</div>
+      <div class="what-cell">Who</div>
+      <div class="everyone-cell">For</div>
+      <div class="when-cell">When</div>
+      <div class="priority-cell">Priority</div>
+      <div class="progress-cell text-right">Progress</div>
+    </div>
+    <div class="tc-configs">
+      <ng-container *ngFor="let config of configurations; let configIndex = index">
+        <app-task-configurations-grid-item [config]="config" [selectedTaskConfigurationId]="selectedTaskConfigurationId" [selectedTaskId]="selectedTaskId" (taskSelected)="onTaskSelected($event)"></app-task-configurations-grid-item>
+      </ng-container>
+    </div>
+    <div>
+      <div class="tasks-list-totals-description">
+        <span>Showing</span>
+        <span>{{loadedNumber$ | async}}</span>
+        <span>/</span>
+        <span>{{totalNumber$ | async}}</span>
+        <span>tasks</span>
+      </div>
+      <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+        <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,9 +23,9 @@ namespace Planner.Persistence.Migrations
                     reservation_on_arrival_date = table.Column<bool>(type: "boolean", nullable: true),
                     reservation_on_departure_date = table.Column<bool>(type: "boolean", nullable: true),
                     reservation_on_stay_dates = table.Column<bool>(type: "boolean", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    modified_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(type: "uuid", nullable: true),
                     hotel_id = table.Column<string>(type: "text", nullable: false)
                 },

@@ -105,13 +105,6 @@ const routes: Routes = [
     data: { claims: [SettingsClaimKeys.RoomCategories] }
   },
   {
-    path: 'categories',
-    component: MainComponent,
-    loadChildren: () => import('../room-categories-management/room-categories-management.module').then(m => m.RoomCategoriesManagementModule),
-    canActivate: [AuthorizeGuard],
-    data: { claims: [SettingsClaimKeys.Categories] }
-  },
-  {
     path: 'reservations',
     component: MainComponent,
     loadChildren: () => import('../reservations/reservations.module').then(m => m.ReservationsModule),

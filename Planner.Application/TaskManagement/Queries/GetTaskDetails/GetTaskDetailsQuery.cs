@@ -26,7 +26,7 @@ namespace Planner.Application.TaskManagement.Queries.GetTaskDetails
 		public string UserName { get; set; }
 		public Guid? UserId { get; set; }
 		public string Message { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 	}
 
 	public class TaskDetailsActionData
@@ -127,7 +127,7 @@ namespace Planner.Application.TaskManagement.Queries.GetTaskDetails
 		public bool IsManuallyModified { get; set; }
 
 		public string CreatedByUserFullName { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
 
 		public TaskImageData[] Images { get; set; }
 		public string[] FilestackImageUrls { get; set; }

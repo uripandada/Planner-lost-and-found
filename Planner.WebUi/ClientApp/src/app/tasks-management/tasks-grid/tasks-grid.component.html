@@ -1,0 +1,104 @@
+<form [formGroup]="filterForm">
+  <div class="list-view-table-filter-row">
+    <div class="filter-row">
+      <div >
+        <mat-form-field appearance="outline" class="full-width" (click)="pickerFrom.open();">
+          <input matInput [matDatepicker]="pickerFrom" formControlName="from">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+            <i class="icofont-calendar" matDatepickerToggleIcon></i>
+          </mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div >
+        <mat-form-field appearance="outline" class="full-width" (click)="pickerTo.open();">
+          <input matInput [matDatepicker]="pickerTo" formControlName="to">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo">
+            <i class="icofont-calendar" matDatepickerToggleIcon></i>
+          </mat-datepicker-toggle>
+          <mat-datepicker #pickerTo disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <input type="text"
+                 placeholder="What..."
+                 aria-label="Number"
+                 matInput
+                 formControlName="action"
+                 [matAutocomplete]="taskActionsAutocomplete">
+          <mat-autocomplete #taskActionsAutocomplete="matAutocomplete" [classList]="'floor-affinities-autocomplete'" [displayWith]="displayTaskAction">
+            <mat-option *ngFor="let action of filteredTaskActions$ | async" [value]="action">
+              <div class="faa-title">{{action.actionName}} {{action.assetName}}</div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <app-where-multiselect [allWheres]="allWheres" [isRequired]="false" [showMiniTags]="true" formControlName="wheres"></app-where-multiselect>
+      </div>
+      <div class="form-field-wrapper">STATUS</div>
+    </div>
+  </div>
+</form>
+<table class="list-view-table">
+  <thead>
+    <tr>
+      <th class="who-cell">User</th>
+      <th class="what-cell">What</th>
+      <th class="where-cell">Where</th>
+      <th class="when-cell">When</th>
+      <th class="priority-cell">Priority</th>
+      <th class="task-status-cell">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="list-view-items-row" *ngFor="let task of tasks$ | async" (click)="selectTask(task.id)" [class.list-view-items-row-selected]="task.id === selectedTaskId">
+      <td class="who-cell">
+        <div class="td-user-avatar-grid">
+          <div class="task-details-avatar-wrapper">
+            <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+            <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+          </div>
+          <div>
+            <div class="cell-value">{{task.userFullName}}</div>
+            <div class="sub-cell-value">{{task.userUsername}}</div>
+          </div>
+        </div>
+      </td>
+      <td class="what-cell">
+        <ng-container *ngFor="let action of task.actions">
+          <div class="cell-value">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</div>
+        </ng-container>
+        <div class="sub-cell-value">{{task.typeDescription}}</div>
+      </td>
+      <td class="where-cell">
+        <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+        <div class="sub-cell-value">{{task.whereDescription}}</div>
+      </td>
+      <td class="when-cell">
+        <div class="cell-value">{{task.when}}</div>
+        <div class="sub-cell-value">{{task.whenDescription}}</div>
+      </td>
+      <td class="priority-cell">
+        <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest request</span>
+        <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High priority</span>
+      </td>
+      <td class="task-status-cell">
+        <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <div class="tasks-list-totals-description">
+    <span>Showing</span>
+    <span>{{loadedNumber$ | async}}</span>
+    <span>/</span>
+    <span>{{totalNumber$ | async}}</span>
+    <span>tasks</span>
+  </div>
+  <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+    <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+  </div>
+</div>

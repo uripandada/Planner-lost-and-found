@@ -9,4 +9,11 @@
 		EVERY,
 	}
 
+    public enum RepeatsForType
+    {
+        NUMBER_OF_DAYS,
+        NUMBER_OF_OCCURENCES,
+		SPECIFIC_DATE
+    }
+
 }

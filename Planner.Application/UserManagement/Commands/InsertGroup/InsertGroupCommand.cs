@@ -32,9 +32,9 @@ namespace Planner.Application.UserManagement.Commands.InsertGroup
         {
             var newGroup = new Domain.Entities.UserGroup
             {
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 CreatedById = this.httpContextAccessor.UserId(),
-                ModifiedAt = DateTime.Now,
+                ModifiedAt = DateTime.UtcNow,
                 ModifiedById = this.httpContextAccessor.UserId(),
                 Name = request.Name
             };

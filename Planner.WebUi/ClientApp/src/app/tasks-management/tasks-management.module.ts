@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { TaskBalancedComponent } from './task-balanced/task-balanced.component';
 import { TaskChatComponent } from './task-chat/task-chat.component';
 import { TaskConfigurationComponent } from './task-configuration/task-configuration.component';
+import { TaskConfigurationsGridItemComponent } from './task-configurations-grid-item/task-configurations-grid-item.component';
+import { TaskConfigurationsGridComponent } from './task-configurations-grid/task-configurations-grid.component';
 import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
 import { TaskEventComponent } from './task-event/task-event.component';
 import { TaskHistoryComponent } from './task-history/task-history.component';
@@ -17,6 +19,9 @@ import { TaskRecurringWeeklyComponent } from './task-recurring-weekly/task-recur
 import { TaskRecurringComponent } from './task-recurring/task-recurring.component';
 import { TaskSingleComponent } from './task-single/task-single.component';
 import { TaskComponent } from './task/task.component';
+import { TasksCalendarComponent } from './tasks-calendar/tasks-calendar.component';
+import { TasksGridComponent } from './tasks-grid/tasks-grid.component';
+import { TasksGroupedGridComponent } from './tasks-grouped-grid/tasks-grouped-grid.component';
 import { TasksListViewComponent } from './tasks-list-view/tasks-list-view.component';
 import { TasksManagementRoutingModule } from './tasks-management-routing.module';
 import { TasksManagementComponent } from './tasks-management.component';
@@ -63,6 +68,11 @@ import { WhoMultiselectComponent } from './who-multiselect/who-multiselect.compo
     WhatMultiselectComponent,
     //WhereSelectComponent,
     TaskRecurringEveryComponent,
+    TasksGridComponent,
+    TaskConfigurationsGridComponent,
+    TaskConfigurationsGridItemComponent,
+    TasksGroupedGridComponent,
+    TasksCalendarComponent,
   ]
 })
 export class TasksManagementModule { }

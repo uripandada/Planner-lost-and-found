@@ -56,7 +56,7 @@ namespace Planner.Application.Export.Commands.ExportUsers
 
 			var rolesMap = await this.databaseContext.Roles.ToDictionaryAsync(r => r.Id, r => r);
 
-			if (users != null && users.Length > 0)
+			if (users != null)
 			{
 				using (ExcelEngine excelEngine = new ExcelEngine())
 				{

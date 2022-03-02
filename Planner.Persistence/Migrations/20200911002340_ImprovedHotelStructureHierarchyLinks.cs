@@ -7,75 +7,75 @@ namespace Planner.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_sub_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 471, DateTimeKind.Unspecified).AddTicks(332), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 464, DateTimeKind.Unspecified).AddTicks(1937), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_sub_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 471, DateTimeKind.Unspecified).AddTicks(8), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 464, DateTimeKind.Unspecified).AddTicks(1189), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 470, DateTimeKind.Unspecified).AddTicks(3465), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 463, DateTimeKind.Unspecified).AddTicks(4326), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_groups",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 470, DateTimeKind.Unspecified).AddTicks(3067), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 463, DateTimeKind.Unspecified).AddTicks(4009), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "rooms",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 469, DateTimeKind.Unspecified).AddTicks(5438), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 462, DateTimeKind.Unspecified).AddTicks(7128), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "rooms",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 469, DateTimeKind.Unspecified).AddTicks(4969), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 462, DateTimeKind.Unspecified).AddTicks(6804), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "floors",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(9915), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(9563), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "floors",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(9557), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(9257), new TimeSpan(0, 0, 0, 0, 0)));
 
@@ -85,21 +85,21 @@ namespace Planner.Persistence.Migrations
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "buildings",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(2431), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(2347), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "buildings",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(2019), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(1980), new TimeSpan(0, 0, 0, 0, 0)));
 
@@ -108,21 +108,21 @@ namespace Planner.Persistence.Migrations
                 table: "buildings",
                 nullable: true);
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "areas",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 461, DateTimeKind.Unspecified).AddTicks(9814), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 456, DateTimeKind.Unspecified).AddTicks(121), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "areas",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 461, DateTimeKind.Unspecified).AddTicks(1065), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 455, DateTimeKind.Unspecified).AddTicks(1031), new TimeSpan(0, 0, 0, 0, 0)));
 
@@ -179,112 +179,112 @@ namespace Planner.Persistence.Migrations
                 name: "area_id",
                 table: "buildings");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_sub_groups",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 464, DateTimeKind.Unspecified).AddTicks(1937), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 471, DateTimeKind.Unspecified).AddTicks(332), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_sub_groups",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 464, DateTimeKind.Unspecified).AddTicks(1189), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 471, DateTimeKind.Unspecified).AddTicks(8), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "user_groups",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 463, DateTimeKind.Unspecified).AddTicks(4326), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 470, DateTimeKind.Unspecified).AddTicks(3465), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "user_groups",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 463, DateTimeKind.Unspecified).AddTicks(4009), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 470, DateTimeKind.Unspecified).AddTicks(3067), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "rooms",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 462, DateTimeKind.Unspecified).AddTicks(7128), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 469, DateTimeKind.Unspecified).AddTicks(5438), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "rooms",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 462, DateTimeKind.Unspecified).AddTicks(6804), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 469, DateTimeKind.Unspecified).AddTicks(4969), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "floors",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(9563), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(9915), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "floors",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(9257), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(9557), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "buildings",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(2347), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(2431), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "buildings",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 458, DateTimeKind.Unspecified).AddTicks(1980), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 464, DateTimeKind.Unspecified).AddTicks(2019), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "areas",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 456, DateTimeKind.Unspecified).AddTicks(121), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 461, DateTimeKind.Unspecified).AddTicks(9814), new TimeSpan(0, 0, 0, 0, 0)));
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "areas",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(2020, 9, 10, 8, 2, 57, 455, DateTimeKind.Unspecified).AddTicks(1031), new TimeSpan(0, 0, 0, 0, 0)),
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldDefaultValue: new DateTimeOffset(new DateTime(2020, 9, 11, 0, 23, 40, 461, DateTimeKind.Unspecified).AddTicks(1065), new TimeSpan(0, 0, 0, 0, 0)));
         }
     }

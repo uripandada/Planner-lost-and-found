@@ -11,10 +11,13 @@ using Planner.Application.TaskManagement.Commands.SendTaskMessage;
 using Planner.Application.TaskManagement.Commands.UpdateTask;
 using Planner.Application.TaskManagement.Commands.UpdateTaskConfiguration;
 using Planner.Application.TaskManagement.Queries.GetAllWheres;
+using Planner.Application.TaskManagement.Queries.GetCalendarTasks;
 using Planner.Application.TaskManagement.Queries.GetMonthlyTasks;
 using Planner.Application.TaskManagement.Queries.GetMonthlyTasksGraphsData;
 using Planner.Application.TaskManagement.Queries.GetPageOfTaskConfigurations;
+using Planner.Application.TaskManagement.Queries.GetPageOfTaskConfigurationsForGrid;
 using Planner.Application.TaskManagement.Queries.GetPageOfTasks;
+using Planner.Application.TaskManagement.Queries.GetPageOfTasksForGrid;
 using Planner.Application.TaskManagement.Queries.GetPageOfWeeklyTasks;
 using Planner.Application.TaskManagement.Queries.GetTaskConfigurationCancelPreview;
 using Planner.Application.TaskManagement.Queries.GetTaskConfigurationDetails;
@@ -176,6 +179,24 @@ namespace Planner.WebUi.Controllers
 
 		[HttpPost]
 		public async Task<ProcessResponse> RejectTask([FromBody] RejectTaskCommand request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[HttpPost]
+		public async Task<PageOf<TaskConfigurationGridItem>> GetPageOfTaskConfigurationsForGrid([FromBody] GetPageOfTaskConfigurationsForGridQuery request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[HttpPost]
+		public async Task<PageOf<TaskGridItem>> GetPageOfTasksForGrid([FromBody] GetPageOfTasksForGridQuery request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[HttpPost]
+		public async Task<TasksCalendar> GetCalendarTasks([FromBody] GetCalendarTasksQuery request)
 		{
 			return await this.Mediator.Send(request);
 		}

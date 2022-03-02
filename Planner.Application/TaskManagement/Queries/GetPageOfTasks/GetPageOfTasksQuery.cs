@@ -413,14 +413,14 @@ namespace Planner.Application.TaskManagement.Queries.GetPageOfTasks
 
 					if(d.WhereTypeKey == "FROM_TO")
 					{
-						var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName, d.FromRoomName);
-						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName, d.ToRoomName);
+						var fromWhere = TaskDescriptions.GetWhere2(d.FromHotelId, d.FromHotelName, d.FromWarehouseId, d.FromReservationId, d.FromRoomId, d.FromName, d.FromRoomName);
+						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelId, d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName, d.ToRoomName);
 						item.Where = $"{fromWhere.Where} -> {toWhere.Where}";
 						item.WhereDescription = $"{fromWhere.Description} -> {toWhere.Description}";
 					}
 					else if(d.WhereTypeKey == "TO")
 					{
-						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName, d.ToRoomName);
+						var toWhere = TaskDescriptions.GetWhere2(d.ToHotelId, d.ToHotelName, d.ToWarehouseId, d.ToReservationId, d.ToRoomId, d.ToName, d.ToRoomName);
 						item.Where = toWhere.Where;
 						item.WhereDescription = toWhere.Description;
 					}

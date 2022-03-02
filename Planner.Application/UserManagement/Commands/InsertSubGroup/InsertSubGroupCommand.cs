@@ -33,9 +33,9 @@ namespace Planner.Application.UserManagement.Commands.InsertSubGroup
         {
             var newSubGroup = new Domain.Entities.UserSubGroup
             {
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 CreatedById = this.httpContextAccessor.UserId(),
-                ModifiedAt = DateTime.Now,
+                ModifiedAt = DateTime.UtcNow,
                 ModifiedById = this.httpContextAccessor.UserId(),
                 UserGroupId = request.GroupId,
                 Name = request.Name

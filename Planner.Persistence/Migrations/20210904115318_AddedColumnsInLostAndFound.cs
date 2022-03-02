@@ -39,13 +39,13 @@ namespace Planner.Persistence.Migrations
                 oldType: "text",
                 oldNullable: true);
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "lost_and_founds",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValueSql: "now()",
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
             migrationBuilder.AlterColumn<string>(
@@ -78,13 +78,13 @@ namespace Planner.Persistence.Migrations
                 oldType: "text",
                 oldNullable: true);
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "lost_and_founds",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValueSql: "now()",
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone");
 
             migrationBuilder.AlterColumn<string>(
@@ -261,12 +261,12 @@ namespace Planner.Persistence.Migrations
                 oldClrType: typeof(string),
                 oldType: "text");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "modified_at",
                 table: "lost_and_founds",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValueSql: "now()");
 
@@ -294,12 +294,12 @@ namespace Planner.Persistence.Migrations
                 oldClrType: typeof(string),
                 oldType: "text");
 
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "created_at",
                 table: "lost_and_founds",
                 type: "timestamp with time zone",
                 nullable: false,
-                oldClrType: typeof(DateTime),
+                oldClrType: typeof(DateTimeOffset),
                 oldType: "timestamp with time zone",
                 oldDefaultValueSql: "now()");
 

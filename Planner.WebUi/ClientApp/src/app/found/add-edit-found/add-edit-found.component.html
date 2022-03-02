@@ -36,13 +36,13 @@
             </div>
             <div class="two-column-grid">
               <div class="form-field-wrapper">
-                <label>Where was it found?</label>
-                  <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"
-                    [displayProperty]="'typeDescription'" (getSelection)="getSelection($event)" >
-                  </app-where-select>
-              </div>
-              <div class="form-field-wrapper">
-                <label>Client name</label>
+                <label>Where was it found?</label>                  
+                <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"                    
+                  [displayProperty]="'typeDescription'" (getSelection)="getSelection($event)" >               
+                </app-where-select>              
+              </div>              
+              <div class="form-field-wrapper">                
+              <label>Client name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
                   <input matInput formControlName="clientName" type="text" />
                 </mat-form-field>
@@ -80,7 +80,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <!-- <div class="form-field-wrapper">
+              <!-- <div class="form-field-wrapper"
                 <label>Last Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
                   <input matInput formControlName="lastName" type="text" />
@@ -108,6 +108,7 @@
 
           <div class="form-section">
             <div class="major-column-title"><b>Information</b></div>
+
             <div class="two-column-grid">
               <div class="form-field-wrapper">
                 <label>Status</label>
@@ -119,27 +120,27 @@
               </div>
               <div class="form-field-wrapper">
                 <label>Where did we store it?</label>
-               <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <mat-select formControlName="status">
-                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+                <mat-form-field appearance="outline" color="accent" class="full-width">                  
+                  <mat-select formControlName="status">                    
+                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>                  
+                  </mat-select>                
+                </mat-form-field>              
+              </div>            
             </div>
-            <div class="two-column-grid">
-              <div class="form-field-wrapper">
-                <app-file-upload (filesChanged)="uploadedFilesChanged($event)"
-                  [currentlyUploadingFiles]="currentlyUploadingFiles"
-                  [temporaryUploadedFiles]="temporaryUploadedFiles"
-                  [uploadedFiles]="uploadedFiles">
-                </app-file-upload>
-              </div>
-              <div class="form-field-wrapper">
-                <label>Category</label>
-               <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <mat-select formControlName="status">
-                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>
-                  </mat-select>
+            <div class="two-column-grid">              
+              <div class="form-field-wrapper">                
+                <app-file-upload (filesChanged)="uploadedFilesChanged($event)"                  
+                [currentlyUploadingFiles]="currentlyUploadingFiles"                  
+                [temporaryUploadedFiles]="temporaryUploadedFiles"                  
+                [uploadedFiles]="uploadedFiles">                
+              </app-file-upload>              
+            </div>              
+            <div class="form-field-wrapper">                
+              <label>Category</label>               
+              <mat-form-field appearance="outline" color="accent" class="full-width">                  
+                <mat-select formControlName="status">                    
+                  <mat-option *ngFor="let status of statuses" [value]=""></mat-option>                  
+                </mat-select>
                 </mat-form-field>
               </div>
             </div>

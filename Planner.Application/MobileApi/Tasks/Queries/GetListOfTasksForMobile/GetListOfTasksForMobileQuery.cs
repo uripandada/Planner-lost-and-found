@@ -155,7 +155,12 @@ namespace Planner.Application.MobileApi.Tasks.Queries.GetListOfTasksForMobile
 
 	public class MobileTaskGuestInfo
 	{
+		public string Reservation_id { get; set; }
 		public string Guest_name { get; set; }
+		public DateTime? CheckIn { get; set; }
+		public DateTime? CheckOut { get; set; }
+		public DateTime? ActualCheckIn { get; set; }
+		public DateTime? ActualCheckOut { get; set; }
 	}
 
 	public class GetListOfTasksForMobileQuery: IRequest<IEnumerable<MobileTask>>
@@ -225,6 +230,21 @@ namespace Planner.Application.MobileApi.Tasks.Queries.GetListOfTasksForMobile
 			foreach(var t in tasks)
 			{
 				var taskDescription = string.Join(", ", t.Actions.Select(a => $"{a.ActionName} {a.AssetQuantity} x {a.AssetName}").ToArray());
+				var guestInfo = new MobileTaskGuestInfo
+				{
+					Reservation_id = "",
+					Guest_name = ""
+				};
+
+				if(t.ToReservation != null)
+				{
+					guestInfo.Reservation_id = t.ToReservation.Id;
+					guestInfo.Guest_name = t.ToReservation.GuestName;
+					guestInfo.CheckIn = t.ToReservation.CheckIn;
+					guestInfo.CheckOut = t.ToReservation.CheckOut;
+					guestInfo.ActualCheckIn = t.ToReservation.ActualCheckIn;
+					guestInfo.ActualCheckOut = t.ToReservation.ActualCheckOut;
+				}
 
 				var item = new MobileTask
 				{
@@ -242,10 +262,7 @@ namespace Planner.Application.MobileApi.Tasks.Queries.GetListOfTasksForMobile
 					Due_date = null,
 					Due_ts = null,
 					Group_uuid = null,
-					Guest_info = new MobileTaskGuestInfo
-					{
-						Guest_name = t.ToReservation == null ? "" : t.ToReservation.GuestName
-					},
+					Guest_info = guestInfo,
 					Last_ts = t.ModifiedAt.ToUnixTimeStamp(),
 					Messages = t.Messages.Select(m => new MobileTaskMessage 
 					{ 
@@ -278,7 +295,7 @@ namespace Planner.Application.MobileApi.Tasks.Queries.GetListOfTasksForMobile
 					Is_optional = false,
 					Is_hidden = false,
 					Is_group = false,
-					Is_priority = false,
+					Is_priority = t.PriorityKey == "HIGH",
 
 					Comment = t.Comment,
 

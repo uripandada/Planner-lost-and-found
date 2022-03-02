@@ -37,6 +37,16 @@ namespace Planner.Common.Data
 		public string ValidatorKey { get; set; }
 	}
 
+	public class ProcessResponseSimple
+    {
+		public bool IsSuccess { get; set; }
+		public string Message { get; set; }
+	}
+	public class ProcessResponseSimple<TResponse> : ProcessResponseSimple
+	{
+		public TResponse Data { get; set; }
+	}
+
 	public class ProcessResponse<TResponse> : ProcessResponse
 	{
 		public TResponse Data { get; set; }

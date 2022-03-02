@@ -380,39 +380,62 @@ namespace Planner.Application.Reservations.Commands.SynchronizeReservations
 			}
 
 			// Find reservation changes
-			var reservationChanges = (ReservationChanges)null;
-			try
+			var reservationChanges = new ReservationChanges
 			{
-				reservationChanges = await this._FindReservationsChanges(hotelId, this._userId, this._utcSynchronizationTime, this._rccReservationsSnapshot.Reservations, dateTime);
-			}
-			catch(Exception ex)
-			{
-				this.ReservationLogMessages.Add(new RccReservationSynchronizationMessage
-				{
-					At = DateTime.UtcNow,
-					Id = Guid.NewGuid(),
-					Message = $"Error while finding reservations changes. {ex.Message}. {ex.StackTrace ?? ""}",
-					Parameters = new RccReservationSynchronizationMessageParameters { HotelId = hotelId, SynchronizationId = synchronizationId.ToString() },
-					Severity = RccReservationSynchronizationMessageSeverity.EXCEPTION,
-					Type = RccReservationSynchronizationMessageType.FIND_RESERVATIONS_CHANGES,
-				});
-			}
+				ReservationsToDeactivate = new ReservationChange[0],
+				ReservationsToInsert = new ReservationChange[0],
+				ReservationsToUpdate = new ReservationChange[0],
+				RoomHistoryEvents = new Domain.Entities.RoomHistoryEvent[0],
+				UpdateRooms = false,
+			};
 
-			// Save reservation changes
-			try
+			if(this._rccReservationsSnapshot.Reservations != null && this._rccReservationsSnapshot.Reservations.Any())
 			{
-				await this._SaveReservationChanges(reservationChanges, cancellationToken);
+				try
+				{
+					reservationChanges = await this._FindReservationsChanges(hotelId, this._userId, this._utcSynchronizationTime, this._rccReservationsSnapshot.Reservations, dateTime);
+				}
+				catch(Exception ex)
+				{
+					this.ReservationLogMessages.Add(new RccReservationSynchronizationMessage
+					{
+						At = DateTime.UtcNow,
+						Id = Guid.NewGuid(),
+						Message = $"Error while finding reservations changes. {ex.Message}. {ex.StackTrace ?? ""}",
+						Parameters = new RccReservationSynchronizationMessageParameters { HotelId = hotelId, SynchronizationId = synchronizationId.ToString() },
+						Severity = RccReservationSynchronizationMessageSeverity.EXCEPTION,
+						Type = RccReservationSynchronizationMessageType.FIND_RESERVATIONS_CHANGES,
+					});
+				}
+
+				// Save reservation changes
+				try
+				{
+					await this._SaveReservationChanges(reservationChanges, cancellationToken);
+				}
+				catch (Exception ex)
+				{
+					this.ReservationLogMessages.Add(new RccReservationSynchronizationMessage
+					{
+						At = DateTime.UtcNow,
+						Id = Guid.NewGuid(),
+						Message = $"Error while saving reservations changes. {ex.Message}. {ex.StackTrace ?? ""}",
+						Parameters = new RccReservationSynchronizationMessageParameters { HotelId = hotelId, SynchronizationId = synchronizationId.ToString() },
+						Severity = RccReservationSynchronizationMessageSeverity.EXCEPTION,
+						Type = RccReservationSynchronizationMessageType.SAVE_RESERVATIONS_CHANGES,
+					});
+				}
 			}
-			catch (Exception ex)
+			else
 			{
 				this.ReservationLogMessages.Add(new RccReservationSynchronizationMessage
 				{
 					At = DateTime.UtcNow,
 					Id = Guid.NewGuid(),
-					Message = $"Error while saving reservations changes. {ex.Message}. {ex.StackTrace ?? ""}",
+					Message = $"Empty reservations response. Skipping reservation updates.",
 					Parameters = new RccReservationSynchronizationMessageParameters { HotelId = hotelId, SynchronizationId = synchronizationId.ToString() },
 					Severity = RccReservationSynchronizationMessageSeverity.EXCEPTION,
-					Type = RccReservationSynchronizationMessageType.SAVE_RESERVATIONS_CHANGES,
+					Type = RccReservationSynchronizationMessageType.LOAD_RESERVATIONS_FROM_RCC,
 				});
 			}
 
@@ -433,7 +456,7 @@ namespace Planner.Application.Reservations.Commands.SynchronizeReservations
 					Id = Guid.NewGuid(),
 					Message = $"Error while finding housekeeping changes. {ex.Message}. {ex.StackTrace ?? ""}",
 					Parameters = new RccReservationSynchronizationMessageParameters { HotelId = hotelId, SynchronizationId = synchronizationId.ToString() },
-					Severity = RccReservationSynchronizationMessageSeverity.EXCEPTION,
+					Severity = RccReservationSynchronizationMessageSeverity.WARNING,
 					Type = RccReservationSynchronizationMessageType.FIND_HOUSEKEEPING_CHANGES,
 				});
 			}
@@ -693,7 +716,7 @@ namespace Planner.Application.Reservations.Commands.SynchronizeReservations
 			public IEnumerable<Domain.Entities.RoomHistoryEvent> RoomHistoryEvents { get; internal set; }
 		}
 
-		private async Task<ReservationChanges> _FindReservationsChanges(string hotelId, Guid userId, DateTime utcSynchronizationTime, IEnumerable<RccReservation> rccReservations, DateTime currentHotelLocalDateTime)
+		private async Task<ReservationChanges> _FindReservationsChanges(string hotelId, Guid userId, DateTimeOffset utcSynchronizationTime, IEnumerable<RccReservation> rccReservations, DateTime currentHotelLocalDateTime)
 		{
 			var currentHotelLocalDate = currentHotelLocalDateTime.Date;
 
@@ -1465,7 +1488,7 @@ namespace Planner.Application.Reservations.Commands.SynchronizeReservations
 			public IEnumerable<Domain.Entities.RoomHistoryEvent> RoomHistoryEvents { get; internal set; }
 		}
 
-		private async Task<IEnumerable<Domain.Entities.RoomHistoryEvent>> _FindPmsEventChanges(string hotelId, DateTime localSynchronizationTime)
+		private async Task<IEnumerable<Domain.Entities.RoomHistoryEvent>> _FindPmsEventChanges(string hotelId, DateTimeOffset localSynchronizationTime)
 		{
 			var eventsToInsert =new List<Domain.Entities.RoomHistoryEvent>();
 

@@ -1,0 +1,185 @@
+<div class="tasks-groped-component">
+  <div class="calendar-view-wrapper" *ngIf="isMyTasksCalendarDisplayed$ | async">
+    <app-tasks-calendar [selectedTaskId]="selectedTaskId" [onlyMyTasks]="onlyMyTasks" [userGroupId]="userGroupId" [userSubGroupId]="userSubGroupId"></app-tasks-calendar>
+  </div>
+  <div class="my-tasks-top-stripe left-right">
+    <div class="my-tasks-summary">
+      <div>
+        <button mat-flat-button type="button" [class]="'toggle-button'" (click)="toggleCalendar()"><ng-container *ngIf="isMyTasksCalendarDisplayed$ | async; else showCalendarLabel"><i class="icofont-simple-up"></i> Hide calendar</ng-container> <ng-template #showCalendarLabel><i class="icofont-simple-down"></i> Show calendar</ng-template></button>
+      </div>
+    </div>
+    <div class="my-tasks-summary-items">
+      <span class="mtsi-tag"><b class="mtsi-pending">{{numberOfPendingTasks$ | async}}</b> pending</span>
+      <span class="mtsi-tag"><b class="mtsi-waiting">{{numberOfWaitingTasks$ | async}}</b> waiting</span>
+      <span class="mtsi-tag"><b class="mtsi-paused">{{numberOfPausedTasks$ | async}}</b> paused</span>
+      <span class="mtsi-tag"><b class="mtsi-started">{{numberOfStartedTasks$ | async}}</b> started</span>
+      <span class="mtsi-tag"><b class="mtsi-finished">{{numberOfFinishedTasks$ | async}}</b> finished</span>
+      <span class="mtsi-tag"><b class="mtsi-verified">{{numberOfVerifiedTasks$ | async}}</b> verified</span>
+      <span class="mtsi-tag"><b class="mtsi-ontime">{{numberOfOnTimeTasks$ | async}}</b> on time</span>
+      <span class="mtsi-tag"><b class="mtsi-late">{{numberOfLateTasks$ | async}}</b> late</span>
+    </div>
+  </div>
+  <form [formGroup]="filterForm" class="tgg-filter-form">
+    <div class="tasks-grouped-grid-sub-groups-row" *ngIf="!onlyMyTasks">
+      <ng-container *ngFor="let sgFormGroup of userSubGroupsFormArray.controls; let sgFormGroupId = index;">
+        <mat-checkbox [formControl]="sgFormGroup.controls.isSelected">
+          {{sgFormGroup.controls.subGroupName.value}}
+        </mat-checkbox>
+      </ng-container>
+    </div>
+    <div class="tasks-grouped-grid-filter-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="whereId" class="full-width" placeholder="Anywhere">
+          <mat-option [value]="null">Anywhere</mat-option>
+          <mat-option *ngFor="let where of whereFilterValues" [value]="where.key">
+            {{where.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="actionKey" class="full-width" placeholder="Anything">
+          <mat-option [value]="null">Anything</mat-option>
+          <mat-option *ngFor="let action of actionFilterValues" [value]="action.key">
+            {{action.action}} {{action.asset}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width" *ngIf="!onlyMyTasks">
+        <mat-select formControlName="userId" class="full-width" placeholder="Anyone">
+          <mat-option [value]="null">Anyone</mat-option>
+          <mat-option *ngFor="let user of userFilterValues" [value]="user.key">
+            {{user.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="statusKey" class="full-width" placeholder="Any status">
+          <mat-option [value]="null">Any status</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status.key">
+            {{status.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox formControlName="isGuestRequest">
+        Guest request
+      </mat-checkbox>
+      <mat-checkbox formControlName="isHighPriority">
+        High priority
+      </mat-checkbox>
+    </div>
+  </form>
+  <div class="major-column-title">
+    <b>Today's tasks</b>
+  </div>
+  <div class="major-column-subtitle">total {{numberOfTodaysTasks$ | async}}, late <span>{{numberOfTodaysLateTasks$ | async}}</span></div>
+  <table class="list-view-table">
+    <thead>
+      <tr>
+        <th class="what-cell">What</th>
+        <th class="priority-cell">Type</th>
+        <th class="where-cell">Where</th>
+        <th class="who-cell" *ngIf="!onlyMyTasks">User</th>
+        <th class="created-by-cell">Created by</th>
+        <th class="when-cell">When</th>
+        <th class="date-cell">Last updated at</th>
+        <th class="task-status-cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="list-view-items-row" *ngFor="let task of filteredTodaysTasks$ | async" (click)="selectTask(task.id, task.taskConfigurationId)" [class.list-view-items-row-selected]="task.id === selectedTaskId">
+        <td class="what-cell">
+          <ng-container *ngFor="let action of task.actions">
+            <div class="cell-value">{{action.assetQuantity}} &times; {{action.actionName}} {{action.assetName}}</div>
+          </ng-container>
+        </td>
+        <td class="priority-cell">
+          <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest req</span>
+          <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High</span>
+        </td>
+        <td class="where-cell">
+          <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+        </td>
+        <td class="who-cell" *ngIf="!onlyMyTasks">
+          <div class="td-user-avatar-grid">
+            <div class="task-details-avatar-wrapper">
+              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+            </div>
+            <div>
+              <div class="cell-value">{{task.userFullName}}</div>
+            </div>
+          </div>
+        </td>
+        <td class="created-by-cell">
+          <div class="cell-value">{{task.createdByUserName}}</div>
+        </td>
+        <td class="when-cell">
+          <div class="cell-value">{{task.startsAtString}}</div>
+        </td>
+        <td class="date-cell">
+          <div class="cell-value">{{task.modifiedAtString }}</div>
+        </td>
+        <td class="task-status-cell">
+          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="major-column-title">
+    <b>Recurring tasks</b>
+  </div>
+  <div class="major-column-subtitle">total {{numberOfRecurringTasks$ | async}}, late <span>{{numberOfRecurringLateTasks$ | async}}</span></div>
+  <table class="list-view-table">
+    <thead>
+      <tr>
+        <th class="what-cell">What</th>
+        <th class="priority-cell">Type</th>
+        <th class="where-cell">Where</th>
+        <th class="who-cell" *ngIf="!onlyMyTasks">User</th>
+        <th class="created-by-cell">Created by</th>
+        <th class="when-cell">When</th>
+        <th class="date-cell">Last updated at</th>
+        <th class="task-status-cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="list-view-items-row" *ngFor="let task of filteredRecurringTasks$ | async" (click)="selectTask(task.id, task.taskConfigurationId)" [class.list-view-items-row-selected]="task.id === selectedTaskId">
+        <td class="what-cell">
+          <ng-container *ngFor="let action of task.actions">
+            <div class="cell-value">{{action.assetQuantity}} &times; {{action.actionName}} {{action.assetName}}</div>
+          </ng-container>
+        </td>
+        <td class="priority-cell">
+          <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest req</span>
+          <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High</span>
+        </td>
+        <td class="where-cell">
+          <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+        </td>
+        <td class="who-cell" *ngIf="!onlyMyTasks">
+          <div class="td-user-avatar-grid">
+            <div class="task-details-avatar-wrapper">
+              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+            </div>
+            <div>
+              <div class="cell-value">{{task.userFullName}}</div>
+            </div>
+          </div>
+        </td>
+        <td class="created-by-cell">
+          <div class="cell-value">{{task.createdByUserName}}</div>
+        </td>
+        <td class="when-cell">
+          <div class="cell-value">{{task.startsAtString}}</div>
+        </td>
+        <td class="date-cell">
+          <div class="cell-value">{{task.modifiedAtString }}</div>
+        </td>
+        <td class="task-status-cell">
+          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

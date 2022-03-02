@@ -1,0 +1,167 @@
+
+<div class="list-view-items-row tc-grid" (click)="toggleShowTasks()" [class.tc-grid-opened]="showListOfTasks$ | async">
+  <div class="where-cell">
+    <ng-container *ngFor="let where of config.wheres">
+      <div class="cell-value"><i class="icofont" [class]="where.typeKey"></i>{{where.name}}</div>
+      <!--<div class="sub-cell-value">{{where.typeDescription}}</div>-->
+    </ng-container>
+  </div>
+  <div class="what-cell">
+    <ng-container *ngFor="let what of config.whats">
+      <div class="cell-value">{{what.assetQuantity}} &times; {{what.actionName}} {{what.assetName}}</div>
+    </ng-container>
+  </div>
+  <div class="who-cell">
+    <ng-container *ngFor="let who of config.whos">
+      <div class="cell-value"><i class="icofont" [class]="who.typeKey"></i>{{who.name}}</div>
+      <!--<div class="sub-cell-value">{{who.typeDescription}}</div>-->
+    </ng-container>
+  </div>
+  <div class="everyone-cell">
+    <div class="cell-value cell-tag-anyone"><span *ngIf="config.mustBeCompletedByEveryone">Everyone</span><span *ngIf="!config.mustBeCompletedByEveryone">First who claims</span></div>
+  </div>
+  <div class="when-cell">
+    <div class="cell-value">{{config.taskTypeDescription}}</div>
+    <div class="cell-value">{{config.taskTimeDescription}}</div>
+    <div class="cell-value">{{config.taskRepeatsForDescription}}</div>
+  </div>
+  <div class="priority-cell">
+    <span class="guest-request-tag" *ngIf="config.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest request</span>
+    <span class="high-priority-tag" *ngIf="config.isHighPriority" title="High priority!"><i class="icofont-exclamation-circle"></i> High priority</span>
+  </div>
+  <div class="progress-cell">
+    <ng-container *ngIf="config.progress.numberOfTasks === 1">
+      <div class="cell-value cv-status-label">Single</div>
+      <div class="cell-value cv-status-desc">{{config.progress.statusDescription}}</div>
+    </ng-container>
+    <ng-container *ngIf="config.progress.numberOfTasks > 1">
+      <div class="cell-value">
+        <div class="cv-compl-factor">{{(config.progress.completionFactor * 100) | number:'1.0'}}%</div>
+        <div class="cv-compl-counts">{{config.progress.numberOfCompletedTasks}}/{{config.progress.numberOfTasks}}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<div *ngIf="showListOfTasks$ | async" class="tc-tasks-grid">
+  <!--<table class="list-view-table tc-grid-opened">
+    <thead>
+      <tr>
+        <th class="who-cell">User</th>-->
+        <!--<th class="what-cell">What</th>-->
+        <!--<th class="where-cell">Where</th>
+        <th class="when-cell">When</th>
+        <th class="priority-cell">Priority</th>
+        <th class="task-status-cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="list-view-items-row" *ngFor="let task of tasks$ | async" (click)="selectTask(task.id)" [class.list-view-items-row-selected]="task.id === selectedTaskId">
+        <td class="who-cell">
+          <div class="td-user-avatar-grid">
+            <div class="task-details-avatar-wrapper">
+              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+            </div>
+            <div>
+              <div class="cell-value">{{task.userFullName}}</div>
+              <div class="sub-cell-value">{{task.userUsername}}</div>
+            </div>
+          </div>
+        </td>-->
+        <!--<td class="what-cell">
+          <ng-container *ngFor="let action of task.actions">
+            <div class="cell-value">{{action.actionName}} {{action.assetQuantity}}&times;{{action.assetName}}</div>
+          </ng-container>
+          <div class="sub-cell-value">{{task.typeDescription}}</div>
+        </td>-->
+        <!--<td class="where-cell">
+          <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+          <div class="sub-cell-value">{{task.whereDescription}}</div>
+        </td>
+        <td class="when-cell">
+          <div class="cell-value">{{task.when}}</div>
+          <div class="sub-cell-value">{{task.whenDescription}}</div>
+        </td>
+        <td class="priority-cell">
+          <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest request</span>
+          <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High priority</span>
+        </td>
+        <td class="task-status-cell">
+          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>-->
+
+
+
+  <table class="list-view-table tc-grid-opened">
+    <thead>
+      <tr>
+        <th class="what-cell">What</th>
+        <th class="priority-cell">Type</th>
+        <th class="where-cell">Where</th>
+        <th class="who-cell">User</th>
+        <th class="created-by-cell">Created by</th>
+        <th class="when-cell">When</th>
+        <th class="date-cell">Last updated at</th>
+        <th class="task-status-cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="list-view-items-row" *ngFor="let task of tasks$ | async" (click)="selectTask(task.id, task.taskConfigurationId)" [class.list-view-items-row-selected]="task.id === selectedTaskId">
+        <td class="what-cell">
+          <ng-container *ngFor="let action of task.actions">
+            <div class="cell-value">{{action.assetQuantity}} &times; {{action.actionName}} {{action.assetName}}</div>
+          </ng-container>
+        </td>
+        <td class="priority-cell">
+          <span class="guest-request-tag" *ngIf="task.isGuestRequest" title="Guest request!"><i class="icofont-star"></i> Guest req</span>
+          <span class="high-priority-tag" *ngIf="task.priorityKey === 'HIGH'" title="High priority!"><i class="icofont-exclamation-circle"></i> High</span>
+        </td>
+        <td class="where-cell">
+          <div class="cell-value">{{task.where}} <span class="task-room-occupied" *ngIf="task.isRoomOccupied"><i class="icofont-users-alt-4"></i></span></div>
+        </td>
+        <td class="who-cell">
+          <div class="td-user-avatar-grid">
+            <div class="task-details-avatar-wrapper">
+              <div class="task-details-avatar" *ngIf="!task.userAvatarImageUrl" [ngStyle]="{'background-color': task.defaultUserAvatarColorHex }">{{task.userInitials}}</div>
+              <div class="task-details-avatar-image" *ngIf="task.userAvatarImageUrl" [ngStyle]="{'background-image': 'url(' + task.userAvatarImageUrl + ')'}"></div>
+            </div>
+            <div>
+              <div class="cell-value">{{task.userFullName}}</div>
+            </div>
+          </div>
+        </td>
+        <td class="created-by-cell">
+          <div class="cell-value">{{task.createdByUserName}}</div>
+        </td>
+        <td class="when-cell">
+          <div class="cell-value">{{task.startsAtString}}</div>
+        </td>
+        <td class="date-cell">
+          <div class="cell-value">{{task.modifiedAtString }}</div>
+        </td>
+        <td class="task-status-cell">
+          <div [class]="task.statusKey + ' cell-value'">{{task.statusDescription}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div>
+    <div class="tasks-list-totals-description">
+      <span>Showing</span>
+      <span>{{loadedNumber$ | async}}</span>
+      <span>/</span>
+      <span>{{totalNumber$ | async}}</span>
+      <span>tasks</span>
+    </div>
+    <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+      <button mat-flat-button type="button" (click)="loadMore()">Load 20 more</button>
+    </div>
+  </div>
+</div>

@@ -139,10 +139,6 @@ namespace Planner.WebUi.Controllers
 			{
 				claims["room_categories"] = "room_categories";
 			}
-			if (User.Claims.Any(c => c.Type == "categories"))
-			{
-				claims["categories"] = "categories";
-			}
 			if (User.Claims.Any(c => c.Type == "hotel_settings"))
 			{
 				claims["hotel_settings"] = "hotel_settings";

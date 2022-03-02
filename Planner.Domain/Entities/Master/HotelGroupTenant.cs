@@ -19,5 +19,7 @@ namespace Planner.Domain.Entities.Master
 		public string ClientId { get; set; }
 		public string Key { get; set; }
 		public bool IsActive { get; set; }
+		public bool HasAccessToListOfHotelGroups { get; set; }
+		public bool HasAccessToListOfHotels { get; set; }
 	}
 }
