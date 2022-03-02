@@ -19,7 +19,7 @@
       </div>
       <div class="bottom-sidebar-items">
         <div class="sidebar-item sidebar-item-with-tooltip" (click)="showSettings()"
-          *hasClaim="['rooms', 'assets', 'users', 'role_management', 'room_categories', 'hotel_settings']"
+          *hasClaim="['rooms', 'assets', 'users', 'role_management', 'room_categories', 'categories', 'hotel_settings']"
           [class.sidebar-item-active]="selectedSubMenuKey === SETTINGS">
           <i class="icofont-gear"></i> <span class="main-sidebar-label">Settings</span>
           <div class="sidebar-item-tooltip">Settings</div>
@@ -157,6 +157,11 @@
         <span>Role management</span>
       </a>
 
+      <a [routerLink]="['/categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'categories'"
+         class="sidebar-item">
+        <i class="svg-icon icon-room-category"></i>
+        <span>L&F Categories</span>
+      </a>
       <a [routerLink]="['/room-categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'room_categories'"
          class="sidebar-item">
         <i class="svg-icon icon-room-category"></i>

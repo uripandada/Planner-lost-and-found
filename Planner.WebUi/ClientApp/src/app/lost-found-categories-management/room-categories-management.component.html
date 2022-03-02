@@ -1,0 +1,91 @@
+<div class="room-categories-component-wrapper component-wrapper">
+  <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
+    <div class="component-list-wrapper">
+      <div class="major-column-title"><b>Room categories</b></div>
+      <div class="component-box">
+        <div class="list-actions">
+          <div class="left-side-actions">
+            <!--<button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-upload-alt"></i> <span>Import data</span></button>
+            <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-download"></i> <span>Export data</span></button>-->
+          </div>
+          <div class="right-side-actions">
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newCategoryDetails()"><i class="icofont-plus"></i> <span>Create a category</span></button>
+          </div>
+        </div>
+        <div class="component-box-filter-row">
+          <form [formGroup]="filterForm">
+            <div class="component-filter-row">
+              <div class="room-categories-filter-row-grid">
+                <div class="form-field-wrapper">
+                  <label>Search buildings, floors and rooms</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input formControlName="keywords" matInput placeholder="By title, name, floor...">
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Sort by</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="sortKey" name="food">
+                      <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                        {{sort.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="component-list-row">
+          <div *ngIf="(totalNumberOfCategories$ | async) === 0">
+            <div class="empty-monthly-date-tasks">
+              <div class="empty-alert">
+                No categories found for the filter...
+              </div>
+            </div>
+          </div>
+          <table class="list-view-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th class="text-center" style="max-width: 200px; width: 200px;">Space</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-view-items-row" *ngFor="let category of roomCategories$ | async" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)">
+                <td class="name-cell">
+                  <div class="cell-value">{{category.name}}</div>
+                </td>
+                <td class="is-public-cell text-center">
+                  <div class="cell-value">{{(category.isPrivate ? 'PRIVATE' : 'Public')}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="tasks-list-totals-description">
+              <span>Showing</span>
+              <span>{{loadedNumberOfCategories$ | async}}</span>
+              <span>/</span>
+              <span>{{totalNumberOfCategories$ | async}}</span>
+              <span>tasks</span>
+            </div>
+            <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
+              <button mat-flat-button type="button" (click)="loadMoreCategories()">Load 20 more</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="component-details-wrapper">
+        <div class="details-content-wrapper">
+          <ng-container *ngIf="(this.isLoadingRoomCategoryDetails$ | async)">
+            <div class="component-box-title">Loading category...</div>
+          </ng-container>
+          <ng-container *ngIf="!(this.isLoadingRoomCategoryDetails$ | async)">
+            <app-room-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onRoomCategoryInserted($event)" (updated)="onRoomCategoryUpdated($event)" (cancelled)="onRoomCategoryCancel()"></app-room-category-edit>
+          </ng-container>
+        </div>
+    </div>
+  </div>
+</div>
