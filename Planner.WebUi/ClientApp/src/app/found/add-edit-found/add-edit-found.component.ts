@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
+  CategoryGridItemViewModel,
   ExtendedWhereData,
   HotelItemData,
   InsertLostAndFoundCommand,
@@ -29,6 +30,7 @@ export class AddEditFoundComponent implements OnInit {
 
   @Input() item: LostAndFoundModel;
   @Input() allWheres: Array<TaskWhereData> = [];
+  @Input() allCategories: Array<CategoryGridItemViewModel> = [];
   @Input() currentlyUploadingFiles: Array<FileDetails> = [];  
   @Input() temporaryUploadedFiles: Array<FileDetails> = [];  
   @Input() uploadedFiles: Array<FileDetails> = [];
@@ -82,6 +84,7 @@ export class AddEditFoundComponent implements OnInit {
 
   ngOnInit(): void {
     this.allWheres = this._route.snapshot.data.allWheres;
+    this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
 
     //this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {

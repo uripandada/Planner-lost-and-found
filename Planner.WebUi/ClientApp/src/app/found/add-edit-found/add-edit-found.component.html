@@ -138,8 +138,8 @@
             <div class="form-field-wrapper">                
               <label>Category</label>               
               <mat-form-field appearance="outline" color="accent" class="full-width">                  
-                <mat-select formControlName="status">                    
-                  <mat-option *ngFor="let status of statuses" [value]=""></mat-option>                  
+                <mat-select formControlName="category">                    
+                  <mat-option *ngFor="let category of allCategories" [value]="category.id">{{ category.name }}</mat-option>                  
                 </mat-select>
                 </mat-form-field>
               </div>
