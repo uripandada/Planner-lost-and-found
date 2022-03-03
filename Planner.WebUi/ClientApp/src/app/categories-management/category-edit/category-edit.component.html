@@ -1,0 +1,48 @@
+<div class="major-column-title">
+  <ng-container *ngIf="(isCreateNew$ | async)">Create a <b>new room category</b></ng-container>
+  <ng-container *ngIf="!(isCreateNew$ | async)">Edit the <b>{{category.name}}</b> room category</ng-container>
+</div>
+<div class="component-box">
+  <div class="task-details-content">
+    <form [formGroup]="categoryForm">
+
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput>
+          <mat-error *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
+            <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
+            <div *ngIf="categoryForm.controls.name.errors.ROOM_CATEGORY_ALREADY_EXISTS">Already exists</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <!--<div>
+    <mat-form-field appearance="outline" color="accent" class="full-width">
+      <mat-label>Credits</mat-label>
+      <input formControlName="credits" matInput placeholder="Category credits...">
+    </mat-form-field>
+  </div>-->
+      <!--<div class="checkbox-form-row">
+    <mat-slide-toggle formControlName="isPublic">Are the spaces assigned to the category public?</mat-slide-toggle>
+  </div>-->
+      <!-- <div class="checkbox-form-row">
+        <mat-slide-toggle formControlName="isPrivate">Are the spaces bedroom spaces?</mat-slide-toggle>
+      </div>
+      <div class="checkbox-form-row">
+        <mat-slide-toggle formControlName="isDefaultForReservationSync">Use as default for rooms created through the PMS synchronization?</mat-slide-toggle>
+      </div> -->
+      <div class="room-category-edit-actions">
+        <div class="edit-confirm-actions">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+            <i class="icofont-check-alt"></i>
+            <ng-container>Save</ng-container>
+          </button>
+        </div>
+        <div class="edit-cancel-actions">
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

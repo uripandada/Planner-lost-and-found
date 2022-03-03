@@ -21,6 +21,8 @@ export class SettingsClaimKeys {
 
   public /* const */ static RoleManagement = 'role_management';
 
+  public /* const */ static Categories = 'categories';
+
   public /* const */ static RoomCategories = 'room_categories';
 
   public /* const */ static HotelSettings = 'hotel_settings';
