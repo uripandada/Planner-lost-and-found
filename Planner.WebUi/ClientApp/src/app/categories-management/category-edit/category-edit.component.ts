@@ -36,6 +36,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
 
     this.categoryForm = this._formBuilder.group({
       name: [this.category.name, [Validators.required]],
+      expirationDays: [this.category.expirationDays, [Validators.required]],
     });
   }
 
@@ -61,6 +62,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
 
   private _setCategoryFormData() {
     this.categoryForm.controls.name.setValue(this.category.name);
+    this.categoryForm.controls.expirationDays.setValue(this.category.expirationDays);
 
     this.categoryForm.updateValueAndValidity({ onlySelf: false });
 
@@ -90,6 +92,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
     let formValues = this.categoryForm.getRawValue();
     let insertRequest: InsertCategoryCommand = new InsertCategoryCommand({
       name: formValues.name,
+      expirationDays: formValues.expirationDays
     });
 
     this.loading.start();
@@ -110,6 +113,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
         let CategoryDetails = new CategoryDetailsViewModel({
           id: response.data,
           name: insertRequest.name,
+          expirationDays: insertRequest.expirationDays
         });
 
         this.inserted.next(CategoryDetails);
@@ -129,6 +133,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
     let updateRequest: UpdateCategoryCommand = new UpdateCategoryCommand({
       id: this.category.id,
       name: formValues.name,
+      expirationDays: formValues.expirationDays,
     });
 
     this.loading.start();
@@ -149,6 +154,7 @@ export class CategoryEditComponent implements OnInit, OnChanges {
         let CategoryDetails = new CategoryDetailsViewModel({
           id: updateRequest.id,
           name: updateRequest.name,
+          expirationDays: updateRequest.expirationDays
         });
 
         this.updated.next(CategoryDetails);

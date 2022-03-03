@@ -19,7 +19,7 @@
                 <div class="form-field-wrapper">
                   <label>Search lost&found categories</label>
                   <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <input formControlName="keywords" matInput placeholder="By title, name, floor...">
+                    <input formControlName="keywords" matInput placeholder="By name">
                   </mat-form-field>
                 </div>
                 <div class="form-field-wrapper">
@@ -57,7 +57,7 @@
                   <div class="cell-value">{{category.name}}</div>
                 </td>
                 <td class="is-public-cell text-center">
-                  <div class="cell-value">{{(category.isPrivate ? 'PRIVATE' : 'Public')}}</div>
+                  <div class="cell-value">{{category.expirationDays}}</div>
                 </td>
               </tr>
             </tbody>
@@ -68,7 +68,7 @@
               <span>{{loadedNumberOfCategories$ | async}}</span>
               <span>/</span>
               <span>{{totalNumberOfCategories$ | async}}</span>
-              <span>tasks</span>
+              <span>categories</span>
             </div>
             <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
               <button mat-flat-button type="button" (click)="loadMoreCategories()">Load 20 more</button>

@@ -10,9 +10,19 @@
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Name</mat-label>
           <input formControlName="name" matInput>
-          <mat-error *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
+          <mat-error
+            *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
             <div *ngIf="categoryForm.controls.name.errors.CATEGORY_ALREADY_EXISTS">Already exists</div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Expiration in days</mat-label>
+          <input formControlName="expirationDays" matInput>
+          <mat-error
+            *ngIf="categoryForm.controls.expirationDays.invalid && (categoryForm.controls.expirationDays.dirty || categoryForm.controls.expirationDays.touched)">
+            <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
           </mat-error>
         </mat-form-field>
       </div>
@@ -33,13 +43,15 @@
       </div> -->
       <div class="category-edit-actions">
         <div class="edit-confirm-actions">
-          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
+          <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()"
+            [disabled]="isSaving$ | async">
             <i class="icofont-check-alt"></i>
             <ng-container>Save</ng-container>
           </button>
         </div>
         <div class="edit-cancel-actions">
-          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i> Cancel</button>
+          <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()"><i class="icofont-undo"></i>
+            Cancel</button>
         </div>
       </div>
     </form>

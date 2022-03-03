@@ -15138,6 +15138,7 @@ export interface IPageOfOfCategoryGridItemViewModel {
 export class CategoryGridItemViewModel implements ICategoryGridItemViewModel {
     id!: string;
     name?: string | null;
+    expirationDays!: number;
 
     constructor(data?: ICategoryGridItemViewModel) {
         if (data) {
@@ -15152,6 +15153,7 @@ export class CategoryGridItemViewModel implements ICategoryGridItemViewModel {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.expirationDays = _data["expirationDays"] !== undefined ? _data["expirationDays"] : <any>null;
         }
     }
 
@@ -15166,6 +15168,7 @@ export class CategoryGridItemViewModel implements ICategoryGridItemViewModel {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["expirationDays"] = this.expirationDays !== undefined ? this.expirationDays : <any>null;
         return data; 
     }
 }
@@ -15173,6 +15176,7 @@ export class CategoryGridItemViewModel implements ICategoryGridItemViewModel {
 export interface ICategoryGridItemViewModel {
     id: string;
     name?: string | null;
+    expirationDays: number;
 }
 
 export class GetPageRequest implements IGetPageRequest {
@@ -15255,6 +15259,7 @@ export interface IGetPageOfCategoriesQuery extends IGetPageRequest {
 export class CategoryDetailsViewModel implements ICategoryDetailsViewModel {
     id!: string;
     name?: string | null;
+    expirationDays!: number;
 
     constructor(data?: ICategoryDetailsViewModel) {
         if (data) {
@@ -15269,6 +15274,7 @@ export class CategoryDetailsViewModel implements ICategoryDetailsViewModel {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.expirationDays = _data["expirationDays"] !== undefined ? _data["expirationDays"] : <any>null;
         }
     }
 
@@ -15283,6 +15289,7 @@ export class CategoryDetailsViewModel implements ICategoryDetailsViewModel {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["expirationDays"] = this.expirationDays !== undefined ? this.expirationDays : <any>null;
         return data; 
     }
 }
@@ -15290,6 +15297,7 @@ export class CategoryDetailsViewModel implements ICategoryDetailsViewModel {
 export interface ICategoryDetailsViewModel {
     id: string;
     name?: string | null;
+    expirationDays: number;
 }
 
 export class GetCategoryDetailsQuery implements IGetCategoryDetailsQuery {
@@ -15330,6 +15338,7 @@ export interface IGetCategoryDetailsQuery {
 
 export class InsertCategoryCommand implements IInsertCategoryCommand {
     name?: string | null;
+    expirationDays!: number;
 
     constructor(data?: IInsertCategoryCommand) {
         if (data) {
@@ -15343,6 +15352,7 @@ export class InsertCategoryCommand implements IInsertCategoryCommand {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.expirationDays = _data["expirationDays"] !== undefined ? _data["expirationDays"] : <any>null;
         }
     }
 
@@ -15356,17 +15366,20 @@ export class InsertCategoryCommand implements IInsertCategoryCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["expirationDays"] = this.expirationDays !== undefined ? this.expirationDays : <any>null;
         return data; 
     }
 }
 
 export interface IInsertCategoryCommand {
     name?: string | null;
+    expirationDays: number;
 }
 
 export class UpdateCategoryCommand implements IUpdateCategoryCommand {
     id!: string;
     name?: string | null;
+    expirationDays!: number;
 
     constructor(data?: IUpdateCategoryCommand) {
         if (data) {
@@ -15381,6 +15394,7 @@ export class UpdateCategoryCommand implements IUpdateCategoryCommand {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.expirationDays = _data["expirationDays"] !== undefined ? _data["expirationDays"] : <any>null;
         }
     }
 
@@ -15395,6 +15409,7 @@ export class UpdateCategoryCommand implements IUpdateCategoryCommand {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["expirationDays"] = this.expirationDays !== undefined ? this.expirationDays : <any>null;
         return data; 
     }
 }
@@ -15402,6 +15417,7 @@ export class UpdateCategoryCommand implements IUpdateCategoryCommand {
 export interface IUpdateCategoryCommand {
     id: string;
     name?: string | null;
+    expirationDays: number;
 }
 
 export class DeleteCategoryCommand implements IDeleteCategoryCommand {

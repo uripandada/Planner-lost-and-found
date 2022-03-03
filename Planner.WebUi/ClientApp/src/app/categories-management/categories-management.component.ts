@@ -19,6 +19,8 @@ export class CategoriesManagementComponent implements OnInit {
     { key: 'NAME_DESC', value: 'Name Z to A' },
     { key: 'CREATED_AT_DESC', value: 'Newest first' },
     { key: 'CREATED_AT_ASC', value: 'Oldest first' },
+    { key: 'EXPIRATION_DAYS_ASC', value: 'Expiration days High to Low' },
+    { key: 'EXPIRATION_DAYS_DESC', value: 'Expiration days Low to High' },
   ];
 
   isCategoryLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -35,6 +37,7 @@ export class CategoriesManagementComponent implements OnInit {
   selectedCategoryDetails$: BehaviorSubject<CategoryDetailsViewModel> = new BehaviorSubject<CategoryDetailsViewModel>(new CategoryDetailsViewModel({
     id: null,
     name: null,
+    expirationDays: 0
   }));
 
   filterForm: FormGroup;
@@ -118,6 +121,7 @@ export class CategoriesManagementComponent implements OnInit {
     let categoryItem = Categories.find(c => c.id === category.id);
     if (categoryItem) {
       categoryItem.name = category.name;
+      categoryItem.expirationDays = category.expirationDays;
       this.Categories$.next(Categories);
     }
   }
@@ -131,6 +135,7 @@ export class CategoriesManagementComponent implements OnInit {
     return new CategoryDetailsViewModel({
       id: null,
       name: null,
+      expirationDays: 0
     });
   }
 
