@@ -20,6 +20,10 @@ namespace Planner.Persistence.Configurations
                 .HasColumnName(nameof(Category.Name))
                 .IsRequired();
 
+            builder.Property(a => a.ExpirationDays)
+                .HasColumnName(nameof(Category.ExpirationDays))
+                .IsRequired();
+
         }
     }
 }

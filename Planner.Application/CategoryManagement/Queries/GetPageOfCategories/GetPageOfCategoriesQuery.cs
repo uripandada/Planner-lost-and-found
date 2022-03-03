@@ -15,6 +15,7 @@ namespace Planner.Application.CategoryManagement.Queries.GetPageOfCategories
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
+		public int ExpirationDays { get; set; }
 	}
 
 	public class GetPageOfCategoriesQuery : GetPageRequest, IRequest<PageOf<CategoryGridItemViewModel>>
@@ -68,6 +69,12 @@ namespace Planner.Application.CategoryManagement.Queries.GetPageOfCategories
 					case "CREATED_AT_ASC":
 						query = query.OrderByDescending(q => q.CreatedAt);
 						break;
+					case "EXPIRATION_DAYS_ASC":
+						query = query.OrderByDescending(q => q.ExpirationDays);
+						break;
+					case "EXPIRATION_DAYS_DESC":
+						query = query.OrderBy(q => q.ExpirationDays);
+						break;
 					default:
 						break;
 				}
@@ -97,6 +104,7 @@ namespace Planner.Application.CategoryManagement.Queries.GetPageOfCategories
 				{
 					Id = d.Id,
 					Name = d.Name,
+					ExpirationDays = d.ExpirationDays
 				}).ToArray()
 			};
 

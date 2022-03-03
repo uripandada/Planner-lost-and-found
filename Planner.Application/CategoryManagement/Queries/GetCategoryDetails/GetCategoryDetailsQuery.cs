@@ -12,6 +12,7 @@ namespace Planner.Application.CategoryManagement.Queries.GetCategoryDetails
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
+		public int ExpirationDays { get; set; }
 	}
 
 	public class GetCategoryDetailsQuery : IRequest<CategoryDetailsViewModel>
@@ -38,6 +39,7 @@ namespace Planner.Application.CategoryManagement.Queries.GetCategoryDetails
 			{
 				Id = category.Id,
 				Name = category.Name,
+				ExpirationDays = category.ExpirationDays
 			};
 		}
 	}

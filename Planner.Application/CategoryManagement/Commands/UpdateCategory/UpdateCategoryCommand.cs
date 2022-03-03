@@ -19,6 +19,7 @@ namespace Planner.Application.CategoryManagement.Commands.UpdateCategory
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
+		public int ExpirationDays { get; set; }
 	}
 
 	public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
@@ -49,6 +50,7 @@ namespace Planner.Application.CategoryManagement.Commands.UpdateCategory
 			category.ModifiedAt = DateTime.UtcNow;
 			category.ModifiedById = this._userId;
 			category.Name = request.Name;
+			category.ExpirationDays = request.ExpirationDays;
 
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 

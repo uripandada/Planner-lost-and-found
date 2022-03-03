@@ -16,7 +16,8 @@ namespace Planner.Persistence.Migrations
                     created_by_id = table.Column<Guid>(nullable: false),
                     modified_at = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "now()"),
                     modified_by_id = table.Column<Guid>(nullable: false),
-                    name = table.Column<string>(nullable: false)
+                    name = table.Column<string>(nullable: false),
+                    expiration_days = table.Column<int>(nullable: false, defaultValueSql: "0")
                 },
                 constraints: table =>
                 {
@@ -49,7 +50,7 @@ namespace Planner.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "room_categorys");
+                name: "categorys");
         }
     }
 }

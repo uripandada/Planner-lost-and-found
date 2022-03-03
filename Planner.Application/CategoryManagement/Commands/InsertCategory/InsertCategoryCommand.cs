@@ -19,6 +19,7 @@ namespace Planner.Application.CategoryManagement.Commands.InsertCategory
 	public class InsertCategoryCommand : IRequest<ProcessResponse<Guid>>
 	{
 		public string Name { get; set; }
+		public int ExpirationDays { get; set; }
 	}
 
 	public class InsertCategoryCommandHandler : IRequestHandler<InsertCategoryCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
@@ -41,7 +42,8 @@ namespace Planner.Application.CategoryManagement.Commands.InsertCategory
 				ModifiedAt = DateTime.UtcNow,
 				ModifiedById = this._userId,
 				Id = Guid.NewGuid(),
-				Name = request.Name
+				Name = request.Name,
+				ExpirationDays = request.ExpirationDays
 			};
 
 			await this._databaseContext.Categorys.AddAsync(category);
