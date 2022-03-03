@@ -37,6 +37,7 @@ namespace Planner.Application.Interfaces
 		DbSet<Domain.Entities.Floor> Floors { get; set; }
 		DbSet<Domain.Entities.Room> Rooms { get; set; }
 		DbSet<Domain.Entities.RoomCategory> RoomCategorys { get; set; }
+		DbSet<Domain.Entities.Category> Categorys { get; set; }
 		DbSet<Domain.Entities.Warehouse> Warehouses { get; set; }
 
 		//DbSet<Domain.Entities.RoomWithHotelStructureView> RoomsWithHotelStructureView { get; set; }

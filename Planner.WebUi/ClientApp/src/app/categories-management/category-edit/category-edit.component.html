@@ -1,6 +1,6 @@
 <div class="major-column-title">
-  <ng-container *ngIf="(isCreateNew$ | async)">Create a <b>new room category</b></ng-container>
-  <ng-container *ngIf="!(isCreateNew$ | async)">Edit the <b>{{category.name}}</b> room category</ng-container>
+  <ng-container *ngIf="(isCreateNew$ | async)">Create a <b>new category</b></ng-container>
+  <ng-container *ngIf="!(isCreateNew$ | async)">Edit the <b>{{category.name}}</b> category</ng-container>
 </div>
 <div class="component-box">
   <div class="task-details-content">
@@ -12,7 +12,7 @@
           <input formControlName="name" matInput>
           <mat-error *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
-            <div *ngIf="categoryForm.controls.name.errors.ROOM_CATEGORY_ALREADY_EXISTS">Already exists</div>
+            <div *ngIf="categoryForm.controls.name.errors.CATEGORY_ALREADY_EXISTS">Already exists</div>
           </mat-error>
         </mat-form-field>
       </div>
@@ -31,7 +31,7 @@
       <div class="checkbox-form-row">
         <mat-slide-toggle formControlName="isDefaultForReservationSync">Use as default for rooms created through the PMS synchronization?</mat-slide-toggle>
       </div> -->
-      <div class="room-category-edit-actions">
+      <div class="category-edit-actions">
         <div class="edit-confirm-actions">
           <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()" [disabled]="isSaving$ | async">
             <i class="icofont-check-alt"></i>

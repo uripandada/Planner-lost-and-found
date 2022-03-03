@@ -1200,6 +1200,280 @@ export class AutomationClient {
 @Injectable({
     providedIn: 'root'
 })
+export class CategoryManagementClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getPageOfCategories(request: GetPageOfCategoriesQuery): Observable<PageOfOfCategoryGridItemViewModel> {
+        let url_ = this.baseUrl + "/api/CategoryManagement/GetPageOfCategories";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPageOfCategories(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPageOfCategories(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfCategoryGridItemViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfCategoryGridItemViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPageOfCategories(response: HttpResponseBase): Observable<PageOfOfCategoryGridItemViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfCategoryGridItemViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfCategoryGridItemViewModel>(<any>null);
+    }
+
+    getCategoryDetails(request: GetCategoryDetailsQuery): Observable<CategoryDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/CategoryManagement/GetCategoryDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCategoryDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCategoryDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<CategoryDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CategoryDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCategoryDetails(response: HttpResponseBase): Observable<CategoryDetailsViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CategoryDetailsViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CategoryDetailsViewModel>(<any>null);
+    }
+
+    insertCategory(request: InsertCategoryCommand): Observable<ProcessResponseOfGuid> {
+        let url_ = this.baseUrl + "/api/CategoryManagement/InsertCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertCategory(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseOfGuid>(<any>null);
+    }
+
+    updateCategory(request: UpdateCategoryCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/CategoryManagement/UpdateCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateCategory(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+
+    deleteCategory(request: DeleteCategoryCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/CategoryManagement/DeleteCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteCategory(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class CleaningCalendarClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -14813,6 +15087,359 @@ export interface ISetRoomsStatusCommand {
     overrideMidnightTime?: boolean | null;
 }
 
+export class PageOfOfCategoryGridItemViewModel implements IPageOfOfCategoryGridItemViewModel {
+    items?: CategoryGridItemViewModel[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfCategoryGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(CategoryGridItemViewModel.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfCategoryGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfCategoryGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfCategoryGridItemViewModel {
+    items?: CategoryGridItemViewModel[] | null;
+    totalNumberOfItems: number;
+}
+
+export class CategoryGridItemViewModel implements ICategoryGridItemViewModel {
+    id!: string;
+    name?: string | null;
+
+    constructor(data?: ICategoryGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CategoryGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new CategoryGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface ICategoryGridItemViewModel {
+    id: string;
+    name?: string | null;
+}
+
+export class GetPageRequest implements IGetPageRequest {
+    skip!: number;
+    take!: number;
+
+    constructor(data?: IGetPageRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
+            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
+        data["take"] = this.take !== undefined ? this.take : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetPageRequest {
+    skip: number;
+    take: number;
+}
+
+export class GetPageOfCategoriesQuery extends GetPageRequest implements IGetPageOfCategoriesQuery {
+    keywords?: string | null;
+    sortKey?: string | null;
+
+    constructor(data?: IGetPageOfCategoriesQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.keywords = _data["keywords"] !== undefined ? _data["keywords"] : <any>null;
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageOfCategoriesQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageOfCategoriesQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["keywords"] = this.keywords !== undefined ? this.keywords : <any>null;
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetPageOfCategoriesQuery extends IGetPageRequest {
+    keywords?: string | null;
+    sortKey?: string | null;
+}
+
+export class CategoryDetailsViewModel implements ICategoryDetailsViewModel {
+    id!: string;
+    name?: string | null;
+
+    constructor(data?: ICategoryDetailsViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CategoryDetailsViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new CategoryDetailsViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface ICategoryDetailsViewModel {
+    id: string;
+    name?: string | null;
+}
+
+export class GetCategoryDetailsQuery implements IGetCategoryDetailsQuery {
+    id!: string;
+
+    constructor(data?: IGetCategoryDetailsQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetCategoryDetailsQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCategoryDetailsQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetCategoryDetailsQuery {
+    id: string;
+}
+
+export class InsertCategoryCommand implements IInsertCategoryCommand {
+    name?: string | null;
+
+    constructor(data?: IInsertCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InsertCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsertCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface IInsertCategoryCommand {
+    name?: string | null;
+}
+
+export class UpdateCategoryCommand implements IUpdateCategoryCommand {
+    id!: string;
+    name?: string | null;
+
+    constructor(data?: IUpdateCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdateCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdateCategoryCommand {
+    id: string;
+    name?: string | null;
+}
+
+export class DeleteCategoryCommand implements IDeleteCategoryCommand {
+    id!: string;
+
+    constructor(data?: IDeleteCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): DeleteCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeleteCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IDeleteCategoryCommand {
+    id: string;
+}
+
 export class CleaningCalendarIntervalResult implements ICleaningCalendarIntervalResult {
     days?: CalendarDay[] | null;
     rooms?: CleaningCalendarRoom[] | null;
@@ -23450,46 +24077,6 @@ export enum TypeOfLoss {
     Customer = 0,
     Employee = 1,
     Unknown = 2,
-}
-
-export class GetPageRequest implements IGetPageRequest {
-    skip!: number;
-    take!: number;
-
-    constructor(data?: IGetPageRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
-            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): GetPageRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetPageRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
-        data["take"] = this.take !== undefined ? this.take : <any>null;
-        return data; 
-    }
-}
-
-export interface IGetPageRequest {
-    skip: number;
-    take: number;
 }
 
 export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLostAndFoundListQuery {

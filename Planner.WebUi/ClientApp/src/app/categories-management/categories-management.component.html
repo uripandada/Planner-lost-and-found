@@ -1,4 +1,4 @@
-<div class="room-categories-component-wrapper component-wrapper">
+<div class="categories-component-wrapper component-wrapper">
   <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
     <div class="component-list-wrapper">
       <div class="major-column-title"><b>Lost&Found Category</b></div>
@@ -15,7 +15,7 @@
         <div class="component-box-filter-row">
           <form [formGroup]="filterForm">
             <div class="component-filter-row">
-              <div class="room-categories-filter-row-grid">
+              <div class="categories-filter-row-grid">
                 <div class="form-field-wrapper">
                   <label>Search lost&found categories</label>
                   <mat-form-field appearance="outline" color="accent" class="full-width">
@@ -52,7 +52,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="list-view-items-row" *ngFor="let category of roomCategories$ | async" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)">
+              <tr class="list-view-items-row" *ngFor="let category of Categories$ | async" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)">
                 <td class="name-cell">
                   <div class="cell-value">{{category.name}}</div>
                 </td>
@@ -79,11 +79,11 @@
     </div>
     <div class="component-details-wrapper">
         <div class="details-content-wrapper">
-          <ng-container *ngIf="(this.isLoadingRoomCategoryDetails$ | async)">
+          <ng-container *ngIf="(this.isLoadingCategoryDetails$ | async)">
             <div class="component-box-title">Loading category...</div>
           </ng-container>
-          <ng-container *ngIf="!(this.isLoadingRoomCategoryDetails$ | async)">
-            <app-room-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onRoomCategoryInserted($event)" (updated)="onRoomCategoryUpdated($event)" (cancelled)="onRoomCategoryCancel()"></app-room-category-edit>
+          <ng-container *ngIf="!(this.isLoadingCategoryDetails$ | async)">
+            <app-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-category-edit>
           </ng-container>
         </div>
     </div>
