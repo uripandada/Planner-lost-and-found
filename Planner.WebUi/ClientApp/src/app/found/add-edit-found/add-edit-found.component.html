@@ -121,8 +121,8 @@
               <div class="form-field-wrapper">
                 <label>Where did we store it?</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">                  
-                  <mat-select formControlName="status">                    
-                    <mat-option *ngFor="let status of statuses" [value]=""></mat-option>                  
+                  <mat-select formControlName="storage">                    
+                    <mat-option *ngFor="let storage of storages" [value]=""></mat-option>                  
                   </mat-select>                
                 </mat-form-field>              
               </div>            
@@ -147,7 +147,7 @@
           </div>
 
           <div class="item-fields-wrapper">
-            <ng-container *ngIf="f.status.value == statuses.ClientContacted">
+            <ng-container *ngIf="f.status.value == statusFlag">
               <div class="form-field-wrapper">
                 <label>First Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">

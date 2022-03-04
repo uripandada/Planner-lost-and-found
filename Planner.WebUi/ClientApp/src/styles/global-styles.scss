@@ -5545,6 +5545,13 @@ td.monthly-weekday-column {
   padding-top: 6px;
 }
 
+.categories-filter-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  grid-column-gap: 15px;
+  padding-top: 6px;
+}
+
 .hotel-settings-filter-row-grid {
   display: grid;
   grid-template-columns: 1fr;

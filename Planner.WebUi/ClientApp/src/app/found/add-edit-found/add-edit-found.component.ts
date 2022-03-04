@@ -50,6 +50,7 @@ export class AddEditFoundComponent implements OnInit {
   statuses: Array<{ key: LostAndFoundStatus, value: string }> = [];
   statusMappings: { [index: number]: string } = {};
   statusChange$: Subscription;
+  statusFlag: number;
 
   hotels: HotelItemData[] = [];
 
@@ -63,7 +64,6 @@ export class AddEditFoundComponent implements OnInit {
   ) {
     this.typesOfLoss.push({ key: TypeOfLoss.Customer, value: "Customer" });
     this.typesOfLoss.push({ key: TypeOfLoss.Employee, value: "Employee" });
-    this.typesOfLoss.push({ key: TypeOfLoss.Unknown, value: "Unknown" });
 
     this.statuses.push({ key: LostAndFoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
     this.statuses.push({ key: LostAndFoundStatus.Unclaimed, value: "Unclaimed" });
@@ -77,7 +77,6 @@ export class AddEditFoundComponent implements OnInit {
     this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
     this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
     this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
-    this.statuses.push({ key: LostAndFoundStatus.Unknown, value: "Unknown" });
 
     this.hotels = hotelService.getHotels();
   }
@@ -86,14 +85,15 @@ export class AddEditFoundComponent implements OnInit {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
+    this.statusFlag = LostAndFoundStatus.ClientContacted;
 
-    //this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
-    //  if(value === LostAndFoundStatus.ClientContacted) {
-    //    this.addClientFormControls();
-    //  } else {
-    //    this.removeClientFormControls();
-    //  }
-    //})
+    this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
+     if(value === LostAndFoundStatus.ClientContacted) {
+       this.addClientFormControls();
+     } else {
+       this.removeClientFormControls();
+     }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -293,29 +293,29 @@ export class AddEditFoundComponent implements OnInit {
 
   }
 
-  //private addClientFormControls() {
-  //  this.foundForm.addControl('firstName', new FormControl('', [Validators.required]));
-  //  this.foundForm.addControl('lastName', new FormControl('', [Validators.required]));
-  //  this.foundForm.addControl('phoneNumber', new FormControl(''));
-  //  this.foundForm.addControl('email', new FormControl('', [Validators.required]));
-  //  this.foundForm.addControl('street', new FormControl(''));
-  //  this.foundForm.addControl('city', new FormControl(''));
-  //  this.foundForm.addControl('postalCode', new FormControl(''));
-  //  this.foundForm.addControl('country', new FormControl(''));
-  //  this.foundForm.addControl('referenceNumber', new FormControl(''));
-  //}
+  private addClientFormControls() {
+   this.foundForm.addControl('firstName', new FormControl('', [Validators.required]));
+   this.foundForm.addControl('lastName', new FormControl('', [Validators.required]));
+   this.foundForm.addControl('phoneNumber', new FormControl(''));
+   this.foundForm.addControl('email', new FormControl('', [Validators.required]));
+   this.foundForm.addControl('street', new FormControl(''));
+   this.foundForm.addControl('city', new FormControl(''));
+   this.foundForm.addControl('postalCode', new FormControl(''));
+   this.foundForm.addControl('country', new FormControl(''));
+   this.foundForm.addControl('referenceNumber', new FormControl(''));
+  }
 
-  //private removeClientFormControls() {
-  //  this.foundForm.removeControl('firstName');
-  //  this.foundForm.removeControl('lastName');
-  //  this.foundForm.removeControl('phoneNumber');
-  //  this.foundForm.removeControl('email');
-  //  this.foundForm.removeControl('street');
-  //  this.foundForm.removeControl('city');
-  //  this.foundForm.removeControl('postalCode');
-  //  this.foundForm.removeControl('country');
-  //  this.foundForm.removeControl('referenceNumber');
-  //}
+  private removeClientFormControls() {
+   this.foundForm.removeControl('firstName');
+   this.foundForm.removeControl('lastName');
+   this.foundForm.removeControl('phoneNumber');
+   this.foundForm.removeControl('email');
+   this.foundForm.removeControl('street');
+   this.foundForm.removeControl('city');
+   this.foundForm.removeControl('postalCode');
+   this.foundForm.removeControl('country');
+   this.foundForm.removeControl('referenceNumber');
+  }
 
   public uploadedFilesChanged(fileChanges: Array<FilesChangedData>) {
     this.selectedFiles = fileChanges;
