@@ -67,46 +67,59 @@ export class AddEditFoundComponent implements OnInit {
 
     this.statuses.push({ key: LostAndFoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
     this.statuses.push({ key: LostAndFoundStatus.Unclaimed, value: "Unclaimed" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
-    this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
-    this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
-    this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
+    // this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
+    // this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
+    // this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
+    // this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
+    // this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
+    // this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
+    // this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
+    // this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
+    // this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
+    // this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
 
     this.hotels = hotelService.getHotels();
   }
 
+  
   ngOnInit(): void {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
     this.statusFlag = LostAndFoundStatus.ClientContacted;
-
+    
     this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
-     if(value === LostAndFoundStatus.ClientContacted) {
-       this.addClientFormControls();
-     } else {
-       this.removeClientFormControls();
-     }
+      if(value === LostAndFoundStatus.ClientContacted) {
+        this.addClientFormControls();
+      } else {
+        this.removeClientFormControls();
+      }
     })
   }
-
+  
   ngOnChanges(changes: SimpleChanges): void {
     if (this.item.id) {
       this.isCreateNew = false;
-
+      
     } else {
       this.isCreateNew = true;
     }
-
+    
     if (!changes.item.firstChange) {
       this.setFormData();
     }
+  }
+  
+  foundstatus(){
+    document.getElementById('foundstatus').style.backgroundColor = '#d5e8d4' ; 
+  }
+
+  gueststatus(){
+      document.getElementById('gueststatus').style.backgroundColor = '#d5e8d4' ; 
+  }
+
+  deliverystatus(){
+    document.getElementById('deliverystatus').style.backgroundColor = '#d5e8d4' ; 
   }
 
   initForm() {

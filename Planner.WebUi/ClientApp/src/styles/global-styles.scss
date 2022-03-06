@@ -1551,9 +1551,15 @@ body {
   font-family: "circular-std";
 }
 
+.object-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 0px;
+}
+
 .two-column-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
   grid-column-gap: 15px;
 }
 
@@ -11233,7 +11239,7 @@ td.priority-cell {
   }
 
   .mat-form-field-wrapper {
-    padding-bottom: 9px;
+    padding-bottom: 0px;
   }
 
   .mat-form-field-subscript-wrapper {
@@ -11245,6 +11251,131 @@ td.priority-cell {
     display: grid;
     grid-template-columns: 1fr 125px;
     grid-column-gap: 15px;
+  }
+}
+
+.columnField {
+  border: 1px solid black;
+}
+
+.found-top-stripe {
+  background-color: #efefef;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+
+  span.mtsi-tag:hover {
+    background-color: #999999;
+  }
+
+  span.mtsi-tag:active {
+    background-color: white;
+  }
+
+  span.mtsi-tag {
+    display: inline-block;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 4px;
+    white-space: nowrap;
+    font-size: 12px !important;
+    font-weight: 100 !important;
+    text-transform: uppercase;
+    line-height: 16px !important;
+    align-self: center;
+
+    .mtsi-paused {
+      background-color: #999;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-ontime {
+      background-color: #07b707;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-pending {
+      background-color: #f8c753;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-waiting {
+      background-color: #eb7e30;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-started {
+      background-color: #049587;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-finished {
+      background-color: #1553b6;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-cancelled {
+      background-color: #999;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-late {
+      background-color: #ff4949;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+
+    .mtsi-verified {
+      background-color: #c545b6;
+      color: white;
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+  }
+
+  .toggle-button {
+    line-height: 14px;
+    background-color: #ef7373;
+    color: #ffffff;
+    padding: 6px;
+    font-weight: 400;
+    padding-right: 15px;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    border-radius: 4px;
+  }
+
+  .found-summary {
+    display: flex;
+  }
+
+  .found-summary-items {
+    color: #555;
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-right: 5px;
+    column-gap: 15px;
+    row-gap: 6px;
   }
 }
 

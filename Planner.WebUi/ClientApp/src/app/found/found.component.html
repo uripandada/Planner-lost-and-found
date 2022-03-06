@@ -23,6 +23,31 @@
           </div>
         </div>
 
+        <div class="found-top-stripe left-right">
+          <div class="found-summary">
+            <div>
+            </div>
+          </div>
+          <div class="found-summary-items">
+            
+            <!-- Add badge button start -->
+
+            <!-- <span class="mtsi-tag"><b class="mtsi-pending">{{numberOfPendingTasks$ | async}}</b> pending</span>
+            <span class="mtsi-tag"><b class="mtsi-waiting">{{numberOfWaitingTasks$ | async}}</b> unclaimed</span>
+            <span class="mtsi-tag"><b class="mtsi-paused">{{numberOfPausedTasks$ | async}}</b> guest follow up</span>
+            <span class="mtsi-tag"><b class="mtsi-started">{{numberOfStartedTasks$ | async}}</b> returned</span>
+            <span class="mtsi-tag"><b class="mtsi-finished">{{numberOfFinishedTasks$ | async}}</b> canceled</span> -->
+            <span class="mtsi-tag" ><b class="mtsi-pending">0</b> pending</span>
+            <span class="mtsi-tag" ><b class="mtsi-waiting">0</b> unclaimed</span>
+            <span class="mtsi-tag" ><b class="mtsi-paused">0</b> guest follow up</span>
+            <span class="mtsi-tag" ><b class="mtsi-started">0</b> returned</span>
+            <span class="mtsi-tag" ><b class="mtsi-finished">0</b> canceled</span>
+
+            <!-- Add badge button end -->
+
+          </div>
+        </div>
+
         <div class="component-box">
           <div class="component-box-filter-row">
             <form [formGroup]="filterForm">
