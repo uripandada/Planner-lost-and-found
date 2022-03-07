@@ -52,6 +52,10 @@ export class AddEditFoundComponent implements OnInit {
   statusChange$: Subscription;
   statusFlag: number;
 
+  isFoundStatus: boolean;
+  isGuestStatus: boolean;
+  isDeliveryStatus: boolean;
+
   hotels: HotelItemData[] = [];
 
   public isCreateNew = true;
@@ -87,6 +91,10 @@ export class AddEditFoundComponent implements OnInit {
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
     this.statusFlag = LostAndFoundStatus.ClientContacted;
+
+    this.isFoundStatus = false;
+    this.isGuestStatus = false;
+    this.isDeliveryStatus = false;
     
     this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
       if(value === LostAndFoundStatus.ClientContacted) {
@@ -111,15 +119,21 @@ export class AddEditFoundComponent implements OnInit {
   }
   
   foundstatus(){
-    document.getElementById('foundstatus').style.backgroundColor = '#d5e8d4' ; 
+    this.isFoundStatus = true;
+    this.isGuestStatus = false;
+    this.isDeliveryStatus = false;
   }
 
   gueststatus(){
-      document.getElementById('gueststatus').style.backgroundColor = '#d5e8d4' ; 
+    this.isFoundStatus = true;
+    this.isGuestStatus = true;
+    this.isDeliveryStatus = false;
   }
 
   deliverystatus(){
-    document.getElementById('deliverystatus').style.backgroundColor = '#d5e8d4' ; 
+    this.isFoundStatus = true;
+    this.isGuestStatus = true;
+    this.isDeliveryStatus = true;
   }
 
   initForm() {

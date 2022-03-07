@@ -117,14 +117,14 @@
                         <mat-option *ngFor="let status of statuses" [value]="status.key">{{ status.value }}</mat-option>
                       </mat-select>
                     </mat-form-field> -->
-                    <mat-form-field appearance="outline" id= "foundstatus" color="primary" class="full-width">
+                    <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isFoundStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Found Object Status</mat-label>
                       <mat-select (selectionChange)="foundstatus()">
                         <mat-option value="Waiting Room Maid">Waiting Room Maid</mat-option>
                         <mat-option value="Unclaimed">Unclaimed</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" id="gueststatus" color="primary" class="full-width">
+                    <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isGuestStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Guest Contact Status</mat-label>
                       <mat-select (selectionChange)="gueststatus()">
                         <mat-option value="Contact by email">Contact by email</mat-option>
@@ -134,7 +134,7 @@
                         <mat-option value="Return">Return</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" id="deliverystatus" color="primary" class="full-width">
+                    <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isDeliveryStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Delivery Status</mat-label>
                       <mat-select (selectionChange)="deliverystatus()">
                         <mat-option value="Waiting For Hand-Delivered">Waiting For Hand-Delivered</mat-option>

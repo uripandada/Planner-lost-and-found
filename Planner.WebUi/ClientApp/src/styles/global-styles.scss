@@ -11265,11 +11265,13 @@ td.priority-cell {
   padding: 10px;
 
   span.mtsi-tag:hover {
-    background-color: #999999;
+    background-color: #ccc;
+    cursor: pointer;
   }
 
   span.mtsi-tag:active {
     background-color: white;
+    cursor: pointer;
   }
 
   span.mtsi-tag {
