@@ -117,31 +117,27 @@
                         <mat-option *ngFor="let status of statuses" [value]="status.key">{{ status.value }}</mat-option>
                       </mat-select>
                     </mat-form-field> -->
+                    <!-- <mat-form-field appearance="outline" color="accent" class="full-width">
+                      <mat-select formControlName="status">
+                        <mat-option *ngFor="let status of statuses" [value]="status.key">{{ status.value }}</mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isFoundStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Found Object Status</mat-label>
-                      <mat-select (selectionChange)="foundstatus()">
-                        <mat-option value="Waiting Room Maid">Waiting Room Maid</mat-option>
-                        <mat-option value="Unclaimed">Unclaimed</mat-option>
+                      <mat-select formControlName="funstatus" (selectionChange)="foundstatus()" >
+                        <mat-option *ngFor="let foundstatus of foundstatuses" [value]="foundstatus.key">{{ foundstatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isGuestStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Guest Contact Status</mat-label>
-                      <mat-select (selectionChange)="gueststatus()">
-                        <mat-option value="Contact by email">Contact by email</mat-option>
-                        <mat-option value="Contact by phone">Contact by phone</mat-option>
-                        <mat-option value="Client Undecided">Client Undecided</mat-option>
-                        <mat-option value="Waiting For Client">Waiting For Client</mat-option>
-                        <mat-option value="Return">Return</mat-option>
+                      <mat-select formControlName="gueststatus" (selectionChange)="gueststatus()" [(ngModel)]="selectedGuestStatus">
+                        <mat-option *ngFor="let gueststatus of gueststatuses" [value]="gueststatus.key">{{ gueststatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isDeliveryStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Delivery Status</mat-label>
-                      <mat-select (selectionChange)="deliverystatus()">
-                        <mat-option value="Waiting For Hand-Delivered">Waiting For Hand-Delivered</mat-option>
-                        <mat-option value="Waiting For Shipment">Waiting For Shipment</mat-option>
-                        <mat-option value="OT Shipped">OT Shipped</mat-option>
-                        <mat-option value="Hand Delivered">Hand Delivered</mat-option>
-                        <mat-option value="Refused By The Client">Refused By The Client</mat-option>
+                      <mat-select formControlName="deliverystatus" (selectionChange)="deliverystatus()">
+                        <mat-option *ngFor="let deliverystatus of deliverystatuses" [value]="deliverystatus.key">{{ deliverystatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -154,11 +150,32 @@
                   </mat-form-field>   -->
                   <mat-form-field appearance="outline" color="primary" class="full-width">
                     <mat-label>Other</mat-label>
-                    <mat-select >
+                    <mat-select formControlName="otherstatus" (selectionChange)="otherstatus()">
+                      <mat-option *ngFor="let otherstatus of otherstatuses" [value]="otherstatus.key">{{ otherstatus.value }}</mat-option>
+                    </mat-select>
+                    <!-- <mat-select >
                       <mat-option value="Detruit">Detruit</mat-option>
                       <mat-option value="Disparu/Perdu">Disparu/Perdu</mat-option>
                       <mat-option value="Expired">Expired</mat-option>
                       <mat-option value="Bad Referencing">Bad Referencing</mat-option>
+                    </mat-select> -->
+                  </mat-form-field>
+                </div>            
+              </div>
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>Where did we store it?</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">                  
+                    <mat-select formControlName="storage">                                        
+                      <mat-option *ngFor="let storage of storages" [value]=""></mat-option>                   
+                    </mat-select>                
+                  </mat-form-field>              
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Category</label>               
+                  <mat-form-field appearance="outline" color="accent" class="full-width">                  
+                    <mat-select formControlName="category">                    
+                      <mat-option *ngFor="let category of allCategories" [value]="category.id">{{ category.name }}</mat-option>                  
                     </mat-select>
                   </mat-form-field>
                 </div>            
@@ -172,18 +189,24 @@
                   </app-file-upload>              
                 </div>              
               <div class="form-field-wrapper">                
-                <label>Category</label>               
+                <!-- <label>Category</label>               
                 <mat-form-field appearance="outline" color="accent" class="full-width">                  
                   <mat-select formControlName="category">                    
                     <mat-option *ngFor="let category of allCategories" [value]="category.id">{{ category.name }}</mat-option>                  
                   </mat-select>
-                  </mat-form-field>
+                </mat-form-field> -->
+                <!-- <label>Status</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]="status.key">{{ status.value }}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
               </div>
             </div>
           </div>
 
           <div class="item-fields-wrapper">
-            <ng-container *ngIf="f.status.value == statusFlag">
+            <ng-container *ngIf="f.gueststatus.value == statusFlag1 || f.gueststatus.value == statusFlag2">
               <div class="form-field-wrapper">
                 <label>First Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">

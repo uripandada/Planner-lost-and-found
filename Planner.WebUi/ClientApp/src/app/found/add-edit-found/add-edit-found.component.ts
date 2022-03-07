@@ -48,9 +48,15 @@ export class AddEditFoundComponent implements OnInit {
 
   typesOfLoss: Array<{ key: TypeOfLoss, value: string }> = [];
   statuses: Array<{ key: LostAndFoundStatus, value: string }> = [];
+  foundstatuses: Array<{ key: number, value: string }> = [];
+  gueststatuses: Array<{ key: number, value: string }> = [];
+  deliverystatuses: Array<{ key: number, value: string }> = [];
+  otherstatuses: Array<{ key: number, value: string }> = [];
   statusMappings: { [index: number]: string } = {};
   statusChange$: Subscription;
-  statusFlag: number;
+  statusFlag1: number;
+  statusFlag2: number;
+  statusFlag3: number;
 
   isFoundStatus: boolean;
   isGuestStatus: boolean;
@@ -69,18 +75,40 @@ export class AddEditFoundComponent implements OnInit {
     this.typesOfLoss.push({ key: TypeOfLoss.Customer, value: "Customer" });
     this.typesOfLoss.push({ key: TypeOfLoss.Employee, value: "Employee" });
 
+    this.foundstatuses.push({ key: 1, value: "Waiting Room Maid"});
+    this.foundstatuses.push({ key: 2, value: "Received"});
+
+    this.gueststatuses.push({ key: 3, value: "Unclaimed"});
+    this.gueststatuses.push({ key: 4, value: "Contact by email"});
+    this.gueststatuses.push({ key: 5, value: "Contact by phone"});
+    this.gueststatuses.push({ key: 6, value: "Client Undecided"});
+    this.gueststatuses.push({ key: 7, value: "Waiting For Client Return"});
+    this.gueststatuses.push({ key: 8, value: "Waiting For Hand-Delivered"});
+    this.gueststatuses.push({ key: 9, value: "Waiting For Shipment"});
+
+    this.deliverystatuses.push({ key: 10, value: "OT Shipped"});
+    this.deliverystatuses.push({ key: 11, value: "Hand Delivered"});
+
+    this.otherstatuses.push({ key: 12, value: "Expired"});
+    this.otherstatuses.push({ key: 13, value: "Refused By The Client"});
+    this.otherstatuses.push({ key: 14, value: "Bad Referencing"});
+    this.otherstatuses.push({ key: 15, value: "Detruit"});
+    this.otherstatuses.push({ key: 16, value: "Rendu a linventeur"});
+    this.otherstatuses.push({ key: 17, value: "Donne a une autre personne"});
+    this.otherstatuses.push({ key: 18, value: "Disparu/Perdu"});
+
     this.statuses.push({ key: LostAndFoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
     this.statuses.push({ key: LostAndFoundStatus.Unclaimed, value: "Unclaimed" });
-    // this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
-    // this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
-    // this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
-    // this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
-    // this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
-    // this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
-    // this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
-    // this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
-    // this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
-    // this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
+    this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
+    this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
+    this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
+    this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
+    this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
+    this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
+    this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
+    this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
+    this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
+    this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
 
     this.hotels = hotelService.getHotels();
   }
@@ -90,7 +118,8 @@ export class AddEditFoundComponent implements OnInit {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
-    this.statusFlag = LostAndFoundStatus.ClientContacted;
+    this.statusFlag1 = 4;
+    this.statusFlag2 = 5;
 
     this.isFoundStatus = false;
     this.isGuestStatus = false;
@@ -136,6 +165,12 @@ export class AddEditFoundComponent implements OnInit {
     this.isDeliveryStatus = true;
   }
 
+  otherstatus(){
+    this.isFoundStatus = false;
+    this.isGuestStatus = false;
+    this.isDeliveryStatus = false;
+  }
+
   initForm() {
     let where: TaskWhereData;
     if (this.item.reservationId) {
@@ -160,6 +195,12 @@ export class AddEditFoundComponent implements OnInit {
       notes: [this.item.notes],
       typeOfLoss: [this.item.typeOfLoss, Validators.required],
       status: [this.item.status, Validators.required],
+      funstatus: [this.foundstatuses[0], Validators.required],
+      gueststatus: ['', Validators.required],
+      deliverystatus: ['', Validators.required],
+      otherstatus: ['', Validators.required],
+      storage: ['', Validators.required],
+      category: ['', Validators.required],
       whereFrom: [where, Validators.required],
       placeOfStorage: [this.item.placeOfStorage],
       foundByNumber: [''],
@@ -210,6 +251,7 @@ export class AddEditFoundComponent implements OnInit {
     this.foundForm.controls.notes.setValue(this.item.notes);
     this.foundForm.controls.typeOfLoss.setValue(this.item.typeOfLoss);
     this.foundForm.controls.status.setValue(this.item.status);
+    // this.foundForm.controls.foundstatus.setValue(this.foundstatuses[0]);
     this.foundForm.controls.whereFrom.setValue(where);
     this.foundForm.controls.placeOfStorage.setValue(this.item.placeOfStorage);
     this.foundForm.controls.foundByNumber.setValue('');
