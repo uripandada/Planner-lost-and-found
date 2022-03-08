@@ -11,7 +11,10 @@ import {
   LostAndFoundClient,
   LostAndFoundFilesUploadedData,
   LostAndFoundModel,
-  LostAndFoundStatus,
+  FoundStatus,
+  GuestStatus,
+  DeliveryStatus,
+  OtherStatus,
   TaskWhereData,
   TypeOfLoss,
   UpdateLostAndFoundCommand
@@ -31,8 +34,8 @@ export class AddEditFoundComponent implements OnInit {
   @Input() item: LostAndFoundModel;
   @Input() allWheres: Array<TaskWhereData> = [];
   @Input() allCategories: Array<CategoryGridItemViewModel> = [];
-  @Input() currentlyUploadingFiles: Array<FileDetails> = [];  
-  @Input() temporaryUploadedFiles: Array<FileDetails> = [];  
+  @Input() currentlyUploadingFiles: Array<FileDetails> = [];
+  @Input() temporaryUploadedFiles: Array<FileDetails> = [];
   @Input() uploadedFiles: Array<FileDetails> = [];
 
   @Output() reloadList: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -47,12 +50,16 @@ export class AddEditFoundComponent implements OnInit {
   foundForm: FormGroup;
 
   typesOfLoss: Array<{ key: TypeOfLoss, value: string }> = [];
-  statuses: Array<{ key: LostAndFoundStatus, value: string }> = [];
-  foundstatuses: Array<{ key: number, value: string }> = [];
-  gueststatuses: Array<{ key: number, value: string }> = [];
-  deliverystatuses: Array<{ key: number, value: string }> = [];
-  otherstatuses: Array<{ key: number, value: string }> = [];
-  statusMappings: { [index: number]: string } = {};
+  foundStatuses: Array<{ key: FoundStatus, value: string }> = [];
+  guestStatuses: Array<{ key: GuestStatus, value: string }> = [];
+  deliveryStatuses: Array<{ key: DeliveryStatus, value: string }> = [];
+  otherStatuses: Array<{ key: OtherStatus, value: string }> = [];
+
+  foundStatusMappings: { [index: number]: string } = {};
+  guestStatusMappings: { [index: number]: string } = {};
+  deliveryStatusMappings: { [index: number]: string } = {};
+  otherStatusMappings: { [index: number]: string } = {};
+
   statusChange$: Subscription;
   statusFlag: number;
 
@@ -77,102 +84,90 @@ export class AddEditFoundComponent implements OnInit {
     this.typesOfLoss.push({ key: TypeOfLoss.Customer, value: "Customer" });
     this.typesOfLoss.push({ key: TypeOfLoss.Employee, value: "Employee" });
 
-    this.foundstatuses.push({ key: 1, value: "Waiting Room Maid"});
-    this.foundstatuses.push({ key: 2, value: "Received"});
+    this.foundStatuses.push({ key: FoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
+    this.foundStatuses.push({ key: FoundStatus.Received, value: "Received" });
 
-    this.gueststatuses.push({ key: 3, value: "Unclaimed"});
-    this.gueststatuses.push({ key: 4, value: "Contact by email"});
-    this.gueststatuses.push({ key: 5, value: "Contact by phone"});
-    this.gueststatuses.push({ key: 6, value: "Client Undecided"});
-    this.gueststatuses.push({ key: 7, value: "Waiting For Client Return"});
-    this.gueststatuses.push({ key: 8, value: "Waiting For Hand-Delivered"});
-    this.gueststatuses.push({ key: 9, value: "Waiting For Shipment"});
+    this.guestStatuses.push({ key: GuestStatus.Unclaimed, value: "Unclaimed" });
+    this.guestStatuses.push({ key: GuestStatus.ClientContactedByEmail, value: "Contact by email" });
+    this.guestStatuses.push({ key: GuestStatus.ClientContactedByPhone, value: "Contact by phone" });
+    this.guestStatuses.push({ key: GuestStatus.ClientUndecided, value: "Client Undecided" });
+    this.guestStatuses.push({ key: GuestStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
 
-    this.deliverystatuses.push({ key: 10, value: "OT Shipped"});
-    this.deliverystatuses.push({ key: 11, value: "Hand Delivered"});
+    this.deliveryStatuses.push({ key: DeliveryStatus.WaitingForHandDelivered, value: "Waiting For Hand-Delivered" });
+    this.deliveryStatuses.push({ key: DeliveryStatus.WaitingForShipment, value: "Waiting For Shipment" });
+    this.deliveryStatuses.push({ key: DeliveryStatus.OTShipped, value: "OT Shipped" });
+    this.deliveryStatuses.push({ key: DeliveryStatus.HandDelivered, value: "Hand Delivered" });
 
-    this.otherstatuses.push({ key: 12, value: "Expired"});
-    this.otherstatuses.push({ key: 13, value: "Refused By The Client"});
-    this.otherstatuses.push({ key: 14, value: "Bad Referencing"});
-    this.otherstatuses.push({ key: 15, value: "Detruit"});
-    this.otherstatuses.push({ key: 16, value: "Rendu a linventeur"});
-    this.otherstatuses.push({ key: 17, value: "Donne a une autre personne"});
-    this.otherstatuses.push({ key: 18, value: "Disparu/Perdu"});
-
-    this.statuses.push({ key: LostAndFoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
-    this.statuses.push({ key: LostAndFoundStatus.Unclaimed, value: "Unclaimed" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
-    this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
-    this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
-    this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
+    this.otherStatuses.push({ key: OtherStatus.Expired, value: "Expired" });
+    this.otherStatuses.push({ key: OtherStatus.RefusedByTheClient, value: "Refused By The Client" });
+    this.otherStatuses.push({ key: OtherStatus.BadReferencing, value: "Bad Referencing" });
+    this.otherStatuses.push({ key: OtherStatus.Destroy, value: "Detruit" });
+    this.otherStatuses.push({ key: OtherStatus.ReturnedToInventor, value: "Rendu a linventeur" });
+    this.otherStatuses.push({ key: OtherStatus.GivenToAnotherPerson, value: "Donne a une autre personne" });
+    this.otherStatuses.push({ key: OtherStatus.DisappearedOrLost, value: "Disparu/Perdu" });
 
     this.hotels = hotelService.getHotels();
   }
 
-  
+
   ngOnInit(): void {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
-    this.statusFlag = 3;
-    this.selectedFoundStatus = this.foundstatuses[0].value;
-    this.selectedGuestStatus = this.gueststatuses[0].value;
+    this.selectedFoundStatus = this.foundStatuses[0].value;
+    this.selectedGuestStatus = this.guestStatuses[0].value;
 
-    this.isFoundStatus = false;
-    this.isGuestStatus = false;
+    this.isFoundStatus = true;
+    this.isGuestStatus = true;
     this.isDeliveryStatus = false;
     this.isOtherStatus = false;
-    
-    this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
-      if(value === LostAndFoundStatus.ClientContacted) {
+
+    this.statusFlag = GuestStatus.Unclaimed;
+
+    this.statusChange$ = this.foundForm.controls['guestStatus'].valueChanges.subscribe((value: number) => {
+      if (value !== GuestStatus.Unclaimed) {
         this.addClientFormControls();
       } else {
         this.removeClientFormControls();
       }
     })
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.item.id) {
       this.isCreateNew = false;
-      
+
     } else {
       this.isCreateNew = true;
     }
-    
+
     if (!changes.item.firstChange) {
       this.setFormData();
     }
   }
-  
-  foundstatus(){
+
+  foundStatusSelectChanged() {
     this.isFoundStatus = true;
     this.isGuestStatus = false;
     this.isDeliveryStatus = false;
     this.isOtherStatus = false;
   }
 
-  gueststatus(){
+  guestStatusSelectChanged() {
     this.isFoundStatus = true;
     this.isGuestStatus = true;
     this.isDeliveryStatus = false;
     this.isOtherStatus = false;
   }
 
-  deliverystatus(){
+  deliveryStatusSelectChanged() {
     this.isFoundStatus = true;
     this.isGuestStatus = true;
     this.isDeliveryStatus = true;
     this.isOtherStatus = false;
   }
 
-  otherstatus(){
+  otherStatusSelectChanged() {
     this.isFoundStatus = false;
     this.isGuestStatus = false;
     this.isDeliveryStatus = false;
@@ -202,11 +197,10 @@ export class AddEditFoundComponent implements OnInit {
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
       typeOfLoss: [this.item.typeOfLoss, Validators.required],
-      status: [this.item.status, Validators.required],
-      funstatus: [this.foundstatuses[0].key, Validators.required],
-      gueststatus: [this.gueststatuses[0].key, Validators.required],
-      deliverystatus: ['', Validators.required],
-      otherstatus: ['', Validators.required],
+      foundStatus: [this.foundStatuses[0].key, Validators.required],
+      guestStatus: [this.guestStatuses[0].key, Validators.required],
+      deliveryStatus: ['', Validators.required],
+      otherStatus: ['', Validators.required],
       storage: ['', Validators.required],
       category: ['', Validators.required],
       whereFrom: [where, Validators.required],
@@ -246,20 +240,14 @@ export class AddEditFoundComponent implements OnInit {
       where = this.allWheres.find(x => x.referenceId == this.item.roomId);
     }
     this.foundForm.controls.hotelId.setValue(this.item.hotelId);
-    this.foundForm.controls.firstName.setValue(this.item.firstName);
-    this.foundForm.controls.lastName.setValue(this.item.lastName);
-    this.foundForm.controls.phoneNumber.setValue(this.item.phoneNumber);
-    this.foundForm.controls.email.setValue(this.item.email);
-    this.foundForm.controls.address.setValue(this.item.address);
-    this.foundForm.controls.city.setValue(this.item.city);
-    this.foundForm.controls.postalCode.setValue(this.item.postalCode);
-    this.foundForm.controls.country.setValue(this.item.country);
     this.foundForm.controls.description.setValue(this.item.description);
     this.foundForm.controls.foundOn.setValue(this.item.lostOn?.format('yyyy-MM-DD'));
     this.foundForm.controls.notes.setValue(this.item.notes);
     this.foundForm.controls.typeOfLoss.setValue(this.item.typeOfLoss);
-    this.foundForm.controls.status.setValue(this.item.status);
-    // this.foundForm.controls.foundstatus.setValue(this.foundstatuses[0]);
+    this.foundForm.controls.foundStatus.setValue(this.item.foundStatus);
+    this.foundForm.controls.guestStatus.setValue(this.item.guestStatus);
+    this.foundForm.controls.deliveryStatus.setValue(this.item.deliveryStatus);
+    this.foundForm.controls.otherStatus.setValue(this.item.otherStatus);
     this.foundForm.controls.whereFrom.setValue(where);
     this.foundForm.controls.placeOfStorage.setValue(this.item.placeOfStorage);
     this.foundForm.controls.foundByNumber.setValue('');
@@ -271,6 +259,17 @@ export class AddEditFoundComponent implements OnInit {
     this.foundForm.controls.ownerCity.setValue(this.item.city);
     this.foundForm.controls.ownerPostalCode.setValue(this.item.postalCode);
     this.foundForm.controls.ownerCountry.setValue(this.item.country);
+
+    if (this.item.guestStatus != GuestStatus.Unclaimed) {
+      this.foundForm.controls.firstName.setValue(this.item.firstName);
+      this.foundForm.controls.lastName.setValue(this.item.lastName);
+      this.foundForm.controls.phoneNumber.setValue(this.item.phoneNumber);
+      this.foundForm.controls.email.setValue(this.item.email);
+      this.foundForm.controls.address.setValue(this.item.address);
+      this.foundForm.controls.city.setValue(this.item.city);
+      this.foundForm.controls.postalCode.setValue(this.item.postalCode);
+      this.foundForm.controls.country.setValue(this.item.country);
+    }
 
     this.foundForm.markAsUntouched({ onlySelf: false });
     this.foundForm.markAsPristine({ onlySelf: false });
@@ -308,7 +307,10 @@ export class AddEditFoundComponent implements OnInit {
       hotelId: formValues.hotelId,
       description: formValues.description,
       lostOn: moment.utc(formValues.foundOn),
-      status: formValues.status,
+      foundStatus: formValues.foundStatus,
+      guestStatus: formValues.guestStatus,
+      deliveryStatus: formValues.deliveryStatus,
+      otherStatus: formValues.otherStatus,
       typeOfLoss: formValues.typeOfLoss,
       address: formValues.address,
       postalCode: formValues.postalCode,
@@ -333,7 +335,7 @@ export class AddEditFoundComponent implements OnInit {
     });
 
     if (this.item.id === null) {
-      
+
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
           if (response.isSuccess) {
@@ -371,27 +373,27 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   private addClientFormControls() {
-   this.foundForm.addControl('firstName', new FormControl('', [Validators.required]));
-   this.foundForm.addControl('lastName', new FormControl('', [Validators.required]));
-   this.foundForm.addControl('phoneNumber', new FormControl(''));
-   this.foundForm.addControl('email', new FormControl('', [Validators.required]));
-   this.foundForm.addControl('street', new FormControl(''));
-   this.foundForm.addControl('city', new FormControl(''));
-   this.foundForm.addControl('postalCode', new FormControl(''));
-   this.foundForm.addControl('country', new FormControl(''));
-   this.foundForm.addControl('referenceNumber', new FormControl(''));
+    this.foundForm.addControl('firstName', new FormControl('', [Validators.required]));
+    this.foundForm.addControl('lastName', new FormControl('', [Validators.required]));
+    this.foundForm.addControl('phoneNumber', new FormControl(''));
+    this.foundForm.addControl('email', new FormControl('', [Validators.required]));
+    this.foundForm.addControl('street', new FormControl(''));
+    this.foundForm.addControl('city', new FormControl(''));
+    this.foundForm.addControl('postalCode', new FormControl(''));
+    this.foundForm.addControl('country', new FormControl(''));
+    this.foundForm.addControl('referenceNumber', new FormControl(''));
   }
 
   private removeClientFormControls() {
-   this.foundForm.removeControl('firstName');
-   this.foundForm.removeControl('lastName');
-   this.foundForm.removeControl('phoneNumber');
-   this.foundForm.removeControl('email');
-   this.foundForm.removeControl('street');
-   this.foundForm.removeControl('city');
-   this.foundForm.removeControl('postalCode');
-   this.foundForm.removeControl('country');
-   this.foundForm.removeControl('referenceNumber');
+    this.foundForm.removeControl('firstName');
+    this.foundForm.removeControl('lastName');
+    this.foundForm.removeControl('phoneNumber');
+    this.foundForm.removeControl('email');
+    this.foundForm.removeControl('street');
+    this.foundForm.removeControl('city');
+    this.foundForm.removeControl('postalCode');
+    this.foundForm.removeControl('country');
+    this.foundForm.removeControl('referenceNumber');
   }
 
   public uploadedFilesChanged(fileChanges: Array<FilesChangedData>) {
@@ -414,9 +416,9 @@ export class AddEditFoundComponent implements OnInit {
     }
   }
 
-  getSelection(data: ExtendedWhereData) {        
-    this.foundForm.controls.whereFrom.setValue(data.roomName);        
-    this.foundForm.controls.clientName.setValue(data.guestName);    
+  getSelection(data: ExtendedWhereData) {
+    this.foundForm.controls.whereFrom.setValue(data.roomName);
+    this.foundForm.controls.clientName.setValue(data.guestName);
   }
 
   ngOnDestroy(): void {

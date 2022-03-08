@@ -95,12 +95,26 @@ namespace Planner.Persistence.Configurations
 			builder.Property(a => a.TypeOfLoss)
 			 .HasColumnName(nameof(LostAndFound.TypeOfLoss));
 
-			builder.Property(a => a.Status)
-				.HasColumnName(nameof(LostAndFound.Status))
+			builder.Property(a => a.FoundStatus)
+				.HasColumnName(nameof(LostAndFound.FoundStatus))
 				.IsRequired()
-				.HasDefaultValue(LostAndFoundStatus.Unknown);
-				// TODO: CREATE A MIGRAITON WITH THIS: .HasDefaultValue(LostAndFoundStatus.WaitingRoomMaid);
+				.HasDefaultValue(FoundStatus.WaitingRoomMaid);
+			// TODO: CREATE A MIGRAITON WITH THIS: .HasDefaultValue(LostAndFoundStatus.WaitingRoomMaid);
 
+			builder.Property(a => a.GuestStatus)
+				.HasColumnName(nameof(LostAndFound.GuestStatus))
+				.IsRequired()
+				.HasDefaultValue(GuestStatus.Unclaimed);
+
+			builder.Property(a => a.DeliveryStatus)
+				.HasColumnName(nameof(LostAndFound.DeliveryStatus))
+				.IsRequired()
+				.HasDefaultValue(DeliveryStatus.Unknown);
+
+			builder.Property(a => a.OtherStatus)
+				.HasColumnName(nameof(LostAndFound.OtherStatus))
+				.IsRequired()
+				.HasDefaultValue(OtherStatus.Unknown);
 			builder.Property(a => a.Type)
 				.HasColumnName(nameof(LostAndFound.Type))
 				.IsRequired()

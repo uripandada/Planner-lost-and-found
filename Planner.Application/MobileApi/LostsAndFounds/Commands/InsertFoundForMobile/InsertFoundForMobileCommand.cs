@@ -58,7 +58,10 @@ namespace Planner.Application.MobileApi.LostsAndFounds.Commands.InsertFoundForMo
 				ModifiedAt = dateTime,
 				ModifiedById = this._userId,
 				RccStatus = request.Status.IsNotNull() && Domain.Values.RccLostAndFoundStatusKeys.Statuses.ContainsKey(request.Status) ? Domain.Values.RccLostAndFoundStatusKeys.Statuses[request.Status] : Domain.Values.RccLostAndFoundStatus.UNKNOWN,
-				Status = Domain.Values.LostAndFoundStatus.Unknown,
+				FoundStatus = Domain.Values.FoundStatus.WaitingRoomMaid,
+				GuestStatus = Domain.Values.GuestStatus.Unclaimed,
+				DeliveryStatus = 0,
+				OtherStatus = 0,
 				Type = Domain.Values.LostAndFoundRecordType.Found,
 				TypeOfLoss = Domain.Values.TypeOfLoss.Employee,
 				

@@ -34,7 +34,10 @@ namespace Planner.Application.LostAndFounds.Commands.Update
         public Guid? RoomId { get; set; }
         public string ReservationId { get; set; }
         public DateTime? LostOn { get; set; }
-        public LostAndFoundStatus Status { get; set; }
+        public FoundStatus FoundStatus { get; set; }
+        public GuestStatus GuestStatus { get; set; }
+        public DeliveryStatus DeliveryStatus { get; set; }
+        public OtherStatus OtherStatus { get; set; }
         public TypeOfLoss TypeOfLoss { get; set; }
         public SaveLostAndFoundWhereData WhereData { get; set; }
         public IEnumerable<LostAndFoundFilesUploadedData> Files { get; set; }
@@ -89,7 +92,10 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             item.ModifiedById = httpContextAccessor.UserId();
             item.PhoneNumber = request.PhoneNumber;
             item.Email= request.Email;
-            item.Status = request.Status;
+            item.FoundStatus = request.FoundStatus;
+            item.GuestStatus = request.GuestStatus;
+            item.DeliveryStatus = request.DeliveryStatus;
+            item.OtherStatus = request.OtherStatus;
             item.TypeOfLoss = request.TypeOfLoss;
             item.RoomId = roomId;
             item.ReservationId = reservationId;

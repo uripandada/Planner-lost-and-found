@@ -47,7 +47,10 @@ namespace Planner.Application.MobileApi.LostsAndFounds.Commands.DeleteFoundForMo
 			foundItem.IsDeleted = true;
 			foundItem.ModifiedById = this._userId;
 			foundItem.ModifiedAt = dateTime;
-			foundItem.Status = Domain.Values.LostAndFoundStatus.Deleted;
+			foundItem.FoundStatus = Domain.Values.FoundStatus.WaitingRoomMaid;
+			foundItem.GuestStatus = Domain.Values.GuestStatus.Unclaimed;
+			foundItem.DeliveryStatus = 0;
+			foundItem.OtherStatus = Domain.Values.OtherStatus.Destroy;
 			foundItem.RccStatus = Domain.Values.RccLostAndFoundStatus.DELETED;
 
 			await this._databaseContext.SaveChangesAsync(cancellationToken);

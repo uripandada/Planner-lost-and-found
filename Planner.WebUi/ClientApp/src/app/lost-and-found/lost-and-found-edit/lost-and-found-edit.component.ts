@@ -10,7 +10,10 @@ import {
   LostAndFoundClient,
   LostAndFoundFilesUploadedData,
   LostAndFoundModel,
-  LostAndFoundStatus,
+  FoundStatus,
+  GuestStatus,
+  DeliveryStatus,
+  OtherStatus,
   TaskWhereData,
   TypeOfLoss,
   UpdateLostAndFoundCommand
@@ -43,8 +46,9 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
   lostForm: FormGroup;
 
   typesOfLoss: Array<{ key: TypeOfLoss, value: string }> = [];
-  statuses: Array<{key: LostAndFoundStatus, value: string}> = [];
-  statusMappings: { [index: number]: string } = {};
+
+  foundStatuses: Array<{key: FoundStatus, value: string}> = [];
+  foundStatusMappings: { [index: number]: string } = {};
 
   hotels: HotelItemData[] = [];
 
@@ -60,19 +64,8 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
     this.typesOfLoss.push({ key: TypeOfLoss.Employee, value: "Employee" });
     this.typesOfLoss.push({ key: TypeOfLoss.Unknown, value: "Unknown" });
 
-    this.statuses.push({ key: LostAndFoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
-    this.statuses.push({ key: LostAndFoundStatus.Unclaimed, value: "Unclaimed" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientContacted, value: "Client Contacted" });
-    this.statuses.push({ key: LostAndFoundStatus.ClientUndecided, value: "Client Undecided" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForShipment, value: "Waiting For Shipment" });
-    this.statuses.push({ key: LostAndFoundStatus.OTShipped, value: "OT Shipped" });
-    this.statuses.push({ key: LostAndFoundStatus.WaitingForHandDelivered, value: "Waiting For Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.HandDelivered, value: "Hand Delivered" });
-    this.statuses.push({ key: LostAndFoundStatus.Expired, value: "Expired" });
-    this.statuses.push({ key: LostAndFoundStatus.RefusedByTheClient, value: "Refused By The Client" });
-    this.statuses.push({ key: LostAndFoundStatus.BadReferencing, value: "Bad Referencing" });
-    this.statuses.push({ key: LostAndFoundStatus.Unknown, value: "Unknown" });
+    this.foundStatuses.push({ key: FoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
+    this.foundStatuses.push({ key: FoundStatus.Received, value: "Received" });
 
     this.hotels = hotelService.getHotels();
   }
@@ -121,7 +114,10 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
       lostOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
       typeOfLoss: [this.item.typeOfLoss, Validators.required],
-      status: [this.item.status, Validators.required],
+      foundStatus: [this.item.foundStatus, Validators.required],
+      guestStatus: [this.item.guestStatus, Validators.required],
+      deliveryStatus: [this.item.deliveryStatus, Validators.required],
+      otherStatus: [this.item.otherStatus, Validators.required],
       whereFrom: [where],
       placeOfStorage: [this.item.placeOfStorage],
       trackingNumber: [this.item.trackingNumber],
@@ -163,7 +159,10 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
     this.lostForm.controls.lostOn.setValue(this.item.lostOn?.format('yyyy-MM-DD'));
     this.lostForm.controls.notes.setValue(this.item.notes);
     this.lostForm.controls.typeOfLoss.setValue(this.item.typeOfLoss);
-    this.lostForm.controls.status.setValue(this.item.status);
+    this.lostForm.controls.foundStatus.setValue(this.item.foundStatus);
+    this.lostForm.controls.guestStatus.setValue(this.item.guestStatus);
+    this.lostForm.controls.deliveryStatus.setValue(this.item.deliveryStatus);
+    this.lostForm.controls.otherStatus.setValue(this.item.otherStatus);
     this.lostForm.controls.whereFrom.setValue(where);
     this.lostForm.controls.placeOfStorage.setValue(this.item.placeOfStorage);
     this.lostForm.controls.trackingNumber.setValue(this.item.trackingNumber);
@@ -200,7 +199,10 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
       hotelId: formValues.hotelId,
       description: formValues.description,
       lostOn: moment.utc(formValues.lostOn),
-      status: formValues.status,
+      foundStatus: formValues.foundStatus,
+      guestStatus: formValues.guestStatus,
+      deliveryStatus: formValues.deliveryStatus,
+      otherStatus: formValues.otherStatus,
       typeOfLoss: formValues.typeOfLoss,
       address: formValues.address,
       postalCode: formValues.postalCode,

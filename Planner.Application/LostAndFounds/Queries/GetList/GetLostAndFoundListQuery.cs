@@ -86,7 +86,10 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				LostOn = x.LostOn,
 				PhoneNumber = x.PhoneNumber,
 				ReferenceNumber = x.ReferenceNumber,
-				Status = x.Status,
+				FoundStatus = x.FoundStatus,
+				GuestStatus = x.GuestStatus,
+				DeliveryStatus = x.DeliveryStatus,
+				OtherStatus = x.OtherStatus,
 				TypeOfLoss = x.TypeOfLoss.HasValue ? x.TypeOfLoss.Value : Domain.Values.TypeOfLoss.Unknown,
 			}).Skip(request.Skip).Take(request.Take).ToListAsync();
 

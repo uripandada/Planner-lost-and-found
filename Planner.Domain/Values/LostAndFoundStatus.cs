@@ -2,22 +2,41 @@
 
 namespace Planner.Domain.Values
 {
-	public enum LostAndFoundStatus
+    public enum FoundStatus
 	{
 		Unknown = 0,
-		WaitingRoomMaid = 12,
+        WaitingRoomMaid = 1,
+        Received = 2,
+	}
+	public enum GuestStatus
+	{
+		Unknown = 0,
 		Unclaimed = 1,
-		ClientContacted = 2,
-		ClientUndecided = 3,
-		WaitingForClientReturn = 4,
-		WaitingForShipment = 5,
-		OTShipped = 6,
-		WaitingForHandDelivered = 7,
-		HandDelivered = 8,
-		Expired = 9,
-		RefusedByTheClient = 10,
-		BadReferencing = 11,
-		Deleted = 13,
+		ClientContactedByEmail = 2,
+		ClientContactedByPhone = 3,
+		ClientUndecided = 4,
+		WaitingForClientReturn = 5,
+	}
+
+	public enum DeliveryStatus
+    {
+		Unknown = 0,
+		WaitingForHandDelivered = 1,
+		WaitingForShipment = 2,
+		OTShipped = 3,
+		HandDelivered = 4,
+	}
+
+	public enum OtherStatus
+    {
+		Unknown = 0,
+		Expired = 1,
+		RefusedByTheClient = 2,
+		BadReferencing = 3,
+		Destroy = 4,
+		ReturnedToInventor = 5,
+		GivenToAnotherPerson = 6,
+		DisappearedOrLost = 7,
 	}
 
 	public enum RccLostAndFoundStatus

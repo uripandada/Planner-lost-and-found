@@ -45,7 +45,10 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 
 		public DateTime? LostOn { get; set; }
 		
-		public LostAndFoundStatus Status { get; set; }
+		public FoundStatus FoundStatus { get; set; }
+		public GuestStatus GuestStatus { get; set; }
+		public DeliveryStatus DeliveryStatus { get; set; }
+		public OtherStatus OtherStatus { get; set; }
 
 		public TypeOfLoss TypeOfLoss { get; set; }
 
@@ -123,7 +126,10 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 				PhoneNumber = request.PhoneNumber,
 				Email = request.Email,
 				ReferenceNumber = referenceNumber,
-				Status = request.Status,
+				FoundStatus = request.FoundStatus,
+				GuestStatus = request.GuestStatus,
+				DeliveryStatus = request.DeliveryStatus,
+				OtherStatus = request.OtherStatus,
 				TypeOfLoss = request.TypeOfLoss,
 				RoomId = roomId,
 				ReservationId = reservationId,

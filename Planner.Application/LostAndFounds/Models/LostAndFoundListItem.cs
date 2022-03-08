@@ -16,7 +16,10 @@ namespace Planner.Application.LostAndFounds.Models
         public string ReferenceNumber { get; set; }
         public string Notes { get; set; }
         public DateTime? LostOn { get; set; }
-        public LostAndFoundStatus Status { get; set; }
+        public FoundStatus FoundStatus { get; set; }
+        public GuestStatus GuestStatus { get; set; }
+        public DeliveryStatus DeliveryStatus { get; set; }
+        public OtherStatus OtherStatus { get; set; }
         public TypeOfLoss TypeOfLoss { get; set; }
     }
 }

@@ -92,7 +92,7 @@ namespace Planner.Application.MobileApi.LostsAndFounds.Queries.GetListOfFoundsFo
 					Pending_message = "",
 					Reference = "",
 					Signature = "",
-					Status = lf.Status.ToString(),
+					Status = lf.FoundStatus.ToString(),
 					Log_date = lf.CreatedAt.ToString("yyyy-MM-dd"),
 				})
 				.ToArrayAsync();

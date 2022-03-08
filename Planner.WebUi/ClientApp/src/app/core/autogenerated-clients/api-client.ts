@@ -24006,7 +24006,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
     referenceNumber?: string | null;
     notes?: string | null;
     lostOn?: moment.Moment | null;
-    status!: LostAndFoundStatus;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
     typeOfLoss!: TypeOfLoss;
 
     constructor(data?: ILostAndFoundListItem) {
@@ -24029,7 +24032,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
             this.referenceNumber = _data["referenceNumber"] !== undefined ? _data["referenceNumber"] : <any>null;
             this.notes = _data["notes"] !== undefined ? _data["notes"] : <any>null;
             this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
-            this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
         }
     }
@@ -24052,7 +24058,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         data["referenceNumber"] = this.referenceNumber !== undefined ? this.referenceNumber : <any>null;
         data["notes"] = this.notes !== undefined ? this.notes : <any>null;
         data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
-        data["status"] = this.status !== undefined ? this.status : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
         return data; 
     }
@@ -24068,25 +24077,45 @@ export interface ILostAndFoundListItem {
     referenceNumber?: string | null;
     notes?: string | null;
     lostOn?: moment.Moment | null;
-    status: LostAndFoundStatus;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
     typeOfLoss: TypeOfLoss;
 }
 
-export enum LostAndFoundStatus {
+export enum FoundStatus {
+    Unknown = 0,
+    WaitingRoomMaid = 1,
+    Received = 2,
+}
+
+export enum GuestStatus {
     Unknown = 0,
     Unclaimed = 1,
-    ClientContacted = 2,
-    ClientUndecided = 3,
-    WaitingForClientReturn = 4,
-    WaitingForShipment = 5,
-    OTShipped = 6,
-    WaitingForHandDelivered = 7,
-    HandDelivered = 8,
-    Expired = 9,
-    RefusedByTheClient = 10,
-    BadReferencing = 11,
-    WaitingRoomMaid = 12,
-    Deleted = 13,
+    ClientContactedByEmail = 2,
+    ClientContactedByPhone = 3,
+    ClientUndecided = 4,
+    WaitingForClientReturn = 5,
+}
+
+export enum DeliveryStatus {
+    Unknown = 0,
+    WaitingForHandDelivered = 1,
+    WaitingForShipment = 2,
+    OTShipped = 3,
+    HandDelivered = 4,
+}
+
+export enum OtherStatus {
+    Unknown = 0,
+    Expired = 1,
+    RefusedByTheClient = 2,
+    BadReferencing = 3,
+    Destroy = 4,
+    ReturnedToInventor = 5,
+    GivenToAnotherPerson = 6,
+    DisappearedOrLost = 7,
 }
 
 export enum TypeOfLoss {
@@ -24195,7 +24224,10 @@ export class LostAndFoundModel implements ILostAndFoundModel {
     reservationId?: string | null;
     reservation?: Reservation | null;
     lostOn?: moment.Moment | null;
-    status!: LostAndFoundStatus;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
     typeOfLoss!: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
@@ -24230,7 +24262,10 @@ export class LostAndFoundModel implements ILostAndFoundModel {
             this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
             this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
             this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
-            this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
             this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
             this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
@@ -24269,7 +24304,10 @@ export class LostAndFoundModel implements ILostAndFoundModel {
         data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
         data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
         data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
-        data["status"] = this.status !== undefined ? this.status : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
         data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
         data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
@@ -24301,7 +24339,10 @@ export interface ILostAndFoundModel {
     reservationId?: string | null;
     reservation?: Reservation | null;
     lostOn?: moment.Moment | null;
-    status: LostAndFoundStatus;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
     typeOfLoss: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
@@ -30728,7 +30769,10 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
     roomId?: string | null;
     reservationId?: string | null;
     lostOn?: moment.Moment | null;
-    status!: LostAndFoundStatus;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
     typeOfLoss!: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
@@ -30762,7 +30806,10 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
             this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
             this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
             this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
-            this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
             this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
             this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
@@ -30800,7 +30847,10 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
         data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
         data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
         data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
-        data["status"] = this.status !== undefined ? this.status : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
         data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
         data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
@@ -30831,7 +30881,10 @@ export interface IInsertLostAndFoundCommand {
     roomId?: string | null;
     reservationId?: string | null;
     lostOn?: moment.Moment | null;
-    status: LostAndFoundStatus;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
     typeOfLoss: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
@@ -30923,7 +30976,10 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
     roomId?: string | null;
     reservationId?: string | null;
     lostOn?: moment.Moment | null;
-    status!: LostAndFoundStatus;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
     typeOfLoss!: TypeOfLoss;
     whereData?: SaveLostAndFoundWhereData2 | null;
     files?: LostAndFoundFilesUploadedData[] | null;
@@ -30958,7 +31014,10 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
             this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
             this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
             this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
-            this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
             this.whereData = _data["whereData"] ? SaveLostAndFoundWhereData2.fromJS(_data["whereData"]) : <any>null;
             if (Array.isArray(_data["files"])) {
@@ -30997,7 +31056,10 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
         data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
         data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
         data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
-        data["status"] = this.status !== undefined ? this.status : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
         data["whereData"] = this.whereData ? this.whereData.toJSON() : <any>null;
         if (Array.isArray(this.files)) {
@@ -31029,7 +31091,10 @@ export interface IUpdateLostAndFoundCommand {
     roomId?: string | null;
     reservationId?: string | null;
     lostOn?: moment.Moment | null;
-    status: LostAndFoundStatus;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
     typeOfLoss: TypeOfLoss;
     whereData?: SaveLostAndFoundWhereData2 | null;
     files?: LostAndFoundFilesUploadedData[] | null;
