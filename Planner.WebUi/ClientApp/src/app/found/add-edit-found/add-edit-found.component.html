@@ -123,8 +123,8 @@
                       </mat-select>
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isFoundStatus ? '#d5e8d4' : '#fff'}">
-                      <mat-label>Found Object Status</mat-label>
-                      <mat-select formControlName="funstatus" (selectionChange)="foundstatus()" >
+                      <mat-label>{{selectedFoundStatus}}Found Object Status</mat-label>
+                      <mat-select formControlName="funstatus" (selectionChange)="foundstatus()" [(ngModel)]="selectedFoundStatus">
                         <mat-option *ngFor="let foundstatus of foundstatuses" [value]="foundstatus.key">{{ foundstatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>

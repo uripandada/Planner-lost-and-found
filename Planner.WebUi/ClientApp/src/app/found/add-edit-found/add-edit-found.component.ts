@@ -57,6 +57,11 @@ export class AddEditFoundComponent implements OnInit {
   statusFlag1: number;
   statusFlag2: number;
   statusFlag3: number;
+  // selectedFoundStatus: Array<{ key: number, value: string}> = [];
+  // selectedGuestStatus: Array<{ key: number, value: string}> = [];
+
+  selectedFoundStatus: string;
+  selectedGuestStatus: string;
 
   isFoundStatus: boolean;
   isGuestStatus: boolean;
@@ -120,6 +125,8 @@ export class AddEditFoundComponent implements OnInit {
     this.initForm();
     this.statusFlag1 = 4;
     this.statusFlag2 = 5;
+    this.selectedFoundStatus = this.foundstatuses[0].value;
+    this.selectedGuestStatus = this.gueststatuses[0].value;
 
     this.isFoundStatus = false;
     this.isGuestStatus = false;
