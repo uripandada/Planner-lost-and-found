@@ -1,7 +1,7 @@
 <div class="found-component-wrapper component-wrapper">
-    <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
+    <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)" >
       <div class="component-list-wrapper">
-        <div class="major-column-title-grid">
+        <div class="major-column-title-grid" >
           <div class="major-column-title">
             <b>Found</b>
           </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <div class="component-box">
+        <div class="component-box" >
           <div class="component-box-filter-row">
             <form [formGroup]="filterForm">
               <div class="item-filter-row-grid">
@@ -74,7 +74,7 @@
               </div>
             </form>
           </div>
-          <div class="component-list-row" *ngIf="(itemsList | async) as items">
+          <div class="component-list-row" *ngIf="(itemsList | async) as items" style = "overflow-x: auto;" >
             <div *ngIf="items.length === 0">
               <div class="empty-monthly-date-tasks">
                 <div class="empty-alert">
@@ -83,7 +83,7 @@
               </div>
             </div>
             <div *ngIf="items.length > 0">
-              <table class="list-view-table">
+              <table class="list-view-table" >
                 <thead>
                   <tr>
                     <th>Found On</th> 
@@ -144,6 +144,15 @@
                     </td>
                     <td class="name-cell">                      
                       <div class="cell-value">{{otherStatusMappings[item.otherStatus]}}</div>
+                    </td>
+                    <td class="name-cell">                      
+                      <div class="cell-value">Guest Status</div>
+                    </td>
+                    <td class="name-cell">                      
+                      <div class="cell-value">Delivery Status</div>
+                    </td>
+                    <td class="name-cell">                      
+                      <div class="cell-value">Other Status</div>
                     </td>
                   </tr>
                 </tbody>
