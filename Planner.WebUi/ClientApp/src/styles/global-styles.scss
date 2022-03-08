@@ -4041,6 +4041,7 @@ table.list-view-table {
     font-weight: normal;
     border-bottom: 1px solid #eee;
     padding: 0 5px 5px 5px;
+    text-align: left;
   }
 
   .list-view-items-row {
@@ -4073,6 +4074,7 @@ table.list-view-table {
       font-weight: 500;
       color: #454545;
       border-bottom: 1px solid #eee;
+      text-align: left;
 
       &.who-cell {
         padding-top: 0px;
@@ -5642,6 +5644,7 @@ td.monthly-weekday-column {
   display: grid;
   grid-template-columns: 100px 1fr auto;
   align-items: center;
+  width:100%
 }
 
 .major-column-buttons {
@@ -11208,6 +11211,7 @@ td.priority-cell {
 .lost-component-wrapper {
   .component-box-filter-row {
     margin-top: 10px;
+    overflow-x: auto;
   }
 
   .component-list-details-wrapper {
@@ -11385,6 +11389,8 @@ td.priority-cell {
 
 // global styles
 .major-column-title-grid{
+
+  overflow-x: auto;
 
   .major-column-title {
     padding: 5px 15px 0px 0px;

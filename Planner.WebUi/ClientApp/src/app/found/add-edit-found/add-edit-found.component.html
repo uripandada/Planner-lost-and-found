@@ -165,11 +165,9 @@
               <div class="two-column-grid">
                 <div class="form-field-wrapper">
                   <label>Where did we store it?</label>
-                  <mat-form-field appearance="outline" color="accent" class="full-width">                  
-                    <mat-select formControlName="storage">                                        
-                      <mat-option *ngFor="let storage of storages" [value]=""></mat-option>                   
-                    </mat-select>                
-                  </mat-form-field>              
+                  <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"                    
+                    [displayProperty]="'typeDescription'" (getSelection)="getSelection($event)" >               
+                  </app-where-select>              
                 </div>
                 <div class="form-field-wrapper">
                   <label>Category</label>               
