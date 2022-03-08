@@ -124,13 +124,13 @@
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isFoundStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>{{selectedFoundStatus}}Found Object Status</mat-label>
-                      <mat-select formControlName="funstatus" (selectionChange)="foundstatus()" [(ngModel)]="selectedFoundStatus">
+                      <mat-select formControlName="funstatus" (selectionChange)="foundstatus()" >
                         <mat-option *ngFor="let foundstatus of foundstatuses" [value]="foundstatus.key">{{ foundstatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isGuestStatus ? '#d5e8d4' : '#fff'}">
                       <mat-label>Guest Contact Status</mat-label>
-                      <mat-select formControlName="gueststatus" (selectionChange)="gueststatus()" [(ngModel)]="selectedGuestStatus">
+                      <mat-select formControlName="gueststatus" (selectionChange)="gueststatus()">
                         <mat-option *ngFor="let gueststatus of gueststatuses" [value]="gueststatus.key">{{ gueststatus.value }}</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -148,7 +148,7 @@
                       <mat-option *ngFor="let other of others" [value]="other.key">{{ other.value }}</mat-option>
                     </mat-select>
                   </mat-form-field>   -->
-                  <mat-form-field appearance="outline" color="primary" class="full-width">
+                  <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isOtherStatus ? '#d5e8d4' : '#fff'}">
                     <mat-label>Other</mat-label>
                     <mat-select formControlName="otherstatus" (selectionChange)="otherstatus()">
                       <mat-option *ngFor="let otherstatus of otherstatuses" [value]="otherstatus.key">{{ otherstatus.value }}</mat-option>
@@ -206,7 +206,7 @@
           </div>
 
           <div class="item-fields-wrapper">
-            <ng-container *ngIf="f.gueststatus.value == statusFlag1 || f.gueststatus.value == statusFlag2">
+            <ng-container *ngIf="f.gueststatus.value != statusFlag">
               <div class="form-field-wrapper">
                 <label>First Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">

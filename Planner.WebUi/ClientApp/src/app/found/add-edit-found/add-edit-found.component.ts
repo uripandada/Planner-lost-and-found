@@ -54,11 +54,7 @@ export class AddEditFoundComponent implements OnInit {
   otherstatuses: Array<{ key: number, value: string }> = [];
   statusMappings: { [index: number]: string } = {};
   statusChange$: Subscription;
-  statusFlag1: number;
-  statusFlag2: number;
-  statusFlag3: number;
-  // selectedFoundStatus: Array<{ key: number, value: string}> = [];
-  // selectedGuestStatus: Array<{ key: number, value: string}> = [];
+  statusFlag: number;
 
   selectedFoundStatus: string;
   selectedGuestStatus: string;
@@ -66,6 +62,7 @@ export class AddEditFoundComponent implements OnInit {
   isFoundStatus: boolean;
   isGuestStatus: boolean;
   isDeliveryStatus: boolean;
+  isOtherStatus: boolean;
 
   hotels: HotelItemData[] = [];
 
@@ -123,14 +120,14 @@ export class AddEditFoundComponent implements OnInit {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
-    this.statusFlag1 = 4;
-    this.statusFlag2 = 5;
+    this.statusFlag = 3;
     this.selectedFoundStatus = this.foundstatuses[0].value;
     this.selectedGuestStatus = this.gueststatuses[0].value;
 
     this.isFoundStatus = false;
     this.isGuestStatus = false;
     this.isDeliveryStatus = false;
+    this.isOtherStatus = false;
     
     this.statusChange$ = this.foundForm.controls['status'].valueChanges.subscribe((value: number) => {
       if(value === LostAndFoundStatus.ClientContacted) {
@@ -158,24 +155,28 @@ export class AddEditFoundComponent implements OnInit {
     this.isFoundStatus = true;
     this.isGuestStatus = false;
     this.isDeliveryStatus = false;
+    this.isOtherStatus = false;
   }
 
   gueststatus(){
     this.isFoundStatus = true;
     this.isGuestStatus = true;
     this.isDeliveryStatus = false;
+    this.isOtherStatus = false;
   }
 
   deliverystatus(){
     this.isFoundStatus = true;
     this.isGuestStatus = true;
     this.isDeliveryStatus = true;
+    this.isOtherStatus = false;
   }
 
   otherstatus(){
     this.isFoundStatus = false;
     this.isGuestStatus = false;
     this.isDeliveryStatus = false;
+    this.isOtherStatus = true;
   }
 
   initForm() {
@@ -202,8 +203,8 @@ export class AddEditFoundComponent implements OnInit {
       notes: [this.item.notes],
       typeOfLoss: [this.item.typeOfLoss, Validators.required],
       status: [this.item.status, Validators.required],
-      funstatus: [this.foundstatuses[0], Validators.required],
-      gueststatus: ['', Validators.required],
+      funstatus: [this.foundstatuses[0].key, Validators.required],
+      gueststatus: [this.gueststatuses[0].key, Validators.required],
       deliverystatus: ['', Validators.required],
       otherstatus: ['', Validators.required],
       storage: ['', Validators.required],
