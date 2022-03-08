@@ -114,13 +114,6 @@ export class AddEditFoundComponent implements OnInit {
     this.allWheres = this._route.snapshot.data.allWheres;
     this.allCategories = this._route.snapshot.data.allCategories;
     this.initForm();
-    this.selectedFoundStatus = this.foundStatuses[0].value;
-    this.selectedGuestStatus = this.guestStatuses[0].value;
-
-    this.isFoundStatus = true;
-    this.isGuestStatus = true;
-    this.isDeliveryStatus = false;
-    this.isOtherStatus = false;
 
     this.statusFlag = GuestStatus.Unclaimed;
 
@@ -182,6 +175,33 @@ export class AddEditFoundComponent implements OnInit {
     else if (this.item.roomId) {
       where = this.allWheres.find(x => x.referenceId == this.item.roomId);
     }
+    
+    console.log(this.item);
+    if (this.item.foundStatus != FoundStatus.Unknown) {
+      this.isFoundStatus = true;
+    } else {
+      this.isFoundStatus = false;
+    }
+
+    if (this.item.guestStatus != GuestStatus.Unknown) {
+      this.isGuestStatus = true;
+    } else {
+      this.isGuestStatus = false;
+    }
+
+    if (this.item.deliveryStatus != DeliveryStatus.Unknown) {
+      this.isDeliveryStatus = true;
+    } else {
+      this.isDeliveryStatus = false;
+    }
+
+    if (this.item.otherStatus != OtherStatus.Unknown) {
+      this.isOtherStatus = true;
+      this.isFoundStatus = false;
+      this.isGuestStatus = false;
+      this.isDeliveryStatus = false;
+    } 
+    
     this.foundForm = this.formBuilder.group({
       hotelId: [this.item.hotelId, Validators.required],
       firstName: [this.item.firstName, Validators.required],
@@ -191,16 +211,18 @@ export class AddEditFoundComponent implements OnInit {
       address: [this.item.address],
       city: [this.item.city],
       postalCode: [this.item.postalCode],
+      referenceNumber: [this.item.referenceNumber],
+      street: "",
       country: [this.item.country],
       clientName: [this.item.reservationId],
       description: [this.item.description, Validators.required],
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
       typeOfLoss: [this.item.typeOfLoss, Validators.required],
-      foundStatus: [this.foundStatuses[0].key, Validators.required],
-      guestStatus: [this.guestStatuses[0].key, Validators.required],
-      deliveryStatus: ['', Validators.required],
-      otherStatus: ['', Validators.required],
+      foundStatus: [this.item.foundStatus, Validators.required],
+      guestStatus: [this.item.guestStatus, Validators.required],
+      deliveryStatus: [this.item.deliveryStatus, Validators.required],
+      otherStatus: [this.item.otherStatus, Validators.required],
       storage: ['', Validators.required],
       category: ['', Validators.required],
       whereFrom: [where, Validators.required],
