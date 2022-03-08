@@ -2600,6 +2600,7 @@ app-floor + app-floor .floor-wrapper {
   .component-list-wrapper {
     width: calc(100vw - 150px);
     transition: width ease 0.25s;
+    overflow-x: auto;
   }
 
   &.component-list-details-loaded {
@@ -4032,6 +4033,7 @@ table.list-view-table {
   background-color: white;
   position: relative;
   width: 100%;
+  overflow-x: auto;
 
   th {
     font-size: 12px;
