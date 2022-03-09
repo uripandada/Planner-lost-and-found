@@ -51,8 +51,11 @@ export class FoundComponent implements OnInit {
     this.filterForm = this.formBuilder.group({
       keywords: [''],
       dateFrom: [''],
-      dateTo: ['']
+      dateTo: [''],
+      hotelId: [],
     });
+
+    this.filterForm.controls.hotelId.setValue(this.hotels[0].id);
 
     this.filterForm.valueChanges.subscribe(
       value => {
@@ -63,13 +66,11 @@ export class FoundComponent implements OnInit {
     this.reloadList(true);
 
     this.foundStatusMappings = {};
-    this.foundStatusMappings[FoundStatus.Unknown] = "";
     this.foundStatusMappings[FoundStatus.WaitingRoomMaid] = "Waiting Room Maid";
     this.foundStatusMappings[FoundStatus.Received] = "Received";
     this.foundStatuses = FoundStatus;
 
     this.guestStatusMappings = {};
-    this.guestStatusMappings[GuestStatus.Unknown] = "";
     this.guestStatusMappings[GuestStatus.Unclaimed] = "Unclaimed";
     this.guestStatusMappings[GuestStatus.ClientContactedByEmail] = "Client Contacted By Email";
     this.guestStatusMappings[GuestStatus.ClientContactedByPhone] = "Client Contacted By Phone";
@@ -78,7 +79,7 @@ export class FoundComponent implements OnInit {
     this.guestStatuses = GuestStatus;
     
     this.deliveryStatusMappings = {};
-    this.deliveryStatusMappings[DeliveryStatus.Unknown] = "";
+    this.deliveryStatusMappings[DeliveryStatus.None] = "None";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForShipment] = "Waiting For Shipment";
     this.deliveryStatusMappings[DeliveryStatus.OTShipped] = "OT Shipped";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForHandDelivered] = "Waiting For Hand Delivered";
@@ -86,7 +87,7 @@ export class FoundComponent implements OnInit {
     this.deliveryStatuses = DeliveryStatus;
 
     this.otherStatusMappings = {};
-    this.otherStatusMappings[OtherStatus.Unknown] = "";
+    this.otherStatusMappings[OtherStatus.None] = "None";
     this.otherStatusMappings[OtherStatus.Expired] = "Expired";
     this.otherStatusMappings[OtherStatus.RefusedByTheClient] = "Refused By The Client";
     this.otherStatusMappings[OtherStatus.BadReferencing] = "Bad Referencing";
@@ -103,8 +104,8 @@ export class FoundComponent implements OnInit {
       lostOn: moment(),
       foundStatus: FoundStatus.WaitingRoomMaid,
       guestStatus: GuestStatus.Unclaimed,
-      deliveryStatus: DeliveryStatus.Unknown,
-      otherStatus: OtherStatus.Unknown,
+      deliveryStatus: DeliveryStatus.None,
+      otherStatus: OtherStatus.None,
       typeOfLoss: TypeOfLoss.Customer,
       address: '',
       firstName: '',
@@ -113,7 +114,8 @@ export class FoundComponent implements OnInit {
       referenceNumber: '',
       description: '',
       roomId: null,
-      reservationId: null
+      reservationId: null,
+      hotelId: this.filterForm.getRawValue().hotelId,
     });
     this.selectedItem.next(item);
     this.areDetailsDisplayed$.next(false);
@@ -139,7 +141,6 @@ export class FoundComponent implements OnInit {
       loadLostItems: false,
     })).subscribe((response) => {
       if (response.isSuccess) {
-
         this.itemsList.next(response.data.items);
         this.totalNumber$.next(response.data.totalNumberOfItems);
         this.loadedNumber$.next(this.loadedNumber$.value + 20);

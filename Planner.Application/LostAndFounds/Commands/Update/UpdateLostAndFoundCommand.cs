@@ -45,6 +45,12 @@ namespace Planner.Application.LostAndFounds.Commands.Update
 
         public string PlaceOfStorage { get; set; }
         public string TrackingNumber { get; set; }
+        public string ClientName { get; set; }
+        public string FounderName { get; set; }
+        public string FounderEmail { get; set; }
+        public string FounderPhoneNumber { get; set; }
+        public Guid? LostAndFoundCategoryId { get; set; }
+        public Guid? StorageRoomId { get; set; }
     }
 
     public class SaveLostAndFoundWhereData : TaskWhereData
@@ -101,6 +107,12 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             item.ReservationId = reservationId;
             item.Description = request.Description;
             item.Notes = request.Notes;
+            item.ClientName = request.ClientName;
+            item.FounderName = request.FounderName;
+            item.FounderEmail = request.FounderEmail;
+            item.FounderPhoneNumber = request.FounderPhoneNumber;
+            item.LostAndFoundCategoryId = request.LostAndFoundCategoryId;
+            item.StorageRoomId = request.StorageRoomId;
 
 
             //var existingLostAndFoundFilesMap = item.Files.ToDictionary(af => af.FileId);
@@ -137,7 +149,7 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             //        FileId = file.Id,
             //    };
 
-             
+
             //    filesToInsert.Add(file);
             //    lostAndFoundFilesToInsert.Add(lostAndFoundFile);
             //}
@@ -152,19 +164,19 @@ namespace Planner.Application.LostAndFounds.Commands.Update
 
             //using (var transaction = await this.databaseContext.Database.BeginTransactionAsync())
             //{
-                //if (filesToInsert.Any())
-                //{
-                //    await this.databaseContext.Files.AddRangeAsync(filesToInsert);
-                //}
-                //if (lostAndFoundFilesToInsert.Any())
-                //{
-                //    await this.databaseContext.LostAndFoundFiles.AddRangeAsync(lostAndFoundFilesToInsert);
-                //}
-                //if (lostAndFoundFilesToDelete.Any())
-                //{
-                //    this.databaseContext.LostAndFoundFiles.RemoveRange(lostAndFoundFilesToDelete);
-                //}
-                await this.databaseContext.SaveChangesAsync(cancellationToken);
+            //if (filesToInsert.Any())
+            //{
+            //    await this.databaseContext.Files.AddRangeAsync(filesToInsert);
+            //}
+            //if (lostAndFoundFilesToInsert.Any())
+            //{
+            //    await this.databaseContext.LostAndFoundFiles.AddRangeAsync(lostAndFoundFilesToInsert);
+            //}
+            //if (lostAndFoundFilesToDelete.Any())
+            //{
+            //    this.databaseContext.LostAndFoundFiles.RemoveRange(lostAndFoundFilesToDelete);
+            //}
+            await this.databaseContext.SaveChangesAsync(cancellationToken);
             //    await transaction.CommitAsync(cancellationToken);
             //}
 

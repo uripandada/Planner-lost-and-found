@@ -42,5 +42,12 @@ namespace Planner.Application.LostAndFounds.Models
         public string HotelId { get; set; }
 
         public IList<LostAndFoundFileModel> Files { get; set; }
+
+        public string ClientName { get; set; }
+        public string FounderName { get; set; }
+        public string FounderEmail { get; set; }
+        public string FounderPhoneNumber { get; set; }
+        public Guid? LostAndFoundCategoryId { get; set; }
+        public Guid? StorageRoomId { get; set; }
     }
 }

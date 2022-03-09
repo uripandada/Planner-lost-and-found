@@ -58,13 +58,11 @@ export class LostAndFoundComponent implements OnInit {
     this.reloadList(true);
 
     this.foundStatusMappings = {};
-    this.foundStatusMappings[FoundStatus.Unknown] = "";
     this.foundStatusMappings[FoundStatus.WaitingRoomMaid] = "Waiting Room Maid";
     this.foundStatusMappings[FoundStatus.Received] = "Received";
     this.foundStatuses = FoundStatus;
 
     this.guestStatusMappings = {};
-    this.guestStatusMappings[GuestStatus.Unknown] = "";
     this.guestStatusMappings[GuestStatus.Unclaimed] = "Unclaimed";
     this.guestStatusMappings[GuestStatus.ClientContactedByEmail] = "Client Contacted By Email";
     this.guestStatusMappings[GuestStatus.ClientContactedByPhone] = "Client Contacted By Phone";
@@ -73,7 +71,6 @@ export class LostAndFoundComponent implements OnInit {
     this.guestStatuses = GuestStatus;
     
     this.deliveryStatusMappings = {};
-    this.deliveryStatusMappings[DeliveryStatus.Unknown] = "";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForShipment] = "Waiting For Shipment";
     this.deliveryStatusMappings[DeliveryStatus.OTShipped] = "OT Shipped";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForHandDelivered] = "Waiting For Hand Delivered";
@@ -81,7 +78,6 @@ export class LostAndFoundComponent implements OnInit {
     this.deliveryStatuses = DeliveryStatus;
 
     this.otherStatusMappings = {};
-    this.otherStatusMappings[OtherStatus.Unknown] = "";
     this.otherStatusMappings[OtherStatus.Expired] = "Expired";
     this.otherStatusMappings[OtherStatus.RefusedByTheClient] = "Refused By The Client";
     this.otherStatusMappings[OtherStatus.BadReferencing] = "Bad Referencing";
@@ -99,8 +95,8 @@ export class LostAndFoundComponent implements OnInit {
       lostOn: moment(),
       foundStatus: FoundStatus.WaitingRoomMaid,
       guestStatus: GuestStatus.Unclaimed,
-      deliveryStatus: DeliveryStatus.Unknown,
-      otherStatus: OtherStatus.Unknown,
+      deliveryStatus: DeliveryStatus.None,
+      otherStatus: OtherStatus.None,
       typeOfLoss: TypeOfLoss.Employee,
       address: '',
       firstName: '',

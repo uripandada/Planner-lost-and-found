@@ -93,11 +93,13 @@ export class AddEditFoundComponent implements OnInit {
     this.guestStatuses.push({ key: GuestStatus.ClientUndecided, value: "Client Undecided" });
     this.guestStatuses.push({ key: GuestStatus.WaitingForClientReturn, value: "Waiting For Client Return" });
 
+    this.deliveryStatuses.push({ key: DeliveryStatus.None, value: "None" });
     this.deliveryStatuses.push({ key: DeliveryStatus.WaitingForHandDelivered, value: "Waiting For Hand-Delivered" });
     this.deliveryStatuses.push({ key: DeliveryStatus.WaitingForShipment, value: "Waiting For Shipment" });
     this.deliveryStatuses.push({ key: DeliveryStatus.OTShipped, value: "OT Shipped" });
     this.deliveryStatuses.push({ key: DeliveryStatus.HandDelivered, value: "Hand Delivered" });
 
+    this.otherStatuses.push({ key: OtherStatus.None, value: "None" });
     this.otherStatuses.push({ key: OtherStatus.Expired, value: "Expired" });
     this.otherStatuses.push({ key: OtherStatus.RefusedByTheClient, value: "Refused By The Client" });
     this.otherStatuses.push({ key: OtherStatus.BadReferencing, value: "Bad Referencing" });
@@ -177,25 +179,16 @@ export class AddEditFoundComponent implements OnInit {
     }
     
     console.log(this.item);
-    if (this.item.foundStatus != FoundStatus.Unknown) {
-      this.isFoundStatus = true;
-    } else {
-      this.isFoundStatus = false;
-    }
+    this.isFoundStatus = true;
+    this.isGuestStatus = true;
 
-    if (this.item.guestStatus != GuestStatus.Unknown) {
-      this.isGuestStatus = true;
-    } else {
-      this.isGuestStatus = false;
-    }
-
-    if (this.item.deliveryStatus != DeliveryStatus.Unknown) {
+    if (this.item.deliveryStatus != DeliveryStatus.None) {
       this.isDeliveryStatus = true;
     } else {
       this.isDeliveryStatus = false;
     }
 
-    if (this.item.otherStatus != OtherStatus.Unknown) {
+    if (this.item.otherStatus != OtherStatus.None) {
       this.isOtherStatus = true;
       this.isFoundStatus = false;
       this.isGuestStatus = false;
@@ -203,9 +196,9 @@ export class AddEditFoundComponent implements OnInit {
     } 
     
     this.foundForm = this.formBuilder.group({
-      hotelId: [this.item.hotelId, Validators.required],
-      firstName: [this.item.firstName, Validators.required],
-      lastName: [this.item.lastName, Validators.required],
+      hotelId: [this.item.hotelId],
+      firstName: [this.item.firstName],
+      lastName: [this.item.lastName],
       phoneNumber: [this.item.phoneNumber],
       email: [this.item.email],
       address: [this.item.address],
@@ -218,25 +211,20 @@ export class AddEditFoundComponent implements OnInit {
       description: [this.item.description, Validators.required],
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
-      typeOfLoss: [this.item.typeOfLoss, Validators.required],
+      typeOfLoss: [this.item.typeOfLoss],
       foundStatus: [this.item.foundStatus, Validators.required],
       guestStatus: [this.item.guestStatus, Validators.required],
-      deliveryStatus: [this.item.deliveryStatus, Validators.required],
-      otherStatus: [this.item.otherStatus, Validators.required],
-      storage: ['', Validators.required],
-      category: ['', Validators.required],
+      deliveryStatus: [this.item.deliveryStatus],
+      otherStatus: [this.item.otherStatus],
+      storage: [''],
+      category: [this.item.lostAndFoundCategoryId, Validators.required],
       whereFrom: [where, Validators.required],
       placeOfStorage: [this.item.placeOfStorage],
       foundByNumber: [''],
 
-      ownerFirstName: [this.item.firstName],
-      ownerLastName: [this.item.lastName],
-      ownerPhoneNumber: [this.item.phoneNumber],
-      ownerEmail: [this.item.email],
-      ownerAddress: [this.item.address],
-      ownerCity: [this.item.city],
-      ownerPostalCode: [this.item.postalCode],
-      ownerCountry: [this.item.country],
+      founderName: [this.item.founderName],
+      founderEmail: [this.item.founderEmail],
+      founderPhoneNumber: [this.item.founderPhoneNumber],
     });
 
     if (this.item.files) {
@@ -261,6 +249,7 @@ export class AddEditFoundComponent implements OnInit {
     else if (this.item.roomId) {
       where = this.allWheres.find(x => x.referenceId == this.item.roomId);
     }
+
     this.foundForm.controls.hotelId.setValue(this.item.hotelId);
     this.foundForm.controls.description.setValue(this.item.description);
     this.foundForm.controls.foundOn.setValue(this.item.lostOn?.format('yyyy-MM-DD'));
@@ -271,16 +260,14 @@ export class AddEditFoundComponent implements OnInit {
     this.foundForm.controls.deliveryStatus.setValue(this.item.deliveryStatus);
     this.foundForm.controls.otherStatus.setValue(this.item.otherStatus);
     this.foundForm.controls.whereFrom.setValue(where);
+    this.foundForm.controls.storage.setValue(this.item.storageRoomId);
     this.foundForm.controls.placeOfStorage.setValue(this.item.placeOfStorage);
     this.foundForm.controls.foundByNumber.setValue('');
-    this.foundForm.controls.ownerFirstName.setValue(this.item.firstName);
-    this.foundForm.controls.ownerLastName.setValue(this.item.lastName);
-    this.foundForm.controls.ownerPhoneNumber.setValue(this.item.phoneNumber);
-    this.foundForm.controls.ownerEmail.setValue(this.item.email);
-    this.foundForm.controls.ownerAddress.setValue(this.item.address);
-    this.foundForm.controls.ownerCity.setValue(this.item.city);
-    this.foundForm.controls.ownerPostalCode.setValue(this.item.postalCode);
-    this.foundForm.controls.ownerCountry.setValue(this.item.country);
+    this.foundForm.controls.clientName.setValue(this.item.reservation?.guestName);
+    this.foundForm.controls.founderName.setValue(this.item.founderName);
+    this.foundForm.controls.founderEmail.setValue(this.item.founderEmail);
+    this.foundForm.controls.founderPhoneNumber.setValue(this.item.founderPhoneNumber);
+    this.foundForm.controls.category.setValue(this.item.lostAndFoundCategoryId);
 
     if (this.item.guestStatus != GuestStatus.Unclaimed) {
       this.foundForm.controls.firstName.setValue(this.item.firstName);
@@ -350,6 +337,12 @@ export class AddEditFoundComponent implements OnInit {
       reservationId: null,
       roomId: null,
       trackingNumber: null,
+      clientName: formValues.clientName,
+      founderName: formValues.founderName,
+      founderEmail: formValues.founderEmail,
+      founderPhoneNumber: formValues.founderPhoneNumber,
+      lostAndFoundCategoryId: formValues.category,
+      storageRoomId: null,
       files: this.selectedFiles.map(x => new LostAndFoundFilesUploadedData({
         fileName: x.fileName,
         id: x.id
@@ -357,6 +350,8 @@ export class AddEditFoundComponent implements OnInit {
     });
 
     if (this.item.id === null) {
+
+      console.log(insertRequest);
 
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
@@ -439,7 +434,8 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   getSelection(data: ExtendedWhereData) {
-    this.foundForm.controls.whereFrom.setValue(data.roomName);
+    console.log(data);
+    this.foundForm.controls.whereFrom.setValue(data);
     this.foundForm.controls.clientName.setValue(data.guestName);
   }
 

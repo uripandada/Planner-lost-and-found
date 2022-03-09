@@ -4,23 +4,21 @@ namespace Planner.Domain.Values
 {
     public enum FoundStatus
 	{
-		Unknown = 0,
-        WaitingRoomMaid = 1,
-        Received = 2,
+        WaitingRoomMaid = 0,
+        Received = 1,
 	}
 	public enum GuestStatus
 	{
-		Unknown = 0,
-		Unclaimed = 1,
-		ClientContactedByEmail = 2,
-		ClientContactedByPhone = 3,
-		ClientUndecided = 4,
-		WaitingForClientReturn = 5,
+		Unclaimed = 0,
+		ClientContactedByEmail = 1,
+		ClientContactedByPhone = 2,
+		ClientUndecided = 3,
+		WaitingForClientReturn = 4,
 	}
 
 	public enum DeliveryStatus
     {
-		Unknown = 0,
+		None = 0,
 		WaitingForHandDelivered = 1,
 		WaitingForShipment = 2,
 		OTShipped = 3,
@@ -29,7 +27,7 @@ namespace Planner.Domain.Values
 
 	public enum OtherStatus
     {
-		Unknown = 0,
+		None = 0,
 		Expired = 1,
 		RefusedByTheClient = 2,
 		BadReferencing = 3,

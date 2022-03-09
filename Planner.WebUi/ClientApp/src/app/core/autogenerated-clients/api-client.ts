@@ -24011,6 +24011,13 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
     deliveryStatus!: DeliveryStatus;
     otherStatus!: OtherStatus;
     typeOfLoss!: TypeOfLoss;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
+    lostAndFoundCategory?: Category | null;
 
     constructor(data?: ILostAndFoundListItem) {
         if (data) {
@@ -24037,6 +24044,13 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
             this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
             this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
+            this.clientName = _data["clientName"] !== undefined ? _data["clientName"] : <any>null;
+            this.founderName = _data["founderName"] !== undefined ? _data["founderName"] : <any>null;
+            this.founderEmail = _data["founderEmail"] !== undefined ? _data["founderEmail"] : <any>null;
+            this.founderPhoneNumber = _data["founderPhoneNumber"] !== undefined ? _data["founderPhoneNumber"] : <any>null;
+            this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
+            this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
+            this.lostAndFoundCategory = _data["lostAndFoundCategory"] ? Category.fromJS(_data["lostAndFoundCategory"]) : <any>null;
         }
     }
 
@@ -24063,6 +24077,13 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
         data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
+        data["clientName"] = this.clientName !== undefined ? this.clientName : <any>null;
+        data["founderName"] = this.founderName !== undefined ? this.founderName : <any>null;
+        data["founderEmail"] = this.founderEmail !== undefined ? this.founderEmail : <any>null;
+        data["founderPhoneNumber"] = this.founderPhoneNumber !== undefined ? this.founderPhoneNumber : <any>null;
+        data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
+        data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
+        data["lostAndFoundCategory"] = this.lostAndFoundCategory ? this.lostAndFoundCategory.toJSON() : <any>null;
         return data; 
     }
 }
@@ -24082,25 +24103,30 @@ export interface ILostAndFoundListItem {
     deliveryStatus: DeliveryStatus;
     otherStatus: OtherStatus;
     typeOfLoss: TypeOfLoss;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
+    lostAndFoundCategory?: Category | null;
 }
 
 export enum FoundStatus {
-    Unknown = 0,
-    WaitingRoomMaid = 1,
-    Received = 2,
+    WaitingRoomMaid = 0,
+    Received = 1,
 }
 
 export enum GuestStatus {
-    Unknown = 0,
-    Unclaimed = 1,
-    ClientContactedByEmail = 2,
-    ClientContactedByPhone = 3,
-    ClientUndecided = 4,
-    WaitingForClientReturn = 5,
+    Unclaimed = 0,
+    ClientContactedByEmail = 1,
+    ClientContactedByPhone = 2,
+    ClientUndecided = 3,
+    WaitingForClientReturn = 4,
 }
 
 export enum DeliveryStatus {
-    Unknown = 0,
+    None = 0,
     WaitingForHandDelivered = 1,
     WaitingForShipment = 2,
     OTShipped = 3,
@@ -24108,7 +24134,7 @@ export enum DeliveryStatus {
 }
 
 export enum OtherStatus {
-    Unknown = 0,
+    None = 0,
     Expired = 1,
     RefusedByTheClient = 2,
     BadReferencing = 3,
@@ -24122,232 +24148,6 @@ export enum TypeOfLoss {
     Customer = 0,
     Employee = 1,
     Unknown = 2,
-}
-
-export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLostAndFoundListQuery {
-    keyword?: string | null;
-    dateFrom?: moment.Moment | null;
-    dateTo?: moment.Moment | null;
-    loadLostItems!: boolean;
-    loadFoundItems!: boolean;
-
-    constructor(data?: IGetLostAndFoundListQuery) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.keyword = _data["keyword"] !== undefined ? _data["keyword"] : <any>null;
-            this.dateFrom = _data["dateFrom"] ? moment(_data["dateFrom"].toString()) : <any>null;
-            this.dateTo = _data["dateTo"] ? moment(_data["dateTo"].toString()) : <any>null;
-            this.loadLostItems = _data["loadLostItems"] !== undefined ? _data["loadLostItems"] : <any>null;
-            this.loadFoundItems = _data["loadFoundItems"] !== undefined ? _data["loadFoundItems"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): GetLostAndFoundListQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetLostAndFoundListQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["keyword"] = this.keyword !== undefined ? this.keyword : <any>null;
-        data["dateFrom"] = this.dateFrom ? this.dateFrom.toISOString() : <any>null;
-        data["dateTo"] = this.dateTo ? this.dateTo.toISOString() : <any>null;
-        data["loadLostItems"] = this.loadLostItems !== undefined ? this.loadLostItems : <any>null;
-        data["loadFoundItems"] = this.loadFoundItems !== undefined ? this.loadFoundItems : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IGetLostAndFoundListQuery extends IGetPageRequest {
-    keyword?: string | null;
-    dateFrom?: moment.Moment | null;
-    dateTo?: moment.Moment | null;
-    loadLostItems: boolean;
-    loadFoundItems: boolean;
-}
-
-export class ProcessResponseOfLostAndFoundModel extends ProcessResponse implements IProcessResponseOfLostAndFoundModel {
-    data?: LostAndFoundModel | null;
-
-    constructor(data?: IProcessResponseOfLostAndFoundModel) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.data = _data["data"] ? LostAndFoundModel.fromJS(_data["data"]) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): ProcessResponseOfLostAndFoundModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProcessResponseOfLostAndFoundModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["data"] = this.data ? this.data.toJSON() : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IProcessResponseOfLostAndFoundModel extends IProcessResponse {
-    data?: LostAndFoundModel | null;
-}
-
-export class LostAndFoundModel implements ILostAndFoundModel {
-    id!: string;
-    description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    address?: string | null;
-    city?: string | null;
-    postalCode?: string | null;
-    country?: string | null;
-    phoneNumber?: string | null;
-    email?: string | null;
-    referenceNumber?: string | null;
-    notes?: string | null;
-    roomId?: string | null;
-    room?: Room2 | null;
-    reservationId?: string | null;
-    reservation?: Reservation | null;
-    lostOn?: moment.Moment | null;
-    foundStatus!: FoundStatus;
-    guestStatus!: GuestStatus;
-    deliveryStatus!: DeliveryStatus;
-    otherStatus!: OtherStatus;
-    typeOfLoss!: TypeOfLoss;
-    placeOfStorage?: string | null;
-    trackingNumber?: string | null;
-    hotelId?: string | null;
-    files?: LostAndFoundFileModel[] | null;
-
-    constructor(data?: ILostAndFoundModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
-            this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
-            this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
-            this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
-            this.country = _data["country"] !== undefined ? _data["country"] : <any>null;
-            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
-            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.referenceNumber = _data["referenceNumber"] !== undefined ? _data["referenceNumber"] : <any>null;
-            this.notes = _data["notes"] !== undefined ? _data["notes"] : <any>null;
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
-            this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
-            this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
-            this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
-            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
-            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
-            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
-            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
-            this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
-            this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
-            this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
-            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
-            if (Array.isArray(_data["files"])) {
-                this.files = [] as any;
-                for (let item of _data["files"])
-                    this.files!.push(LostAndFoundFileModel.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): LostAndFoundModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new LostAndFoundModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
-        data["address"] = this.address !== undefined ? this.address : <any>null;
-        data["city"] = this.city !== undefined ? this.city : <any>null;
-        data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
-        data["country"] = this.country !== undefined ? this.country : <any>null;
-        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
-        data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["referenceNumber"] = this.referenceNumber !== undefined ? this.referenceNumber : <any>null;
-        data["notes"] = this.notes !== undefined ? this.notes : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["room"] = this.room ? this.room.toJSON() : <any>null;
-        data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
-        data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
-        data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
-        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
-        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
-        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
-        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
-        data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
-        data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
-        data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
-        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
-        if (Array.isArray(this.files)) {
-            data["files"] = [];
-            for (let item of this.files)
-                data["files"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface ILostAndFoundModel {
-    id: string;
-    description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    address?: string | null;
-    city?: string | null;
-    postalCode?: string | null;
-    country?: string | null;
-    phoneNumber?: string | null;
-    email?: string | null;
-    referenceNumber?: string | null;
-    notes?: string | null;
-    roomId?: string | null;
-    room?: Room2 | null;
-    reservationId?: string | null;
-    reservation?: Reservation | null;
-    lostOn?: moment.Moment | null;
-    foundStatus: FoundStatus;
-    guestStatus: GuestStatus;
-    deliveryStatus: DeliveryStatus;
-    otherStatus: OtherStatus;
-    typeOfLoss: TypeOfLoss;
-    placeOfStorage?: string | null;
-    trackingNumber?: string | null;
-    hotelId?: string | null;
-    files?: LostAndFoundFileModel[] | null;
 }
 
 export abstract class ChangeTrackingBaseEntity implements IChangeTrackingBaseEntity {
@@ -24402,6 +24202,740 @@ export interface IChangeTrackingBaseEntity {
     modifiedAt: moment.Moment;
     modifiedBy?: User | null;
     modifiedById?: string | null;
+}
+
+export class Category extends ChangeTrackingBaseEntity implements ICategory {
+    id!: string;
+    name?: string | null;
+    expirationDays!: number;
+
+    constructor(data?: ICategory) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.expirationDays = _data["expirationDays"] !== undefined ? _data["expirationDays"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): Category {
+        data = typeof data === 'object' ? data : {};
+        let result = new Category();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["expirationDays"] = this.expirationDays !== undefined ? this.expirationDays : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface ICategory extends IChangeTrackingBaseEntity {
+    id: string;
+    name?: string | null;
+    expirationDays: number;
+}
+
+export class IdentityUserOfGuid implements IIdentityUserOfGuid {
+    id!: string;
+    userName?: string | null;
+    normalizedUserName?: string | null;
+    email?: string | null;
+    normalizedEmail?: string | null;
+    emailConfirmed!: boolean;
+    passwordHash?: string | null;
+    securityStamp?: string | null;
+    concurrencyStamp?: string | null;
+    phoneNumber?: string | null;
+    phoneNumberConfirmed!: boolean;
+    twoFactorEnabled!: boolean;
+    lockoutEnd?: moment.Moment | null;
+    lockoutEnabled!: boolean;
+    accessFailedCount!: number;
+
+    constructor(data?: IIdentityUserOfGuid) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.userName = _data["userName"] !== undefined ? _data["userName"] : <any>null;
+            this.normalizedUserName = _data["normalizedUserName"] !== undefined ? _data["normalizedUserName"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.normalizedEmail = _data["normalizedEmail"] !== undefined ? _data["normalizedEmail"] : <any>null;
+            this.emailConfirmed = _data["emailConfirmed"] !== undefined ? _data["emailConfirmed"] : <any>null;
+            this.passwordHash = _data["passwordHash"] !== undefined ? _data["passwordHash"] : <any>null;
+            this.securityStamp = _data["securityStamp"] !== undefined ? _data["securityStamp"] : <any>null;
+            this.concurrencyStamp = _data["concurrencyStamp"] !== undefined ? _data["concurrencyStamp"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.phoneNumberConfirmed = _data["phoneNumberConfirmed"] !== undefined ? _data["phoneNumberConfirmed"] : <any>null;
+            this.twoFactorEnabled = _data["twoFactorEnabled"] !== undefined ? _data["twoFactorEnabled"] : <any>null;
+            this.lockoutEnd = _data["lockoutEnd"] ? moment(_data["lockoutEnd"].toString()) : <any>null;
+            this.lockoutEnabled = _data["lockoutEnabled"] !== undefined ? _data["lockoutEnabled"] : <any>null;
+            this.accessFailedCount = _data["accessFailedCount"] !== undefined ? _data["accessFailedCount"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): IdentityUserOfGuid {
+        data = typeof data === 'object' ? data : {};
+        let result = new IdentityUserOfGuid();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userName"] = this.userName !== undefined ? this.userName : <any>null;
+        data["normalizedUserName"] = this.normalizedUserName !== undefined ? this.normalizedUserName : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["normalizedEmail"] = this.normalizedEmail !== undefined ? this.normalizedEmail : <any>null;
+        data["emailConfirmed"] = this.emailConfirmed !== undefined ? this.emailConfirmed : <any>null;
+        data["passwordHash"] = this.passwordHash !== undefined ? this.passwordHash : <any>null;
+        data["securityStamp"] = this.securityStamp !== undefined ? this.securityStamp : <any>null;
+        data["concurrencyStamp"] = this.concurrencyStamp !== undefined ? this.concurrencyStamp : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["phoneNumberConfirmed"] = this.phoneNumberConfirmed !== undefined ? this.phoneNumberConfirmed : <any>null;
+        data["twoFactorEnabled"] = this.twoFactorEnabled !== undefined ? this.twoFactorEnabled : <any>null;
+        data["lockoutEnd"] = this.lockoutEnd ? this.lockoutEnd.toISOString() : <any>null;
+        data["lockoutEnabled"] = this.lockoutEnabled !== undefined ? this.lockoutEnabled : <any>null;
+        data["accessFailedCount"] = this.accessFailedCount !== undefined ? this.accessFailedCount : <any>null;
+        return data; 
+    }
+}
+
+export interface IIdentityUserOfGuid {
+    id: string;
+    userName?: string | null;
+    normalizedUserName?: string | null;
+    email?: string | null;
+    normalizedEmail?: string | null;
+    emailConfirmed: boolean;
+    passwordHash?: string | null;
+    securityStamp?: string | null;
+    concurrencyStamp?: string | null;
+    phoneNumber?: string | null;
+    phoneNumberConfirmed: boolean;
+    twoFactorEnabled: boolean;
+    lockoutEnd?: moment.Moment | null;
+    lockoutEnabled: boolean;
+    accessFailedCount: number;
+}
+
+export class User extends IdentityUserOfGuid implements IUser {
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    originalHotel?: string | null;
+    userSubGroupId?: string | null;
+    userSubGroup?: UserSubGroup | null;
+    userGroupId?: string | null;
+    userGroup?: UserGroup | null;
+    isSubGroupLeader!: boolean;
+    isActive!: boolean;
+    defaultAvatarColorHex?: string | null;
+    userRoles?: IdentityUserRoleOfGuid[] | null;
+    userClaims?: IdentityUserClaimOfGuid[] | null;
+    avatar?: ApplicationUserAvatar | null;
+    isOnDuty!: boolean;
+    userHistoryEvents?: UserHistoryEvent[] | null;
+    roomHistoryEvents?: RoomHistoryEvent[] | null;
+    cleaningHistoryEvents?: CleaningHistoryEvent[] | null;
+    cleanings?: Cleaning2[] | null;
+    inspectedCleanings?: Cleaning2[] | null;
+
+    constructor(data?: IUser) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
+            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.connectionName = _data["connectionName"] !== undefined ? _data["connectionName"] : <any>null;
+            this.registrationNumber = _data["registrationNumber"] !== undefined ? _data["registrationNumber"] : <any>null;
+            this.language = _data["language"] !== undefined ? _data["language"] : <any>null;
+            this.originalHotel = _data["originalHotel"] !== undefined ? _data["originalHotel"] : <any>null;
+            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
+            this.userSubGroup = _data["userSubGroup"] ? UserSubGroup.fromJS(_data["userSubGroup"]) : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userGroup = _data["userGroup"] ? UserGroup.fromJS(_data["userGroup"]) : <any>null;
+            this.isSubGroupLeader = _data["isSubGroupLeader"] !== undefined ? _data["isSubGroupLeader"] : <any>null;
+            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
+            this.defaultAvatarColorHex = _data["defaultAvatarColorHex"] !== undefined ? _data["defaultAvatarColorHex"] : <any>null;
+            if (Array.isArray(_data["userRoles"])) {
+                this.userRoles = [] as any;
+                for (let item of _data["userRoles"])
+                    this.userRoles!.push(IdentityUserRoleOfGuid.fromJS(item));
+            }
+            if (Array.isArray(_data["userClaims"])) {
+                this.userClaims = [] as any;
+                for (let item of _data["userClaims"])
+                    this.userClaims!.push(IdentityUserClaimOfGuid.fromJS(item));
+            }
+            this.avatar = _data["avatar"] ? ApplicationUserAvatar.fromJS(_data["avatar"]) : <any>null;
+            this.isOnDuty = _data["isOnDuty"] !== undefined ? _data["isOnDuty"] : <any>null;
+            if (Array.isArray(_data["userHistoryEvents"])) {
+                this.userHistoryEvents = [] as any;
+                for (let item of _data["userHistoryEvents"])
+                    this.userHistoryEvents!.push(UserHistoryEvent.fromJS(item));
+            }
+            if (Array.isArray(_data["roomHistoryEvents"])) {
+                this.roomHistoryEvents = [] as any;
+                for (let item of _data["roomHistoryEvents"])
+                    this.roomHistoryEvents!.push(RoomHistoryEvent.fromJS(item));
+            }
+            if (Array.isArray(_data["cleaningHistoryEvents"])) {
+                this.cleaningHistoryEvents = [] as any;
+                for (let item of _data["cleaningHistoryEvents"])
+                    this.cleaningHistoryEvents!.push(CleaningHistoryEvent.fromJS(item));
+            }
+            if (Array.isArray(_data["cleanings"])) {
+                this.cleanings = [] as any;
+                for (let item of _data["cleanings"])
+                    this.cleanings!.push(Cleaning2.fromJS(item));
+            }
+            if (Array.isArray(_data["inspectedCleanings"])) {
+                this.inspectedCleanings = [] as any;
+                for (let item of _data["inspectedCleanings"])
+                    this.inspectedCleanings!.push(Cleaning2.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): User {
+        data = typeof data === 'object' ? data : {};
+        let result = new User();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["connectionName"] = this.connectionName !== undefined ? this.connectionName : <any>null;
+        data["registrationNumber"] = this.registrationNumber !== undefined ? this.registrationNumber : <any>null;
+        data["language"] = this.language !== undefined ? this.language : <any>null;
+        data["originalHotel"] = this.originalHotel !== undefined ? this.originalHotel : <any>null;
+        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
+        data["userSubGroup"] = this.userSubGroup ? this.userSubGroup.toJSON() : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userGroup"] = this.userGroup ? this.userGroup.toJSON() : <any>null;
+        data["isSubGroupLeader"] = this.isSubGroupLeader !== undefined ? this.isSubGroupLeader : <any>null;
+        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
+        data["defaultAvatarColorHex"] = this.defaultAvatarColorHex !== undefined ? this.defaultAvatarColorHex : <any>null;
+        if (Array.isArray(this.userRoles)) {
+            data["userRoles"] = [];
+            for (let item of this.userRoles)
+                data["userRoles"].push(item.toJSON());
+        }
+        if (Array.isArray(this.userClaims)) {
+            data["userClaims"] = [];
+            for (let item of this.userClaims)
+                data["userClaims"].push(item.toJSON());
+        }
+        data["avatar"] = this.avatar ? this.avatar.toJSON() : <any>null;
+        data["isOnDuty"] = this.isOnDuty !== undefined ? this.isOnDuty : <any>null;
+        if (Array.isArray(this.userHistoryEvents)) {
+            data["userHistoryEvents"] = [];
+            for (let item of this.userHistoryEvents)
+                data["userHistoryEvents"].push(item.toJSON());
+        }
+        if (Array.isArray(this.roomHistoryEvents)) {
+            data["roomHistoryEvents"] = [];
+            for (let item of this.roomHistoryEvents)
+                data["roomHistoryEvents"].push(item.toJSON());
+        }
+        if (Array.isArray(this.cleaningHistoryEvents)) {
+            data["cleaningHistoryEvents"] = [];
+            for (let item of this.cleaningHistoryEvents)
+                data["cleaningHistoryEvents"].push(item.toJSON());
+        }
+        if (Array.isArray(this.cleanings)) {
+            data["cleanings"] = [];
+            for (let item of this.cleanings)
+                data["cleanings"].push(item.toJSON());
+        }
+        if (Array.isArray(this.inspectedCleanings)) {
+            data["inspectedCleanings"] = [];
+            for (let item of this.inspectedCleanings)
+                data["inspectedCleanings"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IUser extends IIdentityUserOfGuid {
+    firstName?: string | null;
+    lastName?: string | null;
+    connectionName?: string | null;
+    registrationNumber?: string | null;
+    language?: string | null;
+    originalHotel?: string | null;
+    userSubGroupId?: string | null;
+    userSubGroup?: UserSubGroup | null;
+    userGroupId?: string | null;
+    userGroup?: UserGroup | null;
+    isSubGroupLeader: boolean;
+    isActive: boolean;
+    defaultAvatarColorHex?: string | null;
+    userRoles?: IdentityUserRoleOfGuid[] | null;
+    userClaims?: IdentityUserClaimOfGuid[] | null;
+    avatar?: ApplicationUserAvatar | null;
+    isOnDuty: boolean;
+    userHistoryEvents?: UserHistoryEvent[] | null;
+    roomHistoryEvents?: RoomHistoryEvent[] | null;
+    cleaningHistoryEvents?: CleaningHistoryEvent[] | null;
+    cleanings?: Cleaning2[] | null;
+    inspectedCleanings?: Cleaning2[] | null;
+}
+
+export class UserSubGroup extends ChangeTrackingBaseEntity implements IUserSubGroup {
+    id!: string;
+    name?: string | null;
+    userGroupId!: string;
+    userGroup?: UserGroup | null;
+    users?: User[] | null;
+
+    constructor(data?: IUserSubGroup) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
+            this.userGroup = _data["userGroup"] ? UserGroup.fromJS(_data["userGroup"]) : <any>null;
+            if (Array.isArray(_data["users"])) {
+                this.users = [] as any;
+                for (let item of _data["users"])
+                    this.users!.push(User.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserSubGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserSubGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
+        data["userGroup"] = this.userGroup ? this.userGroup.toJSON() : <any>null;
+        if (Array.isArray(this.users)) {
+            data["users"] = [];
+            for (let item of this.users)
+                data["users"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IUserSubGroup extends IChangeTrackingBaseEntity {
+    id: string;
+    name?: string | null;
+    userGroupId: string;
+    userGroup?: UserGroup | null;
+    users?: User[] | null;
+}
+
+export class UserGroup extends ChangeTrackingBaseEntity implements IUserGroup {
+    id!: string;
+    name?: string | null;
+    userSubGroups?: UserSubGroup[] | null;
+    users?: User[] | null;
+
+    constructor(data?: IUserGroup) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            if (Array.isArray(_data["userSubGroups"])) {
+                this.userSubGroups = [] as any;
+                for (let item of _data["userSubGroups"])
+                    this.userSubGroups!.push(UserSubGroup.fromJS(item));
+            }
+            if (Array.isArray(_data["users"])) {
+                this.users = [] as any;
+                for (let item of _data["users"])
+                    this.users!.push(User.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserGroup {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserGroup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        if (Array.isArray(this.userSubGroups)) {
+            data["userSubGroups"] = [];
+            for (let item of this.userSubGroups)
+                data["userSubGroups"].push(item.toJSON());
+        }
+        if (Array.isArray(this.users)) {
+            data["users"] = [];
+            for (let item of this.users)
+                data["users"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IUserGroup extends IChangeTrackingBaseEntity {
+    id: string;
+    name?: string | null;
+    userSubGroups?: UserSubGroup[] | null;
+    users?: User[] | null;
+}
+
+export class IdentityUserRoleOfGuid implements IIdentityUserRoleOfGuid {
+    userId!: string;
+    roleId!: string;
+
+    constructor(data?: IIdentityUserRoleOfGuid) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.roleId = _data["roleId"] !== undefined ? _data["roleId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): IdentityUserRoleOfGuid {
+        data = typeof data === 'object' ? data : {};
+        let result = new IdentityUserRoleOfGuid();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["roleId"] = this.roleId !== undefined ? this.roleId : <any>null;
+        return data; 
+    }
+}
+
+export interface IIdentityUserRoleOfGuid {
+    userId: string;
+    roleId: string;
+}
+
+export class IdentityUserClaimOfGuid implements IIdentityUserClaimOfGuid {
+    id!: number;
+    userId!: string;
+    claimType?: string | null;
+    claimValue?: string | null;
+
+    constructor(data?: IIdentityUserClaimOfGuid) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.claimType = _data["claimType"] !== undefined ? _data["claimType"] : <any>null;
+            this.claimValue = _data["claimValue"] !== undefined ? _data["claimValue"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): IdentityUserClaimOfGuid {
+        data = typeof data === 'object' ? data : {};
+        let result = new IdentityUserClaimOfGuid();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["claimType"] = this.claimType !== undefined ? this.claimType : <any>null;
+        data["claimValue"] = this.claimValue !== undefined ? this.claimValue : <any>null;
+        return data; 
+    }
+}
+
+export interface IIdentityUserClaimOfGuid {
+    id: number;
+    userId: string;
+    claimType?: string | null;
+    claimValue?: string | null;
+}
+
+export class ApplicationUserAvatar implements IApplicationUserAvatar {
+    id!: string;
+    fileName?: string | null;
+    fileUrl?: string | null;
+    file?: string | null;
+    user?: User | null;
+
+    constructor(data?: IApplicationUserAvatar) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.fileName = _data["fileName"] !== undefined ? _data["fileName"] : <any>null;
+            this.fileUrl = _data["fileUrl"] !== undefined ? _data["fileUrl"] : <any>null;
+            this.file = _data["file"] !== undefined ? _data["file"] : <any>null;
+            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ApplicationUserAvatar {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApplicationUserAvatar();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["fileName"] = this.fileName !== undefined ? this.fileName : <any>null;
+        data["fileUrl"] = this.fileUrl !== undefined ? this.fileUrl : <any>null;
+        data["file"] = this.file !== undefined ? this.file : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface IApplicationUserAvatar {
+    id: string;
+    fileName?: string | null;
+    fileUrl?: string | null;
+    file?: string | null;
+    user?: User | null;
+}
+
+export class UserHistoryEvent implements IUserHistoryEvent {
+    id!: string;
+    userId!: string;
+    user?: User | null;
+    type!: UserEventType;
+    at!: moment.Moment;
+    message?: string | null;
+    oldData?: string | null;
+    newData?: string | null;
+
+    constructor(data?: IUserHistoryEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
+            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
+            this.at = _data["at"] ? moment(_data["at"].toString()) : <any>null;
+            this.message = _data["message"] !== undefined ? _data["message"] : <any>null;
+            this.oldData = _data["oldData"] !== undefined ? _data["oldData"] : <any>null;
+            this.newData = _data["newData"] !== undefined ? _data["newData"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserHistoryEvent {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserHistoryEvent();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["at"] = this.at ? this.at.toISOString() : <any>null;
+        data["message"] = this.message !== undefined ? this.message : <any>null;
+        data["oldData"] = this.oldData !== undefined ? this.oldData : <any>null;
+        data["newData"] = this.newData !== undefined ? this.newData : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserHistoryEvent {
+    id: string;
+    userId: string;
+    user?: User | null;
+    type: UserEventType;
+    at: moment.Moment;
+    message?: string | null;
+    oldData?: string | null;
+    newData?: string | null;
+}
+
+export enum UserEventType {
+    LOGGED_IN = 0,
+    LOGGED_OUT = 1,
+    CAME_ON_DUTY = 2,
+    CAME_OFF_DUTY = 3,
+    CLEANING_STARTED = 4,
+    CLEANING_PAUSED = 5,
+    CLEANING_UNPAUSED = 6,
+    CLEANING_RESTARTED = 7,
+    CLEANING_FINISHED = 8,
+    CLEANING_INSPECTION_FINISHED = 9,
+    CLEANING_REFUSED = 10,
+    CLEANING_DO_NOT_DISTURB = 11,
+    CLEANING_DELAYED = 12,
+    REGISTERED_GUEST_ENTERED_ROOM = 13,
+    REGISTERED_GUEST_LEFT_ROOM = 14,
+    CLEANING_INSPECTION_DO_NOT_DISTURB = 15,
+    CLEANING_INSPECTION_REQUIRES_INSPECTION = 16,
+    CLEANING_INSPECTION_CLEANING_IN_PROGRESS = 17,
+    CLEANING_INSPECTION_NEW_CLEANING = 18,
+    CLEANING_INSPECTION_CHANGED = 19,
+    CLEANING_NEW = 20,
+    ROOM_CLEANING_PRIORITY_ENABLED = 21,
+    ROOM_CLEANING_PRIORITY_DISABLED = 22,
+}
+
+export class RoomHistoryEvent implements IRoomHistoryEvent {
+    id!: string;
+    roomId!: string;
+    room?: Room2 | null;
+    roomBedId?: string | null;
+    roomBed?: RoomBed | null;
+    userId?: string | null;
+    user?: User | null;
+    type!: RoomEventType;
+    at!: moment.Moment;
+    message?: string | null;
+    oldData?: string | null;
+    newData?: string | null;
+
+    constructor(data?: IRoomHistoryEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.roomBedId = _data["roomBedId"] !== undefined ? _data["roomBedId"] : <any>null;
+            this.roomBed = _data["roomBed"] ? RoomBed.fromJS(_data["roomBed"]) : <any>null;
+            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
+            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
+            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
+            this.at = _data["at"] ? moment(_data["at"].toString()) : <any>null;
+            this.message = _data["message"] !== undefined ? _data["message"] : <any>null;
+            this.oldData = _data["oldData"] !== undefined ? _data["oldData"] : <any>null;
+            this.newData = _data["newData"] !== undefined ? _data["newData"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): RoomHistoryEvent {
+        data = typeof data === 'object' ? data : {};
+        let result = new RoomHistoryEvent();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["roomBedId"] = this.roomBedId !== undefined ? this.roomBedId : <any>null;
+        data["roomBed"] = this.roomBed ? this.roomBed.toJSON() : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["at"] = this.at ? this.at.toISOString() : <any>null;
+        data["message"] = this.message !== undefined ? this.message : <any>null;
+        data["oldData"] = this.oldData !== undefined ? this.oldData : <any>null;
+        data["newData"] = this.newData !== undefined ? this.newData : <any>null;
+        return data; 
+    }
+}
+
+export interface IRoomHistoryEvent {
+    id: string;
+    roomId: string;
+    room?: Room2 | null;
+    roomBedId?: string | null;
+    roomBed?: RoomBed | null;
+    userId?: string | null;
+    user?: User | null;
+    type: RoomEventType;
+    at: moment.Moment;
+    message?: string | null;
+    oldData?: string | null;
+    newData?: string | null;
 }
 
 export abstract class BaseEntity extends ChangeTrackingBaseEntity implements IBaseEntity {
@@ -26105,24 +26639,17 @@ export interface ISettings extends IChangeTrackingBaseEntity {
     minCreditsForMultipleCleanersCleaning: number;
 }
 
-export class IdentityUserOfGuid implements IIdentityUserOfGuid {
+export class WarehouseAssetAvailability implements IWarehouseAssetAvailability {
     id!: string;
-    userName?: string | null;
-    normalizedUserName?: string | null;
-    email?: string | null;
-    normalizedEmail?: string | null;
-    emailConfirmed!: boolean;
-    passwordHash?: string | null;
-    securityStamp?: string | null;
-    concurrencyStamp?: string | null;
-    phoneNumber?: string | null;
-    phoneNumberConfirmed!: boolean;
-    twoFactorEnabled!: boolean;
-    lockoutEnd?: moment.Moment | null;
-    lockoutEnabled!: boolean;
-    accessFailedCount!: number;
+    quantity!: number;
+    reservedQuantity!: number;
+    warehouseId!: string;
+    warehouse?: Warehouse | null;
+    assetId!: string;
+    asset?: Asset | null;
+    xmin!: number;
 
-    constructor(data?: IIdentityUserOfGuid) {
+    constructor(data?: IWarehouseAssetAvailability) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -26134,26 +26661,19 @@ export class IdentityUserOfGuid implements IIdentityUserOfGuid {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.userName = _data["userName"] !== undefined ? _data["userName"] : <any>null;
-            this.normalizedUserName = _data["normalizedUserName"] !== undefined ? _data["normalizedUserName"] : <any>null;
-            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.normalizedEmail = _data["normalizedEmail"] !== undefined ? _data["normalizedEmail"] : <any>null;
-            this.emailConfirmed = _data["emailConfirmed"] !== undefined ? _data["emailConfirmed"] : <any>null;
-            this.passwordHash = _data["passwordHash"] !== undefined ? _data["passwordHash"] : <any>null;
-            this.securityStamp = _data["securityStamp"] !== undefined ? _data["securityStamp"] : <any>null;
-            this.concurrencyStamp = _data["concurrencyStamp"] !== undefined ? _data["concurrencyStamp"] : <any>null;
-            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
-            this.phoneNumberConfirmed = _data["phoneNumberConfirmed"] !== undefined ? _data["phoneNumberConfirmed"] : <any>null;
-            this.twoFactorEnabled = _data["twoFactorEnabled"] !== undefined ? _data["twoFactorEnabled"] : <any>null;
-            this.lockoutEnd = _data["lockoutEnd"] ? moment(_data["lockoutEnd"].toString()) : <any>null;
-            this.lockoutEnabled = _data["lockoutEnabled"] !== undefined ? _data["lockoutEnabled"] : <any>null;
-            this.accessFailedCount = _data["accessFailedCount"] !== undefined ? _data["accessFailedCount"] : <any>null;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
+            this.reservedQuantity = _data["reservedQuantity"] !== undefined ? _data["reservedQuantity"] : <any>null;
+            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
+            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.xmin = _data["xmin"] !== undefined ? _data["xmin"] : <any>null;
         }
     }
 
-    static fromJS(data: any): IdentityUserOfGuid {
+    static fromJS(data: any): WarehouseAssetAvailability {
         data = typeof data === 'object' ? data : {};
-        let result = new IdentityUserOfGuid();
+        let result = new WarehouseAssetAvailability();
         result.init(data);
         return result;
     }
@@ -26161,223 +26681,46 @@ export class IdentityUserOfGuid implements IIdentityUserOfGuid {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["userName"] = this.userName !== undefined ? this.userName : <any>null;
-        data["normalizedUserName"] = this.normalizedUserName !== undefined ? this.normalizedUserName : <any>null;
-        data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["normalizedEmail"] = this.normalizedEmail !== undefined ? this.normalizedEmail : <any>null;
-        data["emailConfirmed"] = this.emailConfirmed !== undefined ? this.emailConfirmed : <any>null;
-        data["passwordHash"] = this.passwordHash !== undefined ? this.passwordHash : <any>null;
-        data["securityStamp"] = this.securityStamp !== undefined ? this.securityStamp : <any>null;
-        data["concurrencyStamp"] = this.concurrencyStamp !== undefined ? this.concurrencyStamp : <any>null;
-        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
-        data["phoneNumberConfirmed"] = this.phoneNumberConfirmed !== undefined ? this.phoneNumberConfirmed : <any>null;
-        data["twoFactorEnabled"] = this.twoFactorEnabled !== undefined ? this.twoFactorEnabled : <any>null;
-        data["lockoutEnd"] = this.lockoutEnd ? this.lockoutEnd.toISOString() : <any>null;
-        data["lockoutEnabled"] = this.lockoutEnabled !== undefined ? this.lockoutEnabled : <any>null;
-        data["accessFailedCount"] = this.accessFailedCount !== undefined ? this.accessFailedCount : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
+        data["reservedQuantity"] = this.reservedQuantity !== undefined ? this.reservedQuantity : <any>null;
+        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
+        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["xmin"] = this.xmin !== undefined ? this.xmin : <any>null;
         return data; 
     }
 }
 
-export interface IIdentityUserOfGuid {
+export interface IWarehouseAssetAvailability {
     id: string;
-    userName?: string | null;
-    normalizedUserName?: string | null;
-    email?: string | null;
-    normalizedEmail?: string | null;
-    emailConfirmed: boolean;
-    passwordHash?: string | null;
-    securityStamp?: string | null;
-    concurrencyStamp?: string | null;
-    phoneNumber?: string | null;
-    phoneNumberConfirmed: boolean;
-    twoFactorEnabled: boolean;
-    lockoutEnd?: moment.Moment | null;
-    lockoutEnabled: boolean;
-    accessFailedCount: number;
+    quantity: number;
+    reservedQuantity: number;
+    warehouseId: string;
+    warehouse?: Warehouse | null;
+    assetId: string;
+    asset?: Asset | null;
+    xmin: number;
 }
 
-export class User extends IdentityUserOfGuid implements IUser {
-    firstName?: string | null;
-    lastName?: string | null;
-    connectionName?: string | null;
-    registrationNumber?: string | null;
-    language?: string | null;
-    originalHotel?: string | null;
-    userSubGroupId?: string | null;
-    userSubGroup?: UserSubGroup | null;
-    userGroupId?: string | null;
-    userGroup?: UserGroup | null;
-    isSubGroupLeader!: boolean;
-    isActive!: boolean;
-    defaultAvatarColorHex?: string | null;
-    userRoles?: IdentityUserRoleOfGuid[] | null;
-    userClaims?: IdentityUserClaimOfGuid[] | null;
-    avatar?: ApplicationUserAvatar | null;
-    isOnDuty!: boolean;
-    userHistoryEvents?: UserHistoryEvent[] | null;
-    roomHistoryEvents?: RoomHistoryEvent[] | null;
-    cleaningHistoryEvents?: CleaningHistoryEvent[] | null;
-    cleanings?: Cleaning2[] | null;
-    inspectedCleanings?: Cleaning2[] | null;
-
-    constructor(data?: IUser) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
-            this.connectionName = _data["connectionName"] !== undefined ? _data["connectionName"] : <any>null;
-            this.registrationNumber = _data["registrationNumber"] !== undefined ? _data["registrationNumber"] : <any>null;
-            this.language = _data["language"] !== undefined ? _data["language"] : <any>null;
-            this.originalHotel = _data["originalHotel"] !== undefined ? _data["originalHotel"] : <any>null;
-            this.userSubGroupId = _data["userSubGroupId"] !== undefined ? _data["userSubGroupId"] : <any>null;
-            this.userSubGroup = _data["userSubGroup"] ? UserSubGroup.fromJS(_data["userSubGroup"]) : <any>null;
-            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
-            this.userGroup = _data["userGroup"] ? UserGroup.fromJS(_data["userGroup"]) : <any>null;
-            this.isSubGroupLeader = _data["isSubGroupLeader"] !== undefined ? _data["isSubGroupLeader"] : <any>null;
-            this.isActive = _data["isActive"] !== undefined ? _data["isActive"] : <any>null;
-            this.defaultAvatarColorHex = _data["defaultAvatarColorHex"] !== undefined ? _data["defaultAvatarColorHex"] : <any>null;
-            if (Array.isArray(_data["userRoles"])) {
-                this.userRoles = [] as any;
-                for (let item of _data["userRoles"])
-                    this.userRoles!.push(IdentityUserRoleOfGuid.fromJS(item));
-            }
-            if (Array.isArray(_data["userClaims"])) {
-                this.userClaims = [] as any;
-                for (let item of _data["userClaims"])
-                    this.userClaims!.push(IdentityUserClaimOfGuid.fromJS(item));
-            }
-            this.avatar = _data["avatar"] ? ApplicationUserAvatar.fromJS(_data["avatar"]) : <any>null;
-            this.isOnDuty = _data["isOnDuty"] !== undefined ? _data["isOnDuty"] : <any>null;
-            if (Array.isArray(_data["userHistoryEvents"])) {
-                this.userHistoryEvents = [] as any;
-                for (let item of _data["userHistoryEvents"])
-                    this.userHistoryEvents!.push(UserHistoryEvent.fromJS(item));
-            }
-            if (Array.isArray(_data["roomHistoryEvents"])) {
-                this.roomHistoryEvents = [] as any;
-                for (let item of _data["roomHistoryEvents"])
-                    this.roomHistoryEvents!.push(RoomHistoryEvent.fromJS(item));
-            }
-            if (Array.isArray(_data["cleaningHistoryEvents"])) {
-                this.cleaningHistoryEvents = [] as any;
-                for (let item of _data["cleaningHistoryEvents"])
-                    this.cleaningHistoryEvents!.push(CleaningHistoryEvent.fromJS(item));
-            }
-            if (Array.isArray(_data["cleanings"])) {
-                this.cleanings = [] as any;
-                for (let item of _data["cleanings"])
-                    this.cleanings!.push(Cleaning2.fromJS(item));
-            }
-            if (Array.isArray(_data["inspectedCleanings"])) {
-                this.inspectedCleanings = [] as any;
-                for (let item of _data["inspectedCleanings"])
-                    this.inspectedCleanings!.push(Cleaning2.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): User {
-        data = typeof data === 'object' ? data : {};
-        let result = new User();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
-        data["connectionName"] = this.connectionName !== undefined ? this.connectionName : <any>null;
-        data["registrationNumber"] = this.registrationNumber !== undefined ? this.registrationNumber : <any>null;
-        data["language"] = this.language !== undefined ? this.language : <any>null;
-        data["originalHotel"] = this.originalHotel !== undefined ? this.originalHotel : <any>null;
-        data["userSubGroupId"] = this.userSubGroupId !== undefined ? this.userSubGroupId : <any>null;
-        data["userSubGroup"] = this.userSubGroup ? this.userSubGroup.toJSON() : <any>null;
-        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
-        data["userGroup"] = this.userGroup ? this.userGroup.toJSON() : <any>null;
-        data["isSubGroupLeader"] = this.isSubGroupLeader !== undefined ? this.isSubGroupLeader : <any>null;
-        data["isActive"] = this.isActive !== undefined ? this.isActive : <any>null;
-        data["defaultAvatarColorHex"] = this.defaultAvatarColorHex !== undefined ? this.defaultAvatarColorHex : <any>null;
-        if (Array.isArray(this.userRoles)) {
-            data["userRoles"] = [];
-            for (let item of this.userRoles)
-                data["userRoles"].push(item.toJSON());
-        }
-        if (Array.isArray(this.userClaims)) {
-            data["userClaims"] = [];
-            for (let item of this.userClaims)
-                data["userClaims"].push(item.toJSON());
-        }
-        data["avatar"] = this.avatar ? this.avatar.toJSON() : <any>null;
-        data["isOnDuty"] = this.isOnDuty !== undefined ? this.isOnDuty : <any>null;
-        if (Array.isArray(this.userHistoryEvents)) {
-            data["userHistoryEvents"] = [];
-            for (let item of this.userHistoryEvents)
-                data["userHistoryEvents"].push(item.toJSON());
-        }
-        if (Array.isArray(this.roomHistoryEvents)) {
-            data["roomHistoryEvents"] = [];
-            for (let item of this.roomHistoryEvents)
-                data["roomHistoryEvents"].push(item.toJSON());
-        }
-        if (Array.isArray(this.cleaningHistoryEvents)) {
-            data["cleaningHistoryEvents"] = [];
-            for (let item of this.cleaningHistoryEvents)
-                data["cleaningHistoryEvents"].push(item.toJSON());
-        }
-        if (Array.isArray(this.cleanings)) {
-            data["cleanings"] = [];
-            for (let item of this.cleanings)
-                data["cleanings"].push(item.toJSON());
-        }
-        if (Array.isArray(this.inspectedCleanings)) {
-            data["inspectedCleanings"] = [];
-            for (let item of this.inspectedCleanings)
-                data["inspectedCleanings"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IUser extends IIdentityUserOfGuid {
-    firstName?: string | null;
-    lastName?: string | null;
-    connectionName?: string | null;
-    registrationNumber?: string | null;
-    language?: string | null;
-    originalHotel?: string | null;
-    userSubGroupId?: string | null;
-    userSubGroup?: UserSubGroup | null;
-    userGroupId?: string | null;
-    userGroup?: UserGroup | null;
-    isSubGroupLeader: boolean;
-    isActive: boolean;
-    defaultAvatarColorHex?: string | null;
-    userRoles?: IdentityUserRoleOfGuid[] | null;
-    userClaims?: IdentityUserClaimOfGuid[] | null;
-    avatar?: ApplicationUserAvatar | null;
-    isOnDuty: boolean;
-    userHistoryEvents?: UserHistoryEvent[] | null;
-    roomHistoryEvents?: RoomHistoryEvent[] | null;
-    cleaningHistoryEvents?: CleaningHistoryEvent[] | null;
-    cleanings?: Cleaning2[] | null;
-    inspectedCleanings?: Cleaning2[] | null;
-}
-
-export class UserSubGroup extends ChangeTrackingBaseEntity implements IUserSubGroup {
+export class Asset extends ChangeTrackingBaseEntity implements IAsset {
     id!: string;
     name?: string | null;
-    userGroupId!: string;
-    userGroup?: UserGroup | null;
-    users?: User[] | null;
+    isBulk!: boolean;
+    serialNumber?: string | null;
+    assetGroupId?: string | null;
+    assetSubGroupId?: string | null;
+    assetGroup?: AssetGroup | null;
+    assetSubGroup?: AssetGroup | null;
+    assetTags?: AssetTag[] | null;
+    assetFiles?: AssetFile[] | null;
+    warehouseAvailabilities?: WarehouseAssetAvailability[] | null;
+    roomUsages?: RoomAssetUsage[] | null;
+    inventoryStatuses?: InventoryAssetStatus[] | null;
+    warehouseDocuments?: WarehouseDocument[] | null;
+    warehouseDocumentArchives?: WarehouseDocumentArchive[] | null;
 
-    constructor(data?: IUserSubGroup) {
+    constructor(data?: IAsset) {
         super(data);
     }
 
@@ -26386,19 +26729,53 @@ export class UserSubGroup extends ChangeTrackingBaseEntity implements IUserSubGr
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.userGroupId = _data["userGroupId"] !== undefined ? _data["userGroupId"] : <any>null;
-            this.userGroup = _data["userGroup"] ? UserGroup.fromJS(_data["userGroup"]) : <any>null;
-            if (Array.isArray(_data["users"])) {
-                this.users = [] as any;
-                for (let item of _data["users"])
-                    this.users!.push(User.fromJS(item));
+            this.isBulk = _data["isBulk"] !== undefined ? _data["isBulk"] : <any>null;
+            this.serialNumber = _data["serialNumber"] !== undefined ? _data["serialNumber"] : <any>null;
+            this.assetGroupId = _data["assetGroupId"] !== undefined ? _data["assetGroupId"] : <any>null;
+            this.assetSubGroupId = _data["assetSubGroupId"] !== undefined ? _data["assetSubGroupId"] : <any>null;
+            this.assetGroup = _data["assetGroup"] ? AssetGroup.fromJS(_data["assetGroup"]) : <any>null;
+            this.assetSubGroup = _data["assetSubGroup"] ? AssetGroup.fromJS(_data["assetSubGroup"]) : <any>null;
+            if (Array.isArray(_data["assetTags"])) {
+                this.assetTags = [] as any;
+                for (let item of _data["assetTags"])
+                    this.assetTags!.push(AssetTag.fromJS(item));
+            }
+            if (Array.isArray(_data["assetFiles"])) {
+                this.assetFiles = [] as any;
+                for (let item of _data["assetFiles"])
+                    this.assetFiles!.push(AssetFile.fromJS(item));
+            }
+            if (Array.isArray(_data["warehouseAvailabilities"])) {
+                this.warehouseAvailabilities = [] as any;
+                for (let item of _data["warehouseAvailabilities"])
+                    this.warehouseAvailabilities!.push(WarehouseAssetAvailability.fromJS(item));
+            }
+            if (Array.isArray(_data["roomUsages"])) {
+                this.roomUsages = [] as any;
+                for (let item of _data["roomUsages"])
+                    this.roomUsages!.push(RoomAssetUsage.fromJS(item));
+            }
+            if (Array.isArray(_data["inventoryStatuses"])) {
+                this.inventoryStatuses = [] as any;
+                for (let item of _data["inventoryStatuses"])
+                    this.inventoryStatuses!.push(InventoryAssetStatus.fromJS(item));
+            }
+            if (Array.isArray(_data["warehouseDocuments"])) {
+                this.warehouseDocuments = [] as any;
+                for (let item of _data["warehouseDocuments"])
+                    this.warehouseDocuments!.push(WarehouseDocument.fromJS(item));
+            }
+            if (Array.isArray(_data["warehouseDocumentArchives"])) {
+                this.warehouseDocumentArchives = [] as any;
+                for (let item of _data["warehouseDocumentArchives"])
+                    this.warehouseDocumentArchives!.push(WarehouseDocumentArchive.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): UserSubGroup {
+    static fromJS(data: any): Asset {
         data = typeof data === 'object' ? data : {};
-        let result = new UserSubGroup();
+        let result = new Asset();
         result.init(data);
         return result;
     }
@@ -26407,33 +26784,82 @@ export class UserSubGroup extends ChangeTrackingBaseEntity implements IUserSubGr
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["userGroupId"] = this.userGroupId !== undefined ? this.userGroupId : <any>null;
-        data["userGroup"] = this.userGroup ? this.userGroup.toJSON() : <any>null;
-        if (Array.isArray(this.users)) {
-            data["users"] = [];
-            for (let item of this.users)
-                data["users"].push(item.toJSON());
+        data["isBulk"] = this.isBulk !== undefined ? this.isBulk : <any>null;
+        data["serialNumber"] = this.serialNumber !== undefined ? this.serialNumber : <any>null;
+        data["assetGroupId"] = this.assetGroupId !== undefined ? this.assetGroupId : <any>null;
+        data["assetSubGroupId"] = this.assetSubGroupId !== undefined ? this.assetSubGroupId : <any>null;
+        data["assetGroup"] = this.assetGroup ? this.assetGroup.toJSON() : <any>null;
+        data["assetSubGroup"] = this.assetSubGroup ? this.assetSubGroup.toJSON() : <any>null;
+        if (Array.isArray(this.assetTags)) {
+            data["assetTags"] = [];
+            for (let item of this.assetTags)
+                data["assetTags"].push(item.toJSON());
+        }
+        if (Array.isArray(this.assetFiles)) {
+            data["assetFiles"] = [];
+            for (let item of this.assetFiles)
+                data["assetFiles"].push(item.toJSON());
+        }
+        if (Array.isArray(this.warehouseAvailabilities)) {
+            data["warehouseAvailabilities"] = [];
+            for (let item of this.warehouseAvailabilities)
+                data["warehouseAvailabilities"].push(item.toJSON());
+        }
+        if (Array.isArray(this.roomUsages)) {
+            data["roomUsages"] = [];
+            for (let item of this.roomUsages)
+                data["roomUsages"].push(item.toJSON());
+        }
+        if (Array.isArray(this.inventoryStatuses)) {
+            data["inventoryStatuses"] = [];
+            for (let item of this.inventoryStatuses)
+                data["inventoryStatuses"].push(item.toJSON());
+        }
+        if (Array.isArray(this.warehouseDocuments)) {
+            data["warehouseDocuments"] = [];
+            for (let item of this.warehouseDocuments)
+                data["warehouseDocuments"].push(item.toJSON());
+        }
+        if (Array.isArray(this.warehouseDocumentArchives)) {
+            data["warehouseDocumentArchives"] = [];
+            for (let item of this.warehouseDocumentArchives)
+                data["warehouseDocumentArchives"].push(item.toJSON());
         }
         super.toJSON(data);
         return data; 
     }
 }
 
-export interface IUserSubGroup extends IChangeTrackingBaseEntity {
+export interface IAsset extends IChangeTrackingBaseEntity {
     id: string;
     name?: string | null;
-    userGroupId: string;
-    userGroup?: UserGroup | null;
-    users?: User[] | null;
+    isBulk: boolean;
+    serialNumber?: string | null;
+    assetGroupId?: string | null;
+    assetSubGroupId?: string | null;
+    assetGroup?: AssetGroup | null;
+    assetSubGroup?: AssetGroup | null;
+    assetTags?: AssetTag[] | null;
+    assetFiles?: AssetFile[] | null;
+    warehouseAvailabilities?: WarehouseAssetAvailability[] | null;
+    roomUsages?: RoomAssetUsage[] | null;
+    inventoryStatuses?: InventoryAssetStatus[] | null;
+    warehouseDocuments?: WarehouseDocument[] | null;
+    warehouseDocumentArchives?: WarehouseDocumentArchive[] | null;
 }
 
-export class UserGroup extends ChangeTrackingBaseEntity implements IUserGroup {
+export class AssetGroup extends ChangeTrackingBaseEntity implements IAssetGroup {
     id!: string;
+    parentAssetGroupId?: string | null;
     name?: string | null;
-    userSubGroups?: UserSubGroup[] | null;
-    users?: User[] | null;
+    typeKey?: string | null;
+    parentAssetGroup?: AssetGroup | null;
+    childAssetGroups?: AssetGroup[] | null;
+    groupAssets?: Asset[] | null;
+    subGroupAssets?: Asset[] | null;
+    assetActions?: AssetAction[] | null;
 
-    constructor(data?: IUserGroup) {
+    constructor(data?: IAssetGroup) {
         super(data);
     }
 
@@ -26441,23 +26867,36 @@ export class UserGroup extends ChangeTrackingBaseEntity implements IUserGroup {
         super.init(_data);
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.parentAssetGroupId = _data["parentAssetGroupId"] !== undefined ? _data["parentAssetGroupId"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            if (Array.isArray(_data["userSubGroups"])) {
-                this.userSubGroups = [] as any;
-                for (let item of _data["userSubGroups"])
-                    this.userSubGroups!.push(UserSubGroup.fromJS(item));
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.parentAssetGroup = _data["parentAssetGroup"] ? AssetGroup.fromJS(_data["parentAssetGroup"]) : <any>null;
+            if (Array.isArray(_data["childAssetGroups"])) {
+                this.childAssetGroups = [] as any;
+                for (let item of _data["childAssetGroups"])
+                    this.childAssetGroups!.push(AssetGroup.fromJS(item));
             }
-            if (Array.isArray(_data["users"])) {
-                this.users = [] as any;
-                for (let item of _data["users"])
-                    this.users!.push(User.fromJS(item));
+            if (Array.isArray(_data["groupAssets"])) {
+                this.groupAssets = [] as any;
+                for (let item of _data["groupAssets"])
+                    this.groupAssets!.push(Asset.fromJS(item));
+            }
+            if (Array.isArray(_data["subGroupAssets"])) {
+                this.subGroupAssets = [] as any;
+                for (let item of _data["subGroupAssets"])
+                    this.subGroupAssets!.push(Asset.fromJS(item));
+            }
+            if (Array.isArray(_data["assetActions"])) {
+                this.assetActions = [] as any;
+                for (let item of _data["assetActions"])
+                    this.assetActions!.push(AssetAction.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): UserGroup {
+    static fromJS(data: any): AssetGroup {
         data = typeof data === 'object' ? data : {};
-        let result = new UserGroup();
+        let result = new AssetGroup();
         result.init(data);
         return result;
     }
@@ -26465,96 +26904,96 @@ export class UserGroup extends ChangeTrackingBaseEntity implements IUserGroup {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["parentAssetGroupId"] = this.parentAssetGroupId !== undefined ? this.parentAssetGroupId : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
-        if (Array.isArray(this.userSubGroups)) {
-            data["userSubGroups"] = [];
-            for (let item of this.userSubGroups)
-                data["userSubGroups"].push(item.toJSON());
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["parentAssetGroup"] = this.parentAssetGroup ? this.parentAssetGroup.toJSON() : <any>null;
+        if (Array.isArray(this.childAssetGroups)) {
+            data["childAssetGroups"] = [];
+            for (let item of this.childAssetGroups)
+                data["childAssetGroups"].push(item.toJSON());
         }
-        if (Array.isArray(this.users)) {
-            data["users"] = [];
-            for (let item of this.users)
-                data["users"].push(item.toJSON());
+        if (Array.isArray(this.groupAssets)) {
+            data["groupAssets"] = [];
+            for (let item of this.groupAssets)
+                data["groupAssets"].push(item.toJSON());
+        }
+        if (Array.isArray(this.subGroupAssets)) {
+            data["subGroupAssets"] = [];
+            for (let item of this.subGroupAssets)
+                data["subGroupAssets"].push(item.toJSON());
+        }
+        if (Array.isArray(this.assetActions)) {
+            data["assetActions"] = [];
+            for (let item of this.assetActions)
+                data["assetActions"].push(item.toJSON());
         }
         super.toJSON(data);
         return data; 
     }
 }
 
-export interface IUserGroup extends IChangeTrackingBaseEntity {
+export interface IAssetGroup extends IChangeTrackingBaseEntity {
     id: string;
+    parentAssetGroupId?: string | null;
     name?: string | null;
-    userSubGroups?: UserSubGroup[] | null;
-    users?: User[] | null;
+    typeKey?: string | null;
+    parentAssetGroup?: AssetGroup | null;
+    childAssetGroups?: AssetGroup[] | null;
+    groupAssets?: Asset[] | null;
+    subGroupAssets?: Asset[] | null;
+    assetActions?: AssetAction[] | null;
 }
 
-export class IdentityUserRoleOfGuid implements IIdentityUserRoleOfGuid {
-    userId!: string;
-    roleId!: string;
+export class AssetAction extends ChangeTrackingBaseEntity implements IAssetAction {
+    id!: string;
+    assetGroupId!: string;
+    assetGroup?: AssetGroup | null;
+    name?: string | null;
+    quickOrTimedKey?: string | null;
+    priorityKey?: string | null;
+    defaultAssignedToUserId?: string | null;
+    defaultAssignedToUser?: User | null;
+    defaultAssignedToUserGroupId?: string | null;
+    defaultAssignedToUserGroup?: UserGroup | null;
+    defaultAssignedToUserSubGroupId?: string | null;
+    defaultAssignedToUserSubGroup?: UserSubGroup | null;
+    credits?: number | null;
+    price?: number | null;
+    isSystemDefined!: boolean;
+    systemActionTypeKey?: string | null;
+    systemDefinedActionIdentifierKey?: string | null;
 
-    constructor(data?: IIdentityUserRoleOfGuid) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
+    constructor(data?: IAssetAction) {
+        super(data);
     }
 
     init(_data?: any) {
-        if (_data) {
-            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
-            this.roleId = _data["roleId"] !== undefined ? _data["roleId"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): IdentityUserRoleOfGuid {
-        data = typeof data === 'object' ? data : {};
-        let result = new IdentityUserRoleOfGuid();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["roleId"] = this.roleId !== undefined ? this.roleId : <any>null;
-        return data; 
-    }
-}
-
-export interface IIdentityUserRoleOfGuid {
-    userId: string;
-    roleId: string;
-}
-
-export class IdentityUserClaimOfGuid implements IIdentityUserClaimOfGuid {
-    id!: number;
-    userId!: string;
-    claimType?: string | null;
-    claimValue?: string | null;
-
-    constructor(data?: IIdentityUserClaimOfGuid) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
+        super.init(_data);
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
-            this.claimType = _data["claimType"] !== undefined ? _data["claimType"] : <any>null;
-            this.claimValue = _data["claimValue"] !== undefined ? _data["claimValue"] : <any>null;
+            this.assetGroupId = _data["assetGroupId"] !== undefined ? _data["assetGroupId"] : <any>null;
+            this.assetGroup = _data["assetGroup"] ? AssetGroup.fromJS(_data["assetGroup"]) : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.quickOrTimedKey = _data["quickOrTimedKey"] !== undefined ? _data["quickOrTimedKey"] : <any>null;
+            this.priorityKey = _data["priorityKey"] !== undefined ? _data["priorityKey"] : <any>null;
+            this.defaultAssignedToUserId = _data["defaultAssignedToUserId"] !== undefined ? _data["defaultAssignedToUserId"] : <any>null;
+            this.defaultAssignedToUser = _data["defaultAssignedToUser"] ? User.fromJS(_data["defaultAssignedToUser"]) : <any>null;
+            this.defaultAssignedToUserGroupId = _data["defaultAssignedToUserGroupId"] !== undefined ? _data["defaultAssignedToUserGroupId"] : <any>null;
+            this.defaultAssignedToUserGroup = _data["defaultAssignedToUserGroup"] ? UserGroup.fromJS(_data["defaultAssignedToUserGroup"]) : <any>null;
+            this.defaultAssignedToUserSubGroupId = _data["defaultAssignedToUserSubGroupId"] !== undefined ? _data["defaultAssignedToUserSubGroupId"] : <any>null;
+            this.defaultAssignedToUserSubGroup = _data["defaultAssignedToUserSubGroup"] ? UserSubGroup.fromJS(_data["defaultAssignedToUserSubGroup"]) : <any>null;
+            this.credits = _data["credits"] !== undefined ? _data["credits"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.isSystemDefined = _data["isSystemDefined"] !== undefined ? _data["isSystemDefined"] : <any>null;
+            this.systemActionTypeKey = _data["systemActionTypeKey"] !== undefined ? _data["systemActionTypeKey"] : <any>null;
+            this.systemDefinedActionIdentifierKey = _data["systemDefinedActionIdentifierKey"] !== undefined ? _data["systemDefinedActionIdentifierKey"] : <any>null;
         }
     }
 
-    static fromJS(data: any): IdentityUserClaimOfGuid {
+    static fromJS(data: any): AssetAction {
         data = typeof data === 'object' ? data : {};
-        let result = new IdentityUserClaimOfGuid();
+        let result = new AssetAction();
         result.init(data);
         return result;
     }
@@ -26562,49 +27001,211 @@ export class IdentityUserClaimOfGuid implements IIdentityUserClaimOfGuid {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["claimType"] = this.claimType !== undefined ? this.claimType : <any>null;
-        data["claimValue"] = this.claimValue !== undefined ? this.claimValue : <any>null;
+        data["assetGroupId"] = this.assetGroupId !== undefined ? this.assetGroupId : <any>null;
+        data["assetGroup"] = this.assetGroup ? this.assetGroup.toJSON() : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["quickOrTimedKey"] = this.quickOrTimedKey !== undefined ? this.quickOrTimedKey : <any>null;
+        data["priorityKey"] = this.priorityKey !== undefined ? this.priorityKey : <any>null;
+        data["defaultAssignedToUserId"] = this.defaultAssignedToUserId !== undefined ? this.defaultAssignedToUserId : <any>null;
+        data["defaultAssignedToUser"] = this.defaultAssignedToUser ? this.defaultAssignedToUser.toJSON() : <any>null;
+        data["defaultAssignedToUserGroupId"] = this.defaultAssignedToUserGroupId !== undefined ? this.defaultAssignedToUserGroupId : <any>null;
+        data["defaultAssignedToUserGroup"] = this.defaultAssignedToUserGroup ? this.defaultAssignedToUserGroup.toJSON() : <any>null;
+        data["defaultAssignedToUserSubGroupId"] = this.defaultAssignedToUserSubGroupId !== undefined ? this.defaultAssignedToUserSubGroupId : <any>null;
+        data["defaultAssignedToUserSubGroup"] = this.defaultAssignedToUserSubGroup ? this.defaultAssignedToUserSubGroup.toJSON() : <any>null;
+        data["credits"] = this.credits !== undefined ? this.credits : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["isSystemDefined"] = this.isSystemDefined !== undefined ? this.isSystemDefined : <any>null;
+        data["systemActionTypeKey"] = this.systemActionTypeKey !== undefined ? this.systemActionTypeKey : <any>null;
+        data["systemDefinedActionIdentifierKey"] = this.systemDefinedActionIdentifierKey !== undefined ? this.systemDefinedActionIdentifierKey : <any>null;
+        super.toJSON(data);
         return data; 
     }
 }
 
-export interface IIdentityUserClaimOfGuid {
-    id: number;
-    userId: string;
-    claimType?: string | null;
-    claimValue?: string | null;
+export interface IAssetAction extends IChangeTrackingBaseEntity {
+    id: string;
+    assetGroupId: string;
+    assetGroup?: AssetGroup | null;
+    name?: string | null;
+    quickOrTimedKey?: string | null;
+    priorityKey?: string | null;
+    defaultAssignedToUserId?: string | null;
+    defaultAssignedToUser?: User | null;
+    defaultAssignedToUserGroupId?: string | null;
+    defaultAssignedToUserGroup?: UserGroup | null;
+    defaultAssignedToUserSubGroupId?: string | null;
+    defaultAssignedToUserSubGroup?: UserSubGroup | null;
+    credits?: number | null;
+    price?: number | null;
+    isSystemDefined: boolean;
+    systemActionTypeKey?: string | null;
+    systemDefinedActionIdentifierKey?: string | null;
 }
 
-export class ApplicationUserAvatar implements IApplicationUserAvatar {
+export class AssetTag implements IAssetTag {
+    assetId!: string;
+    asset?: Asset | null;
+    tagKey?: string | null;
+    tag?: Tag | null;
+
+    constructor(data?: IAssetTag) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.tagKey = _data["tagKey"] !== undefined ? _data["tagKey"] : <any>null;
+            this.tag = _data["tag"] ? Tag.fromJS(_data["tag"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AssetTag {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetTag();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["tagKey"] = this.tagKey !== undefined ? this.tagKey : <any>null;
+        data["tag"] = this.tag ? this.tag.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface IAssetTag {
+    assetId: string;
+    asset?: Asset | null;
+    tagKey?: string | null;
+    tag?: Tag | null;
+}
+
+export class Tag extends ChangeTrackingBaseEntity implements ITag {
+    key?: string | null;
+    value?: string | null;
+
+    constructor(data?: ITag) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.key = _data["key"] !== undefined ? _data["key"] : <any>null;
+            this.value = _data["value"] !== undefined ? _data["value"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): Tag {
+        data = typeof data === 'object' ? data : {};
+        let result = new Tag();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key !== undefined ? this.key : <any>null;
+        data["value"] = this.value !== undefined ? this.value : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface ITag extends IChangeTrackingBaseEntity {
+    key?: string | null;
+    value?: string | null;
+}
+
+export class AssetFile implements IAssetFile {
+    assetId!: string;
+    asset?: Asset | null;
+    fileId!: string;
+    file?: File | null;
+    isPrimaryImage!: boolean;
+    isQrCodeImage!: boolean;
+
+    constructor(data?: IAssetFile) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.fileId = _data["fileId"] !== undefined ? _data["fileId"] : <any>null;
+            this.file = _data["file"] ? File.fromJS(_data["file"]) : <any>null;
+            this.isPrimaryImage = _data["isPrimaryImage"] !== undefined ? _data["isPrimaryImage"] : <any>null;
+            this.isQrCodeImage = _data["isQrCodeImage"] !== undefined ? _data["isQrCodeImage"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AssetFile {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetFile();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["fileId"] = this.fileId !== undefined ? this.fileId : <any>null;
+        data["file"] = this.file ? this.file.toJSON() : <any>null;
+        data["isPrimaryImage"] = this.isPrimaryImage !== undefined ? this.isPrimaryImage : <any>null;
+        data["isQrCodeImage"] = this.isQrCodeImage !== undefined ? this.isQrCodeImage : <any>null;
+        return data; 
+    }
+}
+
+export interface IAssetFile {
+    assetId: string;
+    asset?: Asset | null;
+    fileId: string;
+    file?: File | null;
+    isPrimaryImage: boolean;
+    isQrCodeImage: boolean;
+}
+
+export class File extends ChangeTrackingBaseEntity implements IFile {
     id!: string;
+    fileTypeKey?: string | null;
     fileName?: string | null;
-    fileUrl?: string | null;
-    file?: string | null;
-    user?: User | null;
+    fileData?: string | null;
 
-    constructor(data?: IApplicationUserAvatar) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
+    constructor(data?: IFile) {
+        super(data);
     }
 
     init(_data?: any) {
+        super.init(_data);
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.fileTypeKey = _data["fileTypeKey"] !== undefined ? _data["fileTypeKey"] : <any>null;
             this.fileName = _data["fileName"] !== undefined ? _data["fileName"] : <any>null;
-            this.fileUrl = _data["fileUrl"] !== undefined ? _data["fileUrl"] : <any>null;
-            this.file = _data["file"] !== undefined ? _data["file"] : <any>null;
-            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
+            this.fileData = _data["fileData"] !== undefined ? _data["fileData"] : <any>null;
         }
     }
 
-    static fromJS(data: any): ApplicationUserAvatar {
+    static fromJS(data: any): File {
         data = typeof data === 'object' ? data : {};
-        let result = new ApplicationUserAvatar();
+        let result = new File();
         result.init(data);
         return result;
     }
@@ -26612,127 +27213,31 @@ export class ApplicationUserAvatar implements IApplicationUserAvatar {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["fileTypeKey"] = this.fileTypeKey !== undefined ? this.fileTypeKey : <any>null;
         data["fileName"] = this.fileName !== undefined ? this.fileName : <any>null;
-        data["fileUrl"] = this.fileUrl !== undefined ? this.fileUrl : <any>null;
-        data["file"] = this.file !== undefined ? this.file : <any>null;
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["fileData"] = this.fileData !== undefined ? this.fileData : <any>null;
+        super.toJSON(data);
         return data; 
     }
 }
 
-export interface IApplicationUserAvatar {
+export interface IFile extends IChangeTrackingBaseEntity {
     id: string;
+    fileTypeKey?: string | null;
     fileName?: string | null;
-    fileUrl?: string | null;
-    file?: string | null;
-    user?: User | null;
+    fileData?: string | null;
 }
 
-export class UserHistoryEvent implements IUserHistoryEvent {
+export class RoomAssetUsage implements IRoomAssetUsage {
     id!: string;
-    userId!: string;
-    user?: User | null;
-    type!: UserEventType;
-    at!: moment.Moment;
-    message?: string | null;
-    oldData?: string | null;
-    newData?: string | null;
-
-    constructor(data?: IUserHistoryEvent) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
-            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
-            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
-            this.at = _data["at"] ? moment(_data["at"].toString()) : <any>null;
-            this.message = _data["message"] !== undefined ? _data["message"] : <any>null;
-            this.oldData = _data["oldData"] !== undefined ? _data["oldData"] : <any>null;
-            this.newData = _data["newData"] !== undefined ? _data["newData"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UserHistoryEvent {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserHistoryEvent();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
-        data["type"] = this.type !== undefined ? this.type : <any>null;
-        data["at"] = this.at ? this.at.toISOString() : <any>null;
-        data["message"] = this.message !== undefined ? this.message : <any>null;
-        data["oldData"] = this.oldData !== undefined ? this.oldData : <any>null;
-        data["newData"] = this.newData !== undefined ? this.newData : <any>null;
-        return data; 
-    }
-}
-
-export interface IUserHistoryEvent {
-    id: string;
-    userId: string;
-    user?: User | null;
-    type: UserEventType;
-    at: moment.Moment;
-    message?: string | null;
-    oldData?: string | null;
-    newData?: string | null;
-}
-
-export enum UserEventType {
-    LOGGED_IN = 0,
-    LOGGED_OUT = 1,
-    CAME_ON_DUTY = 2,
-    CAME_OFF_DUTY = 3,
-    CLEANING_STARTED = 4,
-    CLEANING_PAUSED = 5,
-    CLEANING_UNPAUSED = 6,
-    CLEANING_RESTARTED = 7,
-    CLEANING_FINISHED = 8,
-    CLEANING_INSPECTION_FINISHED = 9,
-    CLEANING_REFUSED = 10,
-    CLEANING_DO_NOT_DISTURB = 11,
-    CLEANING_DELAYED = 12,
-    REGISTERED_GUEST_ENTERED_ROOM = 13,
-    REGISTERED_GUEST_LEFT_ROOM = 14,
-    CLEANING_INSPECTION_DO_NOT_DISTURB = 15,
-    CLEANING_INSPECTION_REQUIRES_INSPECTION = 16,
-    CLEANING_INSPECTION_CLEANING_IN_PROGRESS = 17,
-    CLEANING_INSPECTION_NEW_CLEANING = 18,
-    CLEANING_INSPECTION_CHANGED = 19,
-    CLEANING_NEW = 20,
-    ROOM_CLEANING_PRIORITY_ENABLED = 21,
-    ROOM_CLEANING_PRIORITY_DISABLED = 22,
-}
-
-export class RoomHistoryEvent implements IRoomHistoryEvent {
-    id!: string;
+    quantity!: number;
     roomId!: string;
     room?: Room2 | null;
-    roomBedId?: string | null;
-    roomBed?: RoomBed | null;
-    userId?: string | null;
-    user?: User | null;
-    type!: RoomEventType;
-    at!: moment.Moment;
-    message?: string | null;
-    oldData?: string | null;
-    newData?: string | null;
+    assetId!: string;
+    asset?: Asset | null;
+    xmin!: number;
 
-    constructor(data?: IRoomHistoryEvent) {
+    constructor(data?: IRoomAssetUsage) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -26744,23 +27249,18 @@ export class RoomHistoryEvent implements IRoomHistoryEvent {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
             this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
             this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
-            this.roomBedId = _data["roomBedId"] !== undefined ? _data["roomBedId"] : <any>null;
-            this.roomBed = _data["roomBed"] ? RoomBed.fromJS(_data["roomBed"]) : <any>null;
-            this.userId = _data["userId"] !== undefined ? _data["userId"] : <any>null;
-            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>null;
-            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
-            this.at = _data["at"] ? moment(_data["at"].toString()) : <any>null;
-            this.message = _data["message"] !== undefined ? _data["message"] : <any>null;
-            this.oldData = _data["oldData"] !== undefined ? _data["oldData"] : <any>null;
-            this.newData = _data["newData"] !== undefined ? _data["newData"] : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.xmin = _data["xmin"] !== undefined ? _data["xmin"] : <any>null;
         }
     }
 
-    static fromJS(data: any): RoomHistoryEvent {
+    static fromJS(data: any): RoomAssetUsage {
         data = typeof data === 'object' ? data : {};
-        let result = new RoomHistoryEvent();
+        let result = new RoomAssetUsage();
         result.init(data);
         return result;
     }
@@ -26768,59 +27268,35 @@ export class RoomHistoryEvent implements IRoomHistoryEvent {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
         data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
         data["room"] = this.room ? this.room.toJSON() : <any>null;
-        data["roomBedId"] = this.roomBedId !== undefined ? this.roomBedId : <any>null;
-        data["roomBed"] = this.roomBed ? this.roomBed.toJSON() : <any>null;
-        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
-        data["type"] = this.type !== undefined ? this.type : <any>null;
-        data["at"] = this.at ? this.at.toISOString() : <any>null;
-        data["message"] = this.message !== undefined ? this.message : <any>null;
-        data["oldData"] = this.oldData !== undefined ? this.oldData : <any>null;
-        data["newData"] = this.newData !== undefined ? this.newData : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["xmin"] = this.xmin !== undefined ? this.xmin : <any>null;
         return data; 
     }
 }
 
-export interface IRoomHistoryEvent {
+export interface IRoomAssetUsage {
     id: string;
+    quantity: number;
     roomId: string;
     room?: Room2 | null;
-    roomBedId?: string | null;
-    roomBed?: RoomBed | null;
-    userId?: string | null;
-    user?: User | null;
-    type: RoomEventType;
-    at: moment.Moment;
-    message?: string | null;
-    oldData?: string | null;
-    newData?: string | null;
+    assetId: string;
+    asset?: Asset | null;
+    xmin: number;
 }
 
-export class RoomBed implements IRoomBed {
+export class InventoryAssetStatus implements IInventoryAssetStatus {
     id!: string;
-    roomId!: string;
-    room?: Room2 | null;
-    name?: string | null;
-    externalId?: string | null;
-    isAutogeneratedFromReservationSync!: boolean;
-    reservations?: Reservation[] | null;
-    isOccupied!: boolean;
-    isClean!: boolean;
-    isOutOfOrder!: boolean;
-    isOutOfService!: boolean;
-    isDoNotDisturb!: boolean;
-    isCleaningInProgress!: boolean;
-    isInspected!: boolean;
-    isGuestCurrentlyIn!: boolean;
-    isCleaningPriority!: boolean;
-    cleanings?: Cleaning2[] | null;
-    roomHistoryEvents?: RoomHistoryEvent[] | null;
-    rccHousekeepingStatus?: RccHousekeepingStatusCode | null;
-    rccRoomStatus?: RccRoomStatusCode | null;
+    quantity!: number;
+    inventoryId!: string;
+    inventory?: Inventory | null;
+    assetId!: string;
+    asset?: Asset | null;
 
-    constructor(data?: IRoomBed) {
+    constructor(data?: IInventoryAssetStatus) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -26832,43 +27308,328 @@ export class RoomBed implements IRoomBed {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
+            this.inventoryId = _data["inventoryId"] !== undefined ? _data["inventoryId"] : <any>null;
+            this.inventory = _data["inventory"] ? Inventory.fromJS(_data["inventory"]) : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InventoryAssetStatus {
+        data = typeof data === 'object' ? data : {};
+        let result = new InventoryAssetStatus();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
+        data["inventoryId"] = this.inventoryId !== undefined ? this.inventoryId : <any>null;
+        data["inventory"] = this.inventory ? this.inventory.toJSON() : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface IInventoryAssetStatus {
+    id: string;
+    quantity: number;
+    inventoryId: string;
+    inventory?: Inventory | null;
+    assetId: string;
+    asset?: Asset | null;
+}
+
+export class Inventory extends ChangeTrackingBaseEntity implements IInventory {
+    id!: string;
+    assetStatuses?: InventoryAssetStatus[] | null;
+    warehouseId!: string;
+    warehouse?: Warehouse | null;
+    date!: moment.Moment;
+
+    constructor(data?: IInventory) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            if (Array.isArray(_data["assetStatuses"])) {
+                this.assetStatuses = [] as any;
+                for (let item of _data["assetStatuses"])
+                    this.assetStatuses!.push(InventoryAssetStatus.fromJS(item));
+            }
+            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
+            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
+            this.date = _data["date"] ? moment(_data["date"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): Inventory {
+        data = typeof data === 'object' ? data : {};
+        let result = new Inventory();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        if (Array.isArray(this.assetStatuses)) {
+            data["assetStatuses"] = [];
+            for (let item of this.assetStatuses)
+                data["assetStatuses"].push(item.toJSON());
+        }
+        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
+        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
+        data["date"] = this.date ? this.date.toISOString() : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IInventory extends IChangeTrackingBaseEntity {
+    id: string;
+    assetStatuses?: InventoryAssetStatus[] | null;
+    warehouseId: string;
+    warehouse?: Warehouse | null;
+    date: moment.Moment;
+}
+
+export class WarehouseDocument extends ChangeTrackingBaseEntity implements IWarehouseDocument {
+    id!: string;
+    warehouseId!: string;
+    warehouse?: Warehouse | null;
+    typeKey?: string | null;
+    note?: string | null;
+    assetId!: string;
+    asset?: Asset | null;
+    availableQuantityChange!: number;
+    availableQuantityBeforeChange!: number;
+    reservedQuantityChange!: number;
+    reservedQuantityBeforeChange!: number;
+
+    constructor(data?: IWarehouseDocument) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
+            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.note = _data["note"] !== undefined ? _data["note"] : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.availableQuantityChange = _data["availableQuantityChange"] !== undefined ? _data["availableQuantityChange"] : <any>null;
+            this.availableQuantityBeforeChange = _data["availableQuantityBeforeChange"] !== undefined ? _data["availableQuantityBeforeChange"] : <any>null;
+            this.reservedQuantityChange = _data["reservedQuantityChange"] !== undefined ? _data["reservedQuantityChange"] : <any>null;
+            this.reservedQuantityBeforeChange = _data["reservedQuantityBeforeChange"] !== undefined ? _data["reservedQuantityBeforeChange"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): WarehouseDocument {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseDocument();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
+        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["note"] = this.note !== undefined ? this.note : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["availableQuantityChange"] = this.availableQuantityChange !== undefined ? this.availableQuantityChange : <any>null;
+        data["availableQuantityBeforeChange"] = this.availableQuantityBeforeChange !== undefined ? this.availableQuantityBeforeChange : <any>null;
+        data["reservedQuantityChange"] = this.reservedQuantityChange !== undefined ? this.reservedQuantityChange : <any>null;
+        data["reservedQuantityBeforeChange"] = this.reservedQuantityBeforeChange !== undefined ? this.reservedQuantityBeforeChange : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IWarehouseDocument extends IChangeTrackingBaseEntity {
+    id: string;
+    warehouseId: string;
+    warehouse?: Warehouse | null;
+    typeKey?: string | null;
+    note?: string | null;
+    assetId: string;
+    asset?: Asset | null;
+    availableQuantityChange: number;
+    availableQuantityBeforeChange: number;
+    reservedQuantityChange: number;
+    reservedQuantityBeforeChange: number;
+}
+
+export class WarehouseDocumentArchive extends ChangeTrackingBaseEntity implements IWarehouseDocumentArchive {
+    id!: string;
+    warehouseId!: string;
+    warehouse?: Warehouse | null;
+    typeKey?: string | null;
+    note?: string | null;
+    assetId!: string;
+    asset?: Asset | null;
+    availableQuantityChange!: number;
+    availableQuantityBeforeChange!: number;
+    reservedQuantityChange!: number;
+    reservedQuantityBeforeChange!: number;
+
+    constructor(data?: IWarehouseDocumentArchive) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
+            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
+            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
+            this.note = _data["note"] !== undefined ? _data["note"] : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
+            this.availableQuantityChange = _data["availableQuantityChange"] !== undefined ? _data["availableQuantityChange"] : <any>null;
+            this.availableQuantityBeforeChange = _data["availableQuantityBeforeChange"] !== undefined ? _data["availableQuantityBeforeChange"] : <any>null;
+            this.reservedQuantityChange = _data["reservedQuantityChange"] !== undefined ? _data["reservedQuantityChange"] : <any>null;
+            this.reservedQuantityBeforeChange = _data["reservedQuantityBeforeChange"] !== undefined ? _data["reservedQuantityBeforeChange"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): WarehouseDocumentArchive {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseDocumentArchive();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
+        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
+        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
+        data["note"] = this.note !== undefined ? this.note : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
+        data["availableQuantityChange"] = this.availableQuantityChange !== undefined ? this.availableQuantityChange : <any>null;
+        data["availableQuantityBeforeChange"] = this.availableQuantityBeforeChange !== undefined ? this.availableQuantityBeforeChange : <any>null;
+        data["reservedQuantityChange"] = this.reservedQuantityChange !== undefined ? this.reservedQuantityChange : <any>null;
+        data["reservedQuantityBeforeChange"] = this.reservedQuantityBeforeChange !== undefined ? this.reservedQuantityBeforeChange : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IWarehouseDocumentArchive extends IChangeTrackingBaseEntity {
+    id: string;
+    warehouseId: string;
+    warehouse?: Warehouse | null;
+    typeKey?: string | null;
+    note?: string | null;
+    assetId: string;
+    asset?: Asset | null;
+    availableQuantityChange: number;
+    availableQuantityBeforeChange: number;
+    reservedQuantityChange: number;
+    reservedQuantityBeforeChange: number;
+}
+
+export class RoomAssetModel implements IRoomAssetModel {
+    roomId!: string;
+    room?: Room2 | null;
+    assetModelId!: string;
+    assetModel?: AssetModel | null;
+    quantity!: number;
+
+    constructor(data?: IRoomAssetModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
             this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
             this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.assetModelId = _data["assetModelId"] !== undefined ? _data["assetModelId"] : <any>null;
+            this.assetModel = _data["assetModel"] ? AssetModel.fromJS(_data["assetModel"]) : <any>null;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): RoomAssetModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new RoomAssetModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["assetModelId"] = this.assetModelId !== undefined ? this.assetModelId : <any>null;
+        data["assetModel"] = this.assetModel ? this.assetModel.toJSON() : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
+        return data; 
+    }
+}
+
+export interface IRoomAssetModel {
+    roomId: string;
+    room?: Room2 | null;
+    assetModelId: string;
+    assetModel?: AssetModel | null;
+    quantity: number;
+}
+
+export class AssetModel extends ChangeTrackingBaseEntity implements IAssetModel {
+    id!: string;
+    assetId!: string;
+    asset?: Asset | null;
+    name?: string | null;
+    availableQuantity!: number;
+    roomAssetModels?: RoomAssetModel[] | null;
+
+    constructor(data?: IAssetModel) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
+            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.externalId = _data["externalId"] !== undefined ? _data["externalId"] : <any>null;
-            this.isAutogeneratedFromReservationSync = _data["isAutogeneratedFromReservationSync"] !== undefined ? _data["isAutogeneratedFromReservationSync"] : <any>null;
-            if (Array.isArray(_data["reservations"])) {
-                this.reservations = [] as any;
-                for (let item of _data["reservations"])
-                    this.reservations!.push(Reservation.fromJS(item));
+            this.availableQuantity = _data["availableQuantity"] !== undefined ? _data["availableQuantity"] : <any>null;
+            if (Array.isArray(_data["roomAssetModels"])) {
+                this.roomAssetModels = [] as any;
+                for (let item of _data["roomAssetModels"])
+                    this.roomAssetModels!.push(RoomAssetModel.fromJS(item));
             }
-            this.isOccupied = _data["isOccupied"] !== undefined ? _data["isOccupied"] : <any>null;
-            this.isClean = _data["isClean"] !== undefined ? _data["isClean"] : <any>null;
-            this.isOutOfOrder = _data["isOutOfOrder"] !== undefined ? _data["isOutOfOrder"] : <any>null;
-            this.isOutOfService = _data["isOutOfService"] !== undefined ? _data["isOutOfService"] : <any>null;
-            this.isDoNotDisturb = _data["isDoNotDisturb"] !== undefined ? _data["isDoNotDisturb"] : <any>null;
-            this.isCleaningInProgress = _data["isCleaningInProgress"] !== undefined ? _data["isCleaningInProgress"] : <any>null;
-            this.isInspected = _data["isInspected"] !== undefined ? _data["isInspected"] : <any>null;
-            this.isGuestCurrentlyIn = _data["isGuestCurrentlyIn"] !== undefined ? _data["isGuestCurrentlyIn"] : <any>null;
-            this.isCleaningPriority = _data["isCleaningPriority"] !== undefined ? _data["isCleaningPriority"] : <any>null;
-            if (Array.isArray(_data["cleanings"])) {
-                this.cleanings = [] as any;
-                for (let item of _data["cleanings"])
-                    this.cleanings!.push(Cleaning2.fromJS(item));
-            }
-            if (Array.isArray(_data["roomHistoryEvents"])) {
-                this.roomHistoryEvents = [] as any;
-                for (let item of _data["roomHistoryEvents"])
-                    this.roomHistoryEvents!.push(RoomHistoryEvent.fromJS(item));
-            }
-            this.rccHousekeepingStatus = _data["rccHousekeepingStatus"] !== undefined ? _data["rccHousekeepingStatus"] : <any>null;
-            this.rccRoomStatus = _data["rccRoomStatus"] !== undefined ? _data["rccRoomStatus"] : <any>null;
         }
     }
 
-    static fromJS(data: any): RoomBed {
+    static fromJS(data: any): AssetModel {
         data = typeof data === 'object' ? data : {};
-        let result = new RoomBed();
+        let result = new AssetModel();
         result.init(data);
         return result;
     }
@@ -26876,62 +27637,92 @@ export class RoomBed implements IRoomBed {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
+        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["externalId"] = this.externalId !== undefined ? this.externalId : <any>null;
-        data["isAutogeneratedFromReservationSync"] = this.isAutogeneratedFromReservationSync !== undefined ? this.isAutogeneratedFromReservationSync : <any>null;
-        if (Array.isArray(this.reservations)) {
-            data["reservations"] = [];
-            for (let item of this.reservations)
-                data["reservations"].push(item.toJSON());
+        data["availableQuantity"] = this.availableQuantity !== undefined ? this.availableQuantity : <any>null;
+        if (Array.isArray(this.roomAssetModels)) {
+            data["roomAssetModels"] = [];
+            for (let item of this.roomAssetModels)
+                data["roomAssetModels"].push(item.toJSON());
         }
-        data["isOccupied"] = this.isOccupied !== undefined ? this.isOccupied : <any>null;
-        data["isClean"] = this.isClean !== undefined ? this.isClean : <any>null;
-        data["isOutOfOrder"] = this.isOutOfOrder !== undefined ? this.isOutOfOrder : <any>null;
-        data["isOutOfService"] = this.isOutOfService !== undefined ? this.isOutOfService : <any>null;
-        data["isDoNotDisturb"] = this.isDoNotDisturb !== undefined ? this.isDoNotDisturb : <any>null;
-        data["isCleaningInProgress"] = this.isCleaningInProgress !== undefined ? this.isCleaningInProgress : <any>null;
-        data["isInspected"] = this.isInspected !== undefined ? this.isInspected : <any>null;
-        data["isGuestCurrentlyIn"] = this.isGuestCurrentlyIn !== undefined ? this.isGuestCurrentlyIn : <any>null;
-        data["isCleaningPriority"] = this.isCleaningPriority !== undefined ? this.isCleaningPriority : <any>null;
-        if (Array.isArray(this.cleanings)) {
-            data["cleanings"] = [];
-            for (let item of this.cleanings)
-                data["cleanings"].push(item.toJSON());
-        }
-        if (Array.isArray(this.roomHistoryEvents)) {
-            data["roomHistoryEvents"] = [];
-            for (let item of this.roomHistoryEvents)
-                data["roomHistoryEvents"].push(item.toJSON());
-        }
-        data["rccHousekeepingStatus"] = this.rccHousekeepingStatus !== undefined ? this.rccHousekeepingStatus : <any>null;
-        data["rccRoomStatus"] = this.rccRoomStatus !== undefined ? this.rccRoomStatus : <any>null;
+        super.toJSON(data);
         return data; 
     }
 }
 
-export interface IRoomBed {
+export interface IAssetModel extends IChangeTrackingBaseEntity {
     id: string;
-    roomId: string;
-    room?: Room2 | null;
+    assetId: string;
+    asset?: Asset | null;
     name?: string | null;
-    externalId?: string | null;
-    isAutogeneratedFromReservationSync: boolean;
-    reservations?: Reservation[] | null;
-    isOccupied: boolean;
-    isClean: boolean;
-    isOutOfOrder: boolean;
-    isOutOfService: boolean;
-    isDoNotDisturb: boolean;
-    isCleaningInProgress: boolean;
-    isInspected: boolean;
-    isGuestCurrentlyIn: boolean;
-    isCleaningPriority: boolean;
-    cleanings?: Cleaning2[] | null;
-    roomHistoryEvents?: RoomHistoryEvent[] | null;
-    rccHousekeepingStatus?: RccHousekeepingStatusCode | null;
-    rccRoomStatus?: RccRoomStatusCode | null;
+    availableQuantity: number;
+    roomAssetModels?: RoomAssetModel[] | null;
+}
+
+export class RoomCategory extends ChangeTrackingBaseEntity implements IRoomCategory {
+    id!: string;
+    name?: string | null;
+    isPublic!: boolean;
+    isPrivate!: boolean;
+    isSystemDefaultForReservationSync!: boolean;
+    isDefaultForReservationSync!: boolean;
+    rooms?: Room2[] | null;
+
+    constructor(data?: IRoomCategory) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.isPublic = _data["isPublic"] !== undefined ? _data["isPublic"] : <any>null;
+            this.isPrivate = _data["isPrivate"] !== undefined ? _data["isPrivate"] : <any>null;
+            this.isSystemDefaultForReservationSync = _data["isSystemDefaultForReservationSync"] !== undefined ? _data["isSystemDefaultForReservationSync"] : <any>null;
+            this.isDefaultForReservationSync = _data["isDefaultForReservationSync"] !== undefined ? _data["isDefaultForReservationSync"] : <any>null;
+            if (Array.isArray(_data["rooms"])) {
+                this.rooms = [] as any;
+                for (let item of _data["rooms"])
+                    this.rooms!.push(Room2.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): RoomCategory {
+        data = typeof data === 'object' ? data : {};
+        let result = new RoomCategory();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["isPublic"] = this.isPublic !== undefined ? this.isPublic : <any>null;
+        data["isPrivate"] = this.isPrivate !== undefined ? this.isPrivate : <any>null;
+        data["isSystemDefaultForReservationSync"] = this.isSystemDefaultForReservationSync !== undefined ? this.isSystemDefaultForReservationSync : <any>null;
+        data["isDefaultForReservationSync"] = this.isDefaultForReservationSync !== undefined ? this.isDefaultForReservationSync : <any>null;
+        if (Array.isArray(this.rooms)) {
+            data["rooms"] = [];
+            for (let item of this.rooms)
+                data["rooms"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IRoomCategory extends IChangeTrackingBaseEntity {
+    id: string;
+    name?: string | null;
+    isPublic: boolean;
+    isPrivate: boolean;
+    isSystemDefaultForReservationSync: boolean;
+    isDefaultForReservationSync: boolean;
+    rooms?: Room2[] | null;
 }
 
 export class Reservation implements IReservation {
@@ -27136,6 +27927,142 @@ export class ReservationOtherProperty implements IReservationOtherProperty {
 export interface IReservationOtherProperty {
     key?: string | null;
     value?: string | null;
+}
+
+export class RoomBed implements IRoomBed {
+    id!: string;
+    roomId!: string;
+    room?: Room2 | null;
+    name?: string | null;
+    externalId?: string | null;
+    isAutogeneratedFromReservationSync!: boolean;
+    reservations?: Reservation[] | null;
+    isOccupied!: boolean;
+    isClean!: boolean;
+    isOutOfOrder!: boolean;
+    isOutOfService!: boolean;
+    isDoNotDisturb!: boolean;
+    isCleaningInProgress!: boolean;
+    isInspected!: boolean;
+    isGuestCurrentlyIn!: boolean;
+    isCleaningPriority!: boolean;
+    cleanings?: Cleaning2[] | null;
+    roomHistoryEvents?: RoomHistoryEvent[] | null;
+    rccHousekeepingStatus?: RccHousekeepingStatusCode | null;
+    rccRoomStatus?: RccRoomStatusCode | null;
+
+    constructor(data?: IRoomBed) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.externalId = _data["externalId"] !== undefined ? _data["externalId"] : <any>null;
+            this.isAutogeneratedFromReservationSync = _data["isAutogeneratedFromReservationSync"] !== undefined ? _data["isAutogeneratedFromReservationSync"] : <any>null;
+            if (Array.isArray(_data["reservations"])) {
+                this.reservations = [] as any;
+                for (let item of _data["reservations"])
+                    this.reservations!.push(Reservation.fromJS(item));
+            }
+            this.isOccupied = _data["isOccupied"] !== undefined ? _data["isOccupied"] : <any>null;
+            this.isClean = _data["isClean"] !== undefined ? _data["isClean"] : <any>null;
+            this.isOutOfOrder = _data["isOutOfOrder"] !== undefined ? _data["isOutOfOrder"] : <any>null;
+            this.isOutOfService = _data["isOutOfService"] !== undefined ? _data["isOutOfService"] : <any>null;
+            this.isDoNotDisturb = _data["isDoNotDisturb"] !== undefined ? _data["isDoNotDisturb"] : <any>null;
+            this.isCleaningInProgress = _data["isCleaningInProgress"] !== undefined ? _data["isCleaningInProgress"] : <any>null;
+            this.isInspected = _data["isInspected"] !== undefined ? _data["isInspected"] : <any>null;
+            this.isGuestCurrentlyIn = _data["isGuestCurrentlyIn"] !== undefined ? _data["isGuestCurrentlyIn"] : <any>null;
+            this.isCleaningPriority = _data["isCleaningPriority"] !== undefined ? _data["isCleaningPriority"] : <any>null;
+            if (Array.isArray(_data["cleanings"])) {
+                this.cleanings = [] as any;
+                for (let item of _data["cleanings"])
+                    this.cleanings!.push(Cleaning2.fromJS(item));
+            }
+            if (Array.isArray(_data["roomHistoryEvents"])) {
+                this.roomHistoryEvents = [] as any;
+                for (let item of _data["roomHistoryEvents"])
+                    this.roomHistoryEvents!.push(RoomHistoryEvent.fromJS(item));
+            }
+            this.rccHousekeepingStatus = _data["rccHousekeepingStatus"] !== undefined ? _data["rccHousekeepingStatus"] : <any>null;
+            this.rccRoomStatus = _data["rccRoomStatus"] !== undefined ? _data["rccRoomStatus"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): RoomBed {
+        data = typeof data === 'object' ? data : {};
+        let result = new RoomBed();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["externalId"] = this.externalId !== undefined ? this.externalId : <any>null;
+        data["isAutogeneratedFromReservationSync"] = this.isAutogeneratedFromReservationSync !== undefined ? this.isAutogeneratedFromReservationSync : <any>null;
+        if (Array.isArray(this.reservations)) {
+            data["reservations"] = [];
+            for (let item of this.reservations)
+                data["reservations"].push(item.toJSON());
+        }
+        data["isOccupied"] = this.isOccupied !== undefined ? this.isOccupied : <any>null;
+        data["isClean"] = this.isClean !== undefined ? this.isClean : <any>null;
+        data["isOutOfOrder"] = this.isOutOfOrder !== undefined ? this.isOutOfOrder : <any>null;
+        data["isOutOfService"] = this.isOutOfService !== undefined ? this.isOutOfService : <any>null;
+        data["isDoNotDisturb"] = this.isDoNotDisturb !== undefined ? this.isDoNotDisturb : <any>null;
+        data["isCleaningInProgress"] = this.isCleaningInProgress !== undefined ? this.isCleaningInProgress : <any>null;
+        data["isInspected"] = this.isInspected !== undefined ? this.isInspected : <any>null;
+        data["isGuestCurrentlyIn"] = this.isGuestCurrentlyIn !== undefined ? this.isGuestCurrentlyIn : <any>null;
+        data["isCleaningPriority"] = this.isCleaningPriority !== undefined ? this.isCleaningPriority : <any>null;
+        if (Array.isArray(this.cleanings)) {
+            data["cleanings"] = [];
+            for (let item of this.cleanings)
+                data["cleanings"].push(item.toJSON());
+        }
+        if (Array.isArray(this.roomHistoryEvents)) {
+            data["roomHistoryEvents"] = [];
+            for (let item of this.roomHistoryEvents)
+                data["roomHistoryEvents"].push(item.toJSON());
+        }
+        data["rccHousekeepingStatus"] = this.rccHousekeepingStatus !== undefined ? this.rccHousekeepingStatus : <any>null;
+        data["rccRoomStatus"] = this.rccRoomStatus !== undefined ? this.rccRoomStatus : <any>null;
+        return data; 
+    }
+}
+
+export interface IRoomBed {
+    id: string;
+    roomId: string;
+    room?: Room2 | null;
+    name?: string | null;
+    externalId?: string | null;
+    isAutogeneratedFromReservationSync: boolean;
+    reservations?: Reservation[] | null;
+    isOccupied: boolean;
+    isClean: boolean;
+    isOutOfOrder: boolean;
+    isOutOfService: boolean;
+    isDoNotDisturb: boolean;
+    isCleaningInProgress: boolean;
+    isInspected: boolean;
+    isGuestCurrentlyIn: boolean;
+    isCleaningPriority: boolean;
+    cleanings?: Cleaning2[] | null;
+    roomHistoryEvents?: RoomHistoryEvent[] | null;
+    rccHousekeepingStatus?: RccHousekeepingStatusCode | null;
+    rccRoomStatus?: RccRoomStatusCode | null;
 }
 
 export class Cleaning2 implements ICleaning2 {
@@ -28278,1151 +29205,6 @@ export enum RccRoomStatusCode {
     OOO = 16,
     OOS = 17,
     PU = 18,
-}
-
-export enum RoomEventType {
-    CREATED_BY_USER = 0,
-    CREATED_BY_RCC_SYNC = 1,
-    CREATED_BY_SYSTEM = 2,
-    UPDATED_BY_USER = 3,
-    UPDATED_BY_SYSTEM = 4,
-    CLEANING_CREATED = 5,
-    CLEANING_STARTED = 6,
-    CLEANING_PAUSED = 7,
-    CLEANING_UNPAUSED = 8,
-    CLEANING_RESTARTED = 9,
-    CLEANING_FINISHED = 10,
-    CLEANING_FINISHED_READY_FOR_INSPECTION = 11,
-    CLEANING_CANCELLED_BY_CLEANER = 12,
-    CLEANING_CANCELLED_BY_ADMIN = 13,
-    CLEANING_CANCELLED_BY_SYSTEM = 14,
-    CLEANING_INSPECTION_STARTED = 15,
-    CLEANING_INSPECTION_PAUSED = 16,
-    CLEANING_INSPECTION_FINISHED = 17,
-    CLEANING_INSPECTION_CANCELLED_BY_INSPECTOR = 18,
-    CLEANING_INSPECTION_CANCELLED_BY_ADMIN = 19,
-    CLEANING_INSPECTION_CANCELLED_BY_SYSTEM = 20,
-    CLEANING_INSPECTION_DO_NOT_DISTURB = 21,
-    CLEANING_INSPECTION_REQUIRES_INSPECTION = 22,
-    CLEANING_INSPECTION_CLEANING_IN_PROGRESS = 23,
-    CLEANING_INSPECTION_NEW_CLEANING = 24,
-    CLEANING_INSPECTION_CHANGED = 25,
-    CLEANING_REFUSED = 26,
-    CLEANING_DO_NOT_DISTURB = 27,
-    CLEANING_DELAYED = 28,
-    MAINTENANCE_STARTED = 29,
-    MAINTENANCE_PAUSED = 30,
-    MAINTENANCE_FINISHED = 31,
-    MAINTENANCE_CANCELLED_BY_INSPECTOR = 32,
-    MAINTENANCE_CANCELLED_BY_ADMIN = 33,
-    MAINTENANCE_CANCELLED_BY_SYSTEM = 34,
-    GUEST_CHECKED_IN = 35,
-    GUEST_CHECKED_OUT = 36,
-    GUEST_ENTERED_ROOM = 37,
-    GUEST_LEFT_ROOM = 38,
-    CLEANING_NEW = 39,
-    CLEANING_PRIORITY_ENABLED = 40,
-    CLEANING_PRIORITY_DISABLED = 41,
-    PMS_EVENT = 42,
-    RCCSYNC_GUEST_ENTERED_ROOM = 43,
-    RCCSYNC_GUEST_LEFT_ROOM = 44,
-    RCCSYNC_ROOM_IS_OCCUPIED = 45,
-    RCCSYNC_ROOM_IS_VACANT = 46,
-    RCCSYNC_RCC_HK_STATUS_CHANGED = 47,
-    RCCSYNC_RCC_ROOM_STATUS_CHANGED = 48,
-    RCCSYNC_ROOM_EXTERNAL_ID_CHANGED = 49,
-    RCCSYNC_BED_EXTERNAL_ID_CHANGED = 50,
-    RCCSYNC_ROOM_CREATED = 51,
-    RCCSYNC_BED_CREATED = 52,
-    RCCSYNC_RCC_ROOM_BED_STATUS_CHANGED = 53,
-    RCCSYNC_ROOM_OUT_OF_SERVICE = 54,
-    RCCSYNC_ROOM_IN_SERVICE = 55,
-}
-
-export class WarehouseAssetAvailability implements IWarehouseAssetAvailability {
-    id!: string;
-    quantity!: number;
-    reservedQuantity!: number;
-    warehouseId!: string;
-    warehouse?: Warehouse | null;
-    assetId!: string;
-    asset?: Asset | null;
-    xmin!: number;
-
-    constructor(data?: IWarehouseAssetAvailability) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
-            this.reservedQuantity = _data["reservedQuantity"] !== undefined ? _data["reservedQuantity"] : <any>null;
-            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
-            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.xmin = _data["xmin"] !== undefined ? _data["xmin"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): WarehouseAssetAvailability {
-        data = typeof data === 'object' ? data : {};
-        let result = new WarehouseAssetAvailability();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
-        data["reservedQuantity"] = this.reservedQuantity !== undefined ? this.reservedQuantity : <any>null;
-        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
-        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["xmin"] = this.xmin !== undefined ? this.xmin : <any>null;
-        return data; 
-    }
-}
-
-export interface IWarehouseAssetAvailability {
-    id: string;
-    quantity: number;
-    reservedQuantity: number;
-    warehouseId: string;
-    warehouse?: Warehouse | null;
-    assetId: string;
-    asset?: Asset | null;
-    xmin: number;
-}
-
-export class Asset extends ChangeTrackingBaseEntity implements IAsset {
-    id!: string;
-    name?: string | null;
-    isBulk!: boolean;
-    serialNumber?: string | null;
-    assetGroupId?: string | null;
-    assetSubGroupId?: string | null;
-    assetGroup?: AssetGroup | null;
-    assetSubGroup?: AssetGroup | null;
-    assetTags?: AssetTag[] | null;
-    assetFiles?: AssetFile[] | null;
-    warehouseAvailabilities?: WarehouseAssetAvailability[] | null;
-    roomUsages?: RoomAssetUsage[] | null;
-    inventoryStatuses?: InventoryAssetStatus[] | null;
-    warehouseDocuments?: WarehouseDocument[] | null;
-    warehouseDocumentArchives?: WarehouseDocumentArchive[] | null;
-
-    constructor(data?: IAsset) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.isBulk = _data["isBulk"] !== undefined ? _data["isBulk"] : <any>null;
-            this.serialNumber = _data["serialNumber"] !== undefined ? _data["serialNumber"] : <any>null;
-            this.assetGroupId = _data["assetGroupId"] !== undefined ? _data["assetGroupId"] : <any>null;
-            this.assetSubGroupId = _data["assetSubGroupId"] !== undefined ? _data["assetSubGroupId"] : <any>null;
-            this.assetGroup = _data["assetGroup"] ? AssetGroup.fromJS(_data["assetGroup"]) : <any>null;
-            this.assetSubGroup = _data["assetSubGroup"] ? AssetGroup.fromJS(_data["assetSubGroup"]) : <any>null;
-            if (Array.isArray(_data["assetTags"])) {
-                this.assetTags = [] as any;
-                for (let item of _data["assetTags"])
-                    this.assetTags!.push(AssetTag.fromJS(item));
-            }
-            if (Array.isArray(_data["assetFiles"])) {
-                this.assetFiles = [] as any;
-                for (let item of _data["assetFiles"])
-                    this.assetFiles!.push(AssetFile.fromJS(item));
-            }
-            if (Array.isArray(_data["warehouseAvailabilities"])) {
-                this.warehouseAvailabilities = [] as any;
-                for (let item of _data["warehouseAvailabilities"])
-                    this.warehouseAvailabilities!.push(WarehouseAssetAvailability.fromJS(item));
-            }
-            if (Array.isArray(_data["roomUsages"])) {
-                this.roomUsages = [] as any;
-                for (let item of _data["roomUsages"])
-                    this.roomUsages!.push(RoomAssetUsage.fromJS(item));
-            }
-            if (Array.isArray(_data["inventoryStatuses"])) {
-                this.inventoryStatuses = [] as any;
-                for (let item of _data["inventoryStatuses"])
-                    this.inventoryStatuses!.push(InventoryAssetStatus.fromJS(item));
-            }
-            if (Array.isArray(_data["warehouseDocuments"])) {
-                this.warehouseDocuments = [] as any;
-                for (let item of _data["warehouseDocuments"])
-                    this.warehouseDocuments!.push(WarehouseDocument.fromJS(item));
-            }
-            if (Array.isArray(_data["warehouseDocumentArchives"])) {
-                this.warehouseDocumentArchives = [] as any;
-                for (let item of _data["warehouseDocumentArchives"])
-                    this.warehouseDocumentArchives!.push(WarehouseDocumentArchive.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): Asset {
-        data = typeof data === 'object' ? data : {};
-        let result = new Asset();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["isBulk"] = this.isBulk !== undefined ? this.isBulk : <any>null;
-        data["serialNumber"] = this.serialNumber !== undefined ? this.serialNumber : <any>null;
-        data["assetGroupId"] = this.assetGroupId !== undefined ? this.assetGroupId : <any>null;
-        data["assetSubGroupId"] = this.assetSubGroupId !== undefined ? this.assetSubGroupId : <any>null;
-        data["assetGroup"] = this.assetGroup ? this.assetGroup.toJSON() : <any>null;
-        data["assetSubGroup"] = this.assetSubGroup ? this.assetSubGroup.toJSON() : <any>null;
-        if (Array.isArray(this.assetTags)) {
-            data["assetTags"] = [];
-            for (let item of this.assetTags)
-                data["assetTags"].push(item.toJSON());
-        }
-        if (Array.isArray(this.assetFiles)) {
-            data["assetFiles"] = [];
-            for (let item of this.assetFiles)
-                data["assetFiles"].push(item.toJSON());
-        }
-        if (Array.isArray(this.warehouseAvailabilities)) {
-            data["warehouseAvailabilities"] = [];
-            for (let item of this.warehouseAvailabilities)
-                data["warehouseAvailabilities"].push(item.toJSON());
-        }
-        if (Array.isArray(this.roomUsages)) {
-            data["roomUsages"] = [];
-            for (let item of this.roomUsages)
-                data["roomUsages"].push(item.toJSON());
-        }
-        if (Array.isArray(this.inventoryStatuses)) {
-            data["inventoryStatuses"] = [];
-            for (let item of this.inventoryStatuses)
-                data["inventoryStatuses"].push(item.toJSON());
-        }
-        if (Array.isArray(this.warehouseDocuments)) {
-            data["warehouseDocuments"] = [];
-            for (let item of this.warehouseDocuments)
-                data["warehouseDocuments"].push(item.toJSON());
-        }
-        if (Array.isArray(this.warehouseDocumentArchives)) {
-            data["warehouseDocumentArchives"] = [];
-            for (let item of this.warehouseDocumentArchives)
-                data["warehouseDocumentArchives"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IAsset extends IChangeTrackingBaseEntity {
-    id: string;
-    name?: string | null;
-    isBulk: boolean;
-    serialNumber?: string | null;
-    assetGroupId?: string | null;
-    assetSubGroupId?: string | null;
-    assetGroup?: AssetGroup | null;
-    assetSubGroup?: AssetGroup | null;
-    assetTags?: AssetTag[] | null;
-    assetFiles?: AssetFile[] | null;
-    warehouseAvailabilities?: WarehouseAssetAvailability[] | null;
-    roomUsages?: RoomAssetUsage[] | null;
-    inventoryStatuses?: InventoryAssetStatus[] | null;
-    warehouseDocuments?: WarehouseDocument[] | null;
-    warehouseDocumentArchives?: WarehouseDocumentArchive[] | null;
-}
-
-export class AssetGroup extends ChangeTrackingBaseEntity implements IAssetGroup {
-    id!: string;
-    parentAssetGroupId?: string | null;
-    name?: string | null;
-    typeKey?: string | null;
-    parentAssetGroup?: AssetGroup | null;
-    childAssetGroups?: AssetGroup[] | null;
-    groupAssets?: Asset[] | null;
-    subGroupAssets?: Asset[] | null;
-    assetActions?: AssetAction[] | null;
-
-    constructor(data?: IAssetGroup) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.parentAssetGroupId = _data["parentAssetGroupId"] !== undefined ? _data["parentAssetGroupId"] : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
-            this.parentAssetGroup = _data["parentAssetGroup"] ? AssetGroup.fromJS(_data["parentAssetGroup"]) : <any>null;
-            if (Array.isArray(_data["childAssetGroups"])) {
-                this.childAssetGroups = [] as any;
-                for (let item of _data["childAssetGroups"])
-                    this.childAssetGroups!.push(AssetGroup.fromJS(item));
-            }
-            if (Array.isArray(_data["groupAssets"])) {
-                this.groupAssets = [] as any;
-                for (let item of _data["groupAssets"])
-                    this.groupAssets!.push(Asset.fromJS(item));
-            }
-            if (Array.isArray(_data["subGroupAssets"])) {
-                this.subGroupAssets = [] as any;
-                for (let item of _data["subGroupAssets"])
-                    this.subGroupAssets!.push(Asset.fromJS(item));
-            }
-            if (Array.isArray(_data["assetActions"])) {
-                this.assetActions = [] as any;
-                for (let item of _data["assetActions"])
-                    this.assetActions!.push(AssetAction.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): AssetGroup {
-        data = typeof data === 'object' ? data : {};
-        let result = new AssetGroup();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["parentAssetGroupId"] = this.parentAssetGroupId !== undefined ? this.parentAssetGroupId : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
-        data["parentAssetGroup"] = this.parentAssetGroup ? this.parentAssetGroup.toJSON() : <any>null;
-        if (Array.isArray(this.childAssetGroups)) {
-            data["childAssetGroups"] = [];
-            for (let item of this.childAssetGroups)
-                data["childAssetGroups"].push(item.toJSON());
-        }
-        if (Array.isArray(this.groupAssets)) {
-            data["groupAssets"] = [];
-            for (let item of this.groupAssets)
-                data["groupAssets"].push(item.toJSON());
-        }
-        if (Array.isArray(this.subGroupAssets)) {
-            data["subGroupAssets"] = [];
-            for (let item of this.subGroupAssets)
-                data["subGroupAssets"].push(item.toJSON());
-        }
-        if (Array.isArray(this.assetActions)) {
-            data["assetActions"] = [];
-            for (let item of this.assetActions)
-                data["assetActions"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IAssetGroup extends IChangeTrackingBaseEntity {
-    id: string;
-    parentAssetGroupId?: string | null;
-    name?: string | null;
-    typeKey?: string | null;
-    parentAssetGroup?: AssetGroup | null;
-    childAssetGroups?: AssetGroup[] | null;
-    groupAssets?: Asset[] | null;
-    subGroupAssets?: Asset[] | null;
-    assetActions?: AssetAction[] | null;
-}
-
-export class AssetAction extends ChangeTrackingBaseEntity implements IAssetAction {
-    id!: string;
-    assetGroupId!: string;
-    assetGroup?: AssetGroup | null;
-    name?: string | null;
-    quickOrTimedKey?: string | null;
-    priorityKey?: string | null;
-    defaultAssignedToUserId?: string | null;
-    defaultAssignedToUser?: User | null;
-    defaultAssignedToUserGroupId?: string | null;
-    defaultAssignedToUserGroup?: UserGroup | null;
-    defaultAssignedToUserSubGroupId?: string | null;
-    defaultAssignedToUserSubGroup?: UserSubGroup | null;
-    credits?: number | null;
-    price?: number | null;
-    isSystemDefined!: boolean;
-    systemActionTypeKey?: string | null;
-    systemDefinedActionIdentifierKey?: string | null;
-
-    constructor(data?: IAssetAction) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.assetGroupId = _data["assetGroupId"] !== undefined ? _data["assetGroupId"] : <any>null;
-            this.assetGroup = _data["assetGroup"] ? AssetGroup.fromJS(_data["assetGroup"]) : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.quickOrTimedKey = _data["quickOrTimedKey"] !== undefined ? _data["quickOrTimedKey"] : <any>null;
-            this.priorityKey = _data["priorityKey"] !== undefined ? _data["priorityKey"] : <any>null;
-            this.defaultAssignedToUserId = _data["defaultAssignedToUserId"] !== undefined ? _data["defaultAssignedToUserId"] : <any>null;
-            this.defaultAssignedToUser = _data["defaultAssignedToUser"] ? User.fromJS(_data["defaultAssignedToUser"]) : <any>null;
-            this.defaultAssignedToUserGroupId = _data["defaultAssignedToUserGroupId"] !== undefined ? _data["defaultAssignedToUserGroupId"] : <any>null;
-            this.defaultAssignedToUserGroup = _data["defaultAssignedToUserGroup"] ? UserGroup.fromJS(_data["defaultAssignedToUserGroup"]) : <any>null;
-            this.defaultAssignedToUserSubGroupId = _data["defaultAssignedToUserSubGroupId"] !== undefined ? _data["defaultAssignedToUserSubGroupId"] : <any>null;
-            this.defaultAssignedToUserSubGroup = _data["defaultAssignedToUserSubGroup"] ? UserSubGroup.fromJS(_data["defaultAssignedToUserSubGroup"]) : <any>null;
-            this.credits = _data["credits"] !== undefined ? _data["credits"] : <any>null;
-            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
-            this.isSystemDefined = _data["isSystemDefined"] !== undefined ? _data["isSystemDefined"] : <any>null;
-            this.systemActionTypeKey = _data["systemActionTypeKey"] !== undefined ? _data["systemActionTypeKey"] : <any>null;
-            this.systemDefinedActionIdentifierKey = _data["systemDefinedActionIdentifierKey"] !== undefined ? _data["systemDefinedActionIdentifierKey"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AssetAction {
-        data = typeof data === 'object' ? data : {};
-        let result = new AssetAction();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["assetGroupId"] = this.assetGroupId !== undefined ? this.assetGroupId : <any>null;
-        data["assetGroup"] = this.assetGroup ? this.assetGroup.toJSON() : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["quickOrTimedKey"] = this.quickOrTimedKey !== undefined ? this.quickOrTimedKey : <any>null;
-        data["priorityKey"] = this.priorityKey !== undefined ? this.priorityKey : <any>null;
-        data["defaultAssignedToUserId"] = this.defaultAssignedToUserId !== undefined ? this.defaultAssignedToUserId : <any>null;
-        data["defaultAssignedToUser"] = this.defaultAssignedToUser ? this.defaultAssignedToUser.toJSON() : <any>null;
-        data["defaultAssignedToUserGroupId"] = this.defaultAssignedToUserGroupId !== undefined ? this.defaultAssignedToUserGroupId : <any>null;
-        data["defaultAssignedToUserGroup"] = this.defaultAssignedToUserGroup ? this.defaultAssignedToUserGroup.toJSON() : <any>null;
-        data["defaultAssignedToUserSubGroupId"] = this.defaultAssignedToUserSubGroupId !== undefined ? this.defaultAssignedToUserSubGroupId : <any>null;
-        data["defaultAssignedToUserSubGroup"] = this.defaultAssignedToUserSubGroup ? this.defaultAssignedToUserSubGroup.toJSON() : <any>null;
-        data["credits"] = this.credits !== undefined ? this.credits : <any>null;
-        data["price"] = this.price !== undefined ? this.price : <any>null;
-        data["isSystemDefined"] = this.isSystemDefined !== undefined ? this.isSystemDefined : <any>null;
-        data["systemActionTypeKey"] = this.systemActionTypeKey !== undefined ? this.systemActionTypeKey : <any>null;
-        data["systemDefinedActionIdentifierKey"] = this.systemDefinedActionIdentifierKey !== undefined ? this.systemDefinedActionIdentifierKey : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IAssetAction extends IChangeTrackingBaseEntity {
-    id: string;
-    assetGroupId: string;
-    assetGroup?: AssetGroup | null;
-    name?: string | null;
-    quickOrTimedKey?: string | null;
-    priorityKey?: string | null;
-    defaultAssignedToUserId?: string | null;
-    defaultAssignedToUser?: User | null;
-    defaultAssignedToUserGroupId?: string | null;
-    defaultAssignedToUserGroup?: UserGroup | null;
-    defaultAssignedToUserSubGroupId?: string | null;
-    defaultAssignedToUserSubGroup?: UserSubGroup | null;
-    credits?: number | null;
-    price?: number | null;
-    isSystemDefined: boolean;
-    systemActionTypeKey?: string | null;
-    systemDefinedActionIdentifierKey?: string | null;
-}
-
-export class AssetTag implements IAssetTag {
-    assetId!: string;
-    asset?: Asset | null;
-    tagKey?: string | null;
-    tag?: Tag | null;
-
-    constructor(data?: IAssetTag) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.tagKey = _data["tagKey"] !== undefined ? _data["tagKey"] : <any>null;
-            this.tag = _data["tag"] ? Tag.fromJS(_data["tag"]) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AssetTag {
-        data = typeof data === 'object' ? data : {};
-        let result = new AssetTag();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["tagKey"] = this.tagKey !== undefined ? this.tagKey : <any>null;
-        data["tag"] = this.tag ? this.tag.toJSON() : <any>null;
-        return data; 
-    }
-}
-
-export interface IAssetTag {
-    assetId: string;
-    asset?: Asset | null;
-    tagKey?: string | null;
-    tag?: Tag | null;
-}
-
-export class Tag extends ChangeTrackingBaseEntity implements ITag {
-    key?: string | null;
-    value?: string | null;
-
-    constructor(data?: ITag) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.key = _data["key"] !== undefined ? _data["key"] : <any>null;
-            this.value = _data["value"] !== undefined ? _data["value"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): Tag {
-        data = typeof data === 'object' ? data : {};
-        let result = new Tag();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["key"] = this.key !== undefined ? this.key : <any>null;
-        data["value"] = this.value !== undefined ? this.value : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface ITag extends IChangeTrackingBaseEntity {
-    key?: string | null;
-    value?: string | null;
-}
-
-export class AssetFile implements IAssetFile {
-    assetId!: string;
-    asset?: Asset | null;
-    fileId!: string;
-    file?: File | null;
-    isPrimaryImage!: boolean;
-    isQrCodeImage!: boolean;
-
-    constructor(data?: IAssetFile) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.fileId = _data["fileId"] !== undefined ? _data["fileId"] : <any>null;
-            this.file = _data["file"] ? File.fromJS(_data["file"]) : <any>null;
-            this.isPrimaryImage = _data["isPrimaryImage"] !== undefined ? _data["isPrimaryImage"] : <any>null;
-            this.isQrCodeImage = _data["isQrCodeImage"] !== undefined ? _data["isQrCodeImage"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AssetFile {
-        data = typeof data === 'object' ? data : {};
-        let result = new AssetFile();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["fileId"] = this.fileId !== undefined ? this.fileId : <any>null;
-        data["file"] = this.file ? this.file.toJSON() : <any>null;
-        data["isPrimaryImage"] = this.isPrimaryImage !== undefined ? this.isPrimaryImage : <any>null;
-        data["isQrCodeImage"] = this.isQrCodeImage !== undefined ? this.isQrCodeImage : <any>null;
-        return data; 
-    }
-}
-
-export interface IAssetFile {
-    assetId: string;
-    asset?: Asset | null;
-    fileId: string;
-    file?: File | null;
-    isPrimaryImage: boolean;
-    isQrCodeImage: boolean;
-}
-
-export class File extends ChangeTrackingBaseEntity implements IFile {
-    id!: string;
-    fileTypeKey?: string | null;
-    fileName?: string | null;
-    fileData?: string | null;
-
-    constructor(data?: IFile) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.fileTypeKey = _data["fileTypeKey"] !== undefined ? _data["fileTypeKey"] : <any>null;
-            this.fileName = _data["fileName"] !== undefined ? _data["fileName"] : <any>null;
-            this.fileData = _data["fileData"] !== undefined ? _data["fileData"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): File {
-        data = typeof data === 'object' ? data : {};
-        let result = new File();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["fileTypeKey"] = this.fileTypeKey !== undefined ? this.fileTypeKey : <any>null;
-        data["fileName"] = this.fileName !== undefined ? this.fileName : <any>null;
-        data["fileData"] = this.fileData !== undefined ? this.fileData : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IFile extends IChangeTrackingBaseEntity {
-    id: string;
-    fileTypeKey?: string | null;
-    fileName?: string | null;
-    fileData?: string | null;
-}
-
-export class RoomAssetUsage implements IRoomAssetUsage {
-    id!: string;
-    quantity!: number;
-    roomId!: string;
-    room?: Room2 | null;
-    assetId!: string;
-    asset?: Asset | null;
-    xmin!: number;
-
-    constructor(data?: IRoomAssetUsage) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.xmin = _data["xmin"] !== undefined ? _data["xmin"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): RoomAssetUsage {
-        data = typeof data === 'object' ? data : {};
-        let result = new RoomAssetUsage();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["room"] = this.room ? this.room.toJSON() : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["xmin"] = this.xmin !== undefined ? this.xmin : <any>null;
-        return data; 
-    }
-}
-
-export interface IRoomAssetUsage {
-    id: string;
-    quantity: number;
-    roomId: string;
-    room?: Room2 | null;
-    assetId: string;
-    asset?: Asset | null;
-    xmin: number;
-}
-
-export class InventoryAssetStatus implements IInventoryAssetStatus {
-    id!: string;
-    quantity!: number;
-    inventoryId!: string;
-    inventory?: Inventory | null;
-    assetId!: string;
-    asset?: Asset | null;
-
-    constructor(data?: IInventoryAssetStatus) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
-            this.inventoryId = _data["inventoryId"] !== undefined ? _data["inventoryId"] : <any>null;
-            this.inventory = _data["inventory"] ? Inventory.fromJS(_data["inventory"]) : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): InventoryAssetStatus {
-        data = typeof data === 'object' ? data : {};
-        let result = new InventoryAssetStatus();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
-        data["inventoryId"] = this.inventoryId !== undefined ? this.inventoryId : <any>null;
-        data["inventory"] = this.inventory ? this.inventory.toJSON() : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        return data; 
-    }
-}
-
-export interface IInventoryAssetStatus {
-    id: string;
-    quantity: number;
-    inventoryId: string;
-    inventory?: Inventory | null;
-    assetId: string;
-    asset?: Asset | null;
-}
-
-export class Inventory extends ChangeTrackingBaseEntity implements IInventory {
-    id!: string;
-    assetStatuses?: InventoryAssetStatus[] | null;
-    warehouseId!: string;
-    warehouse?: Warehouse | null;
-    date!: moment.Moment;
-
-    constructor(data?: IInventory) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            if (Array.isArray(_data["assetStatuses"])) {
-                this.assetStatuses = [] as any;
-                for (let item of _data["assetStatuses"])
-                    this.assetStatuses!.push(InventoryAssetStatus.fromJS(item));
-            }
-            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
-            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
-            this.date = _data["date"] ? moment(_data["date"].toString()) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): Inventory {
-        data = typeof data === 'object' ? data : {};
-        let result = new Inventory();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        if (Array.isArray(this.assetStatuses)) {
-            data["assetStatuses"] = [];
-            for (let item of this.assetStatuses)
-                data["assetStatuses"].push(item.toJSON());
-        }
-        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
-        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
-        data["date"] = this.date ? this.date.toISOString() : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IInventory extends IChangeTrackingBaseEntity {
-    id: string;
-    assetStatuses?: InventoryAssetStatus[] | null;
-    warehouseId: string;
-    warehouse?: Warehouse | null;
-    date: moment.Moment;
-}
-
-export class WarehouseDocument extends ChangeTrackingBaseEntity implements IWarehouseDocument {
-    id!: string;
-    warehouseId!: string;
-    warehouse?: Warehouse | null;
-    typeKey?: string | null;
-    note?: string | null;
-    assetId!: string;
-    asset?: Asset | null;
-    availableQuantityChange!: number;
-    availableQuantityBeforeChange!: number;
-    reservedQuantityChange!: number;
-    reservedQuantityBeforeChange!: number;
-
-    constructor(data?: IWarehouseDocument) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
-            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
-            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
-            this.note = _data["note"] !== undefined ? _data["note"] : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.availableQuantityChange = _data["availableQuantityChange"] !== undefined ? _data["availableQuantityChange"] : <any>null;
-            this.availableQuantityBeforeChange = _data["availableQuantityBeforeChange"] !== undefined ? _data["availableQuantityBeforeChange"] : <any>null;
-            this.reservedQuantityChange = _data["reservedQuantityChange"] !== undefined ? _data["reservedQuantityChange"] : <any>null;
-            this.reservedQuantityBeforeChange = _data["reservedQuantityBeforeChange"] !== undefined ? _data["reservedQuantityBeforeChange"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): WarehouseDocument {
-        data = typeof data === 'object' ? data : {};
-        let result = new WarehouseDocument();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
-        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
-        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
-        data["note"] = this.note !== undefined ? this.note : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["availableQuantityChange"] = this.availableQuantityChange !== undefined ? this.availableQuantityChange : <any>null;
-        data["availableQuantityBeforeChange"] = this.availableQuantityBeforeChange !== undefined ? this.availableQuantityBeforeChange : <any>null;
-        data["reservedQuantityChange"] = this.reservedQuantityChange !== undefined ? this.reservedQuantityChange : <any>null;
-        data["reservedQuantityBeforeChange"] = this.reservedQuantityBeforeChange !== undefined ? this.reservedQuantityBeforeChange : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IWarehouseDocument extends IChangeTrackingBaseEntity {
-    id: string;
-    warehouseId: string;
-    warehouse?: Warehouse | null;
-    typeKey?: string | null;
-    note?: string | null;
-    assetId: string;
-    asset?: Asset | null;
-    availableQuantityChange: number;
-    availableQuantityBeforeChange: number;
-    reservedQuantityChange: number;
-    reservedQuantityBeforeChange: number;
-}
-
-export class WarehouseDocumentArchive extends ChangeTrackingBaseEntity implements IWarehouseDocumentArchive {
-    id!: string;
-    warehouseId!: string;
-    warehouse?: Warehouse | null;
-    typeKey?: string | null;
-    note?: string | null;
-    assetId!: string;
-    asset?: Asset | null;
-    availableQuantityChange!: number;
-    availableQuantityBeforeChange!: number;
-    reservedQuantityChange!: number;
-    reservedQuantityBeforeChange!: number;
-
-    constructor(data?: IWarehouseDocumentArchive) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.warehouseId = _data["warehouseId"] !== undefined ? _data["warehouseId"] : <any>null;
-            this.warehouse = _data["warehouse"] ? Warehouse.fromJS(_data["warehouse"]) : <any>null;
-            this.typeKey = _data["typeKey"] !== undefined ? _data["typeKey"] : <any>null;
-            this.note = _data["note"] !== undefined ? _data["note"] : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.availableQuantityChange = _data["availableQuantityChange"] !== undefined ? _data["availableQuantityChange"] : <any>null;
-            this.availableQuantityBeforeChange = _data["availableQuantityBeforeChange"] !== undefined ? _data["availableQuantityBeforeChange"] : <any>null;
-            this.reservedQuantityChange = _data["reservedQuantityChange"] !== undefined ? _data["reservedQuantityChange"] : <any>null;
-            this.reservedQuantityBeforeChange = _data["reservedQuantityBeforeChange"] !== undefined ? _data["reservedQuantityBeforeChange"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): WarehouseDocumentArchive {
-        data = typeof data === 'object' ? data : {};
-        let result = new WarehouseDocumentArchive();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["warehouseId"] = this.warehouseId !== undefined ? this.warehouseId : <any>null;
-        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>null;
-        data["typeKey"] = this.typeKey !== undefined ? this.typeKey : <any>null;
-        data["note"] = this.note !== undefined ? this.note : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["availableQuantityChange"] = this.availableQuantityChange !== undefined ? this.availableQuantityChange : <any>null;
-        data["availableQuantityBeforeChange"] = this.availableQuantityBeforeChange !== undefined ? this.availableQuantityBeforeChange : <any>null;
-        data["reservedQuantityChange"] = this.reservedQuantityChange !== undefined ? this.reservedQuantityChange : <any>null;
-        data["reservedQuantityBeforeChange"] = this.reservedQuantityBeforeChange !== undefined ? this.reservedQuantityBeforeChange : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IWarehouseDocumentArchive extends IChangeTrackingBaseEntity {
-    id: string;
-    warehouseId: string;
-    warehouse?: Warehouse | null;
-    typeKey?: string | null;
-    note?: string | null;
-    assetId: string;
-    asset?: Asset | null;
-    availableQuantityChange: number;
-    availableQuantityBeforeChange: number;
-    reservedQuantityChange: number;
-    reservedQuantityBeforeChange: number;
-}
-
-export class RoomAssetModel implements IRoomAssetModel {
-    roomId!: string;
-    room?: Room2 | null;
-    assetModelId!: string;
-    assetModel?: AssetModel | null;
-    quantity!: number;
-
-    constructor(data?: IRoomAssetModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
-            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
-            this.assetModelId = _data["assetModelId"] !== undefined ? _data["assetModelId"] : <any>null;
-            this.assetModel = _data["assetModel"] ? AssetModel.fromJS(_data["assetModel"]) : <any>null;
-            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): RoomAssetModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new RoomAssetModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
-        data["room"] = this.room ? this.room.toJSON() : <any>null;
-        data["assetModelId"] = this.assetModelId !== undefined ? this.assetModelId : <any>null;
-        data["assetModel"] = this.assetModel ? this.assetModel.toJSON() : <any>null;
-        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
-        return data; 
-    }
-}
-
-export interface IRoomAssetModel {
-    roomId: string;
-    room?: Room2 | null;
-    assetModelId: string;
-    assetModel?: AssetModel | null;
-    quantity: number;
-}
-
-export class AssetModel extends ChangeTrackingBaseEntity implements IAssetModel {
-    id!: string;
-    assetId!: string;
-    asset?: Asset | null;
-    name?: string | null;
-    availableQuantity!: number;
-    roomAssetModels?: RoomAssetModel[] | null;
-
-    constructor(data?: IAssetModel) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.assetId = _data["assetId"] !== undefined ? _data["assetId"] : <any>null;
-            this.asset = _data["asset"] ? Asset.fromJS(_data["asset"]) : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.availableQuantity = _data["availableQuantity"] !== undefined ? _data["availableQuantity"] : <any>null;
-            if (Array.isArray(_data["roomAssetModels"])) {
-                this.roomAssetModels = [] as any;
-                for (let item of _data["roomAssetModels"])
-                    this.roomAssetModels!.push(RoomAssetModel.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): AssetModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new AssetModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["assetId"] = this.assetId !== undefined ? this.assetId : <any>null;
-        data["asset"] = this.asset ? this.asset.toJSON() : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["availableQuantity"] = this.availableQuantity !== undefined ? this.availableQuantity : <any>null;
-        if (Array.isArray(this.roomAssetModels)) {
-            data["roomAssetModels"] = [];
-            for (let item of this.roomAssetModels)
-                data["roomAssetModels"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IAssetModel extends IChangeTrackingBaseEntity {
-    id: string;
-    assetId: string;
-    asset?: Asset | null;
-    name?: string | null;
-    availableQuantity: number;
-    roomAssetModels?: RoomAssetModel[] | null;
-}
-
-export class RoomCategory extends ChangeTrackingBaseEntity implements IRoomCategory {
-    id!: string;
-    name?: string | null;
-    isPublic!: boolean;
-    isPrivate!: boolean;
-    isSystemDefaultForReservationSync!: boolean;
-    isDefaultForReservationSync!: boolean;
-    rooms?: Room2[] | null;
-
-    constructor(data?: IRoomCategory) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.isPublic = _data["isPublic"] !== undefined ? _data["isPublic"] : <any>null;
-            this.isPrivate = _data["isPrivate"] !== undefined ? _data["isPrivate"] : <any>null;
-            this.isSystemDefaultForReservationSync = _data["isSystemDefaultForReservationSync"] !== undefined ? _data["isSystemDefaultForReservationSync"] : <any>null;
-            this.isDefaultForReservationSync = _data["isDefaultForReservationSync"] !== undefined ? _data["isDefaultForReservationSync"] : <any>null;
-            if (Array.isArray(_data["rooms"])) {
-                this.rooms = [] as any;
-                for (let item of _data["rooms"])
-                    this.rooms!.push(Room2.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): RoomCategory {
-        data = typeof data === 'object' ? data : {};
-        let result = new RoomCategory();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["isPublic"] = this.isPublic !== undefined ? this.isPublic : <any>null;
-        data["isPrivate"] = this.isPrivate !== undefined ? this.isPrivate : <any>null;
-        data["isSystemDefaultForReservationSync"] = this.isSystemDefaultForReservationSync !== undefined ? this.isSystemDefaultForReservationSync : <any>null;
-        data["isDefaultForReservationSync"] = this.isDefaultForReservationSync !== undefined ? this.isDefaultForReservationSync : <any>null;
-        if (Array.isArray(this.rooms)) {
-            data["rooms"] = [];
-            for (let item of this.rooms)
-                data["rooms"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IRoomCategory extends IChangeTrackingBaseEntity {
-    id: string;
-    name?: string | null;
-    isPublic: boolean;
-    isPrivate: boolean;
-    isSystemDefaultForReservationSync: boolean;
-    isDefaultForReservationSync: boolean;
-    rooms?: Room2[] | null;
 }
 
 export class RoomNote implements IRoomNote {
@@ -30700,6 +30482,315 @@ export interface ISystemTaskMessage extends IChangeTrackingBaseEntity {
     message?: string | null;
 }
 
+export enum RoomEventType {
+    CREATED_BY_USER = 0,
+    CREATED_BY_RCC_SYNC = 1,
+    CREATED_BY_SYSTEM = 2,
+    UPDATED_BY_USER = 3,
+    UPDATED_BY_SYSTEM = 4,
+    CLEANING_CREATED = 5,
+    CLEANING_STARTED = 6,
+    CLEANING_PAUSED = 7,
+    CLEANING_UNPAUSED = 8,
+    CLEANING_RESTARTED = 9,
+    CLEANING_FINISHED = 10,
+    CLEANING_FINISHED_READY_FOR_INSPECTION = 11,
+    CLEANING_CANCELLED_BY_CLEANER = 12,
+    CLEANING_CANCELLED_BY_ADMIN = 13,
+    CLEANING_CANCELLED_BY_SYSTEM = 14,
+    CLEANING_INSPECTION_STARTED = 15,
+    CLEANING_INSPECTION_PAUSED = 16,
+    CLEANING_INSPECTION_FINISHED = 17,
+    CLEANING_INSPECTION_CANCELLED_BY_INSPECTOR = 18,
+    CLEANING_INSPECTION_CANCELLED_BY_ADMIN = 19,
+    CLEANING_INSPECTION_CANCELLED_BY_SYSTEM = 20,
+    CLEANING_INSPECTION_DO_NOT_DISTURB = 21,
+    CLEANING_INSPECTION_REQUIRES_INSPECTION = 22,
+    CLEANING_INSPECTION_CLEANING_IN_PROGRESS = 23,
+    CLEANING_INSPECTION_NEW_CLEANING = 24,
+    CLEANING_INSPECTION_CHANGED = 25,
+    CLEANING_REFUSED = 26,
+    CLEANING_DO_NOT_DISTURB = 27,
+    CLEANING_DELAYED = 28,
+    MAINTENANCE_STARTED = 29,
+    MAINTENANCE_PAUSED = 30,
+    MAINTENANCE_FINISHED = 31,
+    MAINTENANCE_CANCELLED_BY_INSPECTOR = 32,
+    MAINTENANCE_CANCELLED_BY_ADMIN = 33,
+    MAINTENANCE_CANCELLED_BY_SYSTEM = 34,
+    GUEST_CHECKED_IN = 35,
+    GUEST_CHECKED_OUT = 36,
+    GUEST_ENTERED_ROOM = 37,
+    GUEST_LEFT_ROOM = 38,
+    CLEANING_NEW = 39,
+    CLEANING_PRIORITY_ENABLED = 40,
+    CLEANING_PRIORITY_DISABLED = 41,
+    PMS_EVENT = 42,
+    RCCSYNC_GUEST_ENTERED_ROOM = 43,
+    RCCSYNC_GUEST_LEFT_ROOM = 44,
+    RCCSYNC_ROOM_IS_OCCUPIED = 45,
+    RCCSYNC_ROOM_IS_VACANT = 46,
+    RCCSYNC_RCC_HK_STATUS_CHANGED = 47,
+    RCCSYNC_RCC_ROOM_STATUS_CHANGED = 48,
+    RCCSYNC_ROOM_EXTERNAL_ID_CHANGED = 49,
+    RCCSYNC_BED_EXTERNAL_ID_CHANGED = 50,
+    RCCSYNC_ROOM_CREATED = 51,
+    RCCSYNC_BED_CREATED = 52,
+    RCCSYNC_RCC_ROOM_BED_STATUS_CHANGED = 53,
+    RCCSYNC_ROOM_OUT_OF_SERVICE = 54,
+    RCCSYNC_ROOM_IN_SERVICE = 55,
+}
+
+export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLostAndFoundListQuery {
+    keyword?: string | null;
+    dateFrom?: moment.Moment | null;
+    dateTo?: moment.Moment | null;
+    loadLostItems!: boolean;
+    loadFoundItems!: boolean;
+
+    constructor(data?: IGetLostAndFoundListQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.keyword = _data["keyword"] !== undefined ? _data["keyword"] : <any>null;
+            this.dateFrom = _data["dateFrom"] ? moment(_data["dateFrom"].toString()) : <any>null;
+            this.dateTo = _data["dateTo"] ? moment(_data["dateTo"].toString()) : <any>null;
+            this.loadLostItems = _data["loadLostItems"] !== undefined ? _data["loadLostItems"] : <any>null;
+            this.loadFoundItems = _data["loadFoundItems"] !== undefined ? _data["loadFoundItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetLostAndFoundListQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetLostAndFoundListQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["keyword"] = this.keyword !== undefined ? this.keyword : <any>null;
+        data["dateFrom"] = this.dateFrom ? this.dateFrom.toISOString() : <any>null;
+        data["dateTo"] = this.dateTo ? this.dateTo.toISOString() : <any>null;
+        data["loadLostItems"] = this.loadLostItems !== undefined ? this.loadLostItems : <any>null;
+        data["loadFoundItems"] = this.loadFoundItems !== undefined ? this.loadFoundItems : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetLostAndFoundListQuery extends IGetPageRequest {
+    keyword?: string | null;
+    dateFrom?: moment.Moment | null;
+    dateTo?: moment.Moment | null;
+    loadLostItems: boolean;
+    loadFoundItems: boolean;
+}
+
+export class ProcessResponseOfLostAndFoundModel extends ProcessResponse implements IProcessResponseOfLostAndFoundModel {
+    data?: LostAndFoundModel | null;
+
+    constructor(data?: IProcessResponseOfLostAndFoundModel) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.data = _data["data"] ? LostAndFoundModel.fromJS(_data["data"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ProcessResponseOfLostAndFoundModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcessResponseOfLostAndFoundModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["data"] = this.data ? this.data.toJSON() : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IProcessResponseOfLostAndFoundModel extends IProcessResponse {
+    data?: LostAndFoundModel | null;
+}
+
+export class LostAndFoundModel implements ILostAndFoundModel {
+    id!: string;
+    description?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    address?: string | null;
+    city?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phoneNumber?: string | null;
+    email?: string | null;
+    referenceNumber?: string | null;
+    notes?: string | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
+    lostOn?: moment.Moment | null;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
+    typeOfLoss!: TypeOfLoss;
+    placeOfStorage?: string | null;
+    trackingNumber?: string | null;
+    hotelId?: string | null;
+    files?: LostAndFoundFileModel[] | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
+
+    constructor(data?: ILostAndFoundModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
+            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
+            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
+            this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
+            this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
+            this.country = _data["country"] !== undefined ? _data["country"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.referenceNumber = _data["referenceNumber"] !== undefined ? _data["referenceNumber"] : <any>null;
+            this.notes = _data["notes"] !== undefined ? _data["notes"] : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
+            this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
+            this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
+            this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
+            this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
+            this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
+            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
+            if (Array.isArray(_data["files"])) {
+                this.files = [] as any;
+                for (let item of _data["files"])
+                    this.files!.push(LostAndFoundFileModel.fromJS(item));
+            }
+            this.clientName = _data["clientName"] !== undefined ? _data["clientName"] : <any>null;
+            this.founderName = _data["founderName"] !== undefined ? _data["founderName"] : <any>null;
+            this.founderEmail = _data["founderEmail"] !== undefined ? _data["founderEmail"] : <any>null;
+            this.founderPhoneNumber = _data["founderPhoneNumber"] !== undefined ? _data["founderPhoneNumber"] : <any>null;
+            this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
+            this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LostAndFoundModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new LostAndFoundModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["address"] = this.address !== undefined ? this.address : <any>null;
+        data["city"] = this.city !== undefined ? this.city : <any>null;
+        data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
+        data["country"] = this.country !== undefined ? this.country : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["referenceNumber"] = this.referenceNumber !== undefined ? this.referenceNumber : <any>null;
+        data["notes"] = this.notes !== undefined ? this.notes : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
+        data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
+        data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
+        data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
+        data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
+        data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
+        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
+        if (Array.isArray(this.files)) {
+            data["files"] = [];
+            for (let item of this.files)
+                data["files"].push(item.toJSON());
+        }
+        data["clientName"] = this.clientName !== undefined ? this.clientName : <any>null;
+        data["founderName"] = this.founderName !== undefined ? this.founderName : <any>null;
+        data["founderEmail"] = this.founderEmail !== undefined ? this.founderEmail : <any>null;
+        data["founderPhoneNumber"] = this.founderPhoneNumber !== undefined ? this.founderPhoneNumber : <any>null;
+        data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
+        data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
+        return data; 
+    }
+}
+
+export interface ILostAndFoundModel {
+    id: string;
+    description?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    address?: string | null;
+    city?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phoneNumber?: string | null;
+    email?: string | null;
+    referenceNumber?: string | null;
+    notes?: string | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
+    lostOn?: moment.Moment | null;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
+    typeOfLoss: TypeOfLoss;
+    placeOfStorage?: string | null;
+    trackingNumber?: string | null;
+    hotelId?: string | null;
+    files?: LostAndFoundFileModel[] | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
+}
+
 export class LostAndFoundFileModel implements ILostAndFoundFileModel {
     id!: string;
     name?: string | null;
@@ -30776,6 +30867,12 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
     typeOfLoss!: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
     whereData?: SaveLostAndFoundWhereData | null;
     files?: LostAndFoundFilesUploadedData[] | null;
 
@@ -30813,6 +30910,12 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
             this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
             this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
             this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
+            this.clientName = _data["clientName"] !== undefined ? _data["clientName"] : <any>null;
+            this.founderName = _data["founderName"] !== undefined ? _data["founderName"] : <any>null;
+            this.founderEmail = _data["founderEmail"] !== undefined ? _data["founderEmail"] : <any>null;
+            this.founderPhoneNumber = _data["founderPhoneNumber"] !== undefined ? _data["founderPhoneNumber"] : <any>null;
+            this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
+            this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
             this.whereData = _data["whereData"] ? SaveLostAndFoundWhereData.fromJS(_data["whereData"]) : <any>null;
             if (Array.isArray(_data["files"])) {
                 this.files = [] as any;
@@ -30854,6 +30957,12 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
         data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
         data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
         data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
+        data["clientName"] = this.clientName !== undefined ? this.clientName : <any>null;
+        data["founderName"] = this.founderName !== undefined ? this.founderName : <any>null;
+        data["founderEmail"] = this.founderEmail !== undefined ? this.founderEmail : <any>null;
+        data["founderPhoneNumber"] = this.founderPhoneNumber !== undefined ? this.founderPhoneNumber : <any>null;
+        data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
+        data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
         data["whereData"] = this.whereData ? this.whereData.toJSON() : <any>null;
         if (Array.isArray(this.files)) {
             data["files"] = [];
@@ -30888,6 +30997,12 @@ export interface IInsertLostAndFoundCommand {
     typeOfLoss: TypeOfLoss;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
     whereData?: SaveLostAndFoundWhereData | null;
     files?: LostAndFoundFilesUploadedData[] | null;
 }
@@ -30986,6 +31101,12 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
     isLostItem!: boolean;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
 
     constructor(data?: IUpdateLostAndFoundCommand) {
         if (data) {
@@ -31028,6 +31149,12 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
             this.isLostItem = _data["isLostItem"] !== undefined ? _data["isLostItem"] : <any>null;
             this.placeOfStorage = _data["placeOfStorage"] !== undefined ? _data["placeOfStorage"] : <any>null;
             this.trackingNumber = _data["trackingNumber"] !== undefined ? _data["trackingNumber"] : <any>null;
+            this.clientName = _data["clientName"] !== undefined ? _data["clientName"] : <any>null;
+            this.founderName = _data["founderName"] !== undefined ? _data["founderName"] : <any>null;
+            this.founderEmail = _data["founderEmail"] !== undefined ? _data["founderEmail"] : <any>null;
+            this.founderPhoneNumber = _data["founderPhoneNumber"] !== undefined ? _data["founderPhoneNumber"] : <any>null;
+            this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
+            this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
         }
     }
 
@@ -31070,6 +31197,12 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
         data["isLostItem"] = this.isLostItem !== undefined ? this.isLostItem : <any>null;
         data["placeOfStorage"] = this.placeOfStorage !== undefined ? this.placeOfStorage : <any>null;
         data["trackingNumber"] = this.trackingNumber !== undefined ? this.trackingNumber : <any>null;
+        data["clientName"] = this.clientName !== undefined ? this.clientName : <any>null;
+        data["founderName"] = this.founderName !== undefined ? this.founderName : <any>null;
+        data["founderEmail"] = this.founderEmail !== undefined ? this.founderEmail : <any>null;
+        data["founderPhoneNumber"] = this.founderPhoneNumber !== undefined ? this.founderPhoneNumber : <any>null;
+        data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
+        data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
         return data; 
     }
 }
@@ -31101,6 +31234,12 @@ export interface IUpdateLostAndFoundCommand {
     isLostItem: boolean;
     placeOfStorage?: string | null;
     trackingNumber?: string | null;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    storageRoomId?: string | null;
 }
 
 export class SaveLostAndFoundWhereData2 extends TaskWhereData implements ISaveLostAndFoundWhereData2 {

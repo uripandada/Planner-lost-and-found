@@ -75,6 +75,7 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				query = query.Where(x => typeValues.Contains(x.Type));
 			}
 
+
 			var lostAndFound = await query.Select(x => new Models.LostAndFoundListItem
 			{
 				Id = x.Id,
@@ -91,6 +92,11 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				DeliveryStatus = x.DeliveryStatus,
 				OtherStatus = x.OtherStatus,
 				TypeOfLoss = x.TypeOfLoss.HasValue ? x.TypeOfLoss.Value : Domain.Values.TypeOfLoss.Unknown,
+				StorageRoomId = x.StorageRoomId,
+				FounderName = x.FounderName,
+				LostAndFoundCategoryId = x.LostAndFoundCategoryId,
+				ClientName = x.ClientName,
+				LostAndFoundCategory = x.LostAndFoundCategory
 			}).Skip(request.Skip).Take(request.Take).ToListAsync();
 
 			var count = await query.CountAsync();

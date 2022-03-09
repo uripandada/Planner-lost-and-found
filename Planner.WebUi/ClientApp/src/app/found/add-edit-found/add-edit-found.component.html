@@ -8,7 +8,7 @@
       <form [formGroup]="foundForm" (ngSubmit)="save()">
         <div class="item-edit">
 
-
+          <input matInput formControlName="hotelId" type="text" hidden/>
           <div class="form-section">
             <div class="major-column-title"><b>What is found?</b></div>
 
@@ -73,9 +73,9 @@
                 <div class="form-field-wrapper">
                   <label>Name</label>
                   <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <input matInput formControlName="foundName" type="text" />
-                    <mat-error class="error" *ngIf="canShowErrorMessage('foundName')">
-                      <span *ngIf="f.foundName.errors.required">Required</span>
+                    <input matInput formControlName="founderName" type="text" />
+                    <mat-error class="error" *ngIf="canShowErrorMessage('founderName')">
+                      <span *ngIf="f.founderName.errors.required">Required</span>
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -85,13 +85,13 @@
               <div class="form-field-wrapper">
                 <label>Email Address</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="foundEmail" type="text" />
+                  <input matInput formControlName="founderEmail" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>Phone Number</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="foundPhoneNumber" type="text" />
+                  <input matInput formControlName="founderPhoneNumber" type="text" />
                 </mat-form-field>
               </div>
             </div>
@@ -103,9 +103,9 @@
             <div class="two-column-grid">
               <div class="form-field-wrapper">
                 <label>Where did we store it?</label>
-                <app-where-select [allWheres]="allWheres" [whereFormControl]="f.whereFrom" [placeholderText]="'Where?'"                    
-                  [displayProperty]="'typeDescription'" (getSelection)="getSelection($event)" >               
-                </app-where-select>              
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="storage" type="text" />
+                </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>Category</label>               

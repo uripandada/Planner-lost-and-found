@@ -82,6 +82,12 @@ namespace Planner.Application.LostAndFounds.Queries.GetById
                 HotelId = item.HotelId,
                 PlaceOfStorage = "",
                 TrackingNumber = "",
+                ClientName = item.ClientName,
+                FounderName = item.FounderName,
+                FounderEmail = item.FounderEmail,
+                FounderPhoneNumber = item.FounderPhoneNumber,
+                LostAndFoundCategoryId = item.LostAndFoundCategoryId,
+                StorageRoomId = item.StorageRoomId
             };
             
             return new ProcessResponse<LostAndFoundModel>

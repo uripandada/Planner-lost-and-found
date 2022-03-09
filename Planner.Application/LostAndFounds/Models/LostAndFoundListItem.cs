@@ -1,7 +1,6 @@
 ﻿using Planner.Domain.Values;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Planner.Domain.Entities;
 
 namespace Planner.Application.LostAndFounds.Models
 {
@@ -21,5 +20,12 @@ namespace Planner.Application.LostAndFounds.Models
         public DeliveryStatus DeliveryStatus { get; set; }
         public OtherStatus OtherStatus { get; set; }
         public TypeOfLoss TypeOfLoss { get; set; }
+        public string ClientName { get; set; }
+        public string FounderName { get; set; }
+        public string FounderEmail { get; set; }
+        public string FounderPhoneNumber { get; set; }
+        public Guid? LostAndFoundCategoryId { get; set; }
+        public Guid? StorageRoomId { get; set; }
+        public Category LostAndFoundCategory { get; set; }
     }
 }

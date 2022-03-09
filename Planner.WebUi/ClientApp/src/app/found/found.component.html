@@ -8,7 +8,7 @@
           <div class="major-column-matform">            
             <form [formGroup]="filterForm">                            
               <mat-form-field appearance="outline" color="accent" class="full-width">                                
-                <mat-select name="hotelId">                                    
+                <mat-select name="hotelId" formControlName="hotelId">                                    
                   <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">                        
                     {{hotel.name}}                                    
                   </mat-option>                                
@@ -116,22 +116,22 @@
                       <div class="cell-value">{{item.description}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.place}}</div>
+                      <div class="cell-value">{{item.roomId}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>                                        
+                      <div class="cell-value">{{item.clientName}}</div>                                        
                     </td>                                        
                     <td class="name-cell">                                            
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.lostAndFoundCategory.name}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.founderName}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.notes}}</div>                    
+                      <div class="cell-value">{{item.referenceNumber}}</div>                    
                     </td>     
                     <td class="name-cell">                                            
-                      <div class="cell-value"></div>                                        
+                      <div class="cell-value">{{item.storageRoomId}}</div>                                        
                     </td>               
                     <td class="name-cell">                      
                       <div class="cell-value">{{foundStatusMappings[item.foundStatus]}}</div>

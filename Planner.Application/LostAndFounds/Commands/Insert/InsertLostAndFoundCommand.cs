@@ -55,6 +55,13 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 		public string PlaceOfStorage { get; set; }
 		public string TrackingNumber { get; set; }
 
+		public string ClientName { get; set; }
+		public string FounderName { get; set; }
+		public string FounderEmail { get; set; }
+		public string FounderPhoneNumber { get; set; }
+		public Guid? LostAndFoundCategoryId { get; set; }
+		public Guid? StorageRoomId { get; set; }
+
 		public SaveLostAndFoundWhereData WhereData { get; set; }
 
 		public IEnumerable<LostAndFoundFilesUploadedData> Files { get; set; }
@@ -140,6 +147,12 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 				IsDeleted = false,
 				Type = request.IsLostItem ? LostAndFoundRecordType.Lost : LostAndFoundRecordType.Found,
 				RccStatus = RccLostAndFoundStatus.OPEN,
+				ClientName = request.ClientName,
+				FounderName = request.FounderName,
+				FounderEmail = request.FounderEmail,
+				FounderPhoneNumber = request.FounderPhoneNumber,
+				LostAndFoundCategoryId = request.LostAndFoundCategoryId,
+				StorageRoomId = request.StorageRoomId
 			};
 
 			//var storageDirectory = this._fileService.GetLostAndFoundStoragePath(item.Id);

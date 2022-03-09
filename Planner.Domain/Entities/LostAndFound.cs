@@ -42,6 +42,14 @@ namespace Planner.Domain.Entities
         public RccLostAndFoundStatus RccStatus { get; set; }
         public TypeOfLoss? TypeOfLoss { get; set; }
         public LostAndFoundRecordType Type { get; set; }
+        public string ClientName { get; set; }
+        public string FounderName { get; set; }
+        public string FounderEmail { get; set; }
+        public string FounderPhoneNumber { get; set; }
+        public Guid? LostAndFoundCategoryId { get; set; }
+        public Category LostAndFoundCategory { get; set; }
+        public Guid? StorageRoomId { get; set; }
+
 
         public ICollection<LostAndFoundFile> Files { get; set; }
     }

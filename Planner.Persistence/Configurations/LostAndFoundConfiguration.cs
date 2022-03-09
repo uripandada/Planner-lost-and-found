@@ -108,13 +108,11 @@ namespace Planner.Persistence.Configurations
 
 			builder.Property(a => a.DeliveryStatus)
 				.HasColumnName(nameof(LostAndFound.DeliveryStatus))
-				.IsRequired()
-				.HasDefaultValue(DeliveryStatus.Unknown);
+				.HasDefaultValue(DeliveryStatus.None);
 
 			builder.Property(a => a.OtherStatus)
 				.HasColumnName(nameof(LostAndFound.OtherStatus))
-				.IsRequired()
-				.HasDefaultValue(OtherStatus.Unknown);
+				.HasDefaultValue(OtherStatus.None);
 			builder.Property(a => a.Type)
 				.HasColumnName(nameof(LostAndFound.Type))
 				.IsRequired()
