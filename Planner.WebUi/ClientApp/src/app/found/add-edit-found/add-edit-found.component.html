@@ -76,9 +76,6 @@
                     <input matInput formControlName="founderName" type="text" />
                     <mat-error class="error" *ngIf="canShowErrorMessage('founderName')">
                       <span *ngIf="f.founderName.errors.required">Required</span>
-                    <input matInput formControlName="firstName" type="text" />
-                    <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
-                      <span *ngIf="f.firstName.errors.required">Required</span>
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -89,7 +86,6 @@
                 <label>Email Address</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
                   <input matInput formControlName="founderEmail" type="text" />
-                  <input matInput formControlName="email" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
