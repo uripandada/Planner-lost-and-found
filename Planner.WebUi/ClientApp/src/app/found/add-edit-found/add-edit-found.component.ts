@@ -196,7 +196,6 @@ export class AddEditFoundComponent implements OnInit {
       where = this.allWheres.find(x => x.referenceId == this.item.roomId);
     }
     
-    console.log(this.item);
     this.isFoundStatus = true;
     this.isGuestStatus = true;
 
@@ -266,6 +265,24 @@ export class AddEditFoundComponent implements OnInit {
     }
     else if (this.item.roomId) {
       where = this.allWheres.find(x => x.referenceId == this.item.roomId);
+    }
+
+    this.isFoundStatus = true;
+    this.isGuestStatus = true;
+
+    if (this.item.deliveryStatus != DeliveryStatus.None) {
+      this.isDeliveryStatus = true;
+    } else {
+      this.isDeliveryStatus = false;
+    }
+
+    if (this.item.otherStatus != OtherStatus.None) {
+      this.isOtherStatus = true;
+      this.isFoundStatus = false;
+      this.isGuestStatus = false;
+      this.isDeliveryStatus = false;
+    } else {
+      this.isOtherStatus = false;
     }
 
     this.foundForm.controls.hotelId.setValue(this.item.hotelId);
