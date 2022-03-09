@@ -1295,6 +1295,12 @@ button.secondary-button {
     color: #999;
   }
 
+  & > p {
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+  }
+
   .mat-form-field-wrapper {
     margin: 0 !important;
   }
@@ -1577,6 +1583,11 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 15px;
+  label {
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+  }
 }
 
 .four-column-grid {
@@ -11269,6 +11280,7 @@ td.priority-cell {
   position: relative;
   background-color: #eee;
   width: 135px;
+  height: 30px;
   text-align: center;
   padding: 6px 0px 6px 0px ;
   color: #888;
@@ -11325,6 +11337,72 @@ td.priority-cell {
       z-index: 10;
     }
   }
+
+}
+
+.found-details-status-item-change {
+  margin-right: 6px;
+  position: relative;
+  background-color: #d5e8d4;
+  width: 135px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0px 6px 0px ;
+  color: #888;
+
+  mat-select {
+    padding-left: 15px;
+  }
+
+  &.VERIFIED {
+    margin-right: 0px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -14px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 14px solid #d5e8d4;
+    z-index: 10;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 14px solid white;
+    z-index: 9;
+    top: 0;
+  }
+
+  &:last-child::before {
+    content: none;
+  }
+
+  &:last-child::after {
+    content: none;
+  }
+
+  &:hover {
+    background-color: #aaa;
+    cursor: pointer;
+    color: white;
+
+    &::before {
+      border-left-color: #aaa;
+      z-index: 10;
+    }
+  }
+
 }
 
 .columnField {

@@ -130,69 +130,45 @@
             <div class="major-column-title"><b>Status</b></div>
             <div class="two-column-grid">
               <div class="form-field-wrapper">
-                <div class="object-column-grid">
-                  <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isFoundStatus ? '#d5e8d4' : '#fff'}">
-                    <mat-label>Found Object Status</mat-label>
-                    <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
-                      <mat-option *ngFor="let foundStatus of foundStatuses" [value]="foundStatus.key">{{ foundStatus.value }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isGuestStatus ? '#d5e8d4' : '#fff'}">
-                    <mat-label>Guest Contact Status</mat-label>
-                    <mat-select formControlName="guestStatus" (selectionChange)="guestStatusSelectChanged()">
-                      <mat-option *ngFor="let guestStatus of guestStatuses" [value]="guestStatus.key">{{ guestStatus.value }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isDeliveryStatus ? '#d5e8d4' : '#fff'}">
-                    <mat-label>Delivery Status</mat-label>
-                    <mat-select formControlName="deliveryStatus" (selectionChange)="deliveryStatusSelectChanged()">
-                      <mat-option *ngFor="let deliveryStatus of deliveryStatuses" [value]="deliveryStatus.key">{{ deliveryStatus.value }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <div class="three-column-grid">
+                  <label>Found Object Status</label>
+                  <label>Guest Contact Status</label>
+                  <label>Delivery Status</label>
                 </div>
               </div>
               <div class="form-field-wrapper">
-                <mat-form-field appearance="outline" color="primary" class="full-width" [ngStyle]="{'background-color': isOtherStatus ? '#d5e8d4' : '#fff'}">
-                  <mat-label>Other</mat-label>
-                  <mat-select formControlName="otherStatus" (selectionChange)="otherStatusSelectChanged()">
-                    <mat-option *ngFor="let otherStatus of otherStatuses" [value]="otherStatus.key">{{ otherStatus.value }}</mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <p>Other</p>
               </div>            
             </div>
-
-            <!--  -->
 
             <div class="two-column-grid">
               
               <div class="found-details-statuses">
-                <div class="found-details-status-item">
+                <div [ngClass]="{'found-details-status-item-change': isFoundStatus, 'found-details-status-item': !isFoundStatus }">
                   <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
                     <mat-option *ngFor="let foundStatus of foundStatuses" [value]="foundStatus.key">{{ foundStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div class="found-details-status-item">
+                <div [ngClass]="{'found-details-status-item-change': isGuestStatus, 'found-details-status-item': !isGuestStatus }">
                   <mat-select formControlName="guestStatus" (selectionChange)="guestStatusSelectChanged()">
                     <mat-option *ngFor="let guestStatus of guestStatuses" [value]="guestStatus.key">{{ guestStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div class="found-details-status-item">
-                  <mat-select formControlName="deliveryStatus" (selectionChange)="deliveryStatusSelectChanged()">
+                <div [ngClass]="{'found-details-status-item-change': isDeliveryStatus, 'found-details-status-item': !isDeliveryStatus }">
+                  <mat-select formControlName="deliveryStatus" (valueChange)="deliveryStatusSelectChanged($event)">
                     <mat-option *ngFor="let deliveryStatus of deliveryStatuses" [value]="deliveryStatus.key">{{ deliveryStatus.value }}</mat-option>
                   </mat-select>
                 </div>
               </div>
 
               <div class="found-details-statuses">
-                <div class="found-details-status-item" >
-                  <mat-select formControlName="otherStatus" (selectionChange)="otherStatusSelectChanged()">
+                <div [ngClass]="{'found-details-status-item-change': isOtherStatus, 'found-details-status-item': !isOtherStatus }">
+                  <mat-select formControlName="otherStatus" (selectionChange)="otherStatusSelectChanged($event)">
                     <mat-option *ngFor="let otherStatus of otherStatuses" [value]="otherStatus.key">{{ otherStatus.value }}</mat-option>
                   </mat-select>
                 </div>
               </div>
             </div>
-
-            <!--  -->
           </div>
 
           <div class="item-fields-wrapper">

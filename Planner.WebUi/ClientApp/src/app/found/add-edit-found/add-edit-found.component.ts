@@ -155,18 +155,36 @@ export class AddEditFoundComponent implements OnInit {
     this.isOtherStatus = false;
   }
 
-  deliveryStatusSelectChanged() {
-    this.isFoundStatus = true;
-    this.isGuestStatus = true;
-    this.isDeliveryStatus = true;
-    this.isOtherStatus = false;
+  deliveryStatusSelectChanged(value:any) {
+    if ( value == this.deliveryStatuses[0].key) {
+      this.isFoundStatus = true;
+      this.isGuestStatus = true;
+      this.isDeliveryStatus = false;
+      this.isOtherStatus = false;  
+    }else {
+      this.isFoundStatus = true;
+      this.isGuestStatus = true;
+      this.isDeliveryStatus = true;
+      this.isOtherStatus = false;
+    }
   }
 
-  otherStatusSelectChanged() {
-    this.isFoundStatus = false;
-    this.isGuestStatus = false;
-    this.isDeliveryStatus = false;
-    this.isOtherStatus = true;
+  otherStatusSelectChanged(val:any) {
+    if (val.value == this.otherStatuses[0].key) {
+      this.isFoundStatus = true;
+      this.isGuestStatus = true;
+      this.isDeliveryStatus = false;
+      this.isOtherStatus = false;
+    }else {
+      this.foundForm.controls.foundStatus.setValue(this.foundStatuses[0].key);
+      this.foundForm.controls.guestStatus.setValue(this.guestStatuses[0].key);
+      this.foundForm.controls.deliveryStatus.setValue(this.deliveryStatuses[0].key);
+      this.isFoundStatus = false;
+      this.isGuestStatus = false;
+      this.isDeliveryStatus = false;
+      this.isOtherStatus = true;
+      
+    }
   }
 
   initForm() {
