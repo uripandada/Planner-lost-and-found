@@ -4318,7 +4318,7 @@ td.task-status-cell {
   margin-right: 6px;
   position: relative;
   background-color: #eee;
-  width: 90px;
+  width: 120px;
   text-align: center;
   padding: 6px 0;
   color: #888;
@@ -11257,6 +11257,73 @@ td.priority-cell {
     display: grid;
     grid-template-columns: 1fr 125px;
     grid-column-gap: 15px;
+  }
+}
+
+.found-details-statuses {
+  display: flex;
+}
+
+.found-details-status-item {
+  margin-right: 6px;
+  position: relative;
+  background-color: #eee;
+  width: 135px;
+  text-align: center;
+  padding: 6px 0px 6px 0px ;
+  color: #888;
+
+  mat-select {
+    padding-left: 15px;
+  }
+
+  &.VERIFIED {
+    margin-right: 0px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -14px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 14px solid #eee;
+    z-index: 10;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 14px solid white;
+    z-index: 9;
+    top: 0;
+  }
+
+  &:last-child::before {
+    content: none;
+  }
+
+  &:last-child::after {
+    content: none;
+  }
+
+  &:hover {
+    background-color: #aaa;
+    cursor: pointer;
+    color: white;
+
+    &::before {
+      border-left-color: #aaa;
+      z-index: 10;
+    }
   }
 }
 

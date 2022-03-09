@@ -76,6 +76,9 @@
                     <input matInput formControlName="founderName" type="text" />
                     <mat-error class="error" *ngIf="canShowErrorMessage('founderName')">
                       <span *ngIf="f.founderName.errors.required">Required</span>
+                    <input matInput formControlName="firstName" type="text" />
+                    <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
+                      <span *ngIf="f.firstName.errors.required">Required</span>
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -86,6 +89,7 @@
                 <label>Email Address</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
                   <input matInput formControlName="founderEmail" type="text" />
+                  <input matInput formControlName="email" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
@@ -160,6 +164,39 @@
                 </mat-form-field>
               </div>            
             </div>
+
+            <!--  -->
+
+            <div class="two-column-grid">
+              
+              <div class="found-details-statuses">
+                <div class="found-details-status-item">
+                  <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
+                    <mat-option *ngFor="let foundStatus of foundStatuses" [value]="foundStatus.key">{{ foundStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+                <div class="found-details-status-item">
+                  <mat-select formControlName="guestStatus" (selectionChange)="guestStatusSelectChanged()">
+                    <mat-option *ngFor="let guestStatus of guestStatuses" [value]="guestStatus.key">{{ guestStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+                <div class="found-details-status-item">
+                  <mat-select formControlName="deliveryStatus" (selectionChange)="deliveryStatusSelectChanged()">
+                    <mat-option *ngFor="let deliveryStatus of deliveryStatuses" [value]="deliveryStatus.key">{{ deliveryStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="found-details-statuses">
+                <div class="found-details-status-item" >
+                  <mat-select formControlName="otherStatus" (selectionChange)="otherStatusSelectChanged()">
+                    <mat-option *ngFor="let otherStatus of otherStatuses" [value]="otherStatus.key">{{ otherStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+
+            <!--  -->
           </div>
 
           <div class="item-fields-wrapper">
