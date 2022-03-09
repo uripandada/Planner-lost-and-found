@@ -177,7 +177,7 @@ export class AddEditFoundComponent implements OnInit {
       this.isOtherStatus = false;
     }else {
       this.foundForm.controls.foundStatus.setValue(this.foundStatuses[0].key);
-      this.foundForm.controls.guestStatus.setValue(this.guestStatuses[0].key);
+      // this.foundForm.controls.guestStatus.setValue(this.guestStatuses[0].key);
       this.foundForm.controls.deliveryStatus.setValue(this.deliveryStatuses[0].key);
       this.isFoundStatus = false;
       this.isGuestStatus = false;
