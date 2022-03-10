@@ -25,7 +25,12 @@ export class FoundComponent implements OnInit {
   totalNumber$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   showLoadMore$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   hotels: HotelItemData[] = [];
-
+  pendingNum: number;
+  unclaimedNum: number;
+  guestNum: number;
+  gueNum: number;
+  returnedNum: number;
+  canceledNum: number;
 
   public foundStatuses: any;
   public guestStatuses: any;
@@ -48,6 +53,7 @@ export class FoundComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
     this.filterForm = this.formBuilder.group({
       keywords: [''],
       dateFrom: [''],
@@ -81,8 +87,8 @@ export class FoundComponent implements OnInit {
     this.deliveryStatusMappings = {};
     this.deliveryStatusMappings[DeliveryStatus.None] = "None";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForShipment] = "Waiting For Shipment";
-    this.deliveryStatusMappings[DeliveryStatus.OTShipped] = "OT Shipped";
     this.deliveryStatusMappings[DeliveryStatus.WaitingForHandDelivered] = "Waiting For Hand Delivered";
+    this.deliveryStatusMappings[DeliveryStatus.OTShipped] = "OT Shipped";
     this.deliveryStatusMappings[DeliveryStatus.HandDelivered] = "Hand Delivered";
     this.deliveryStatuses = DeliveryStatus;
 
@@ -122,7 +128,12 @@ export class FoundComponent implements OnInit {
     this.areDetailsDisplayed$.next(true);
   }
 
+  // columnFilter(val: any){
+  //   console.log(val);
+  //   this.loading.start();
+  // }
 
+  
   reloadList(reload: boolean) {
     if (reload) {
       this.loadedNumber$.next(0);
@@ -145,6 +156,40 @@ export class FoundComponent implements OnInit {
         this.totalNumber$.next(response.data.totalNumberOfItems);
         this.loadedNumber$.next(this.loadedNumber$.value + 20);
         this.showLoadMore$.next(this.loadedNumber$.value < this.totalNumber$.value);
+        this.pendingNum = 0;
+        this.unclaimedNum = 0;
+        this.gueNum = 0;
+        this.returnedNum = 0;
+        this.canceledNum = 0;
+        for (let i = 0; i < this.itemsList.value.length; i++) {
+          console.log(this.itemsList.value[i])
+          if (this.itemsList.value[i].foundStatus == 0) {
+            this.pendingNum += 1;
+          }
+        }
+        for (let i = 0; i < this.itemsList.value.length; i++) {
+          if (this.itemsList.value[i].guestStatus == 0) {
+            this.unclaimedNum += 1;
+          }
+        }
+        for (let i = 0; i < this.itemsList.value.length; i++) {
+          if (this.itemsList.value[i].foundStatus == 0 && this.itemsList.value[i].guestStatus == 0 && this.itemsList.value[i].deliveryStatus != 1 && this.itemsList.value[i].deliveryStatus != 2) {
+            this.gueNum += 1;
+          }
+        }
+        console.log(this.gueNum);
+        this.guestNum = this.itemsList.value.length - this.gueNum;
+        for (let i = 0; i < this.itemsList.value.length; i++) {
+          if (this.itemsList.value[i].deliveryStatus == 4 || this.itemsList.value[i].deliveryStatus == 3) {
+            this.returnedNum += 1;
+          }
+        }
+        for (let i = 0; i < this.itemsList.value.length; i++) {
+          if (this.itemsList.value[i].otherStatus != 0) {
+            this.canceledNum += 1;
+          }
+        }
+
       } else {
         this.toastr.error(response.message);
       }

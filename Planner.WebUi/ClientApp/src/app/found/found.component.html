@@ -29,21 +29,12 @@
             </div>
           </div>
           <div class="found-summary-items">
-            
-            <!-- Add badge button start -->
 
-            <!-- <span class="mtsi-tag"><b class="mtsi-pending">{{numberOfPendingTasks$ | async}}</b> pending</span>
-            <span class="mtsi-tag"><b class="mtsi-waiting">{{numberOfWaitingTasks$ | async}}</b> unclaimed</span>
-            <span class="mtsi-tag"><b class="mtsi-paused">{{numberOfPausedTasks$ | async}}</b> guest follow up</span>
-            <span class="mtsi-tag"><b class="mtsi-started">{{numberOfStartedTasks$ | async}}</b> returned</span>
-            <span class="mtsi-tag"><b class="mtsi-finished">{{numberOfFinishedTasks$ | async}}</b> canceled</span> -->
-            <span class="mtsi-tag" ><b class="mtsi-pending">0</b> pending</span>
-            <span class="mtsi-tag" ><b class="mtsi-waiting">0</b> unclaimed</span>
-            <span class="mtsi-tag" ><b class="mtsi-paused">0</b> guest follow up</span>
-            <span class="mtsi-tag" ><b class="mtsi-started">0</b> returned</span>
-            <span class="mtsi-tag" ><b class="mtsi-finished">0</b> canceled</span>
-
-            <!-- Add badge button end -->
+            <span class="mtsi-tag" (click)="columnFilter(1)"><b class="mtsi-pending">{{pendingNum}}</b> pending</span>
+            <span class="mtsi-tag" (click)="columnFilter(2)"><b class="mtsi-waiting">{{unclaimedNum}}</b> unclaimed</span>
+            <span class="mtsi-tag" (click)="columnFilter(3)"><b class="mtsi-paused">{{guestNum}}</b> guest follow up</span>
+            <span class="mtsi-tag" (click)="columnFilter(4)"><b class="mtsi-started">{{returnedNum}}</b> returned</span>
+            <span class="mtsi-tag" (click)="columnFilter(5)"><b class="mtsi-finished">{{canceledNum}}</b> canceled</span>
 
           </div>
         </div>
@@ -83,7 +74,7 @@
               </div>
             </div>
             <div *ngIf="items.length > 0">
-              <table class="list-view-table" >
+              <table class="list-view-table">
                 <thead>
                   <tr>
                     <th>Found On</th> 
@@ -169,3 +160,4 @@
       </div>
     </div>
   </div>
+
