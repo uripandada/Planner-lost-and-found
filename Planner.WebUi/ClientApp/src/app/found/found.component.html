@@ -30,13 +30,11 @@
           </div>
           <div class="found-summary-items">
 
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-              <mat-button-toggle ><span class="mtsi-tag" (click)="columnFilter(1)"><b class="mtsi-pending">{{pendingNum}}</b> pending</span></mat-button-toggle>
-              <mat-button-toggle ><span class="mtsi-tag" (click)="columnFilter(2)"><b class="mtsi-waiting">{{unclaimedNum}}</b> unclaimed</span></mat-button-toggle>
-              <mat-button-toggle ><span class="mtsi-tag" (click)="columnFilter(3)"><b class="mtsi-paused">{{guestNum}}</b> guest follow up</span></mat-button-toggle>
-              <mat-button-toggle ><span class="mtsi-tag" (click)="columnFilter(4)"><b class="mtsi-started">{{returnedNum}}</b> returned</span></mat-button-toggle>
-              <mat-button-toggle ><span class="mtsi-tag" (click)="columnFilter(5)"><b class="mtsi-finished">{{canceledNum}}</b> canceled</span></mat-button-toggle>
-            </mat-button-toggle-group>
+            <span class="mtsi-tag" (click)="columnFilter(1)"><b class="mtsi-pending">{{pendingNum}}</b> pending</span>
+            <span class="mtsi-tag" (click)="columnFilter(2)"><b class="mtsi-waiting">{{unclaimedNum}}</b> unclaimed</span>
+            <span class="mtsi-tag" (click)="columnFilter(3)"><b class="mtsi-paused">{{guestNum}}</b> guest follow up</span>
+            <span class="mtsi-tag" (click)="columnFilter(4)"><b class="mtsi-started">{{returnedNum}}</b> returned</span>
+            <span class="mtsi-tag" (click)="columnFilter(5)"><b class="mtsi-finished">{{canceledNum}}</b> canceled</span>
 
           </div>
         </div>
