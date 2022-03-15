@@ -9,6 +9,7 @@
         <div class="item-edit">
 
           <input matInput formControlName="hotelId" type="text" hidden/>
+          <input [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" hidden/>
 
           <div class="form-section">
             <div class="two-column-grid">
@@ -51,10 +52,17 @@
               <div class="form-field-wrapper">
                 <label>Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="description" type="text" />
-                  <mat-error class="error" *ngIf="canShowErrorMessage('description')">
-                    <span *ngIf="f.description.errors.required">Required</span>
-                  </mat-error>
+                  <input type="text"
+                         placeholder="Select Name..."
+                         aria-label="Number"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
               </div>
             </div>
@@ -123,20 +131,13 @@
             <div class="two-column-grid-21">
               <div class="form-field-wrapper">
                 <label>Experience Category</label>
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <mat-label>Style</mat-label>
-                  <input type="text"
-                         placeholder="Pick one"
-                         aria-label="Style"
-                         matInput
-                         [formControl]="myControl"
-                         [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
+                <ng-select2
+                  [data]="exampleData1"
+                  [placeholder]="placeholder"
+                  [width]="370"
+                  [options]="options"
+                  [(ngModel)]="value"
+                ></ng-select2>
               </div>
             </div>
             <div class="two-column-grid-21">
@@ -166,11 +167,9 @@
             <div class="two-column-grid-21">
               <div class="form-field-wrapper">
                 <label>Compensation</label>
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
-                    <mat-option *ngFor="" [value]="foundStatus.key"></mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <ng-select2 [data]="exampleData"
+                            [width]="370">
+                </ng-select2>
               </div>
             </div>
           </div>

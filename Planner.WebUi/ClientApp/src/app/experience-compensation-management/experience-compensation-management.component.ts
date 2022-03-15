@@ -9,14 +9,14 @@ import { GetPageOfCategoriesQuery, GetCategoryDetailsQuery, InsertCategoryComman
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-experience-categories-management',
-  templateUrl: './experience-categories-management.component.html',
-  styleUrls: ['./experience-categories-management.component.scss']
+  selector: 'app-experience-compensation-management',
+  templateUrl: './experience-compensation-management.component.html',
+  styleUrls: ['./experience-compensation-management.component.scss']
 })
-export class ExperienceCategoriesComponent implements OnInit {
+export class ExperienceCompensationComponent implements OnInit {
   sorts = [
-    { key: 'category', value: 'Category' },
-    { key: 'name', value: 'Name' },
+    { key: 'compensation', value: 'Compensation' },
+    { key: 'price', value: 'Price' },
   ];
 
   isCategoryLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

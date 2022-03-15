@@ -59,26 +59,24 @@
           <div class="form-section">
             <div class="major-column-title"><b>Who found it?</b></div>
             <div class="two-column-grid-21">
-              <div class="two-column-grid">
-                <div class="form-field-wrapper">
-                  <label>Who</label>
-                  <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <mat-select formControlName="typeOfLoss">
-                      <mat-option *ngFor="let typeOfLoss of typesOfLoss" [value]="typeOfLoss.key">
-                        {{ typeOfLoss.value }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="form-field-wrapper">
-                  <label>Name</label>
-                  <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <input matInput formControlName="founderName" type="text" />
-                    <mat-error class="error" *ngIf="canShowErrorMessage('founderName')">
-                      <span *ngIf="f.founderName.errors.required">Required</span>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+              <div class="form-field-wrapper">
+                <label>Who</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="typeOfLoss">
+                    <mat-option *ngFor="let typeOfLoss of typesOfLoss" [value]="typeOfLoss.key">
+                      {{ typeOfLoss.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="founderName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('founderName')">
+                    <span *ngIf="f.founderName.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="two-column-grid-21">

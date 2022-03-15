@@ -1,28 +1,14 @@
 <div class="major-column-title">
-  <ng-container *ngIf="(isCreateNew$ | async)">Create a <b>new experience category</b></ng-container>
-  <ng-container *ngIf="!(isCreateNew$ | async)">Edit the <b>{{category.name}}</b> experience category</ng-container>
+  <ng-container *ngIf="(isCreateNew$ | async)">Create a <b>new experience compensation</b></ng-container>
+  <ng-container *ngIf="!(isCreateNew$ | async)">Edit the <b>{{category.name}}</b> experience compensation</ng-container>
 </div>
 <div class="component-box">
   <div class="task-details-content">
     <form [formGroup]="categoryForm">
 
       <div>
-        <mat-form-field appearance="outline" color="accent" class="full-width">
-          <input type="text"
-                 placeholder="Select Category..."
-                 aria-label="Number"
-                 matInput
-                 [formControl]="myControl"
-                 [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Experience name</mat-label>
+          <mat-label>Compensation</mat-label>
           <input formControlName="name" matInput>
           <mat-error
             *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
@@ -31,6 +17,14 @@
           </mat-error>
         </mat-form-field>
 
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Price</mat-label>
+          <input formControlName="expirationDays" matInput>
+          <mat-error
+            *ngIf="categoryForm.controls.expirationDays.invalid && (categoryForm.controls.expirationDays.dirty || categoryForm.controls.expirationDays.touched)">
+            <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
+          </mat-error>
+        </mat-form-field>
       </div>
       <!--<div>
     <mat-form-field appearance="outline" color="accent" class="full-width">

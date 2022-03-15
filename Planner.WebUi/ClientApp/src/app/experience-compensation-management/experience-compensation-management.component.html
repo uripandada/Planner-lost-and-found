@@ -1,7 +1,7 @@
 <div class="categories-component-wrapper component-wrapper">
   <div class="component-list-details-wrapper" [class.component-list-details-loaded]="(areDetailsDisplayed$ | async)">
     <div class="component-list-wrapper">
-      <div class="major-column-title"><b>Experience Category</b></div>
+      <div class="major-column-title"><b>Experience Compensation</b></div>
       <div class="component-box">
         <div class="list-actions">
           <div class="left-side-actions">
@@ -9,7 +9,7 @@
             <button mat-flat-button class="button-with-icon" type="button" disabled="disabled"><i class="icofont-download"></i> <span>Export data</span></button>-->
           </div>
           <div class="right-side-actions">
-            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newCategoryDetails()"><i class="icofont-plus"></i> <span>Create a experience category</span></button>
+            <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="newCategoryDetails()"><i class="icofont-plus"></i> <span>Create a experience compensation</span></button>
           </div>
         </div>
         <div class="component-box-filter-row">
@@ -17,9 +17,9 @@
             <div class="component-filter-row">
               <div class="categories-filter-row-grid">
                 <div class="form-field-wrapper">
-                  <label>Search experience categories</label>
+                  <label>Search experience compensation</label>
                   <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <input formControlName="keywords" matInput placeholder="By name">
+                    <input formControlName="keywords" matInput placeholder="By compensation">
                   </mat-form-field>
                 </div>
                 <div class="form-field-wrapper">
@@ -40,15 +40,15 @@
           <div *ngIf="(totalNumberOfCategories$ | async) === 0">
             <div class="empty-monthly-date-tasks">
               <div class="empty-alert">
-                No experience categories found for the filter...
+                No experience compensation found for the filter...
               </div>
             </div>
           </div>
           <table class="list-view-table">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>Name</th>
+                <th>Compensation</th>
+                <th>Price</th>
               </tr>
             </thead>
             <tbody>
@@ -84,7 +84,7 @@
             <div class="component-box-title">Loading category...</div>
           </ng-container>
           <ng-container *ngIf="!(this.isLoadingCategoryDetails$ | async)">
-            <app-experience-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-experience-category-edit>
+            <app-experience-compensation-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-experience-compensation-edit>
           </ng-container>
         </div>
     </div>

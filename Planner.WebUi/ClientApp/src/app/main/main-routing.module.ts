@@ -126,6 +126,13 @@ const routes: Routes = [
     data: { claims: [SettingsClaimKeys.Categories] }
   },
   {
+    path: 'experience-compensation',
+    component: MainComponent,
+    loadChildren: () => import('../experience-compensation-management/experience-compensation-management.module').then(m => m.ExperienceCompensationModule),
+    canActivate: [AuthorizeGuard],
+    data: { claims: [SettingsClaimKeys.Categories] }
+  },
+  {
     path: 'reservations',
     component: MainComponent,
     loadChildren: () => import('../reservations/reservations.module').then(m => m.ReservationsModule),

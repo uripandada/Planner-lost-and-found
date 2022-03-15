@@ -24,6 +24,8 @@ import moment from 'moment';
 import { HotelService } from '../../core/services/hotel.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { Select2OptionData } from 'ng-select2';
+
 
 @Component({
   selector: 'app-add-edit-experience',
@@ -50,8 +52,12 @@ export class AddEditExperienceComponent implements OnInit {
   ExperienceStatus3 = new FormControl('resolved');
 
   myControl = new FormControl();
-  options: string[] = ['Happyness', 'Happyness - Clean Room', 'Happyness - Nice Team', 'Happyness - Nice View', 'Housekeeping', 'Housekeeping - Room not clean'];
+  options: string[] = ['NAME1', 'NAME2', 'NAME3', 'NAME4', 'NAME5'];
   filteredOptions: Observable<string[]>;
+
+  public exampleData: Array<Select2OptionData>;
+  public exampleData1: Array<Select2OptionData>;
+
 
   // add experience search field end
 
@@ -126,6 +132,56 @@ export class AddEditExperienceComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.exampleData = [
+      {
+        id: 'compensation1',
+        text: 'Compensation 1'
+      },
+      {
+        id: 'compensation2',
+        text: 'Compensation 2'
+      },
+      {
+        id: 'compensation3',
+        text: 'Compensation 3'
+      },
+      {
+        id: 'compensation4',
+        text: 'Compensation 4'
+      }
+    ];
+
+    this.exampleData1 = [
+      {
+        id: '0',
+        text: 'Happyness',
+        children: [
+          {
+            id: 'cleanroom',
+            text: 'Happyness - Clean Room'
+          },
+          {
+            id: 'niceteam',
+            text: 'Happyness - Nice Team'
+          },
+          {
+            id: 'niceview',
+            text: 'Happyness - Nice View'
+          }
+        ]
+      },
+      {
+        id: '0',
+        text: 'Housekeeping',
+        children: [
+          {
+            id: 'roomnotclean',
+            text: 'Housekeeping - Room not clean'
+          }
+        ]
+      }
+    ]
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
