@@ -9,11 +9,11 @@ import { GetPageOfCategoriesQuery, GetCategoryDetailsQuery, InsertCategoryComman
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-categories-management',
-  templateUrl: './categories-management.component.html',
-  styleUrls: ['./categories-management.component.scss']
+  selector: 'app-lost-and-found-categories-management',
+  templateUrl: './lost-and-found-categories-management.component.html',
+  styleUrls: ['./lost-and-found-categories-management.component.scss']
 })
-export class CategoriesManagementComponent implements OnInit {
+export class LostAndFoundCategoriesManagementComponent implements OnInit {
   sorts = [
     { key: 'NAME_ASC', value: 'Name A to Z' },
     { key: 'NAME_DESC', value: 'Name Z to A' },

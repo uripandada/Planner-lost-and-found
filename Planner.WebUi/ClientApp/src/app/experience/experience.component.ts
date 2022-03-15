@@ -10,11 +10,11 @@ import { HotelService } from '../core/services/hotel.service';
 
 @Component({
   selector: 'app-experience',
-  templateUrl: './found.component.html',
-  styleUrls: ['./found.component.scss'],
+  templateUrl: './experience.component.html',
+  styleUrls: ['./experience.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FoundComponent implements OnInit {
+export class ExperienceComponent implements OnInit {
 
   filterForm: FormGroup;
   itemsList: BehaviorSubject<LostAndFoundListItem[]> = new BehaviorSubject<LostAndFoundListItem[]>(null);

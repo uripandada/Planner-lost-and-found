@@ -83,7 +83,7 @@
             <div class="component-box-title">Loading category...</div>
           </ng-container>
           <ng-container *ngIf="!(this.isLoadingCategoryDetails$ | async)">
-            <app-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-category-edit>
+            <app-lost-and-found-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-lost-and-found-category-edit>
           </ng-container>
         </div>
     </div>

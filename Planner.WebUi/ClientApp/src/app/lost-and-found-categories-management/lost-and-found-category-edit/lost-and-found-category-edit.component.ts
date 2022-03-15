@@ -7,11 +7,11 @@ import { InsertCategoryCommand, ProcessResponse, ProcessResponseOfGuid, Category
 import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
-  selector: 'app-category-edit',
-  templateUrl: './category-edit.component.html',
-  styleUrls: ['./category-edit.component.scss']
+  selector: 'app-lost-and-found-category-edit',
+  templateUrl: './lost-and-found-category-edit.component.html',
+  styleUrls: ['./lost-and-found-category-edit.component.scss']
 })
-export class CategoryEditComponent implements OnInit, OnChanges {
+export class LostAndFoundCategoryEditComponent implements OnInit, OnChanges {
 
   @Input() category: CategoryDetailsViewModel;
 

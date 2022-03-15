@@ -11,7 +11,7 @@
           </h1>
         </div>
         <div class="sidebar-item sidebar-item-with-tooltip" (click)="showManagement()"
-          *hasClaim="['rooom_insights','user_insights','tasks','reservations','cleaning_planner','cleaning_calendar','reservation_calendar','lost_and_found','on_guard']"
+          *hasClaim="['rooom_insights','user_insights','tasks','reservations','cleaning_planner','cleaning_calendar','reservation_calendar','lost_and_found','on_guard','experience']"
           [class.sidebar-item-active]="selectedSubMenuKey === MANAGEMENT">
           <i class="svg-icon icon-management"></i> <span class="main-sidebar-label">Management</span>
           <div class="sidebar-item-tooltip">Management</div>
@@ -19,7 +19,7 @@
       </div>
       <div class="bottom-sidebar-items">
         <div class="sidebar-item sidebar-item-with-tooltip" (click)="showSettings()"
-          *hasClaim="['rooms', 'assets', 'users', 'role_management', 'room_categories', 'categories', 'hotel_settings']"
+          *hasClaim="['rooms', 'assets', 'users', 'role_management', 'room_categories', 'categories', 'hotel_settings', 'experience-categories']"
           [class.sidebar-item-active]="selectedSubMenuKey === SETTINGS">
           <i class="icofont-gear"></i> <span class="main-sidebar-label">Settings</span>
           <div class="sidebar-item-tooltip">Settings</div>
@@ -118,6 +118,12 @@
         <i class="svg-icon icon-hotel-bell"></i>
         <span>Found</span>
       </a>
+      <!-- <a [routerLink]="['/experience']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'experience'" -->
+      <a [routerLink]="['/experience']" [routerLinkActive]="['sidebar-item-active']" 
+         class="sidebar-item">
+        <i class="svg-icon icon-hotel-bell"></i>
+        <span>Experience</span>
+      </a>
       <!--<a [routerLink]="['/on-guard']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'on_guard'"
          class="sidebar-item">
         <i class="svg-icon icon-hotel-bell"></i>
@@ -164,10 +170,17 @@
       <span>Room categories</span>
       </a>
       
-      <a [routerLink]="['/categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'categories'"
+      <a [routerLink]="['/lost-and-found-categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'categories'"
         class="sidebar-item">
         <i class="svg-icon icon-room-category"></i>
         <span>L&F Categories</span>
+      </a>
+
+      <!-- <a [routerLink]="['/experience-categories']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'experience-categories'" -->
+      <a [routerLink]="['/experience-categories']" [routerLinkActive]="['sidebar-item-active']" 
+        class="sidebar-item">
+        <i class="svg-icon icon-room-category"></i>
+        <span>Experience Categories</span>
       </a>
 
       <a [routerLink]="['/hotels-management']" [routerLinkActive]="['sidebar-item-active']" *hasClaim="'hotel_settings'"

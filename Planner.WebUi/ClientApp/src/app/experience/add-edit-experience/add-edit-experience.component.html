@@ -1,0 +1,345 @@
+<ng-container *ngIf="item">
+  <div class="major-column-title">
+    <ng-container *ngIf="isCreateNew">Create a <b>new experience</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit Experience <b>{{ item.referenceNumber }}</b></ng-container>
+  </div>
+  <div class="item-component-wrapper component-wrapper component-box">
+    <div class="item-edit-wrapper">
+      <form [formGroup]="foundForm" (ngSubmit)="save()">
+        <div class="item-edit">
+
+          <input matInput formControlName="hotelId" type="text" hidden/>
+
+          <div class="form-section">
+            <div class="two-column-grid">
+              <div class="found-details-statuses">
+                <div [ngClass]="{'experience-details-status-item-change': isFoundStatus, 'experience-details-status-item': !isFoundStatus }">
+                  <!-- <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
+                    <mat-option *ngFor="let foundStatus of foundStatuses" [value]="foundStatus.key"></mat-option>
+                  </mat-select> -->
+                  <mat-select [formControl]="ExperienceStatus1" (selectionChange)="foundStatusSelectChanged()">
+                    <mat-option value="pending">Pending</mat-option>
+                  </mat-select>
+                </div>
+                <div [ngClass]="{'experience-details-status-item-change': isGuestStatus, 'experience-details-status-item': !isGuestStatus }">
+                  <!-- <mat-select formControlName="guestStatus" (selectionChange)="guestStatusSelectChanged()">
+                    <mat-option *ngFor="let guestStatus of guestStatuses" [value]="guestStatus.key"></mat-option>
+                  </mat-select> -->
+                  <mat-select [formControl]="ExperienceStatus2" (selectionChange)="guestStatusSelectChanged()">
+                    <mat-option value="action">No client action</mat-option>
+                    <mat-option value="client">Meet with client</mat-option>
+                    <mat-option value="Meet">Meet with Client at C/O(avecArchiveuto peut-etre?)</mat-option>
+                  </mat-select>
+                </div>
+                <div [ngClass]="{'experience-details-status-item-change': isDeliveryStatus, 'experience-details-status-item': !isDeliveryStatus }">
+                  <!-- <mat-select formControlName="deliveryStatus" (valueChange)="deliveryStatusSelectChanged($event)">
+                    <mat-option *ngFor="let deliveryStatus of deliveryStatuses" [value]="deliveryStatus.key"></mat-option>
+                  </mat-select> -->
+                  <mat-select [formControl]="ExperienceStatus3" (valueChange)="deliveryStatusSelectChanged($event)">
+                    <mat-option value="resolved">Resolved</mat-option>
+                    <mat-option value="closed">Closed</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="major-column-title"><b>Contact Information</b></div>
+
+            <div class="found-description-grid">
+              <div class="form-field-wrapper">
+                <label>Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="description" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('description')">
+                    <span *ngIf="f.description.errors.required">Required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Reservation</label>                  
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="clientName" type="text" />
+                </mat-form-field>            
+              </div>              
+              <div class="form-field-wrapper">                
+              <label>VIP</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="clientName" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="three-column-grid-211">
+              <div class="form-field-wrapper">
+                <label>Room</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="clientName" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>CI</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="clientName" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>CO</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="clientName" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Email Address</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="founderEmail" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Phone Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="founderPhoneNumber" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="major-column-title"><b>Experience Information</b></div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Experience Type&nbsp;&nbsp;</label>
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                  <mat-button-toggle value="bold"><img src="../../../assets/images/3.png" alt="angry" style="width: 30px; height: 30px;"></mat-button-toggle>
+                  <mat-button-toggle value="italic"><img src="../../../assets/images/2.png" alt="normal" style="width: 30px; height: 30px;"></mat-button-toggle>
+                  <mat-button-toggle value="underline"><img src="../../../assets/images/1.png" alt="good" style="width: 30px; height: 30px;"></mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Experience Category</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-label>Style</mat-label>
+                  <input type="text"
+                         placeholder="Pick one"
+                         aria-label="Style"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Description</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <textarea matInput formControlName="notes" type="text" multiple></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Actions</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <textarea matInput formControlName="notes" type="text" multiple></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Internal Follow up</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <textarea matInput formControlName="notes" type="text" multiple></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Compensation</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
+                    <mat-option *ngFor="" [value]="foundStatus.key"></mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="form-section">
+            <div class="major-column-title"><b>Information</b></div>
+
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <label>Where did we store it?</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="storage" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Category</label>               
+                <mat-form-field appearance="outline" color="accent" class="full-width">                  
+                  <mat-select formControlName="category">                    
+                    <mat-option *ngFor="let category of allCategories" [value]="category.id">{{ category.name }}</mat-option>                  
+                  </mat-select>
+                </mat-form-field>
+              </div>            
+            </div>
+            <div class="two-column-grid">              
+              <div class="form-field-wrapper">                
+                <app-file-upload (filesChanged)="uploadedFilesChanged($event)"                  
+                  [currentlyUploadingFiles]="currentlyUploadingFiles"                  
+                  [temporaryUploadedFiles]="temporaryUploadedFiles"                  
+                  [uploadedFiles]="uploadedFiles">                
+                </app-file-upload>              
+              </div>              
+              <div class="form-field-wrapper">                
+              </div>
+            </div>
+            <div class="major-column-title"><b>Status</b></div>
+            <div class="two-column-grid">
+              <div class="form-field-wrapper">
+                <div class="three-column-grid">
+                  <label>Found Object Status</label>
+                  <label>Guest Contact Status</label>
+                  <label>Delivery Status</label>
+                </div>
+              </div>
+              <div class="form-field-wrapper">
+                <p>Other</p>
+              </div>            
+            </div>
+
+            <div class="two-column-grid">
+              
+              <div class="found-details-statuses">
+                <div [ngClass]="{'found-details-status-item-change': isFoundStatus, 'found-details-status-item': !isFoundStatus }">
+                  <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()" >
+                    <mat-option *ngFor="let foundStatus of foundStatuses" [value]="foundStatus.key">{{ foundStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+                <div [ngClass]="{'found-details-status-item-change': isGuestStatus, 'found-details-status-item': !isGuestStatus }">
+                  <mat-select formControlName="guestStatus" (selectionChange)="guestStatusSelectChanged()">
+                    <mat-option *ngFor="let guestStatus of guestStatuses" [value]="guestStatus.key">{{ guestStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+                <div [ngClass]="{'found-details-status-item-change': isDeliveryStatus, 'found-details-status-item': !isDeliveryStatus }">
+                  <mat-select formControlName="deliveryStatus" (valueChange)="deliveryStatusSelectChanged($event)">
+                    <mat-option *ngFor="let deliveryStatus of deliveryStatuses" [value]="deliveryStatus.key">{{ deliveryStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="found-details-statuses">
+                <div [ngClass]="{'found-details-status-item-change': isOtherStatus, 'found-details-status-item': !isOtherStatus }">
+                  <mat-select formControlName="otherStatus" (selectionChange)="otherStatusSelectChanged($event)">
+                    <mat-option *ngFor="let otherStatus of otherStatuses" [value]="otherStatus.key">{{ otherStatus.value }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="item-fields-wrapper">
+            <ng-container *ngIf="f.guestStatus.value != statusFlag">
+              <div class="form-field-wrapper">
+                <label>First Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="firstName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
+                    <span *ngIf="f.firstName.errors.required">
+                      First name is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Last Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="lastName" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('lastName')">
+                    <span *ngIf="f.lastName.errors.required">
+                      Last name is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Phone number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="phoneNumber" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Email</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="email" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('email')">
+                    <span *ngIf="f.email.errors.required">
+                      Email is required!
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Street</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="street" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <label>City</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="city" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="two-column-grid">
+                <div class="form-field-wrapper">
+                  <label>Country</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input matInput formControlName="country" type="text" />
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <label>Postal code</label>
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <input matInput formControlName="postalCode" type="text" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-field-wrapper">
+                <label>Tracking Number</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="referenceNumber" type="text" />
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </div> -->
+        </div>
+        <div class="item-configuration-edit-actions">
+          <div class="edit-confirm-actions">
+            <button mat-flat-button type="submit" class="button-with-icon secondary-button">
+              <i class="icofont-check-alt"></i>
+              <ng-container *ngIf="isCreateNew">Save</ng-container>
+              <ng-container *ngIf="!isCreateNew">Update</ng-container>
+            </button>
+          </div>
+          <div class="edit-cancel-actions">
+            <button mat-flat-button type="button" class="button-with-icon" (click)="cancel()">
+              <i class="icofont-undo"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

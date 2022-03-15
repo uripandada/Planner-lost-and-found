@@ -91,6 +91,13 @@ const routes: Routes = [
     data: { claims: [ManagementClaimKeys.LostAndFound] }
   },
   {
+    path: 'experience',
+    component: MainComponent,
+    loadChildren: () => import('../experience/experience.module').then(m => m.ExperienceModule),
+    canActivate: [AuthorizeGuard],
+    data: { claims: [ManagementClaimKeys.LostAndFound] }
+  },
+  {
     path: 'on-guard',
     component: MainComponent,
     loadChildren: () => import('../on-guard/on-guard.module').then(m => m.OnGuardModule),
@@ -105,9 +112,16 @@ const routes: Routes = [
     data: { claims: [SettingsClaimKeys.RoomCategories] }
   },
   {
-    path: 'categories',
+    path: 'lost-and-found-categories',
     component: MainComponent,
-    loadChildren: () => import('../categories-management/categories-management.module').then(m => m.CategoriesManagementModule),
+    loadChildren: () => import('../lost-and-found-categories-management/lost-and-found-categories-management.module').then(m => m.LostAndFoundCategoriesManagementModule),
+    canActivate: [AuthorizeGuard],
+    data: { claims: [SettingsClaimKeys.Categories] }
+  },
+  {
+    path: 'experience-categories',
+    component: MainComponent,
+    loadChildren: () => import('../experience-categories-management/experience-categories-management.module').then(m => m.ExperienceCategoriesModule),
     canActivate: [AuthorizeGuard],
     data: { claims: [SettingsClaimKeys.Categories] }
   },

@@ -25,6 +25,8 @@ export class SettingsClaimKeys {
 
   public /* const */ static Categories = 'categories';
 
+  public /* const */ static ExperienceCategories = 'experience-categories';
+
   public /* const */ static HotelSettings = 'hotel_settings';
 }
 
@@ -38,6 +40,7 @@ export class ManagementClaimKeys {
   public static CleaningCalendar = 'cleaning_calendar';
   public static ReservationCalendar = 'reservation_calendar';
   public static LostAndFound = 'lost_and_found';
+  public static Experience = 'experience';
   public static OnGuard = 'on_guard';
 }
 

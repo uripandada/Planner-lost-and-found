@@ -143,6 +143,10 @@ namespace Planner.WebUi.Controllers
 			{
 				claims["categories"] = "categories";
 			}
+			if (User.Claims.Any(c => c.Type == "experience-categories"))
+			{
+				claims["experience-categories"] = "experience-categories";
+			}
 			if (User.Claims.Any(c => c.Type == "hotel_settings"))
 			{
 				claims["hotel_settings"] = "hotel_settings";
@@ -178,6 +182,10 @@ namespace Planner.WebUi.Controllers
 			if (User.Claims.Any(c => c.Type == "lost_and_found"))
 			{
 				claims["lost_and_found"] = "lost_and_found";
+			}
+			if (User.Claims.Any(c => c.Type == "experience"))
+			{
+				claims["experience"] = "experience";
 			}
 			if (User.Claims.Any(c => c.Type == "on_guard"))
 			{
