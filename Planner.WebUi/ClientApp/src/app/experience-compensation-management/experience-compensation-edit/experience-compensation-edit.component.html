@@ -7,21 +7,34 @@
     <form [formGroup]="categoryForm">
 
       <div>
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Compensation</mat-label>
+        <mat-form-field appearance="outline" color="accent" class="full-width">
+          <input type="text"
+                 placeholder="Select Compensation Name..."
+                 aria-label="Number"
+                 matInput
+                 formControlName="name"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <!-- <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Compensation Name</mat-label>
           <input formControlName="name" matInput>
           <mat-error
             *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
-            <div *ngIf="categoryForm.controls.name.errors.CATEGORY_ALREADY_EXISTS">Already exists</div>
+            <div *ngIf="categoryForm.controls.name.errors.EXPERIENCE_COMPENSATION_ALREADY_EXISTS">Already exists</div>
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Price</mat-label>
-          <input formControlName="expirationDays" matInput>
+          <input formControlName="price" matInput>
           <mat-error
-            *ngIf="categoryForm.controls.expirationDays.invalid && (categoryForm.controls.expirationDays.dirty || categoryForm.controls.expirationDays.touched)">
+            *ngIf="categoryForm.controls.price.invalid && (categoryForm.controls.price.dirty || categoryForm.controls.price.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
           </mat-error>
         </mat-form-field>
@@ -46,7 +59,8 @@
           <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()"
             [disabled]="isSaving$ | async">
             <i class="icofont-check-alt"></i>
-            <ng-container>Save</ng-container>
+            <ng-container *ngIf="(isCreateNew$ | async)">Save</ng-container>
+            <ng-container *ngIf="!(isCreateNew$ | async)">Update</ng-container>
           </button>
         </div>
         <div class="edit-cancel-actions">

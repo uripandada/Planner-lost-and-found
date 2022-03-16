@@ -70,12 +70,10 @@ export class LostAndFoundCategoriesManagementComponent implements OnInit {
   }
 
   selectCategory(category: LostAndFoundCategoryGridItemViewModel) {
-    console.log("rrrrrrrrrrrrrrr");
     this.isLoadingCategoryDetails$.next(true);
     this.selectedCategoryId$.next(category.id);
     this.loading.start();
     let request = new GetLostAndFoundCategoryDetailsQuery({ id: category.id });
-    console.log(request);
 
     this._CategoryManagementClient.getLostAndFoundCategoryDetails(request).subscribe(
       (categoryDetails: LostAndFoundCategoryDetailsViewModel) => {
@@ -99,7 +97,6 @@ export class LostAndFoundCategoriesManagementComponent implements OnInit {
 
   newCategoryDetails() {
     this.selectedCategoryId$.next(null);
-    console.log("dddddddddddddddddd");
     this.selectedCategoryDetails$.next(this._createNewCategoryDetails());
     this.isCategoryLoaded$.next(true);
 

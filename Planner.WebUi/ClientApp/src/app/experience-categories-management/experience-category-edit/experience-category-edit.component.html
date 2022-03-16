@@ -9,10 +9,10 @@
       <div>
         <mat-form-field appearance="outline" color="accent" class="full-width">
           <input type="text"
-                 placeholder="Select Category..."
+                 placeholder="Select Category Name..."
                  aria-label="Number"
                  matInput
-                 [formControl]="myControl"
+                 formControlName="name"
                  [matAutocomplete]="auto">
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -20,14 +20,21 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Experience name</mat-label>
-          <input formControlName="name" matInput>
+        <!-- <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Category</mat-label>
           <mat-error
             *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
-            <div *ngIf="categoryForm.controls.name.errors.CATEGORY_ALREADY_EXISTS">Already exists</div>
+            <div *ngIf="categoryForm.controls.name.errors.EXPERIENCE_CATEGORY_ALREADY_EXISTS">Already exists</div>
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Experience Name</mat-label>
+          <input formControlName="experienceName" matInput>
+          <mat-error
+            *ngIf="categoryForm.controls.experienceName.invalid && (categoryForm.controls.experienceName.dirty || categoryForm.controls.experienceName.touched)">
+            <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
           </mat-error>
         </mat-form-field>
 
@@ -52,7 +59,8 @@
           <button mat-flat-button type="button" class="button-with-icon secondary-button" (click)="save()"
             [disabled]="isSaving$ | async">
             <i class="icofont-check-alt"></i>
-            <ng-container>Save</ng-container>
+            <ng-container *ngIf="(isCreateNew$ | async)">Save</ng-container>
+            <ng-container *ngIf="!(isCreateNew$ | async)">Update</ng-container>
           </button>
         </div>
         <div class="edit-cancel-actions">

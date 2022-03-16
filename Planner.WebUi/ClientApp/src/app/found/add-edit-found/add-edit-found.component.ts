@@ -212,8 +212,6 @@ export class AddEditFoundComponent implements OnInit {
       this.isDeliveryStatus = false;
     } 
 
-    console.log(this.item);
-    
     this.foundForm = this.formBuilder.group({
       hotelId: [this.item.hotelId],
       name: [this.item.reservation?.guestName],
@@ -423,7 +421,6 @@ export class AddEditFoundComponent implements OnInit {
 
   private addClientFormControls() {
     this.foundForm.addControl('name', new FormControl('', [Validators.required]));
-    console.log(this.item);
     this.foundForm.controls.name.setValue(this.item.reservation?.guestName);
     this.foundForm.addControl('phoneNumber', new FormControl(''));
     this.foundForm.addControl('email', new FormControl('', [Validators.required]));

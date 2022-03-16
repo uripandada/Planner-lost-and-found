@@ -19,13 +19,13 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 		//public int Credits { get; set; }
 	}
 
-	public class GetPageOfExperienceCategoriesQuery : GetPageRequest, IRequest<PageOf<ExperienceCompensationGridItemViewModel>>
+	public class GetPageOfExperienceCompensationsQuery : GetPageRequest, IRequest<PageOf<ExperienceCompensationGridItemViewModel>>
 	{
 		public string Keywords { get; set; }
 		public string SortKey { get; set; }
 	}
 
-	public class GetPageOfExperienceCompensationsQueryHandler : GetPageRequest, IRequestHandler<GetPageOfExperienceCategoriesQuery, PageOf<ExperienceCompensationGridItemViewModel>>, IAmWebApplicationHandler
+	public class GetPageOfExperienceCompensationsQueryHandler : GetPageRequest, IRequestHandler<GetPageOfExperienceCompensationsQuery, PageOf<ExperienceCompensationGridItemViewModel>>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
@@ -36,7 +36,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<PageOf<ExperienceCompensationGridItemViewModel>> Handle(GetPageOfExperienceCategoriesQuery request, CancellationToken cancellationToken)
+		public async Task<PageOf<ExperienceCompensationGridItemViewModel>> Handle(GetPageOfExperienceCompensationsQuery request, CancellationToken cancellationToken)
 		{
 			var query = this._databaseContext.ExperienceCompensations
 				.AsQueryable();
@@ -64,11 +64,11 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 					case "NAME_DESC":
 						query = query.OrderByDescending(q => q.Name);
 						break;
-					case "CREATED_AT_DESC":
-						query = query.OrderBy(q => q.CreatedAt);
+					case "PRICE_ASC":
+						query = query.OrderBy(q => q.Price);
 						break;
-					case "CREATED_AT_ASC":
-						query = query.OrderByDescending(q => q.CreatedAt);
+					case "PRICE_DESC":
+						query = query.OrderByDescending(q => q.Price);
 						break;
 					default:
 						break;
@@ -85,17 +85,17 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 				query = query.Take(request.Take);
 			}
 
-			var categories = await query.ToArrayAsync();
+			var compensations = await query.ToArrayAsync();
 
 			if (request.Skip == 0 && request.Take == 0)
 			{
-				count = categories.Length;
+				count = compensations.Length;
 			}
 
 			var response = new PageOf<ExperienceCompensationGridItemViewModel>
 			{
 				TotalNumberOfItems = count,
-				Items = categories.Select(d => new ExperienceCompensationGridItemViewModel
+				Items = compensations.Select(d => new ExperienceCompensationGridItemViewModel
 				{
 					Id = d.Id,
 					Name = d.Name,

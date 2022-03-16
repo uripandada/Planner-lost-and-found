@@ -17,7 +17,7 @@ namespace Planner.WebUi.Controllers
 	public class ExperienceCompensationManagementController : BaseController
 	{
 		[HttpPost]
-		public async Task<PageOf<ExperienceCompensationGridItemViewModel>> GetPageOfExperienceCategories([FromBody] GetPageOfExperienceCategoriesQuery request)
+		public async Task<PageOf<ExperienceCompensationGridItemViewModel>> GetPageOfExperienceCompensations([FromBody] GetPageOfExperienceCompensationsQuery request)
 		{
 			return await this.Mediator.Send(request);
 		}
@@ -28,7 +28,7 @@ namespace Planner.WebUi.Controllers
 			return await this.Mediator.Send(request);
 		}
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCompensations)]
 		[HttpPost]
 		public async Task<ProcessResponse<Guid>> InsertExperienceCompensation([FromBody] InsertExperienceCompensationCommand request)
 		{
@@ -42,7 +42,7 @@ namespace Planner.WebUi.Controllers
 			return await this.Mediator.Send(request);
 		}
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCompensations)]
 		[HttpPost]
 		public async Task<ProcessResponse> UpdateExperienceCompensation([FromBody] UpdateExperienceCompensationCommand request)
 		{
@@ -57,7 +57,7 @@ namespace Planner.WebUi.Controllers
 		}
 
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCompensations)]
 		[HttpPost]
 		public async Task<ProcessResponse> DeleteExperienceCompensation([FromBody] DeleteExperienceCompensationCommand request)
 		{

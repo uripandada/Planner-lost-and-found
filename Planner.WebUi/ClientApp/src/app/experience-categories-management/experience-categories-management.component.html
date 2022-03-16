@@ -47,18 +47,17 @@
           <table class="list-view-table">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>Name</th>
+                <th>Experience Category</th>
+                <th class="text-center" style="max-width: 200px; width: 200px;">Name</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr class="list-view-items-row" *ngFor="let category of Categories$ | async" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)"> -->
-              <tr class="list-view-items-row" *ngFor="" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)">
+              <tr class="list-view-items-row" *ngFor="let category of Categories$ | async" (click)="selectCategory(category)" [class.list-view-items-row-selected]="category.id === (selectedCategoryId$ | async)">
                 <td class="name-cell">
-                  <!-- <div class="cell-value">{{category.name}}</div> -->
+                  <div class="cell-value">{{category.name}}</div>
                 </td>
                 <td class="is-public-cell text-center">
-                  <!-- <div class="cell-value">{{category.expirationDays}}</div> -->
+                  <div class="cell-value">{{category.experienceName}}</div>
                 </td>
               </tr>
             </tbody>
@@ -66,10 +65,10 @@
           <div>
             <div class="tasks-list-totals-description">
               <span>Showing</span>
-              <!-- <span>{{loadedNumberOfCategories$ | async}}</span> -->
+              <span>{{loadedNumberOfCategories$ | async}}</span>
               <span>/</span>
-              <!-- <span>{{totalNumberOfCategories$ | async}}</span> -->
-              <span>categories</span>
+              <span>{{totalNumberOfCategories$ | async}}</span>
+              <span>Experience categories</span>
             </div>
             <div class="tasks-list-load-more-actions" *ngIf="showLoadMore$ | async">
               <button mat-flat-button type="button" (click)="loadMoreCategories()">Load 20 more</button>
@@ -81,7 +80,7 @@
     <div class="component-details-wrapper">
         <div class="details-content-wrapper">
           <ng-container *ngIf="(this.isLoadingCategoryDetails$ | async)">
-            <div class="component-box-title">Loading category...</div>
+            <div class="component-box-title">Loading experience category...</div>
           </ng-container>
           <ng-container *ngIf="!(this.isLoadingCategoryDetails$ | async)">
             <app-experience-category-edit [category]="selectedCategoryDetails$ | async" (inserted)="onCategoryInserted($event)" (updated)="onCategoryUpdated($event)" (cancelled)="onCategoryCancel()"></app-experience-category-edit>

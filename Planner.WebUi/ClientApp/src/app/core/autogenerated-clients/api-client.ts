@@ -2904,8 +2904,8 @@ export class ExperienceCompensationManagementClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getPageOfExperienceCategories(request: GetPageOfExperienceCategoriesQuery2): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
-        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/GetPageOfExperienceCategories";
+    getPageOfExperienceCompensations(request: GetPageOfExperienceCompensationsQuery): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/GetPageOfExperienceCompensations";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
@@ -2921,11 +2921,11 @@ export class ExperienceCompensationManagementClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetPageOfExperienceCategories(response_);
+            return this.processGetPageOfExperienceCompensations(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetPageOfExperienceCategories(<any>response_);
+                    return this.processGetPageOfExperienceCompensations(<any>response_);
                 } catch (e) {
                     return <Observable<PageOfOfExperienceCompensationGridItemViewModel>><any>_observableThrow(e);
                 }
@@ -2934,7 +2934,7 @@ export class ExperienceCompensationManagementClient {
         }));
     }
 
-    protected processGetPageOfExperienceCategories(response: HttpResponseBase): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
+    protected processGetPageOfExperienceCompensations(response: HttpResponseBase): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -22877,11 +22877,11 @@ export interface IExperienceCompensationGridItemViewModel {
     price: number;
 }
 
-export class GetPageOfExperienceCategoriesQuery2 extends GetPageRequest implements IGetPageOfExperienceCategoriesQuery2 {
+export class GetPageOfExperienceCompensationsQuery extends GetPageRequest implements IGetPageOfExperienceCompensationsQuery {
     keywords?: string | null;
     sortKey?: string | null;
 
-    constructor(data?: IGetPageOfExperienceCategoriesQuery2) {
+    constructor(data?: IGetPageOfExperienceCompensationsQuery) {
         super(data);
     }
 
@@ -22893,9 +22893,9 @@ export class GetPageOfExperienceCategoriesQuery2 extends GetPageRequest implemen
         }
     }
 
-    static fromJS(data: any): GetPageOfExperienceCategoriesQuery2 {
+    static fromJS(data: any): GetPageOfExperienceCompensationsQuery {
         data = typeof data === 'object' ? data : {};
-        let result = new GetPageOfExperienceCategoriesQuery2();
+        let result = new GetPageOfExperienceCompensationsQuery();
         result.init(data);
         return result;
     }
@@ -22909,7 +22909,7 @@ export class GetPageOfExperienceCategoriesQuery2 extends GetPageRequest implemen
     }
 }
 
-export interface IGetPageOfExperienceCategoriesQuery2 extends IGetPageRequest {
+export interface IGetPageOfExperienceCompensationsQuery extends IGetPageRequest {
     keywords?: string | null;
     sortKey?: string | null;
 }

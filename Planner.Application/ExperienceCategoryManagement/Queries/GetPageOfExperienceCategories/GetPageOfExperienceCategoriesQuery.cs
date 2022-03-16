@@ -56,17 +56,17 @@ namespace Planner.Application.ExperienceCategoryManagement.Queries.GetPageOfExpe
 			{
 				switch (request.SortKey)
 				{
-					case "NAME_ASC":
+					case "CATEGORY_ASC":
 						query = query.OrderBy(q => q.Name);
 						break;
-					case "NAME_DESC":
+					case "CATEGORY_DESC":
 						query = query.OrderByDescending(q => q.Name);
 						break;
-					case "CREATED_AT_DESC":
-						query = query.OrderBy(q => q.CreatedAt);
+					case "EXPERIENCE_NAME_ASC":
+						query = query.OrderBy(q => q.ExperienceName);
 						break;
-					case "CREATED_AT_ASC":
-						query = query.OrderByDescending(q => q.CreatedAt);
+					case "EXPERIENCE_NAME_DESC":
+						query = query.OrderByDescending(q => q.ExperienceName);
 						break;
 					default:
 						break;

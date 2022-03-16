@@ -45,22 +45,10 @@ namespace Planner.Persistence.Migrations
                 name: "ix_experience_categories_modified_by_id",
                 table: "experience_categories",
                 column: "modified_by_id");
-
-            migrationBuilder.AddForeignKey(
-                name: "fk_experiences_experience_categories_experience_categ~",
-                table: "experiences",
-                column: "experience_category_id",
-                principalTable: "experience_categories",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_experiences_experience_categories_experience_categ~",
-                table: "experiences");
-
             migrationBuilder.DropTable(
                 name: "experience_categories");
         }

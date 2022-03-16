@@ -464,8 +464,6 @@ export class AddEditExperienceComponent implements OnInit {
 
     if (this.item.id === null) {
 
-      console.log(insertRequest);
-
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
           if (response.isSuccess) {
@@ -547,7 +545,6 @@ export class AddEditExperienceComponent implements OnInit {
   }
 
   getSelection(data: ExtendedWhereData) {
-    console.log(data);
     this.foundForm.controls.whereFrom.setValue(data);
     this.foundForm.controls.clientName.setValue(data.guestName);
   }

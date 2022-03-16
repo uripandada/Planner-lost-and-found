@@ -67,9 +67,9 @@ namespace Planner.Application.ExperienceCategoryManagement.Commands.InsertExperi
 		{
 			this._databaseContext = masterDatabaseContext;
 
-			RuleFor(command => command.Name).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
+			RuleFor(command => command).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
 			{
-				var category = await this._databaseContext.ExperienceCategories.Where(t => t.Name.ToLower() == key.ToLower()).FirstOrDefaultAsync();
+				var category = await this._databaseContext.ExperienceCategories.Where(t => t.Name.ToLower() == key.Name.ToLower() && t.ExperienceName.ToLower() == key.ExperienceName.ToLower()).FirstOrDefaultAsync();
 				return category == null;
 			}).WithMessage("EXPERIENCE_CATEGORY_ALREADY_EXISTS");
 		}
