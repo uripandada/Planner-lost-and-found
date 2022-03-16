@@ -30559,6 +30559,7 @@ export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLost
     dateTo?: moment.Moment | null;
     loadLostItems!: boolean;
     loadFoundItems!: boolean;
+    filter?: string | null;
 
     constructor(data?: IGetLostAndFoundListQuery) {
         super(data);
@@ -30572,6 +30573,7 @@ export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLost
             this.dateTo = _data["dateTo"] ? moment(_data["dateTo"].toString()) : <any>null;
             this.loadLostItems = _data["loadLostItems"] !== undefined ? _data["loadLostItems"] : <any>null;
             this.loadFoundItems = _data["loadFoundItems"] !== undefined ? _data["loadFoundItems"] : <any>null;
+            this.filter = _data["filter"] !== undefined ? _data["filter"] : <any>null;
         }
     }
 
@@ -30589,6 +30591,7 @@ export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLost
         data["dateTo"] = this.dateTo ? this.dateTo.toISOString() : <any>null;
         data["loadLostItems"] = this.loadLostItems !== undefined ? this.loadLostItems : <any>null;
         data["loadFoundItems"] = this.loadFoundItems !== undefined ? this.loadFoundItems : <any>null;
+        data["filter"] = this.filter !== undefined ? this.filter : <any>null;
         super.toJSON(data);
         return data; 
     }
@@ -30600,6 +30603,7 @@ export interface IGetLostAndFoundListQuery extends IGetPageRequest {
     dateTo?: moment.Moment | null;
     loadLostItems: boolean;
     loadFoundItems: boolean;
+    filter?: string | null;
 }
 
 export class ProcessResponseOfLostAndFoundModel extends ProcessResponse implements IProcessResponseOfLostAndFoundModel {

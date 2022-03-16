@@ -30,11 +30,11 @@
           </div>
           <div class="found-summary-items">
 
-            <span class="mtsi-tag" (click)="columnFilter(1)"><b class="mtsi-pending">{{pendingNum}}</b> pending</span>
-            <span class="mtsi-tag" (click)="columnFilter(2)"><b class="mtsi-waiting">{{unclaimedNum}}</b> unclaimed</span>
-            <span class="mtsi-tag" (click)="columnFilter(3)"><b class="mtsi-paused">{{guestNum}}</b> guest follow up</span>
-            <span class="mtsi-tag" (click)="columnFilter(4)"><b class="mtsi-started">{{returnedNum}}</b> returned</span>
-            <span class="mtsi-tag" (click)="columnFilter(5)"><b class="mtsi-finished">{{canceledNum}}</b> canceled</span>
+            <span class="mtsi-tag" (click)="columnFilter('pending')"><b class="mtsi-pending">{{pendingNum}}</b> pending</span>
+            <span class="mtsi-tag" (click)="columnFilter('unclaimed')"><b class="mtsi-waiting">{{unclaimedNum}}</b> unclaimed</span>
+            <span class="mtsi-tag" (click)="columnFilter('guest_follow_up')"><b class="mtsi-paused">{{guestNum}}</b> guest follow up</span>
+            <span class="mtsi-tag" (click)="columnFilter('returned')"><b class="mtsi-started">{{returnedNum}}</b> returned</span>
+            <span class="mtsi-tag" (click)="columnFilter('canceled')"><b class="mtsi-finished">{{canceledNum}}</b> canceled</span>
 
           </div>
         </div>

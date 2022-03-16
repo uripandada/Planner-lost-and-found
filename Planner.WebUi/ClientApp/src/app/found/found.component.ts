@@ -65,11 +65,11 @@ export class FoundComponent implements OnInit {
 
     this.filterForm.valueChanges.subscribe(
       value => {
-        this.reloadList(true);
+        this.reloadList(true, "");
       }
     );
 
-    this.reloadList(true);
+    this.reloadList(true, "");
 
     this.foundStatusMappings = {};
     this.foundStatusMappings[FoundStatus.WaitingRoomMaid] = "Waiting Room Maid";
@@ -127,12 +127,12 @@ export class FoundComponent implements OnInit {
     this.areDetailsDisplayed$.next(true);
   }
 
-  columnFilter(val: any){
-    this.loading.start();
+  columnFilter(val: string){
+    this.reloadList(true, val);
   }
 
   
-  reloadList(reload: boolean) {
+  reloadList(reload: boolean, filter: string) {
     if (reload) {
       this.loadedNumber$.next(0);
     }
@@ -148,6 +148,7 @@ export class FoundComponent implements OnInit {
       keyword: this.filterForm.controls.keywords.value,
       loadFoundItems: true,
       loadLostItems: false,
+      filter: filter
     })).subscribe((response) => {
       if (response.isSuccess) {
         this.itemsList.next(response.data.items);
@@ -159,7 +160,6 @@ export class FoundComponent implements OnInit {
         this.gueNum = 0;
         this.returnedNum = 0;
         this.canceledNum = 0;
-        console.log(this.itemsList.value);
         for (let i = 0; i < this.itemsList.value.length; i++) {
           if (this.itemsList.value[i].foundStatus == 0) {
             this.pendingNum += 1;

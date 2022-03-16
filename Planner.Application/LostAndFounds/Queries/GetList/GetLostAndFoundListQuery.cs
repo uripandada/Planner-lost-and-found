@@ -18,6 +18,7 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 		public DateTime? DateTo { get; set; }
 		public bool LoadLostItems { get; set; }
 		public bool LoadFoundItems { get; set; }
+		public string Filter { get; set; }
 	}
 
 	public class GetLostAndFoundListQueryHandler : IRequestHandler<GetLostAndFoundListQuery, ProcessResponse<PageOf<Models.LostAndFoundListItem>>>, IAmWebApplicationHandler
@@ -71,6 +72,28 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 			{
 				query = query.Where(x => typeValues.Contains(x.Type));
 			}
+
+			switch (request.Filter)
+            {
+				case "pending":
+					query = query.Where(x => x.FoundStatus.Equals(Domain.Values.FoundStatus.WaitingRoomMaid));
+					break;
+				case "unclaimed":
+					query = query.Where(x => x.GuestStatus.Equals(Domain.Values.GuestStatus.Unclaimed) && x.FoundStatus.Equals(Domain.Values.FoundStatus.Received));
+					break;
+				case "guest_follow_up":
+					query = query.Where(x => x.FoundStatus.Equals(Domain.Values.FoundStatus.Received) && !x.GuestStatus.Equals(Domain.Values.GuestStatus.Unclaimed));
+					break;
+				case "returned":
+					query = query.Where(x => x.DeliveryStatus.Equals(Domain.Values.DeliveryStatus.OTShipped) || x.DeliveryStatus.Equals(Domain.Values.DeliveryStatus.HandDelivered));
+					break;
+				case "canceled":
+					query = query.Where(x => !x.OtherStatus.Equals(Domain.Values.OtherStatus.None));
+					break;
+				default:
+					break;
+					
+            }
 
 
 			var lostAndFound = await query.Select(x => new Models.LostAndFoundListItem
