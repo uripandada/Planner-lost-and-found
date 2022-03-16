@@ -13,29 +13,29 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.LostAndFoundCategoryManagement.Commands.UpdateLostAndFoundCategory
+namespace Planner.Application.ExperienceCategoryManagement.Commands.UpdateExperienceCategory
 {
-	public class UpdateLostAndFoundCategoryCommand : IRequest<ProcessResponse>
+	public class UpdateExperienceCategoryCommand : IRequest<ProcessResponse>
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public int ExpirationDays { get; set; }
+		public string ExperienceName { get; set; }
 	}
 
-	public class UpdateLostAndFoundCategoryCommandHandler : IRequestHandler<UpdateLostAndFoundCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
+	public class UpdateExperienceCategoryCommandHandler : IRequestHandler<UpdateExperienceCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public UpdateLostAndFoundCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public UpdateExperienceCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<ProcessResponse> Handle(UpdateLostAndFoundCategoryCommand request, CancellationToken cancellationToken)
+		public async Task<ProcessResponse> Handle(UpdateExperienceCategoryCommand request, CancellationToken cancellationToken)
 		{
-			var category = await this._databaseContext.LostAndFoundCategories.FindAsync(request.Id);
+			var category = await this._databaseContext.ExperienceCategories.FindAsync(request.Id);
 
 			if (category == null)
 			{
@@ -43,14 +43,14 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Commands.UpdateLost
 				{
 					HasError = true,
 					IsSuccess = false,
-					Message = "Unable to find lost and found category to update."
+					Message = "Unable to find Experience category to update."
 				};
 			}
 
 			category.ModifiedAt = DateTime.UtcNow;
 			category.ModifiedById = this._userId;
 			category.Name = request.Name;
-			category.ExpirationDays = request.ExpirationDays;
+			category.ExperienceName = request.ExperienceName;
 
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 
@@ -58,24 +58,24 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Commands.UpdateLost
 			{
 				HasError = false,
 				IsSuccess = true,
-				Message = "Lost and Found Category updated."
+				Message = "Experience category updated."
 			};
 		}
 	}
 
-	public class UpdateLostAndFoundCategoryCommandValidator : AbstractValidator<UpdateLostAndFoundCategoryCommand>
+	public class UpdateExperienceCategoryCommandValidator : AbstractValidator<UpdateExperienceCategoryCommand>
 	{
 		private readonly IDatabaseContext _databaseContext;
 
-		public UpdateLostAndFoundCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
+		public UpdateExperienceCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
 		{
 			this._databaseContext = masterDatabaseContext;
 
 			RuleFor(command => command.Name).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
 			{
-				var category = await this._databaseContext.LostAndFoundCategories.Where(t => t.Name.ToLower() == key.ToLower() && t.Id != command.Id).FirstOrDefaultAsync();
+				var category = await this._databaseContext.ExperienceCategories.Where(t => t.Name.ToLower() == key.ToLower() && t.Id != command.Id).FirstOrDefaultAsync();
 				return category == null;
-			}).WithMessage("LOST_AND_FOUND_CATEGORY_ALREADY_EXISTS");
+			}).WithMessage("EXPERIENCE_CATEGORY_ALREADY_EXISTS");
 		}
 	}
 }

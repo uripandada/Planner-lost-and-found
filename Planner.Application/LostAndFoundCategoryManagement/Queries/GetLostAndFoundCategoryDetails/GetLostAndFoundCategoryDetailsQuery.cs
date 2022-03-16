@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.CategoryManagement.Queries.GetLostAndFoundCategoryDetails
+namespace Planner.Application.LostAndFoundCategoryManagement.Queries.GetLostAndFoundCategoryDetails
 {
 	public class LostAndFoundCategoryDetailsViewModel
 	{

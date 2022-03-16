@@ -2620,6 +2620,554 @@ export class DashboardClient {
 @Injectable({
     providedIn: 'root'
 })
+export class ExperienceCategoryManagementClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getPageOfExperienceCategories(request: GetPageOfExperienceCategoriesQuery): Observable<PageOfOfExperienceCategoryGridItemViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/GetPageOfExperienceCategories";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPageOfExperienceCategories(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPageOfExperienceCategories(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfExperienceCategoryGridItemViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfExperienceCategoryGridItemViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPageOfExperienceCategories(response: HttpResponseBase): Observable<PageOfOfExperienceCategoryGridItemViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfExperienceCategoryGridItemViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfExperienceCategoryGridItemViewModel>(<any>null);
+    }
+
+    getExperienceCategoryDetails(request: GetExperienceCategoryDetailsQuery): Observable<ExperienceCategoryDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/GetExperienceCategoryDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExperienceCategoryDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExperienceCategoryDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<ExperienceCategoryDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExperienceCategoryDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetExperienceCategoryDetails(response: HttpResponseBase): Observable<ExperienceCategoryDetailsViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ExperienceCategoryDetailsViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExperienceCategoryDetailsViewModel>(<any>null);
+    }
+
+    insertExperienceCategory(request: InsertExperienceCategoryCommand): Observable<ProcessResponseOfGuid> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/InsertExperienceCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertExperienceCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertExperienceCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertExperienceCategory(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseOfGuid>(<any>null);
+    }
+
+    updateExperienceCategory(request: UpdateExperienceCategoryCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/UpdateExperienceCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateExperienceCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateExperienceCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateExperienceCategory(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+
+    deleteExperienceCategory(request: DeleteExperienceCategoryCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/DeleteExperienceCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteExperienceCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteExperienceCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteExperienceCategory(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ExperienceCompensationManagementClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getPageOfExperienceCategories(request: GetPageOfExperienceCategoriesQuery2): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/GetPageOfExperienceCategories";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPageOfExperienceCategories(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPageOfExperienceCategories(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfExperienceCompensationGridItemViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfExperienceCompensationGridItemViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPageOfExperienceCategories(response: HttpResponseBase): Observable<PageOfOfExperienceCompensationGridItemViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfExperienceCompensationGridItemViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfExperienceCompensationGridItemViewModel>(<any>null);
+    }
+
+    getExperienceCompensationDetails(request: GetExperienceCompensationDetailsQuery): Observable<ExperienceCompensationDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/GetExperienceCompensationDetails";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExperienceCompensationDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExperienceCompensationDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<ExperienceCompensationDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExperienceCompensationDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetExperienceCompensationDetails(response: HttpResponseBase): Observable<ExperienceCompensationDetailsViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ExperienceCompensationDetailsViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExperienceCompensationDetailsViewModel>(<any>null);
+    }
+
+    insertExperienceCompensation(request: InsertExperienceCompensationCommand): Observable<ProcessResponseOfGuid> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/InsertExperienceCompensation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertExperienceCompensation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertExperienceCompensation(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertExperienceCompensation(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseOfGuid>(<any>null);
+    }
+
+    updateExperienceCompensation(request: UpdateExperienceCompensationCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/UpdateExperienceCompensation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateExperienceCompensation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateExperienceCompensation(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateExperienceCompensation(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+
+    deleteExperienceCompensation(request: DeleteExperienceCompensationCommand): Observable<ProcessResponse> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/DeleteExperienceCompensation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteExperienceCompensation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteExperienceCompensation(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteExperienceCompensation(response: HttpResponseBase): Observable<ProcessResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponse>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class ExportAssetsClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -21868,6 +22416,704 @@ export enum MasterFilterType {
     ROOMS_OVERVIEW_DASHBOARD = 0,
 }
 
+export class PageOfOfExperienceCategoryGridItemViewModel implements IPageOfOfExperienceCategoryGridItemViewModel {
+    items?: ExperienceCategoryGridItemViewModel[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfExperienceCategoryGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ExperienceCategoryGridItemViewModel.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfExperienceCategoryGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfExperienceCategoryGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfExperienceCategoryGridItemViewModel {
+    items?: ExperienceCategoryGridItemViewModel[] | null;
+    totalNumberOfItems: number;
+}
+
+export class ExperienceCategoryGridItemViewModel implements IExperienceCategoryGridItemViewModel {
+    id!: string;
+    name?: string | null;
+    experienceName?: string | null;
+
+    constructor(data?: IExperienceCategoryGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.experienceName = _data["experienceName"] !== undefined ? _data["experienceName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCategoryGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCategoryGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["experienceName"] = this.experienceName !== undefined ? this.experienceName : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCategoryGridItemViewModel {
+    id: string;
+    name?: string | null;
+    experienceName?: string | null;
+}
+
+export class GetPageRequest implements IGetPageRequest {
+    skip!: number;
+    take!: number;
+
+    constructor(data?: IGetPageRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
+            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
+        data["take"] = this.take !== undefined ? this.take : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetPageRequest {
+    skip: number;
+    take: number;
+}
+
+export class GetPageOfExperienceCategoriesQuery extends GetPageRequest implements IGetPageOfExperienceCategoriesQuery {
+    keywords?: string | null;
+    sortKey?: string | null;
+
+    constructor(data?: IGetPageOfExperienceCategoriesQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.keywords = _data["keywords"] !== undefined ? _data["keywords"] : <any>null;
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageOfExperienceCategoriesQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageOfExperienceCategoriesQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["keywords"] = this.keywords !== undefined ? this.keywords : <any>null;
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetPageOfExperienceCategoriesQuery extends IGetPageRequest {
+    keywords?: string | null;
+    sortKey?: string | null;
+}
+
+export class ExperienceCategoryDetailsViewModel implements IExperienceCategoryDetailsViewModel {
+    id!: string;
+    name?: string | null;
+    experienceName?: string | null;
+
+    constructor(data?: IExperienceCategoryDetailsViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.experienceName = _data["experienceName"] !== undefined ? _data["experienceName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCategoryDetailsViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCategoryDetailsViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["experienceName"] = this.experienceName !== undefined ? this.experienceName : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCategoryDetailsViewModel {
+    id: string;
+    name?: string | null;
+    experienceName?: string | null;
+}
+
+export class GetExperienceCategoryDetailsQuery implements IGetExperienceCategoryDetailsQuery {
+    id!: string;
+
+    constructor(data?: IGetExperienceCategoryDetailsQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetExperienceCategoryDetailsQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExperienceCategoryDetailsQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetExperienceCategoryDetailsQuery {
+    id: string;
+}
+
+export class InsertExperienceCategoryCommand implements IInsertExperienceCategoryCommand {
+    name?: string | null;
+    experienceName?: string | null;
+
+    constructor(data?: IInsertExperienceCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.experienceName = _data["experienceName"] !== undefined ? _data["experienceName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InsertExperienceCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsertExperienceCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["experienceName"] = this.experienceName !== undefined ? this.experienceName : <any>null;
+        return data; 
+    }
+}
+
+export interface IInsertExperienceCategoryCommand {
+    name?: string | null;
+    experienceName?: string | null;
+}
+
+export class UpdateExperienceCategoryCommand implements IUpdateExperienceCategoryCommand {
+    id!: string;
+    name?: string | null;
+    experienceName?: string | null;
+
+    constructor(data?: IUpdateExperienceCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.experienceName = _data["experienceName"] !== undefined ? _data["experienceName"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdateExperienceCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateExperienceCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["experienceName"] = this.experienceName !== undefined ? this.experienceName : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdateExperienceCategoryCommand {
+    id: string;
+    name?: string | null;
+    experienceName?: string | null;
+}
+
+export class DeleteExperienceCategoryCommand implements IDeleteExperienceCategoryCommand {
+    id!: string;
+
+    constructor(data?: IDeleteExperienceCategoryCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): DeleteExperienceCategoryCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeleteExperienceCategoryCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IDeleteExperienceCategoryCommand {
+    id: string;
+}
+
+export class PageOfOfExperienceCompensationGridItemViewModel implements IPageOfOfExperienceCompensationGridItemViewModel {
+    items?: ExperienceCompensationGridItemViewModel[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfExperienceCompensationGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ExperienceCompensationGridItemViewModel.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfExperienceCompensationGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfExperienceCompensationGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfExperienceCompensationGridItemViewModel {
+    items?: ExperienceCompensationGridItemViewModel[] | null;
+    totalNumberOfItems: number;
+}
+
+export class ExperienceCompensationGridItemViewModel implements IExperienceCompensationGridItemViewModel {
+    id!: string;
+    name?: string | null;
+    price!: number;
+
+    constructor(data?: IExperienceCompensationGridItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCompensationGridItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCompensationGridItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCompensationGridItemViewModel {
+    id: string;
+    name?: string | null;
+    price: number;
+}
+
+export class GetPageOfExperienceCategoriesQuery2 extends GetPageRequest implements IGetPageOfExperienceCategoriesQuery2 {
+    keywords?: string | null;
+    sortKey?: string | null;
+
+    constructor(data?: IGetPageOfExperienceCategoriesQuery2) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.keywords = _data["keywords"] !== undefined ? _data["keywords"] : <any>null;
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetPageOfExperienceCategoriesQuery2 {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPageOfExperienceCategoriesQuery2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["keywords"] = this.keywords !== undefined ? this.keywords : <any>null;
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetPageOfExperienceCategoriesQuery2 extends IGetPageRequest {
+    keywords?: string | null;
+    sortKey?: string | null;
+}
+
+export class ExperienceCompensationDetailsViewModel implements IExperienceCompensationDetailsViewModel {
+    id!: string;
+    name?: string | null;
+    price!: number;
+
+    constructor(data?: IExperienceCompensationDetailsViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCompensationDetailsViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCompensationDetailsViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCompensationDetailsViewModel {
+    id: string;
+    name?: string | null;
+    price: number;
+}
+
+export class GetExperienceCompensationDetailsQuery implements IGetExperienceCompensationDetailsQuery {
+    id!: string;
+
+    constructor(data?: IGetExperienceCompensationDetailsQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetExperienceCompensationDetailsQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExperienceCompensationDetailsQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetExperienceCompensationDetailsQuery {
+    id: string;
+}
+
+export class InsertExperienceCompensationCommand implements IInsertExperienceCompensationCommand {
+    name?: string | null;
+    price!: number;
+
+    constructor(data?: IInsertExperienceCompensationCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InsertExperienceCompensationCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsertExperienceCompensationCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        return data; 
+    }
+}
+
+export interface IInsertExperienceCompensationCommand {
+    name?: string | null;
+    price: number;
+}
+
+export class UpdateExperienceCompensationCommand implements IUpdateExperienceCompensationCommand {
+    id!: string;
+    name?: string | null;
+    price!: number;
+
+    constructor(data?: IUpdateExperienceCompensationCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdateExperienceCompensationCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateExperienceCompensationCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdateExperienceCompensationCommand {
+    id: string;
+    name?: string | null;
+    price: number;
+}
+
+export class DeleteExperienceCompensationCommand implements IDeleteExperienceCompensationCommand {
+    id!: string;
+
+    constructor(data?: IDeleteExperienceCompensationCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): DeleteExperienceCompensationCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeleteExperienceCompensationCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        return data; 
+    }
+}
+
+export interface IDeleteExperienceCompensationCommand {
+    id: string;
+}
+
 export class TemporaryUploadedFileDetails implements ITemporaryUploadedFileDetails {
     fileName?: string | null;
     imageUrl?: string | null;
@@ -23636,46 +24882,6 @@ export interface ILostAndFoundCategoryGridItemViewModel {
     id: string;
     name?: string | null;
     expirationDays: number;
-}
-
-export class GetPageRequest implements IGetPageRequest {
-    skip!: number;
-    take!: number;
-
-    constructor(data?: IGetPageRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.skip = _data["skip"] !== undefined ? _data["skip"] : <any>null;
-            this.take = _data["take"] !== undefined ? _data["take"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): GetPageRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetPageRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["skip"] = this.skip !== undefined ? this.skip : <any>null;
-        data["take"] = this.take !== undefined ? this.take : <any>null;
-        return data; 
-    }
-}
-
-export interface IGetPageRequest {
-    skip: number;
-    take: number;
 }
 
 export class GetPageOfLostAndFoundCategoriesQuery extends GetPageRequest implements IGetPageOfLostAndFoundCategoriesQuery {

@@ -9,35 +9,35 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.LostAndFoundCategoryManagement.Queries.GetPageOfLostAndFoundCategories
+namespace Planner.Application.ExperienceCategoryManagement.Queries.GetPageOfExperienceCategories
 {
-	public class LostAndFoundCategoryGridItemViewModel
+	public class ExperienceCategoryGridItemViewModel
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public int ExpirationDays { get; set; }
+		public string ExperienceName { get; set; }
 	}
 
-	public class GetPageOfLostAndFoundCategoriesQuery : GetPageRequest, IRequest<PageOf<LostAndFoundCategoryGridItemViewModel>>
+	public class GetPageOfExperienceCategoriesQuery : GetPageRequest, IRequest<PageOf<ExperienceCategoryGridItemViewModel>>
 	{
 		public string Keywords { get; set; }
 		public string SortKey { get; set; }
 	}
 
-	public class GetPageOfLostAndFoundCategoriesQueryHandler : GetPageRequest, IRequestHandler<GetPageOfLostAndFoundCategoriesQuery, PageOf<LostAndFoundCategoryGridItemViewModel>>, IAmWebApplicationHandler
+	public class GetPageOfExperienceCategoriesQueryHandler : GetPageRequest, IRequestHandler<GetPageOfExperienceCategoriesQuery, PageOf<ExperienceCategoryGridItemViewModel>>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public GetPageOfLostAndFoundCategoriesQueryHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public GetPageOfExperienceCategoriesQueryHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<PageOf<LostAndFoundCategoryGridItemViewModel>> Handle(GetPageOfLostAndFoundCategoriesQuery request, CancellationToken cancellationToken)
+		public async Task<PageOf<ExperienceCategoryGridItemViewModel>> Handle(GetPageOfExperienceCategoriesQuery request, CancellationToken cancellationToken)
 		{
-			var query = this._databaseContext.LostAndFoundCategories
+			var query = this._databaseContext.ExperienceCategories
 				.AsQueryable();
 
 			if (request.Keywords.IsNotNull())
@@ -56,7 +56,6 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Queries.GetPageOfLo
 			{
 				switch (request.SortKey)
 				{
-
 					case "NAME_ASC":
 						query = query.OrderBy(q => q.Name);
 						break;
@@ -68,12 +67,6 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Queries.GetPageOfLo
 						break;
 					case "CREATED_AT_ASC":
 						query = query.OrderByDescending(q => q.CreatedAt);
-						break;
-					case "EXPIRATION_DAYS_ASC":
-						query = query.OrderByDescending(q => q.ExpirationDays);
-						break;
-					case "EXPIRATION_DAYS_DESC":
-						query = query.OrderBy(q => q.ExpirationDays);
 						break;
 					default:
 						break;
@@ -97,14 +90,14 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Queries.GetPageOfLo
 				count = categories.Length;
 			}
 
-			var response = new PageOf<LostAndFoundCategoryGridItemViewModel>
+			var response = new PageOf<ExperienceCategoryGridItemViewModel>
 			{
 				TotalNumberOfItems = count,
-				Items = categories.Select(d => new LostAndFoundCategoryGridItemViewModel
+				Items = categories.Select(d => new ExperienceCategoryGridItemViewModel
 				{
 					Id = d.Id,
 					Name = d.Name,
-					ExpirationDays = d.ExpirationDays
+					ExperienceName = d.ExperienceName
 				}).ToArray()
 			};
 

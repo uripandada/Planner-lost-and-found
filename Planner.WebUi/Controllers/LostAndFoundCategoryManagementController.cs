@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Planner.Application.Files.Commands;
-using Planner.Application.CategoryManagement.Commands.DeleteLostAndFoundCategory;
-using Planner.Application.CategoryManagement.Commands.InsertLostAndFoundCategory;
-using Planner.Application.CategoryManagement.Commands.UpdateLostAndFoundCategory;
-using Planner.Application.CategoryManagement.Queries.GetPageOfLostAndFoundCategories;
-using Planner.Application.CategoryManagement.Queries.GetLostAndFoundCategoryDetails;
+using Planner.Application.LostAndFoundCategoryManagement.Commands.DeleteLostAndFoundCategory;
+using Planner.Application.LostAndFoundCategoryManagement.Commands.InsertLostAndFoundCategory;
+using Planner.Application.LostAndFoundCategoryManagement.Commands.UpdateLostAndFoundCategory;
+using Planner.Application.LostAndFoundCategoryManagement.Queries.GetPageOfLostAndFoundCategories;
+using Planner.Application.LostAndFoundCategoryManagement.Queries.GetLostAndFoundCategoryDetails;
 using Planner.Common.Data;
 using Planner.Domain.Values;
 using System;

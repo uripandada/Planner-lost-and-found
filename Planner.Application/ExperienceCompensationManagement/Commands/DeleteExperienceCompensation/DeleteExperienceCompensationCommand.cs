@@ -12,26 +12,26 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.LostAndFoundCategoryManagement.Commands.DeleteLostAndFoundCategory
+namespace Planner.Application.ExperienceCompensationManagement.Commands.DeleteExperienceCompensation
 {
-	public class DeleteLostAndFoundCategoryCommand : IRequest<ProcessResponse>
+	public class DeleteExperienceCompensationCommand : IRequest<ProcessResponse>
 	{
 		public Guid Id { get; set; }
 	}
-	public class DeleteLostAndFoundCategoryCommandHandler : IRequestHandler<DeleteLostAndFoundCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
+	public class DeleteExperienceCompensationCommandHandler : IRequestHandler<DeleteExperienceCompensationCommand, ProcessResponse>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public DeleteLostAndFoundCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public DeleteExperienceCompensationCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<ProcessResponse> Handle(DeleteLostAndFoundCategoryCommand request, CancellationToken cancellationToken)
+		public async Task<ProcessResponse> Handle(DeleteExperienceCompensationCommand request, CancellationToken cancellationToken)
 		{
-			var category = await this._databaseContext.LostAndFoundCategories.FindAsync(request.Id);
+			var category = await this._databaseContext.ExperienceCompensations.FindAsync(request.Id);
 
 			if(category == null)
 			{
@@ -39,18 +39,18 @@ namespace Planner.Application.LostAndFoundCategoryManagement.Commands.DeleteLost
 				{
 					HasError = true,
 					IsSuccess = false,
-					Message = "Unable to find lost and found category to delete."
+					Message = "Unable to find experience compensation to delete."
 				};
 			}
 
-			this._databaseContext.LostAndFoundCategories.Remove(category);
+			this._databaseContext.ExperienceCompensations.Remove(category);
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 
 			return new ProcessResponse
 			{
 				HasError = false,
 				IsSuccess = true,
-				Message = "lost and found category deleted"
+				Message = "Experience compensation deleted"
 			};
 		}
 	}
