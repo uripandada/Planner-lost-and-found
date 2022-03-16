@@ -37,13 +37,10 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 			{
 
 				query = query.Where(x =>
-				x.FirstName.ToLower().Contains(request.Keyword.ToLower())
-				|| x.LastName.ToLower().Contains(request.Keyword.ToLower())
+				x.Name.ToLower().Contains(request.Keyword.ToLower())
 				|| x.ReferenceNumber.ToLower().Contains(request.Keyword.ToLower())
 				|| x.PhoneNumber.ToLower().Contains(request.Keyword.ToLower())
 				|| x.Address.ToLower().Contains(request.Keyword.ToLower())
-				|| x.LastName.ToLower().Contains(request.Keyword.ToLower())
-				//|| x.Place.ToLower().Contains(request.Keyword.ToLower())
 				|| x.Description.ToLower().Contains(request.Keyword.ToLower())
 				|| x.Notes.ToLower().Contains(request.Keyword.ToLower())
 				);
@@ -81,8 +78,7 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				Id = x.Id,
 				Description = x.Description,
 				Address = x.Address,
-				FirstName = x.FirstName,
-				LastName = x.LastName, 
+				Name = x.Name,
 				Notes = x.Notes,
 				LostOn = x.LostOn,
 				PhoneNumber = x.PhoneNumber,
@@ -96,7 +92,11 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				FounderName = x.FounderName,
 				LostAndFoundCategoryId = x.LostAndFoundCategoryId,
 				ClientName = x.ClientName,
-				LostAndFoundCategory = x.LostAndFoundCategory
+				LostAndFoundCategory = x.LostAndFoundCategory,
+				RoomId = x.RoomId,
+				Room = x.Room,
+				Reservation = x.Reservation,
+				ReservationId = x.ReservationId
 			}).Skip(request.Skip).Take(request.Take).ToListAsync();
 
 			var count = await query.CountAsync();

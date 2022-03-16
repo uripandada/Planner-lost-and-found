@@ -57,15 +57,15 @@ namespace Planner.Application.LostAndFounds.Queries.GetById
 
             var result = new Models.LostAndFoundModel
             {
+                Room = item.RoomId != null ? this.databaseContext.Rooms.Where(x=> x.Id == item.RoomId).Single() : null,
                 Address = item.Address,
                 //Street = item.Street,
                 City = item.City,
                 PostalCode = item.PostalCode,
                 Country = item.Country,
-                FirstName = item.FirstName,
+                Name = item.Name,
                 Id = item.Id,
                 Description = item.Description,
-                LastName = item.LastName,
                 LostOn = item.LostOn,
                 PhoneNumber = item.PhoneNumber,
                 Email = item.Email,
@@ -79,6 +79,7 @@ namespace Planner.Application.LostAndFounds.Queries.GetById
                 Notes = item.Notes,
                 RoomId = item.RoomId,
                 ReservationId = item.ReservationId,
+                Reservation = item.ReservationId != null ?  this.databaseContext.Reservations.Where(x=> x.Id == item.ReservationId).Single(): null,
                 HotelId = item.HotelId,
                 PlaceOfStorage = "",
                 TrackingNumber = "",

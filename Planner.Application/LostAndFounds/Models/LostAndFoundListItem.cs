@@ -8,8 +8,7 @@ namespace Planner.Application.LostAndFounds.Models
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string ReferenceNumber { get; set; }
@@ -27,5 +26,9 @@ namespace Planner.Application.LostAndFounds.Models
         public Guid? LostAndFoundCategoryId { get; set; }
         public Guid? StorageRoomId { get; set; }
         public Category LostAndFoundCategory { get; set; }
+        public Guid? RoomId { get; set; }
+        public Room Room { get; set; }
+        public string ReservationId { get; set; }
+        public Reservation Reservation { get; set; }
     }
 }

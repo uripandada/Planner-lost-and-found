@@ -13,9 +13,6 @@
         </div>
       </div>
 
-
-
-
       <div class="component-box">
         <div class="component-box-filter-row">
           <form [formGroup]="filterForm">
@@ -58,8 +55,7 @@
                   <th>Notes</th>
                   <th>Place</th>
                   <th>Status</th>
-                  <th>First name</th>
-                  <th>Last name</th>
+                  <th>Name</th>
                   <th>Lost On</th>
                 </tr>
               </thead>
@@ -79,10 +75,7 @@
                     <div class="cell-value">{{statusMappings[item.status]}}</div>
                   </td>
                   <td class="name-cell">
-                    <div class="cell-value">{{item.firstName}}</div>
-                  </td>
-                  <td class="name-cell">
-                    <div class="cell-value">{{item.lastName}}</div>
+                    <div class="cell-value">{{item.name}}</div>
                   </td>
                   <td class="name-cell">
                     <div *ngIf="item.lostOn" class="cell-value">{{item.lostOn | date}}</div>

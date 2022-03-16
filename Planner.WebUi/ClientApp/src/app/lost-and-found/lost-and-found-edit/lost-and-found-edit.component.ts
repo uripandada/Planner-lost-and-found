@@ -101,8 +101,7 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
 
     this.lostForm = this.formBuilder.group({
       hotelId: [this.item.hotelId, Validators.required],
-      firstName: [this.item.firstName, Validators.required],
-      lastName: [this.item.lastName, Validators.required],
+      name: [this.item.name, Validators.required],
       phoneNumber: [this.item.phoneNumber],
       email: [this.item.email],
       address: [this.item.address],
@@ -147,8 +146,7 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
     }
 
     this.lostForm.controls.hotelId.setValue(this.item.hotelId);
-    this.lostForm.controls.firstName.setValue(this.item.firstName);
-    this.lostForm.controls.lastName.setValue(this.item.lastName);
+    this.lostForm.controls.name.setValue(this.item.name);
     this.lostForm.controls.phoneNumber.setValue(this.item.phoneNumber);
     this.lostForm.controls.email.setValue(this.item.email);
     this.lostForm.controls.address.setValue(this.item.address);
@@ -209,8 +207,7 @@ export class LostAndFoundEditComponent implements OnInit, OnChanges {
       city: formValues.city,
       country: formValues.country,
       notes: formValues.notes,
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
+      name: formValues.name,
       phoneNumber: formValues.phoneNumber,
       email: formValues.email,
       whereData: formValues.whereFrom,

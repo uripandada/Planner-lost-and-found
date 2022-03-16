@@ -107,7 +107,7 @@
                       <div class="cell-value">{{item.description}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.roomId}}</div>
+                      <div class="cell-value">{{item.room?.name || item.reservation?.roomName}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.clientName}}</div>                                        

@@ -23999,8 +23999,7 @@ export interface IPageOfOfLostAndFoundListItem {
 export class LostAndFoundListItem implements ILostAndFoundListItem {
     id!: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     phoneNumber?: string | null;
     referenceNumber?: string | null;
@@ -24018,6 +24017,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
     lostAndFoundCategoryId?: string | null;
     storageRoomId?: string | null;
     lostAndFoundCategory?: Category | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
 
     constructor(data?: ILostAndFoundListItem) {
         if (data) {
@@ -24032,8 +24035,7 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
             this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
             this.referenceNumber = _data["referenceNumber"] !== undefined ? _data["referenceNumber"] : <any>null;
@@ -24051,6 +24053,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
             this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
             this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
             this.lostAndFoundCategory = _data["lostAndFoundCategory"] ? Category.fromJS(_data["lostAndFoundCategory"]) : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
+            this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
         }
     }
 
@@ -24065,8 +24071,7 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         data["address"] = this.address !== undefined ? this.address : <any>null;
         data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
         data["referenceNumber"] = this.referenceNumber !== undefined ? this.referenceNumber : <any>null;
@@ -24084,6 +24089,10 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
         data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
         data["lostAndFoundCategory"] = this.lostAndFoundCategory ? this.lostAndFoundCategory.toJSON() : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
+        data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
         return data; 
     }
 }
@@ -24091,8 +24100,7 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
 export interface ILostAndFoundListItem {
     id: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     phoneNumber?: string | null;
     referenceNumber?: string | null;
@@ -24110,6 +24118,10 @@ export interface ILostAndFoundListItem {
     lostAndFoundCategoryId?: string | null;
     storageRoomId?: string | null;
     lostAndFoundCategory?: Category | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
 }
 
 export enum FoundStatus {
@@ -30626,8 +30638,7 @@ export interface IProcessResponseOfLostAndFoundModel extends IProcessResponse {
 export class LostAndFoundModel implements ILostAndFoundModel {
     id!: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;
@@ -30670,8 +30681,7 @@ export class LostAndFoundModel implements ILostAndFoundModel {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
             this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
             this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
@@ -30718,8 +30728,7 @@ export class LostAndFoundModel implements ILostAndFoundModel {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         data["address"] = this.address !== undefined ? this.address : <any>null;
         data["city"] = this.city !== undefined ? this.city : <any>null;
         data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
@@ -30759,8 +30768,7 @@ export class LostAndFoundModel implements ILostAndFoundModel {
 export interface ILostAndFoundModel {
     id: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;
@@ -30847,8 +30855,7 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
     hotelId?: string | null;
     isLostItem!: boolean;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;
@@ -30890,8 +30897,7 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
             this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
             this.isLostItem = _data["isLostItem"] !== undefined ? _data["isLostItem"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
             this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
             this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
@@ -30937,8 +30943,7 @@ export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {
         data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
         data["isLostItem"] = this.isLostItem !== undefined ? this.isLostItem : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         data["address"] = this.address !== undefined ? this.address : <any>null;
         data["city"] = this.city !== undefined ? this.city : <any>null;
         data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
@@ -30977,8 +30982,7 @@ export interface IInsertLostAndFoundCommand {
     hotelId?: string | null;
     isLostItem: boolean;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;
@@ -31078,8 +31082,7 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
     hotelId?: string | null;
     id!: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;
@@ -31122,8 +31125,7 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
             this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.firstName = _data["firstName"] !== undefined ? _data["firstName"] : <any>null;
-            this.lastName = _data["lastName"] !== undefined ? _data["lastName"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
             this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
             this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
@@ -31170,8 +31172,7 @@ export class UpdateLostAndFoundCommand implements IUpdateLostAndFoundCommand {
         data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         data["address"] = this.address !== undefined ? this.address : <any>null;
         data["city"] = this.city !== undefined ? this.city : <any>null;
         data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
@@ -31211,8 +31212,7 @@ export interface IUpdateLostAndFoundCommand {
     hotelId?: string | null;
     id: string;
     description?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    name?: string | null;
     address?: string | null;
     city?: string | null;
     postalCode?: string | null;

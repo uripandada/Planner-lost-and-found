@@ -21,8 +21,7 @@ namespace Planner.Application.LostAndFounds.Commands.Update
         public string HotelId { get; set; }
         public Guid Id { get; set; }
         public string Description { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
@@ -91,8 +90,7 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             item.City = request.City;
             item.PostalCode = request.PostalCode;
             item.Country = request.Country;
-            item.FirstName = request.FirstName;
-            item.LastName = request.LastName;
+            item.Name = request.Name;
             item.LostOn = request.LostOn;
             item.ModifiedAt = DateTime.UtcNow;
             item.ModifiedById = httpContextAccessor.UserId();

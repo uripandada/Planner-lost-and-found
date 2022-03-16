@@ -295,8 +295,7 @@ export class AddEditExperienceComponent implements OnInit {
     
     this.foundForm = this.formBuilder.group({
       hotelId: [this.item.hotelId],
-      firstName: [this.item.firstName],
-      lastName: [this.item.lastName],
+      name: [this.item.name],
       phoneNumber: [this.item.phoneNumber],
       email: [this.item.email],
       address: [this.item.address],
@@ -386,8 +385,7 @@ export class AddEditExperienceComponent implements OnInit {
     this.foundForm.controls.category.setValue(this.item.lostAndFoundCategoryId);
 
     if (this.item.guestStatus != GuestStatus.Unclaimed) {
-      this.foundForm.controls.firstName.setValue(this.item.firstName);
-      this.foundForm.controls.lastName.setValue(this.item.lastName);
+      this.foundForm.controls.name.setValue(this.item.name);
       this.foundForm.controls.phoneNumber.setValue(this.item.phoneNumber);
       this.foundForm.controls.email.setValue(this.item.email);
       this.foundForm.controls.address.setValue(this.item.address);
@@ -442,8 +440,7 @@ export class AddEditExperienceComponent implements OnInit {
       city: formValues.city,
       country: formValues.country,
       notes: formValues.notes,
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
+      name: formValues.name,
       phoneNumber: formValues.phoneNumber,
       email: formValues.email,
       whereData: formValues.whereFrom,

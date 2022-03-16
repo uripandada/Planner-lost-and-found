@@ -99,8 +99,7 @@ export class LostAndFoundComponent implements OnInit {
       otherStatus: OtherStatus.None,
       typeOfLoss: TypeOfLoss.Employee,
       address: '',
-      firstName: '',
-      lastName: '',
+      name: '',
       phoneNumber: '',
       referenceNumber: '',
       description: ''

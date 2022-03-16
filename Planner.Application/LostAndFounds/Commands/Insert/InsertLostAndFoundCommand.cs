@@ -23,8 +23,7 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 		public string HotelId { get; set; }
 		public bool IsLostItem { get; set; }
 		public string Description { get; set; }
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
+		public string Name { get; set; }
 		public string Address { get; set; }
 		public string City { get; set; }
 		public string PostalCode { get; set; }
@@ -124,9 +123,8 @@ namespace Planner.Application.LostAndFounds.Commands.Insert
 				Country = request.Country,
 				CreatedAt = dateTime,
 				CreatedById = this._userId,
-				FirstName = request.FirstName,
+				Name = request.Name,
 				Id = Guid.NewGuid(),
-				LastName = request.LastName,
 				LostOn = request.LostOn,
 				ModifiedAt = dateTime,
 				ModifiedById = this._userId,

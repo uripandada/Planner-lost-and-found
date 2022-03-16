@@ -69,23 +69,14 @@
                   </mat-form-field>
                 </div>
                 <div class="form-field-wrapper">
-                  <label>First Name</label>
+                  <label>Name</label>
                   <mat-form-field appearance="outline" color="accent" class="full-width">
-                    <input matInput formControlName="firstName" type="text" />
-                    <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
-                      <span *ngIf="l.firstName.errors.required">Required</span>
+                    <input matInput formControlName="name" type="text" />
+                    <mat-error class="error" *ngIf="canShowErrorMessage('name')">
+                      <span *ngIf="l.name.errors.required">Required</span>
                     </mat-error>
                   </mat-form-field>
                 </div>
-              </div>
-              <div class="form-field-wrapper">
-                <label>Last Name</label>
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="lastName" type="text" />
-                  <mat-error class="error" *ngIf="canShowErrorMessage('lastName')">
-                    <span *ngIf="l.lastName.errors.required">Required</span>
-                  </mat-error>
-                </mat-form-field>
               </div>
             </div>
             <div class="two-column-grid-21">

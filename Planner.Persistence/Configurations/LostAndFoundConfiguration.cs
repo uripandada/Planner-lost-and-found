@@ -41,11 +41,9 @@ namespace Planner.Persistence.Configurations
 				.HasForeignKey(a => a.HotelId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			builder.Property(a => a.FirstName)
-			   .HasColumnName(nameof(LostAndFound.FirstName));
 
-			builder.Property(a => a.LastName)
-			   .HasColumnName(nameof(LostAndFound.LastName));
+			builder.Property(a => a.Name)
+			   .HasColumnName(nameof(LostAndFound.Name));
 
 			builder.Property(a => a.Address)
 			  .HasColumnName(nameof(LostAndFound.Address));

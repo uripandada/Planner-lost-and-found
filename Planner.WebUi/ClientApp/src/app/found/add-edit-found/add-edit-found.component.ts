@@ -211,11 +211,12 @@ export class AddEditFoundComponent implements OnInit {
       this.isGuestStatus = false;
       this.isDeliveryStatus = false;
     } 
+
+    console.log(this.item);
     
     this.foundForm = this.formBuilder.group({
       hotelId: [this.item.hotelId],
-      firstName: [this.item.firstName],
-      lastName: [this.item.lastName],
+      name: [this.item.reservation?.guestName],
       phoneNumber: [this.item.phoneNumber],
       email: [this.item.email],
       address: [this.item.address],
@@ -224,7 +225,7 @@ export class AddEditFoundComponent implements OnInit {
       referenceNumber: [this.item.referenceNumber],
       street: "",
       country: [this.item.country],
-      clientName: [this.item.reservationId],
+      clientName: [this.item.reservation?.guestName],
       description: [this.item.description, Validators.required],
       foundOn: [this.item.lostOn?.format('yyyy-MM-DD'), Validators.required],
       notes: [this.item.notes],
@@ -235,7 +236,7 @@ export class AddEditFoundComponent implements OnInit {
       otherStatus: [this.item.otherStatus],
       storage: [''],
       category: [this.item.lostAndFoundCategoryId, Validators.required],
-      whereFrom: [where, Validators.required],
+      whereFrom: [this.item.room?.name || this.item.reservation?.roomName, Validators.required],
       placeOfStorage: [this.item.placeOfStorage],
       foundByNumber: [''],
 
@@ -305,8 +306,7 @@ export class AddEditFoundComponent implements OnInit {
     this.foundForm.controls.category.setValue(this.item.lostAndFoundCategoryId);
 
     if (this.item.guestStatus != GuestStatus.Unclaimed) {
-      this.foundForm.controls.firstName.setValue(this.item.firstName);
-      this.foundForm.controls.lastName.setValue(this.item.lastName);
+      this.foundForm.controls.name.setValue(this.item.name);
       this.foundForm.controls.phoneNumber.setValue(this.item.phoneNumber);
       this.foundForm.controls.email.setValue(this.item.email);
       this.foundForm.controls.address.setValue(this.item.address);
@@ -361,8 +361,7 @@ export class AddEditFoundComponent implements OnInit {
       city: formValues.city,
       country: formValues.country,
       notes: formValues.notes,
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
+      name: formValues.name,
       phoneNumber: formValues.phoneNumber,
       email: formValues.email,
       whereData: formValues.whereFrom,
@@ -385,8 +384,6 @@ export class AddEditFoundComponent implements OnInit {
     });
 
     if (this.item.id === null) {
-
-      console.log(insertRequest);
 
       this.lostAndFoundClient.insert(insertRequest).subscribe(
         response => {
@@ -425,8 +422,9 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   private addClientFormControls() {
-    this.foundForm.addControl('firstName', new FormControl('', [Validators.required]));
-    this.foundForm.addControl('lastName', new FormControl('', [Validators.required]));
+    this.foundForm.addControl('name', new FormControl('', [Validators.required]));
+    console.log(this.item);
+    this.foundForm.controls.name.setValue(this.item.reservation?.guestName);
     this.foundForm.addControl('phoneNumber', new FormControl(''));
     this.foundForm.addControl('email', new FormControl('', [Validators.required]));
     this.foundForm.addControl('street', new FormControl(''));
@@ -437,8 +435,7 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   private removeClientFormControls() {
-    this.foundForm.removeControl('firstName');
-    this.foundForm.removeControl('lastName');
+    this.foundForm.removeControl('name');
     this.foundForm.removeControl('phoneNumber');
     this.foundForm.removeControl('email');
     this.foundForm.removeControl('street');
@@ -469,9 +466,9 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   getSelection(data: ExtendedWhereData) {
-    console.log(data);
-    this.foundForm.controls.whereFrom.setValue(data);
+    this.foundForm.controls.whereFrom.setValue(data.roomName);
     this.foundForm.controls.clientName.setValue(data.guestName);
+    this.foundForm.controls.name.setValue(data.guestName);
   }
 
   ngOnDestroy(): void {
