@@ -25,7 +25,7 @@ namespace Planner.Application.LostAndFounds.Models
         public string FounderPhoneNumber { get; set; }
         public Guid? LostAndFoundCategoryId { get; set; }
         public Guid? StorageRoomId { get; set; }
-        public Category LostAndFoundCategory { get; set; }
+        public LostAndFoundCategory LostAndFoundCategory { get; set; }
         public Guid? RoomId { get; set; }
         public Room Room { get; set; }
         public string ReservationId { get; set; }

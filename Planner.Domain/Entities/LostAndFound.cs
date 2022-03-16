@@ -46,7 +46,7 @@ namespace Planner.Domain.Entities
         public string FounderEmail { get; set; }
         public string FounderPhoneNumber { get; set; }
         public Guid? LostAndFoundCategoryId { get; set; }
-        public Category LostAndFoundCategory { get; set; }
+        public LostAndFoundCategory LostAndFoundCategory { get; set; }
         public Guid? StorageRoomId { get; set; }
 
 

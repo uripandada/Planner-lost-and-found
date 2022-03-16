@@ -33,7 +33,7 @@ namespace Planner.Persistence
 		public DbSet<Room> Rooms { get; set; }
 		//public DbSet<RoomWithHotelStructureView> RoomsWithHotelStructureView { get; set; }
 		public DbSet<RoomCategory> RoomCategorys { get; set; }
-		public DbSet<Category> Categorys { get; set; }
+		public DbSet<LostAndFoundCategory> LostAndFoundCategories { get; set; }
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<File> Files { get; set; }
 		public DbSet<AssetGroup> AssetGroups { get; set; }

@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Planner.Application.Files.Commands;
-using Planner.Application.CategoryManagement.Commands.DeleteCategory;
-using Planner.Application.CategoryManagement.Commands.InsertCategory;
-using Planner.Application.CategoryManagement.Commands.UpdateCategory;
-using Planner.Application.CategoryManagement.Queries.GetPageOfCategories;
-using Planner.Application.CategoryManagement.Queries.GetCategoryDetails;
+using Planner.Application.CategoryManagement.Commands.DeleteLostAndFoundCategory;
+using Planner.Application.CategoryManagement.Commands.InsertLostAndFoundCategory;
+using Planner.Application.CategoryManagement.Commands.UpdateLostAndFoundCategory;
+using Planner.Application.CategoryManagement.Queries.GetPageOfLostAndFoundCategories;
+using Planner.Application.CategoryManagement.Queries.GetLostAndFoundCategoryDetails;
 using Planner.Common.Data;
 using Planner.Domain.Values;
 using System;
@@ -14,23 +14,23 @@ using System.Threading.Tasks;
 
 namespace Planner.WebUi.Controllers
 {
-	public class CategoryManagementController : BaseController
+	public class LostAndFoundCategoryManagementController : BaseController
 	{
 		[HttpPost]
-		public async Task<PageOf<CategoryGridItemViewModel>> GetPageOfCategories([FromBody] GetPageOfCategoriesQuery request)
+		public async Task<PageOf<LostAndFoundCategoryGridItemViewModel>> GetPageOfLostAndFoundCategories([FromBody] GetPageOfLostAndFoundCategoriesQuery request)
 		{
 			return await this.Mediator.Send(request);
 		}
 
 		[HttpPost]
-		public async Task<CategoryDetailsViewModel> GetCategoryDetails([FromBody] GetCategoryDetailsQuery request)
+		public async Task<LostAndFoundCategoryDetailsViewModel> GetLostAndFoundCategoryDetails([FromBody] GetLostAndFoundCategoryDetailsQuery request)
 		{
 			return await this.Mediator.Send(request);
 		}
 
 		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.Categories)]
 		[HttpPost]
-		public async Task<ProcessResponse<Guid>> InsertCategory([FromBody] InsertCategoryCommand request)
+		public async Task<ProcessResponse<Guid>> InsertLostAndFoundCategory([FromBody] InsertLostAndFoundCategoryCommand request)
 		{
 			if (!this.ModelState.IsValid)
 			{
@@ -44,7 +44,7 @@ namespace Planner.WebUi.Controllers
 
 		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.Categories)]
 		[HttpPost]
-		public async Task<ProcessResponse> UpdateCategory([FromBody] UpdateCategoryCommand request)
+		public async Task<ProcessResponse> UpdateLostAndFoundCategory([FromBody] UpdateLostAndFoundCategoryCommand request)
 		{
 			if (!this.ModelState.IsValid)
 			{
@@ -59,7 +59,7 @@ namespace Planner.WebUi.Controllers
 
 		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.Categories)]
 		[HttpPost]
-		public async Task<ProcessResponse> DeleteCategory([FromBody] DeleteCategoryCommand request)
+		public async Task<ProcessResponse> DeleteLostAndFoundCategory([FromBody] DeleteLostAndFoundCategoryCommand request)
 		{
 			return await this.Mediator.Send(request);
 		}

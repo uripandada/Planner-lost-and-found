@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Planner.Domain.Entities
 {
-	public class Category : ChangeTrackingBaseEntity
+	public class LostAndFoundCategory : ChangeTrackingBaseEntity
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

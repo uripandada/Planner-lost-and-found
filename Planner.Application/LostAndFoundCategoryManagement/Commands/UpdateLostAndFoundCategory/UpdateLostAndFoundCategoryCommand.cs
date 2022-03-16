@@ -13,29 +13,29 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.CategoryManagement.Commands.UpdateCategory
+namespace Planner.Application.CategoryManagement.Commands.UpdateLostAndFoundCategory
 {
-	public class UpdateCategoryCommand : IRequest<ProcessResponse>
+	public class UpdateLostAndFoundCategoryCommand : IRequest<ProcessResponse>
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int ExpirationDays { get; set; }
 	}
 
-	public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
+	public class UpdateLostAndFoundCategoryCommandHandler : IRequestHandler<UpdateLostAndFoundCategoryCommand, ProcessResponse>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public UpdateCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public UpdateLostAndFoundCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<ProcessResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+		public async Task<ProcessResponse> Handle(UpdateLostAndFoundCategoryCommand request, CancellationToken cancellationToken)
 		{
-			var category = await this._databaseContext.Categorys.FindAsync(request.Id);
+			var category = await this._databaseContext.LostAndFoundCategories.FindAsync(request.Id);
 
 			if (category == null)
 			{
@@ -43,7 +43,7 @@ namespace Planner.Application.CategoryManagement.Commands.UpdateCategory
 				{
 					HasError = true,
 					IsSuccess = false,
-					Message = "Unable to find category to update."
+					Message = "Unable to find lost and found category to update."
 				};
 			}
 
@@ -58,24 +58,24 @@ namespace Planner.Application.CategoryManagement.Commands.UpdateCategory
 			{
 				HasError = false,
 				IsSuccess = true,
-				Message = "Category updated."
+				Message = "Lost and Found Category updated."
 			};
 		}
 	}
 
-	public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
+	public class UpdateLostAndFoundCategoryCommandValidator : AbstractValidator<UpdateLostAndFoundCategoryCommand>
 	{
 		private readonly IDatabaseContext _databaseContext;
 
-		public UpdateCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
+		public UpdateLostAndFoundCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
 		{
 			this._databaseContext = masterDatabaseContext;
 
 			RuleFor(command => command.Name).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
 			{
-				var category = await this._databaseContext.Categorys.Where(t => t.Name.ToLower() == key.ToLower() && t.Id != command.Id).FirstOrDefaultAsync();
+				var category = await this._databaseContext.LostAndFoundCategories.Where(t => t.Name.ToLower() == key.ToLower() && t.Id != command.Id).FirstOrDefaultAsync();
 				return category == null;
-			}).WithMessage("CATEGORY_ALREADY_EXISTS");
+			}).WithMessage("LOST_AND_FOUND_CATEGORY_ALREADY_EXISTS");
 		}
 	}
 }

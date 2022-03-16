@@ -6,12 +6,12 @@ namespace Planner.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable("categorys", "lost_and_found_categories");
+            migrationBuilder.RenameTable( name: "categorys", newName: "lost_and_found_categories");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable("lost_and_found_categories", "categorys");
+            migrationBuilder.RenameTable( name: "lost_and_found_categories", newName: "categorys");
         }
     }
 }

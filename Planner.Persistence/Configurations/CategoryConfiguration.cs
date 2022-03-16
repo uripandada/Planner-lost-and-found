@@ -4,24 +4,24 @@ using Planner.Domain.Entities;
 
 namespace Planner.Persistence.Configurations
 {
-	public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+	public class CategoryConfiguration : IEntityTypeConfiguration<LostAndFoundCategory>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<LostAndFoundCategory> builder)
         {
             builder.ConfigureChangeTrackingBaseEntity();
 
             builder.HasKey(a => a.Id);
 
             builder.Property(a => a.Id)
-                .HasColumnName(nameof(Category.Id))
+                .HasColumnName(nameof(LostAndFoundCategory.Id))
                 .IsRequired();
 
             builder.Property(a => a.Name)
-                .HasColumnName(nameof(Category.Name))
+                .HasColumnName(nameof(LostAndFoundCategory.Name))
                 .IsRequired();
 
             builder.Property(a => a.ExpirationDays)
-                .HasColumnName(nameof(Category.ExpirationDays))
+                .HasColumnName(nameof(LostAndFoundCategory.ExpirationDays))
                 .IsRequired();
 
         }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
-  CategoryGridItemViewModel,
+  LostAndFoundCategoryGridItemViewModel,
   ExtendedWhereData,
   HotelItemData,
   InsertLostAndFoundCommand,
@@ -37,7 +37,7 @@ export class AddEditExperienceComponent implements OnInit {
 
   @Input() item: LostAndFoundModel;
   @Input() allWheres: Array<TaskWhereData> = [];
-  @Input() allCategories: Array<CategoryGridItemViewModel> = [];
+  @Input() allCategories: Array<LostAndFoundCategoryGridItemViewModel> = [];
   @Input() currentlyUploadingFiles: Array<FileDetails> = [];
   @Input() temporaryUploadedFiles: Array<FileDetails> = [];
   @Input() uploadedFiles: Array<FileDetails> = [];

@@ -14,28 +14,28 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.CategoryManagement.Commands.InsertCategory
+namespace Planner.Application.CategoryManagement.Commands.InsertLostAndFoundCategory
 {
-	public class InsertCategoryCommand : IRequest<ProcessResponse<Guid>>
+	public class InsertLostAndFoundCategoryCommand : IRequest<ProcessResponse<Guid>>
 	{
 		public string Name { get; set; }
 		public int ExpirationDays { get; set; }
 	}
 
-	public class InsertCategoryCommandHandler : IRequestHandler<InsertCategoryCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
+	public class InsertLostAndFoundCategoryCommandHandler : IRequestHandler<InsertLostAndFoundCategoryCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public InsertCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public InsertLostAndFoundCategoryCommandHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<ProcessResponse<Guid>> Handle(InsertCategoryCommand request, CancellationToken cancellationToken)
+		public async Task<ProcessResponse<Guid>> Handle(InsertLostAndFoundCategoryCommand request, CancellationToken cancellationToken)
 		{
-			var category = new Category
+			var category = new LostAndFoundCategory
 			{
 				CreatedAt = DateTime.UtcNow,
 				CreatedById = this._userId,
@@ -46,7 +46,7 @@ namespace Planner.Application.CategoryManagement.Commands.InsertCategory
 				ExpirationDays = request.ExpirationDays
 			};
 
-			await this._databaseContext.Categorys.AddAsync(category);
+			await this._databaseContext.LostAndFoundCategories.AddAsync(category);
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 
 			return new ProcessResponse<Guid>
@@ -54,24 +54,24 @@ namespace Planner.Application.CategoryManagement.Commands.InsertCategory
 				Data = category.Id,
 				HasError = false,
 				IsSuccess = true,
-				Message = "Category inserted."
+				Message = "Lost and Found Category inserted."
 			};
 		}
 	}
 
-	public class InsertCategoryCommandValidator : AbstractValidator<InsertCategoryCommand>
+	public class InsertLostAndFoundCategoryCommandValidator : AbstractValidator<InsertLostAndFoundCategoryCommand>
 	{
 		private readonly IDatabaseContext _databaseContext;
 
-		public InsertCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
+		public InsertLostAndFoundCategoryCommandValidator(IDatabaseContext masterDatabaseContext)
 		{
 			this._databaseContext = masterDatabaseContext;
 
 			RuleFor(command => command.Name).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
 			{
-				var category = await this._databaseContext.Categorys.Where(t => t.Name.ToLower() == key.ToLower()).FirstOrDefaultAsync();
+				var category = await this._databaseContext.LostAndFoundCategories.Where(t => t.Name.ToLower() == key.ToLower()).FirstOrDefaultAsync();
 				return category == null;
-			}).WithMessage("CATEGORY_ALREADY_EXISTS");
+			}).WithMessage("LOST_AND_FOUND_CATEGORY_ALREADY_EXISTS");
 		}
 	}
 }

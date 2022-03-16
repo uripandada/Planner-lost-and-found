@@ -9,35 +9,35 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.CategoryManagement.Queries.GetPageOfCategories
+namespace Planner.Application.CategoryManagement.Queries.GetPageOfLostAndFoundCategories
 {
-	public class CategoryGridItemViewModel
+	public class LostAndFoundCategoryGridItemViewModel
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int ExpirationDays { get; set; }
 	}
 
-	public class GetPageOfCategoriesQuery : GetPageRequest, IRequest<PageOf<CategoryGridItemViewModel>>
+	public class GetPageOfLostAndFoundCategoriesQuery : GetPageRequest, IRequest<PageOf<LostAndFoundCategoryGridItemViewModel>>
 	{
 		public string Keywords { get; set; }
 		public string SortKey { get; set; }
 	}
 
-	public class GetPageOfCategoriesQueryHandler : GetPageRequest, IRequestHandler<GetPageOfCategoriesQuery, PageOf<CategoryGridItemViewModel>>, IAmWebApplicationHandler
+	public class GetPageOfLostAndFoundCategoriesQueryHandler : GetPageRequest, IRequestHandler<GetPageOfLostAndFoundCategoriesQuery, PageOf<LostAndFoundCategoryGridItemViewModel>>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext _databaseContext;
 		private readonly Guid _userId;
 
-		public GetPageOfCategoriesQueryHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
+		public GetPageOfLostAndFoundCategoriesQueryHandler(IDatabaseContext databaseContext, IHttpContextAccessor contextAccessor)
 		{
 			this._databaseContext = databaseContext;
 			this._userId = contextAccessor.UserId();
 		}
 
-		public async Task<PageOf<CategoryGridItemViewModel>> Handle(GetPageOfCategoriesQuery request, CancellationToken cancellationToken)
+		public async Task<PageOf<LostAndFoundCategoryGridItemViewModel>> Handle(GetPageOfLostAndFoundCategoriesQuery request, CancellationToken cancellationToken)
 		{
-			var query = this._databaseContext.Categorys
+			var query = this._databaseContext.LostAndFoundCategories
 				.AsQueryable();
 
 			if (request.Keywords.IsNotNull())
@@ -97,10 +97,10 @@ namespace Planner.Application.CategoryManagement.Queries.GetPageOfCategories
 				count = categories.Length;
 			}
 
-			var response = new PageOf<CategoryGridItemViewModel>
+			var response = new PageOf<LostAndFoundCategoryGridItemViewModel>
 			{
 				TotalNumberOfItems = count,
-				Items = categories.Select(d => new CategoryGridItemViewModel
+				Items = categories.Select(d => new LostAndFoundCategoryGridItemViewModel
 				{
 					Id = d.Id,
 					Name = d.Name,
