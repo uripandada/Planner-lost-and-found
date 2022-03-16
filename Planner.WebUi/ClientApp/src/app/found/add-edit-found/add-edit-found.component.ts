@@ -81,8 +81,8 @@ export class AddEditFoundComponent implements OnInit {
     private lostAndFoundClient: LostAndFoundClient,
     public hotelService: HotelService,
   ) {
-    this.typesOfLoss.push({ key: TypeOfLoss.Customer, value: "Customer" });
     this.typesOfLoss.push({ key: TypeOfLoss.Employee, value: "Employee" });
+    this.typesOfLoss.push({ key: TypeOfLoss.Customer, value: "Customer" });
 
     this.foundStatuses.push({ key: FoundStatus.WaitingRoomMaid, value: "Waiting Room Maid" });
     this.foundStatuses.push({ key: FoundStatus.Received, value: "Received" });

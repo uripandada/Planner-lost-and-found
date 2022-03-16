@@ -8,26 +8,20 @@
 
       <div>
         <mat-form-field appearance="outline" color="accent" class="full-width">
-          <input type="text"
-                 placeholder="Select Compensation Name..."
-                 aria-label="Number"
-                 matInput
-                 formControlName="name"
-                 [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <!-- <mat-form-field class="full-width" appearance="outline">
           <mat-label>Compensation Name</mat-label>
-          <input formControlName="name" matInput>
+          <input type="text"
+            matInput
+            formControlName="name"
+            [matAutocomplete]="auto">
           <mat-error
             *ngIf="categoryForm.controls.name.invalid && (categoryForm.controls.name.dirty || categoryForm.controls.name.touched)">
             <div *ngIf="categoryForm.controls.name.errors.required">Required</div>
             <div *ngIf="categoryForm.controls.name.errors.EXPERIENCE_COMPENSATION_ALREADY_EXISTS">Already exists</div>
           </mat-error>
+        </mat-form-field>
+        <!-- <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Compensation Name</mat-label>
+          <input formControlName="name" matInput>
         </mat-form-field> -->
 
         <mat-form-field class="full-width" appearance="outline">

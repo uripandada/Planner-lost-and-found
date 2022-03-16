@@ -111,7 +111,7 @@ export class FoundComponent implements OnInit {
       guestStatus: GuestStatus.Unclaimed,
       deliveryStatus: DeliveryStatus.None,
       otherStatus: OtherStatus.None,
-      typeOfLoss: TypeOfLoss.Customer,
+      typeOfLoss: TypeOfLoss.Employee,
       address: '',
       name: '',
       phoneNumber: '',
