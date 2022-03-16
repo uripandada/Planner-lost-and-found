@@ -28,7 +28,6 @@ export class FoundComponent implements OnInit {
   pendingNum: number;
   unclaimedNum: number;
   guestNum: number;
-  gueNum: number;
   returnedNum: number;
   canceledNum: number;
 
@@ -157,7 +156,7 @@ export class FoundComponent implements OnInit {
         this.showLoadMore$.next(this.loadedNumber$.value < this.totalNumber$.value);
         this.pendingNum = 0;
         this.unclaimedNum = 0;
-        this.gueNum = 0;
+        this.guestNum = 0;
         this.returnedNum = 0;
         this.canceledNum = 0;
         for (let i = 0; i < this.itemsList.value.length; i++) {
@@ -166,16 +165,15 @@ export class FoundComponent implements OnInit {
           }
         }
         for (let i = 0; i < this.itemsList.value.length; i++) {
-          if (this.itemsList.value[i].guestStatus == 0) {
+          if (this.itemsList.value[i].guestStatus == 0 && this.itemsList.value[i].foundStatus == 1 ) {
             this.unclaimedNum += 1;
           }
         }
         for (let i = 0; i < this.itemsList.value.length; i++) {
-          if (this.itemsList.value[i].foundStatus == 0 && this.itemsList.value[i].guestStatus == 0 && this.itemsList.value[i].deliveryStatus != 1 && this.itemsList.value[i].deliveryStatus != 2) {
-            this.gueNum += 1;
+          if (this.itemsList.value[i].foundStatus == 1 && this.itemsList.value[i].guestStatus != 0 ) {
+            this.guestNum += 1;
           }
         }
-        this.guestNum = this.itemsList.value.length - this.gueNum;
         for (let i = 0; i < this.itemsList.value.length; i++) {
           if (this.itemsList.value[i].deliveryStatus == 4 || this.itemsList.value[i].deliveryStatus == 3) {
             this.returnedNum += 1;
