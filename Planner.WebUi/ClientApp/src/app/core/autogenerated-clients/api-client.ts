@@ -2630,6 +2630,62 @@ export class ExperienceCategoryManagementClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
+    getList(query: GetListOfExperienceCategoriesQuery): Observable<ExperienceCategoryItemData[]> {
+        let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/GetList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetList(<any>response_);
+                } catch (e) {
+                    return <Observable<ExperienceCategoryItemData[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExperienceCategoryItemData[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetList(response: HttpResponseBase): Observable<ExperienceCategoryItemData[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ExperienceCategoryItemData.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExperienceCategoryItemData[]>(<any>null);
+    }
+
     getPageOfExperienceCategories(request: GetPageOfExperienceCategoriesQuery): Observable<PageOfOfExperienceCategoryGridItemViewModel> {
         let url_ = this.baseUrl + "/api/ExperienceCategoryManagement/GetPageOfExperienceCategories";
         url_ = url_.replace(/[?&]$/, "");
@@ -22414,6 +22470,78 @@ export interface IGetRoomViewDashboardFilterValuesQuery {
 
 export enum MasterFilterType {
     ROOMS_OVERVIEW_DASHBOARD = 0,
+}
+
+export class ExperienceCategoryItemData implements IExperienceCategoryItemData {
+    name?: string | null;
+
+    constructor(data?: IExperienceCategoryItemData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCategoryItemData {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCategoryItemData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCategoryItemData {
+    name?: string | null;
+}
+
+export class GetListOfExperienceCategoriesQuery implements IGetListOfExperienceCategoriesQuery {
+    name?: string | null;
+
+    constructor(data?: IGetListOfExperienceCategoriesQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): GetListOfExperienceCategoriesQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetListOfExperienceCategoriesQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        return data; 
+    }
+}
+
+export interface IGetListOfExperienceCategoriesQuery {
+    name?: string | null;
 }
 
 export class PageOfOfExperienceCategoryGridItemViewModel implements IPageOfOfExperienceCategoryGridItemViewModel {

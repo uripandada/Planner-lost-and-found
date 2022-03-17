@@ -11,11 +11,18 @@ using Planner.Common.Data;
 using Planner.Domain.Values;
 using System;
 using System.Threading.Tasks;
+using Planner.Application.ExperienceCategoryManagement.Queries.GetList;
 
 namespace Planner.WebUi.Controllers
 {
 	public class ExperienceCategoryManagementController : BaseController
 	{
+		[HttpPost]
+		public async Task<ExperienceCategoryItemData[]> GetList(GetListOfExperienceCategoriesQuery query)
+		{
+			return await this.Mediator.Send(query);
+		}
+
 		[HttpPost]
 		public async Task<PageOf<ExperienceCategoryGridItemViewModel>> GetPageOfExperienceCategories([FromBody] GetPageOfExperienceCategoriesQuery request)
 		{
