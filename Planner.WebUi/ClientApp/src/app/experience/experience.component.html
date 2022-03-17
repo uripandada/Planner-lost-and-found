@@ -58,41 +58,47 @@
                     <th>VIP</th>                                        
                     <th>CO date</th>                                        
                     <th>Category</th>                                        
-                    <th>Status</th>                                        
+                    <th>PendingStatus</th>                                        
+                    <th>ActionStatus</th>                                        
+                    <th>ResolvedStatus</th>                                        
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr class="list-view-items-row" *ngFor="let item of items" (click)="selectItem(item)" -->
-                  <tr class="list-view-items-row" *ngFor="" (click)="selectItem(item)"
+                  <tr class="list-view-items-row" *ngFor="let item of items" (click)="selectItem(item)"
                       [class.list-view-items-row-selected]="item.id === selectedItem.value?.id">
                     <td class="name-cell">
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.check_in}}</div>
                     </td>
                     <td class="name-cell">                                            
-                      <div class="cell-value">                                                
-                      </div>                                        
+                      <div class="cell-value">{{item.room_name}}</div>                                        
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.guest_name}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.vip}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>                                        
+                      <div class="cell-value">{{item.check_out}}</div>                                        
                     </td>                                        
                     <td class="name-cell">                                            
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.experience_category}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value"></div>
+                      <div class="cell-value">{{item.solveStatus}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.clientStatus}}</div>
+                    </td>
+                    <td class="name-cell">
+                      <div class="cell-value">{{item.solveStatus1}}</div>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div class="tasks-list-totals-description">
                 <span>Showing</span>
-                <!-- <span>{{items.length}}</span> -->
+                <span>{{items.length}}</span>
                 <span>items</span>
               </div>
             </div>

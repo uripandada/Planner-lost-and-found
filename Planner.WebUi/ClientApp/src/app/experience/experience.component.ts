@@ -126,6 +126,12 @@ export class ExperienceComponent implements OnInit {
     this.areDetailsDisplayed$.next(false);
     this.areDetailsDisplayed$.next(true);
   }
+
+  // columnFilter(val: any){
+  //   console.log(val);
+  //   this.loading.start();
+  // }
+
   
   reloadList(reload: boolean) {
     if (reload) {
@@ -155,6 +161,7 @@ export class ExperienceComponent implements OnInit {
         this.returnedNum = 0;
         this.canceledNum = 0;
         for (let i = 0; i < this.itemsList.value.length; i++) {
+          console.log(this.itemsList.value[i])
           if (this.itemsList.value[i].foundStatus == 0) {
             this.pendingNum += 1;
           }
@@ -169,6 +176,7 @@ export class ExperienceComponent implements OnInit {
             this.gueNum += 1;
           }
         }
+        console.log(this.gueNum);
         this.guestNum = this.itemsList.value.length - this.gueNum;
         for (let i = 0; i < this.itemsList.value.length; i++) {
           if (this.itemsList.value[i].deliveryStatus == 4 || this.itemsList.value[i].deliveryStatus == 3) {

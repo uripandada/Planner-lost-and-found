@@ -1,7 +1,7 @@
 <ng-container *ngIf="item">
   <div class="major-column-title">
     <ng-container *ngIf="isCreateNew">Create a <b>new experience</b></ng-container>
-    <ng-container *ngIf="!isCreateNew">Edit Experience <b>{{ item.referenceNumber }}</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit Experience <b>{{ item.guest_name }}</b></ng-container>
   </div>
   <div class="item-component-wrapper component-wrapper component-box">
     <div class="item-edit-wrapper">
@@ -9,27 +9,23 @@
         <div class="item-edit">
 
           <input matInput formControlName="hotelId" type="text" hidden/>
-          <input [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" hidden/>
 
           <div class="form-section">
             <div class="two-column-grid">
-              <div class="found-details-statuses">
-                <div [ngClass]="{'experience-details-status-item-change': isFoundStatus, 'experience-details-status-item': !isFoundStatus }">
-                  <mat-select formControlName="foundStatus" (selectionChange)="foundStatusSelectChanged()">
-                    <mat-option value="pending">Pending</mat-option>
+              <div class="experience-details-statuses">
+                <div [ngClass]="{'experience-details-status-item-change': isSolveStatus, 'experience-details-status-item': !isSolveStatus }">
+                  <mat-select formControlName="solveStatus" (selectionChange)="solveStatusSelectChanged()">
+                    <mat-option *ngFor="let solveStatus of solveStatuses" [value]="solveStatus.key">{{ solveStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div [ngClass]="{'experience-details-status-item-change': isGuestStatus, 'experience-details-status-item': !isGuestStatus }">
-                  <mat-select [formControl]="ExperienceStatus2" (selectionChange)="guestStatusSelectChanged()">
-                    <mat-option value="action">No client action</mat-option>
-                    <mat-option value="client">Meet with client</mat-option>
-                    <mat-option value="Meet">Meet with Client at C/O(avecArchiveuto peut-etre?)</mat-option>
+                <div [ngClass]="{'experience-details-status-item-change': isClientStatus, 'experience-details-status-item': !isClientStatus }">
+                  <mat-select formControlName="clientStatus" (selectionChange)="clientStatusSelectChanged()">
+                    <mat-option *ngFor="let clientStatus of clientStatuses" [value]="clientStatus.key">{{ clientStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div [ngClass]="{'experience-details-status-item-change': isDeliveryStatus, 'experience-details-status-item': !isDeliveryStatus }">
-                  <mat-select [formControl]="ExperienceStatus3" (valueChange)="deliveryStatusSelectChanged($event)">
-                    <mat-option value="resolved">Resolved</mat-option>
-                    <mat-option value="closed">Closed</mat-option>
+                <div [ngClass]="{'experience-details-status-item-change': isSolveStatus1, 'experience-details-status-item': !isSolveStatus1 }">
+                  <mat-select formControlName="solveStatus1" (valueChange)="solveStatusSelectChanged1($event)">
+                    <mat-option *ngFor="let solveStatus1 of solveStatuses1" [value]="solveStatus1.key">{{ solveStatus1.value }}</mat-option>
                   </mat-select>
                 </div>
               </div>
@@ -47,7 +43,7 @@
                          placeholder="Select Name..."
                          aria-label="Number"
                          matInput
-                         formControlName="myControl"
+                         formControlName="guest_name"
                          [matAutocomplete]="auto">
                   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -57,37 +53,43 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="two-column-grid-21">
-              <div class="form-field-wrapper">
-                <label>Reservation</label>                  
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="reservation" type="text" />
-                </mat-form-field>            
-              </div>              
-              <div class="form-field-wrapper">                
-              <label>VIP</label>
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="vip" type="text" />
-                </mat-form-field>
-              </div>
-            </div>
             <div class="three-column-grid-211">
               <div class="form-field-wrapper">
                 <label>Room</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="room" type="text" />
+                  <input matInput formControlName="room_name" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>CI</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="ci" type="text" />
+                  <input matInput formControlName="check_in" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>CO</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="co" type="text" />
+                  <input matInput formControlName="check_out" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="two-column-grid-21">
+              <div class="form-field-wrapper">
+                <label>Reservation</label>                  
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="reservation_id" type="text" />
+                </mat-form-field>            
+              </div>              
+              <div class="form-field-wrapper">                
+                <label>VIP</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="vip" type="text" />
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">                
+                <label>Group Name</label>
+                <mat-form-field appearance="outline" color="accent" class="full-width">
+                  <input matInput formControlName="group" type="text" />
                 </mat-form-field>
               </div>
             </div>
@@ -95,13 +97,13 @@
               <div class="form-field-wrapper">
                 <label>Email Address</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="email" type="text" />
+                  <input matInput formControlName="experience_email" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>Phone Number</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="phone" type="text" />
+                  <input matInput formControlName="experience_phonenumber" type="text" />
                 </mat-form-field>
               </div>
             </div>
@@ -112,10 +114,10 @@
             <div class="two-column-grid-21">
               <div class="form-field-wrapper">
                 <label>Experience Type&nbsp;&nbsp;</label>
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                  <mat-button-toggle value="bold"><img src="../../../assets/images/3.png" alt="angry" style="width: 30px; height: 30px;"></mat-button-toggle>
-                  <mat-button-toggle value="italic"><img src="../../../assets/images/2.png" alt="normal" style="width: 30px; height: 30px;"></mat-button-toggle>
-                  <mat-button-toggle value="underline"><img src="../../../assets/images/1.png" alt="good" style="width: 30px; height: 30px;"></mat-button-toggle>
+                <mat-button-toggle-group formControlName="experience_type" name="fontStyle" aria-label="Font Style">
+                  <mat-button-toggle value="1"><img src="../../../assets/images/3.png" alt="angry" style="width: 30px; height: 30px;"></mat-button-toggle>
+                  <mat-button-toggle value="2"><img src="../../../assets/images/2.png" alt="normal" style="width: 30px; height: 30px;"></mat-button-toggle>
+                  <mat-button-toggle value="3"><img src="../../../assets/images/1.png" alt="good" style="width: 30px; height: 30px;"></mat-button-toggle>
                 </mat-button-toggle-group>
               </div>
             </div>
@@ -123,11 +125,11 @@
               <div class="form-field-wrapper">
                 <label>Experience Category</label>
                 <ng-select2
-                  [data]="exampleData1"
+                  formControlName="experience_category"
+                  [data]="experienceCategory"
                   [placeholder]="placeholder"
                   [width]="370"
                   [options]="options"
-                  [(ngModel)]="value"
                 ></ng-select2>
               </div>
             </div>
@@ -143,7 +145,7 @@
               <div class="form-field-wrapper">
                 <label>Actions</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <textarea matInput formControlName="action" type="text" multiple></textarea>
+                  <textarea matInput formControlName="actions" type="text" multiple></textarea>
                 </mat-form-field>
               </div>
             </div>
@@ -151,15 +153,17 @@
               <div class="form-field-wrapper">
                 <label>Internal Follow up</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <textarea matInput formControlName="follow_up" type="text" multiple></textarea>
+                  <textarea matInput formControlName="internal_follow_up" type="text" multiple></textarea>
                 </mat-form-field>
               </div>
             </div>
             <div class="two-column-grid-21">
               <div class="form-field-wrapper">
                 <label>Compensation</label>
-                <ng-select2 [data]="exampleData"
-                            [width]="370">
+                <ng-select2 
+                  formControlName="compensation_name"
+                  [data]="compensation"
+                  [width]="370">
                 </ng-select2>
               </div>
             </div>
