@@ -38,6 +38,7 @@ namespace Planner.Application.Interfaces
 		DbSet<Domain.Entities.Room> Rooms { get; set; }
 		DbSet<Domain.Entities.RoomCategory> RoomCategorys { get; set; }
 		DbSet<Domain.Entities.LostAndFoundCategory> LostAndFoundCategories { get; set; }
+		DbSet<Domain.Entities.Experience> Experiences { get; set; }
 		DbSet<Domain.Entities.ExperienceCategory> ExperienceCategories { get; set; }
 		DbSet<Domain.Entities.ExperienceCompensation> ExperienceCompensations { get; set; }
 		DbSet<Domain.Entities.Warehouse> Warehouses { get; set; }

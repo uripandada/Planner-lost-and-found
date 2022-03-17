@@ -34,6 +34,7 @@ namespace Planner.Persistence
 		//public DbSet<RoomWithHotelStructureView> RoomsWithHotelStructureView { get; set; }
 		public DbSet<RoomCategory> RoomCategorys { get; set; }
 		public DbSet<LostAndFoundCategory> LostAndFoundCategories { get; set; }
+		public DbSet<Experience> Experiences { get; set; }
 		public DbSet<ExperienceCategory> ExperienceCategories { get; set; }
 		public DbSet<ExperienceCompensation> ExperienceCompensations { get; set; }
 		public DbSet<Tag> Tags { get; set; }
