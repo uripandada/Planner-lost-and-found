@@ -24,15 +24,17 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 	public class GetLostAndFoundListQueryHandler : IRequestHandler<GetLostAndFoundListQuery, ProcessResponse<PageOf<Models.LostAndFoundListItem>>>, IAmWebApplicationHandler
 	{
 		private readonly IDatabaseContext databaseContext;
+		private readonly IFileService fileService;
 
-		public GetLostAndFoundListQueryHandler(IDatabaseContext databaseContext)
+		public GetLostAndFoundListQueryHandler(IDatabaseContext databaseContext, IFileService fileService)
 		{
 			this.databaseContext = databaseContext;
+			this.fileService = fileService;
 		}
 
 		public async Task<ProcessResponse<PageOf<LostAndFoundListItem>>> Handle(GetLostAndFoundListQuery request, CancellationToken cancellationToken)
 		{
-			var query  = databaseContext.LostAndFounds.AsQueryable();
+			var query  = databaseContext.LostAndFounds.Include(x => x.Files).AsQueryable();
 
 			if (!String.IsNullOrWhiteSpace(request.Keyword))
 			{
@@ -95,7 +97,6 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 					
             }
 
-
 			var lostAndFound = await query.Select(x => new Models.LostAndFoundListItem
 			{
 				Id = x.Id,
@@ -119,8 +120,34 @@ namespace Planner.Application.LostAndFounds.Queries.GetList
 				RoomId = x.RoomId,
 				Room = x.Room,
 				Reservation = x.Reservation,
-				ReservationId = x.ReservationId
+				ReservationId = x.ReservationId,
+				Files = x.Files
 			}).Skip(request.Skip).Take(request.Take).ToListAsync();
+
+			foreach(var item in lostAndFound)
+            {
+				if (item.Files.Count > 0)
+                {
+					var fileId = item.Files.Select(af => af.FileId).First();
+
+					var file = await this.databaseContext.Files.Where(f => fileId.Equals(f.Id)).Select(f => new
+					{
+						Id = f.Id,
+						Name = f.FileName
+					}).SingleAsync();
+
+					var fileTypeData = this.fileService.DetermineFileType(file.Name);
+
+					item.FirstImage = new LostAndFoundFileModel
+					{
+						Id = file.Id,
+						Name = file.Name,
+						Extension = fileTypeData.Extension,
+						IsImage = fileTypeData.FileType == FileTypes.IMAGE,
+						Url = this.fileService.GetAssetFileUrl(item.Id, file.Name)
+					};
+				}
+			}
 
 			var count = await query.CountAsync();
 			return new ProcessResponse<PageOf<LostAndFoundListItem>>

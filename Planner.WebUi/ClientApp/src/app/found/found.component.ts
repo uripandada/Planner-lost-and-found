@@ -159,6 +159,8 @@ export class FoundComponent implements OnInit {
         this.guestNum = 0;
         this.returnedNum = 0;
         this.canceledNum = 0;
+
+        console.log(this.itemsList.value);
         for (let i = 0; i < this.itemsList.value.length; i++) {
           if (this.itemsList.value[i].foundStatus == 0) {
             this.pendingNum += 1;

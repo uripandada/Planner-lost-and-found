@@ -11,8 +11,8 @@ using Planner.Persistence;
 namespace Planner.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220308080436_ChangeCategoryTableNameToLostAndFoundCategory")]
-    partial class ChangeCategoryTableNameToLostAndFoundCategory
+    [Migration("20220303142301_AddedLostAndFoundCategoryTable")]
+    partial class AddedLostAndFoundCategoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -881,54 +881,6 @@ namespace Planner.Persistence.Migrations
                         .HasDatabaseName("ix_buildings_modified_by_id");
 
                     b.ToTable("buildings");
-                });
-
-            modelBuilder.Entity("Planner.Domain.Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<int>("ExpirationDays")
-                        .HasColumnType("integer")
-                        .HasColumnName("expiration_days");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("modified_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid?>("ModifiedById")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by_id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_categorys");
-
-                    b.HasIndex("CreatedById")
-                        .HasDatabaseName("ix_categorys_created_by_id");
-
-                    b.HasIndex("ModifiedById")
-                        .HasDatabaseName("ix_categorys_modified_by_id");
-
-                    b.ToTable("categorys");
                 });
 
             modelBuilder.Entity("Planner.Domain.Entities.Cleaning", b =>
@@ -2089,12 +2041,6 @@ namespace Planner.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("created_by_id");
 
-                    b.Property<int>("DeliveryStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("delivery_status");
-
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
@@ -2106,18 +2052,6 @@ namespace Planner.Persistence.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text")
                         .HasColumnName("first_name");
-
-                    b.Property<int>("FoundStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1)
-                        .HasColumnName("found_status");
-
-                    b.Property<int>("GuestStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1)
-                        .HasColumnName("guest_status");
 
                     b.Property<string>("HotelId")
                         .HasColumnType("text")
@@ -2157,12 +2091,6 @@ namespace Planner.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("notes");
 
-                    b.Property<int>("OtherStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("other_status");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text")
                         .HasColumnName("phone_number");
@@ -2189,6 +2117,12 @@ namespace Planner.Persistence.Migrations
                     b.Property<Guid?>("RoomId")
                         .HasColumnType("uuid")
                         .HasColumnName("room_id");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0)
+                        .HasColumnName("status");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -4807,25 +4741,6 @@ namespace Planner.Persistence.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Hotel");
-
-                    b.Navigation("ModifiedBy");
-                });
-
-            modelBuilder.Entity("Planner.Domain.Entities.Category", b =>
-                {
-                    b.HasOne("Planner.Domain.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .HasConstraintName("fk_categorys_asp_net_users_created_by_id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Planner.Domain.Entities.User", "ModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("ModifiedById")
-                        .HasConstraintName("fk_categorys_asp_net_users_modified_by_id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedBy");
 
                     b.Navigation("ModifiedBy");
                 });

@@ -3224,6 +3224,72 @@ export class ExperienceCompensationManagementClient {
 @Injectable({
     providedIn: 'root'
 })
+export class ExperienceManagementClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    insertExperience(request: InsertExperienceCommand): Observable<ProcessResponseOfGuid> {
+        let url_ = this.baseUrl + "/api/ExperienceManagement/InsertExperience";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertExperience(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertExperience(<any>response_);
+                } catch (e) {
+                    return <Observable<ProcessResponseOfGuid>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProcessResponseOfGuid>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertExperience(response: HttpResponseBase): Observable<ProcessResponseOfGuid> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProcessResponseOfGuid.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProcessResponseOfGuid>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class ExportAssetsClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -23242,6 +23308,94 @@ export interface IDeleteExperienceCompensationCommand {
     id: string;
 }
 
+export class InsertExperienceCommand implements IInsertExperienceCommand {
+    roomName?: string | null;
+    guestName?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    reservationId?: string | null;
+    vip?: string | null;
+    email?: string | null;
+    phoneNumber?: string | null;
+    type!: number;
+    description?: string | null;
+    actions?: string | null;
+    internalFollowUp?: string | null;
+    experienceCategoryId!: string;
+    experienceCompensationId!: string;
+
+    constructor(data?: IInsertExperienceCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
+            this.guestName = _data["guestName"] !== undefined ? _data["guestName"] : <any>null;
+            this.checkIn = _data["checkIn"] ? moment(_data["checkIn"].toString()) : <any>null;
+            this.checkOut = _data["checkOut"] ? moment(_data["checkOut"].toString()) : <any>null;
+            this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
+            this.vip = _data["vip"] !== undefined ? _data["vip"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
+            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
+            this.actions = _data["actions"] !== undefined ? _data["actions"] : <any>null;
+            this.internalFollowUp = _data["internalFollowUp"] !== undefined ? _data["internalFollowUp"] : <any>null;
+            this.experienceCategoryId = _data["experienceCategoryId"] !== undefined ? _data["experienceCategoryId"] : <any>null;
+            this.experienceCompensationId = _data["experienceCompensationId"] !== undefined ? _data["experienceCompensationId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): InsertExperienceCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsertExperienceCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
+        data["guestName"] = this.guestName !== undefined ? this.guestName : <any>null;
+        data["checkIn"] = this.checkIn ? this.checkIn.toISOString() : <any>null;
+        data["checkOut"] = this.checkOut ? this.checkOut.toISOString() : <any>null;
+        data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
+        data["vip"] = this.vip !== undefined ? this.vip : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["actions"] = this.actions !== undefined ? this.actions : <any>null;
+        data["internalFollowUp"] = this.internalFollowUp !== undefined ? this.internalFollowUp : <any>null;
+        data["experienceCategoryId"] = this.experienceCategoryId !== undefined ? this.experienceCategoryId : <any>null;
+        data["experienceCompensationId"] = this.experienceCompensationId !== undefined ? this.experienceCompensationId : <any>null;
+        return data; 
+    }
+}
+
+export interface IInsertExperienceCommand {
+    roomName?: string | null;
+    guestName?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    reservationId?: string | null;
+    vip?: string | null;
+    email?: string | null;
+    phoneNumber?: string | null;
+    type: number;
+    description?: string | null;
+    actions?: string | null;
+    internalFollowUp?: string | null;
+    experienceCategoryId: string;
+    experienceCompensationId: string;
+}
+
 export class TemporaryUploadedFileDetails implements ITemporaryUploadedFileDetails {
     fileName?: string | null;
     imageUrl?: string | null;
@@ -25355,6 +25509,8 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
     room?: Room2 | null;
     reservationId?: string | null;
     reservation?: Reservation | null;
+    files?: LostAndFoundFile[] | null;
+    firstImage?: LostAndFoundFileModel | null;
 
     constructor(data?: ILostAndFoundListItem) {
         if (data) {
@@ -25391,6 +25547,12 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
             this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
             this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
             this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
+            if (Array.isArray(_data["files"])) {
+                this.files = [] as any;
+                for (let item of _data["files"])
+                    this.files!.push(LostAndFoundFile.fromJS(item));
+            }
+            this.firstImage = _data["firstImage"] ? LostAndFoundFileModel.fromJS(_data["firstImage"]) : <any>null;
         }
     }
 
@@ -25427,6 +25589,12 @@ export class LostAndFoundListItem implements ILostAndFoundListItem {
         data["room"] = this.room ? this.room.toJSON() : <any>null;
         data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
         data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
+        if (Array.isArray(this.files)) {
+            data["files"] = [];
+            for (let item of this.files)
+                data["files"].push(item.toJSON());
+        }
+        data["firstImage"] = this.firstImage ? this.firstImage.toJSON() : <any>null;
         return data; 
     }
 }
@@ -25456,6 +25624,8 @@ export interface ILostAndFoundListItem {
     room?: Room2 | null;
     reservationId?: string | null;
     reservation?: Reservation | null;
+    files?: LostAndFoundFile[] | null;
+    firstImage?: LostAndFoundFileModel | null;
 }
 
 export enum FoundStatus {
@@ -31887,6 +32057,308 @@ export enum RoomEventType {
     RCCSYNC_ROOM_IN_SERVICE = 55,
 }
 
+export class LostAndFoundFile implements ILostAndFoundFile {
+    fileId!: string;
+    file?: File | null;
+    lostAndFoundId!: string;
+    lostAndFound?: LostAndFound | null;
+
+    constructor(data?: ILostAndFoundFile) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.fileId = _data["fileId"] !== undefined ? _data["fileId"] : <any>null;
+            this.file = _data["file"] ? File.fromJS(_data["file"]) : <any>null;
+            this.lostAndFoundId = _data["lostAndFoundId"] !== undefined ? _data["lostAndFoundId"] : <any>null;
+            this.lostAndFound = _data["lostAndFound"] ? LostAndFound.fromJS(_data["lostAndFound"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LostAndFoundFile {
+        data = typeof data === 'object' ? data : {};
+        let result = new LostAndFoundFile();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fileId"] = this.fileId !== undefined ? this.fileId : <any>null;
+        data["file"] = this.file ? this.file.toJSON() : <any>null;
+        data["lostAndFoundId"] = this.lostAndFoundId !== undefined ? this.lostAndFoundId : <any>null;
+        data["lostAndFound"] = this.lostAndFound ? this.lostAndFound.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ILostAndFoundFile {
+    fileId: string;
+    file?: File | null;
+    lostAndFoundId: string;
+    lostAndFound?: LostAndFound | null;
+}
+
+export class LostAndFound extends ChangeTrackingBaseEntity implements ILostAndFound {
+    hotelId?: string | null;
+    hotel?: Hotel | null;
+    imageUrl?: string | null;
+    isDeleted!: boolean;
+    isClosed!: boolean;
+    id!: string;
+    description?: string | null;
+    name?: string | null;
+    address?: string | null;
+    city?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phoneNumber?: string | null;
+    email?: string | null;
+    referenceNumber?: string | null;
+    notes?: string | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
+    lostOn?: moment.Moment | null;
+    foundStatus!: FoundStatus;
+    guestStatus!: GuestStatus;
+    deliveryStatus!: DeliveryStatus;
+    otherStatus!: OtherStatus;
+    rccStatus!: RccLostAndFoundStatus;
+    typeOfLoss?: TypeOfLoss | null;
+    type!: LostAndFoundRecordType;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    lostAndFoundCategory?: LostAndFoundCategory | null;
+    storageRoomId?: string | null;
+    files?: LostAndFoundFile[] | null;
+
+    constructor(data?: ILostAndFound) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.hotelId = _data["hotelId"] !== undefined ? _data["hotelId"] : <any>null;
+            this.hotel = _data["hotel"] ? Hotel.fromJS(_data["hotel"]) : <any>null;
+            this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : <any>null;
+            this.isDeleted = _data["isDeleted"] !== undefined ? _data["isDeleted"] : <any>null;
+            this.isClosed = _data["isClosed"] !== undefined ? _data["isClosed"] : <any>null;
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.address = _data["address"] !== undefined ? _data["address"] : <any>null;
+            this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
+            this.postalCode = _data["postalCode"] !== undefined ? _data["postalCode"] : <any>null;
+            this.country = _data["country"] !== undefined ? _data["country"] : <any>null;
+            this.phoneNumber = _data["phoneNumber"] !== undefined ? _data["phoneNumber"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.referenceNumber = _data["referenceNumber"] !== undefined ? _data["referenceNumber"] : <any>null;
+            this.notes = _data["notes"] !== undefined ? _data["notes"] : <any>null;
+            this.roomId = _data["roomId"] !== undefined ? _data["roomId"] : <any>null;
+            this.room = _data["room"] ? Room2.fromJS(_data["room"]) : <any>null;
+            this.reservationId = _data["reservationId"] !== undefined ? _data["reservationId"] : <any>null;
+            this.reservation = _data["reservation"] ? Reservation.fromJS(_data["reservation"]) : <any>null;
+            this.lostOn = _data["lostOn"] ? moment(_data["lostOn"].toString()) : <any>null;
+            this.foundStatus = _data["foundStatus"] !== undefined ? _data["foundStatus"] : <any>null;
+            this.guestStatus = _data["guestStatus"] !== undefined ? _data["guestStatus"] : <any>null;
+            this.deliveryStatus = _data["deliveryStatus"] !== undefined ? _data["deliveryStatus"] : <any>null;
+            this.otherStatus = _data["otherStatus"] !== undefined ? _data["otherStatus"] : <any>null;
+            this.rccStatus = _data["rccStatus"] !== undefined ? _data["rccStatus"] : <any>null;
+            this.typeOfLoss = _data["typeOfLoss"] !== undefined ? _data["typeOfLoss"] : <any>null;
+            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
+            this.clientName = _data["clientName"] !== undefined ? _data["clientName"] : <any>null;
+            this.founderName = _data["founderName"] !== undefined ? _data["founderName"] : <any>null;
+            this.founderEmail = _data["founderEmail"] !== undefined ? _data["founderEmail"] : <any>null;
+            this.founderPhoneNumber = _data["founderPhoneNumber"] !== undefined ? _data["founderPhoneNumber"] : <any>null;
+            this.lostAndFoundCategoryId = _data["lostAndFoundCategoryId"] !== undefined ? _data["lostAndFoundCategoryId"] : <any>null;
+            this.lostAndFoundCategory = _data["lostAndFoundCategory"] ? LostAndFoundCategory.fromJS(_data["lostAndFoundCategory"]) : <any>null;
+            this.storageRoomId = _data["storageRoomId"] !== undefined ? _data["storageRoomId"] : <any>null;
+            if (Array.isArray(_data["files"])) {
+                this.files = [] as any;
+                for (let item of _data["files"])
+                    this.files!.push(LostAndFoundFile.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): LostAndFound {
+        data = typeof data === 'object' ? data : {};
+        let result = new LostAndFound();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["hotelId"] = this.hotelId !== undefined ? this.hotelId : <any>null;
+        data["hotel"] = this.hotel ? this.hotel.toJSON() : <any>null;
+        data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : <any>null;
+        data["isDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
+        data["isClosed"] = this.isClosed !== undefined ? this.isClosed : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["address"] = this.address !== undefined ? this.address : <any>null;
+        data["city"] = this.city !== undefined ? this.city : <any>null;
+        data["postalCode"] = this.postalCode !== undefined ? this.postalCode : <any>null;
+        data["country"] = this.country !== undefined ? this.country : <any>null;
+        data["phoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["referenceNumber"] = this.referenceNumber !== undefined ? this.referenceNumber : <any>null;
+        data["notes"] = this.notes !== undefined ? this.notes : <any>null;
+        data["roomId"] = this.roomId !== undefined ? this.roomId : <any>null;
+        data["room"] = this.room ? this.room.toJSON() : <any>null;
+        data["reservationId"] = this.reservationId !== undefined ? this.reservationId : <any>null;
+        data["reservation"] = this.reservation ? this.reservation.toJSON() : <any>null;
+        data["lostOn"] = this.lostOn ? this.lostOn.toISOString() : <any>null;
+        data["foundStatus"] = this.foundStatus !== undefined ? this.foundStatus : <any>null;
+        data["guestStatus"] = this.guestStatus !== undefined ? this.guestStatus : <any>null;
+        data["deliveryStatus"] = this.deliveryStatus !== undefined ? this.deliveryStatus : <any>null;
+        data["otherStatus"] = this.otherStatus !== undefined ? this.otherStatus : <any>null;
+        data["rccStatus"] = this.rccStatus !== undefined ? this.rccStatus : <any>null;
+        data["typeOfLoss"] = this.typeOfLoss !== undefined ? this.typeOfLoss : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["clientName"] = this.clientName !== undefined ? this.clientName : <any>null;
+        data["founderName"] = this.founderName !== undefined ? this.founderName : <any>null;
+        data["founderEmail"] = this.founderEmail !== undefined ? this.founderEmail : <any>null;
+        data["founderPhoneNumber"] = this.founderPhoneNumber !== undefined ? this.founderPhoneNumber : <any>null;
+        data["lostAndFoundCategoryId"] = this.lostAndFoundCategoryId !== undefined ? this.lostAndFoundCategoryId : <any>null;
+        data["lostAndFoundCategory"] = this.lostAndFoundCategory ? this.lostAndFoundCategory.toJSON() : <any>null;
+        data["storageRoomId"] = this.storageRoomId !== undefined ? this.storageRoomId : <any>null;
+        if (Array.isArray(this.files)) {
+            data["files"] = [];
+            for (let item of this.files)
+                data["files"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface ILostAndFound extends IChangeTrackingBaseEntity {
+    hotelId?: string | null;
+    hotel?: Hotel | null;
+    imageUrl?: string | null;
+    isDeleted: boolean;
+    isClosed: boolean;
+    id: string;
+    description?: string | null;
+    name?: string | null;
+    address?: string | null;
+    city?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phoneNumber?: string | null;
+    email?: string | null;
+    referenceNumber?: string | null;
+    notes?: string | null;
+    roomId?: string | null;
+    room?: Room2 | null;
+    reservationId?: string | null;
+    reservation?: Reservation | null;
+    lostOn?: moment.Moment | null;
+    foundStatus: FoundStatus;
+    guestStatus: GuestStatus;
+    deliveryStatus: DeliveryStatus;
+    otherStatus: OtherStatus;
+    rccStatus: RccLostAndFoundStatus;
+    typeOfLoss?: TypeOfLoss | null;
+    type: LostAndFoundRecordType;
+    clientName?: string | null;
+    founderName?: string | null;
+    founderEmail?: string | null;
+    founderPhoneNumber?: string | null;
+    lostAndFoundCategoryId?: string | null;
+    lostAndFoundCategory?: LostAndFoundCategory | null;
+    storageRoomId?: string | null;
+    files?: LostAndFoundFile[] | null;
+}
+
+export enum RccLostAndFoundStatus {
+    OPEN = 0,
+    EMAILED = 1,
+    PHONED = 2,
+    PENDING = 3,
+    WAITING = 4,
+    MAILED = 5,
+    HAND_DELIVERED = 6,
+    EXPIRED = 7,
+    REFUSED = 8,
+    DELETED = 9,
+    CLOSED = 10,
+    UNKNOWN = 11,
+}
+
+export enum LostAndFoundRecordType {
+    Unknown = 0,
+    Lost = 1,
+    Found = 2,
+}
+
+export class LostAndFoundFileModel implements ILostAndFoundFileModel {
+    id!: string;
+    name?: string | null;
+    url?: string | null;
+    isImage!: boolean;
+    extension?: string | null;
+
+    constructor(data?: ILostAndFoundFileModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.url = _data["url"] !== undefined ? _data["url"] : <any>null;
+            this.isImage = _data["isImage"] !== undefined ? _data["isImage"] : <any>null;
+            this.extension = _data["extension"] !== undefined ? _data["extension"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LostAndFoundFileModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new LostAndFoundFileModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["url"] = this.url !== undefined ? this.url : <any>null;
+        data["isImage"] = this.isImage !== undefined ? this.isImage : <any>null;
+        data["extension"] = this.extension !== undefined ? this.extension : <any>null;
+        return data; 
+    }
+}
+
+export interface ILostAndFoundFileModel {
+    id: string;
+    name?: string | null;
+    url?: string | null;
+    isImage: boolean;
+    extension?: string | null;
+}
+
 export class GetLostAndFoundListQuery extends GetPageRequest implements IGetLostAndFoundListQuery {
     keyword?: string | null;
     dateFrom?: moment.Moment | null;
@@ -32135,58 +32607,6 @@ export interface ILostAndFoundModel {
     founderPhoneNumber?: string | null;
     lostAndFoundCategoryId?: string | null;
     storageRoomId?: string | null;
-}
-
-export class LostAndFoundFileModel implements ILostAndFoundFileModel {
-    id!: string;
-    name?: string | null;
-    url?: string | null;
-    isImage!: boolean;
-    extension?: string | null;
-
-    constructor(data?: ILostAndFoundFileModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.url = _data["url"] !== undefined ? _data["url"] : <any>null;
-            this.isImage = _data["isImage"] !== undefined ? _data["isImage"] : <any>null;
-            this.extension = _data["extension"] !== undefined ? _data["extension"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): LostAndFoundFileModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new LostAndFoundFileModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["url"] = this.url !== undefined ? this.url : <any>null;
-        data["isImage"] = this.isImage !== undefined ? this.isImage : <any>null;
-        data["extension"] = this.extension !== undefined ? this.extension : <any>null;
-        return data; 
-    }
-}
-
-export interface ILostAndFoundFileModel {
-    id: string;
-    name?: string | null;
-    url?: string | null;
-    isImage: boolean;
-    extension?: string | null;
 }
 
 export class InsertLostAndFoundCommand implements IInsertLostAndFoundCommand {

@@ -50,6 +50,6 @@ namespace Planner.Domain.Entities
         public Guid? StorageRoomId { get; set; }
 
 
-        public ICollection<LostAndFoundFile> Files { get; set; }
+        public IList<LostAndFoundFile> Files { get; set; }
     }
 }

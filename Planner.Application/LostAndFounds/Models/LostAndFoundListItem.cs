@@ -1,6 +1,7 @@
 ﻿using Planner.Domain.Values;
 using System;
 using Planner.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Planner.Application.LostAndFounds.Models
 {
@@ -30,5 +31,7 @@ namespace Planner.Application.LostAndFounds.Models
         public Room Room { get; set; }
         public string ReservationId { get; set; }
         public Reservation Reservation { get; set; }
+        public IList<LostAndFoundFile> Files { get; set; }
+        public LostAndFoundFileModel FirstImage { get; set; }
     }
 }

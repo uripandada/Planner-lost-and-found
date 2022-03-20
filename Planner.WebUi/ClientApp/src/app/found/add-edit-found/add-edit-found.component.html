@@ -172,23 +172,12 @@
           <div class="item-fields-wrapper">
             <ng-container *ngIf="f.guestStatus.value != statusFlag">
               <div class="form-field-wrapper">
-                <label>First Name</label>
+                <label>Name</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="firstName" type="text" />
-                  <mat-error class="error" *ngIf="canShowErrorMessage('firstName')">
-                    <span *ngIf="f.firstName.errors.required">
-                      First name is required!
-                    </span>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="form-field-wrapper">
-                <label>Last Name</label>
-                <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="lastName" type="text" />
-                  <mat-error class="error" *ngIf="canShowErrorMessage('lastName')">
-                    <span *ngIf="f.lastName.errors.required">
-                      Last name is required!
+                  <input matInput formControlName="name" type="text" />
+                  <mat-error class="error" *ngIf="canShowErrorMessage('name')">
+                    <span *ngIf="f.nameerrors.required">
+                      Name is required!
                     </span>
                   </mat-error>
                 </mat-form-field>

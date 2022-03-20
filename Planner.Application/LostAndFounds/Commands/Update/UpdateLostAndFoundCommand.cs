@@ -95,7 +95,7 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             item.ModifiedAt = DateTime.UtcNow;
             item.ModifiedById = httpContextAccessor.UserId();
             item.PhoneNumber = request.PhoneNumber;
-            item.Email= request.Email;
+            item.Email = request.Email;
             item.FoundStatus = request.FoundStatus;
             item.GuestStatus = request.GuestStatus;
             item.DeliveryStatus = request.DeliveryStatus;
@@ -113,70 +113,63 @@ namespace Planner.Application.LostAndFounds.Commands.Update
             item.StorageRoomId = request.StorageRoomId;
 
 
-            //var existingLostAndFoundFilesMap = item.Files.ToDictionary(af => af.FileId);
-            //var filesToInsert = new List<Domain.Entities.File>();
-            //var lostAndFoundFilesToInsert = new List<Domain.Entities.LostAndFoundFile>();
-            //var lostAndFoundFilesToDelete = new List<Domain.Entities.LostAndFoundFile>();
-            //var checkedFileIds = new HashSet<Guid>();
+            var existingLostAndFoundFilesMap = item.Files.ToDictionary(af => af.FileId);
+            var filesToInsert = new List<Domain.Entities.File>();
+            var lostAndFoundFilesToInsert = new List<Domain.Entities.LostAndFoundFile>();
+            var lostAndFoundFilesToDelete = new List<Domain.Entities.LostAndFoundFile>();
+            var checkedFileIds = new HashSet<Guid>();
 
-            //foreach (var f in request.Files)
-            //{
-            //    if (f.Id.HasValue)
-            //    {
-            //        checkedFileIds.Add(f.Id.Value);
-            //        continue;
-            //    }
-
-            //    var processResult = await this.fileService.ProcessNewAssetFile(item.Id, f.FileName);
-
-            //    var file = new Domain.Entities.File
-            //    {
-            //        CreatedAt = DateTime.UtcNow,
-            //        CreatedById = this.httpContextAccessor.UserId(),
-            //        FileData = await System.IO.File.ReadAllBytesAsync(processResult.FilePath),
-            //        FileName = f.FileName,
-            //        Id = Guid.NewGuid(),
-            //        ModifiedAt = DateTime.UtcNow,
-            //        ModifiedById = this.httpContextAccessor.UserId(),
-            //        FileTypeKey = "LOSTANDFOUND"
-            //    };
-
-            //    var lostAndFoundFile = new Domain.Entities.LostAndFoundFile
-            //    {
-            //        LostAndFoundId = item.Id,
-            //        FileId = file.Id,
-            //    };
-
-
-            //    filesToInsert.Add(file);
-            //    lostAndFoundFilesToInsert.Add(lostAndFoundFile);
-            //}
-
-            //foreach (var lostAndFoundFile in existingLostAndFoundFilesMap.Values)
-            //{
-            //    if (!checkedFileIds.Contains(lostAndFoundFile.FileId))
-            //    {
-            //        lostAndFoundFilesToDelete.Add(lostAndFoundFile);
-            //    }
-            //}
-
-            //using (var transaction = await this.databaseContext.Database.BeginTransactionAsync())
-            //{
-            //if (filesToInsert.Any())
-            //{
-            //    await this.databaseContext.Files.AddRangeAsync(filesToInsert);
-            //}
-            //if (lostAndFoundFilesToInsert.Any())
-            //{
-            //    await this.databaseContext.LostAndFoundFiles.AddRangeAsync(lostAndFoundFilesToInsert);
-            //}
-            //if (lostAndFoundFilesToDelete.Any())
-            //{
-            //    this.databaseContext.LostAndFoundFiles.RemoveRange(lostAndFoundFilesToDelete);
-            //}
-            await this.databaseContext.SaveChangesAsync(cancellationToken);
-            //    await transaction.CommitAsync(cancellationToken);
-            //}
+            foreach (var f in request.Files)
+            {
+                if (f.Id.HasValue)
+                {
+                    checkedFileIds.Add(f.Id.Value);
+                    continue;
+                }
+                var processResult = await this.fileService.ProcessNewAssetFile(item.Id, f.FileName);
+                var file = new Domain.Entities.File
+                {
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedById = this.httpContextAccessor.UserId(),
+                    FileData = await System.IO.File.ReadAllBytesAsync(processResult.FilePath),
+                    FileName = f.FileName,
+                    Id = Guid.NewGuid(),
+                    ModifiedAt = DateTime.UtcNow,
+                    ModifiedById = this.httpContextAccessor.UserId(),
+                    FileTypeKey = "LOSTANDFOUND"
+                };
+                var lostAndFoundFile = new Domain.Entities.LostAndFoundFile
+                {
+                    LostAndFoundId = item.Id,
+                    FileId = file.Id,
+                };
+                filesToInsert.Add(file);
+                lostAndFoundFilesToInsert.Add(lostAndFoundFile);
+            }
+            foreach (var lostAndFoundFile in existingLostAndFoundFilesMap.Values)
+            {
+                if (!checkedFileIds.Contains(lostAndFoundFile.FileId))
+                {
+                    lostAndFoundFilesToDelete.Add(lostAndFoundFile);
+                }
+            }
+            using (var transaction = await this.databaseContext.Database.BeginTransactionAsync())
+            {
+                if (filesToInsert.Any())
+                {
+                    await this.databaseContext.Files.AddRangeAsync(filesToInsert);
+                }
+                if (lostAndFoundFilesToInsert.Any())
+                {
+                    await this.databaseContext.LostAndFoundFiles.AddRangeAsync(lostAndFoundFilesToInsert);
+                }
+                if (lostAndFoundFilesToDelete.Any())
+                {
+                    this.databaseContext.LostAndFoundFiles.RemoveRange(lostAndFoundFilesToDelete);
+                }
+                await this.databaseContext.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+            }
 
             return new ProcessResponse
             {

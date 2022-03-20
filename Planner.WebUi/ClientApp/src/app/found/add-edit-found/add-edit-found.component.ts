@@ -234,7 +234,7 @@ export class AddEditFoundComponent implements OnInit {
       otherStatus: [this.item.otherStatus],
       storage: [''],
       category: [this.item.lostAndFoundCategoryId, Validators.required],
-      whereFrom: [this.item.room?.name || this.item.reservation?.roomName, Validators.required],
+      whereFrom: [where, Validators.required],
       placeOfStorage: [this.item.placeOfStorage],
       foundByNumber: [''],
 
@@ -252,8 +252,10 @@ export class AddEditFoundComponent implements OnInit {
         displayText: ''
       }) as FileDetails);
       this.uploadedFiles$.next(files);
+      this.uploadedFiles = files;
     } else {
       this.uploadedFiles$.next([]);
+      this.uploadedFiles = [];
     }
   }
 
@@ -327,8 +329,10 @@ export class AddEditFoundComponent implements OnInit {
         displayText: ''
       }) as FileDetails);
       this.uploadedFiles$.next(files);
+      this.uploadedFiles = files;
     } else {
       this.uploadedFiles$.next([]);
+      this.uploadedFiles = [];
     }
   }
 
@@ -416,7 +420,6 @@ export class AddEditFoundComponent implements OnInit {
         }
       );
     }
-
   }
 
   private addClientFormControls() {
@@ -463,7 +466,7 @@ export class AddEditFoundComponent implements OnInit {
   }
 
   getSelection(data: ExtendedWhereData) {
-    this.foundForm.controls.whereFrom.setValue(data.roomName);
+    this.foundForm.controls.whereFrom.setValue(data);
     this.foundForm.controls.clientName.setValue(data.guestName);
     this.foundForm.controls.name.setValue(data.guestName);
   }
