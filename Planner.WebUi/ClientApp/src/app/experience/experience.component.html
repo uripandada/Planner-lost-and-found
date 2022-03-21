@@ -82,7 +82,7 @@
                       <div class="cell-value">{{item.checkOut | date}}</div>                                        
                     </td>                                        
                     <td class="name-cell">                                            
-                      <div class="cell-value">{{item.experienceCategory}}</div>
+                      <div class="cell-value">{{item.experienceCategory?.name}} - {{item.experienceCategory?.experienceName}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.solveStatus}}</div>
