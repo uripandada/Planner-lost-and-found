@@ -20,7 +20,9 @@ namespace Planner.Domain.Entities
 		public string Actions { get; set; }
 		public string InternalFollowUp { get; set; }
 		public Guid ExperienceCategoryId { get; set; }
+		public ExperienceCategory ExperienceCategory { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
+		public ExperienceCompensation ExperienceCompensation { get; set; }
 
 		/// <summary>
 		/// Whether rooms with this category are public.
