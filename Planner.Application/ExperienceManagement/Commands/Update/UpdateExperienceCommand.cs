@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Planner.Application.ExperienceManagement.Commands.Update
 {
-	public class UpdateExperienceCommand : IRequest<ProcessResponse<Guid>>
+	public class UpdateExperienceCommand : IRequest<ProcessResponse>
 	{
 		public Guid Id { get; set; }
 		public string RoomName { get; set; }
@@ -86,21 +86,6 @@ namespace Planner.Application.ExperienceManagement.Commands.Update
 				IsSuccess = true,
 				Message = "Experience updated."
 			};
-		}
-	}
-
-	public class UpdateExperienceCommandValidator : AbstractValidator<UpdateExperienceCommand>
-	{
-		private readonly IDatabaseContext _databaseContext;
-
-		public UpdateExperienceCommandValidator(IDatabaseContext masterDatabaseContext)
-		{
-			this._databaseContext = masterDatabaseContext;
-			RuleFor(command => command.GuestName).NotEmpty().MustAsync(async (command, key, propertyValidatorContext, cancellationToken) =>
-			{
-				var experience = await this._databaseContext.Experiences.Where(t => t.GuestName.ToLower() == key.ToLower()).FirstOrDefaultAsync();
-				return experience == null;
-			}).WithMessage("EXPERIENCE_ALREADY_EXISTS");
 		}
 	}
 }

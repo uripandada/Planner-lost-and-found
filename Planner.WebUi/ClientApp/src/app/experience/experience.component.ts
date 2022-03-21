@@ -132,7 +132,9 @@ export class ExperienceComponent implements OnInit {
 
   selectItem(item: ExperienceDetailsViewModel) {
     this.ExperienceManagementClient.getById(new GetExperienceDetailsQuery({ id: item.id })).subscribe(response => {
-      // console.log(response)
+      this.selectedItem.next(response);
+      this.areDetailsDisplayed$.next(false);
+      this.areDetailsDisplayed$.next(true);
     })
   }
 

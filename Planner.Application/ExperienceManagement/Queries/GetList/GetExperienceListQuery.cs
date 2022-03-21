@@ -114,9 +114,9 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 					Actions = d.Actions,
 					InternalFollowUp = d.InternalFollowUp,
 					ExperienceCategoryId = d.ExperienceCategoryId,
-					ExperienceCategory = d.ExperienceCategory,
+					ExperienceCategory = this._databaseContext.ExperienceCategories.Where(x => x.Id == d.ExperienceCategoryId).Single(),
 					ExperienceCompensationId = d.ExperienceCompensationId,
-					ExperienceCompensation = d.ExperienceCompensation
+					ExperienceCompensation = this._databaseContext.ExperienceCompensations.Where(x => x.Id == d.ExperienceCompensationId).Single()
 				}).ToArray()
 			};
 
