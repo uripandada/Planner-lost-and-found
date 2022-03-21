@@ -7,25 +7,28 @@ using Planner.Common.Data;
 using Planner.Domain.Values;
 using System;
 using System.Threading.Tasks;
+using Planner.Application.ExperienceManagement.Queries.GetById;
+using Planner.Application.ExperienceManagement.Queries.GetList;
+using Planner.Application.ExperienceManagement.Commands.Update;
 
 namespace Planner.WebUi.Controllers
 {
 	public class ExperienceManagementController : BaseController
 	{
-		/*[HttpPost]
-		public async Task<PageOf<ExperienceGridItemViewModel>> GetPageOfExperienceCategories([FromBody] GetPageOfExperienceCategoriesQuery request)
-		{
-			return await this.Mediator.Send(request);
-		}
+        [HttpPost]
+        public async Task<PageOf<ExperienceGridItemViewModel>> GetList([FromBody] GetExperienceListQuery request)
+        {
+            return await this.Mediator.Send(request);
+        }
 
-		[HttpPost]
-		public async Task<ExperienceDetailsViewModel> GetExperienceDetails([FromBody] GetExperienceDetailsQuery request)
-		{
-			return await this.Mediator.Send(request);
-		}*/
+        [HttpPost]
+        public async Task<ExperienceDetailsViewModel> GetById([FromBody] GetExperienceDetailsQuery request)
+        {
+            return await this.Mediator.Send(request);
+        }
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
-		[HttpPost]
+        //[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+        [HttpPost]
 		public async Task<ProcessResponse<Guid>> InsertExperience([FromBody] InsertExperienceCommand request)
 		{
 			if (!this.ModelState.IsValid)
@@ -38,26 +41,26 @@ namespace Planner.WebUi.Controllers
 			return await this.Mediator.Send(request);
 		}
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
-		/*[HttpPost]
-		public async Task<ProcessResponse> UpdateExperience([FromBody] UpdateExperienceCommand request)
-		{
-			if (!this.ModelState.IsValid)
-			{
-				var result = new ProcessResponse<Guid>();
-				this._populateErrorModelState(result, "Unable to update category.");
-				return result;
-			}
+        //[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+        [HttpPost]
+        public async Task<ProcessResponse> UpdateExperience([FromBody] UpdateExperienceCommand request)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var result = new ProcessResponse<Guid>();
+                this._populateErrorModelState(result, "Unable to update category.");
+                return result;
+            }
 
-			return await this.Mediator.Send(request);
-		}
+            return await this.Mediator.Send(request);
+        }
 
 
-		//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
-		[HttpPost]
-		public async Task<ProcessResponse> DeleteExperience([FromBody] DeleteExperienceCommand request)
-		{
-			return await this.Mediator.Send(request);
-		}*/
-	}
+        /*//[Authorize(Policy = ClaimsKeys.SettingsClaimKeys.ExperienceCategories)]
+        [HttpPost]
+        public async Task<ProcessResponse> DeleteExperience([FromBody] DeleteExperienceCommand request)
+        {
+            return await this.Mediator.Send(request);
+        }*/
+    }
 }

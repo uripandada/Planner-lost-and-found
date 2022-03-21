@@ -63,13 +63,23 @@
               <div class="form-field-wrapper">
                 <label>CI</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="check_in" type="text" />
+                  <input matInput [matDatepicker]="datePickerCheckIn" formControlName="check_in">
+                  <mat-datepicker-toggle matSuffix [for]="datePickerCheckIn" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
+                  <mat-datepicker #datePickerCheckIn></mat-datepicker>
+                  <mat-error class="error" *ngIf="canShowErrorMessage('check_in')">
+                    <span *ngIf="f.check_in.errors.required">Required</span>
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>CO</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="check_out" type="text" />
+                  <input matInput [matDatepicker]="datePickerCheckOut" formControlName="check_out">
+                  <mat-datepicker-toggle matSuffix [for]="datePickerCheckOut" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
+                  <mat-datepicker #datePickerCheckOut></mat-datepicker>
+                  <mat-error class="error" *ngIf="canShowErrorMessage('check_out')">
+                    <span *ngIf="f.check_out.errors.required">Required</span>
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
