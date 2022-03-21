@@ -43,7 +43,7 @@
                          placeholder="Select Name..."
                          aria-label="Number"
                          matInput
-                         formControlName="guest_name"
+                         formControlName="guestName"
                          [matAutocomplete]="auto">
                   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -57,13 +57,13 @@
               <div class="form-field-wrapper">
                 <label>Room</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="room_name" type="text" />
+                  <input matInput formControlName="roomName" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>CI</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput [matDatepicker]="datePickerCheckIn" formControlName="check_in">
+                  <input matInput [matDatepicker]="datePickerCheckIn" formControlName="checkIn">
                   <mat-datepicker-toggle matSuffix [for]="datePickerCheckIn" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
                   <mat-datepicker #datePickerCheckIn></mat-datepicker>
                   <mat-error class="error" *ngIf="canShowErrorMessage('check_in')">
@@ -74,7 +74,7 @@
               <div class="form-field-wrapper">
                 <label>CO</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput [matDatepicker]="datePickerCheckOut" formControlName="check_out">
+                  <input matInput [matDatepicker]="datePickerCheckOut" formControlName="checkOut">
                   <mat-datepicker-toggle matSuffix [for]="datePickerCheckOut" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
                   <mat-datepicker #datePickerCheckOut></mat-datepicker>
                   <mat-error class="error" *ngIf="canShowErrorMessage('check_out')">
@@ -87,7 +87,7 @@
               <div class="form-field-wrapper">
                 <label>Reservation</label>                  
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="reservation_id" type="text" />
+                  <input matInput formControlName="reservationId" type="text" />
                 </mat-form-field>            
               </div>              
               <div class="form-field-wrapper">                
@@ -107,13 +107,13 @@
               <div class="form-field-wrapper">
                 <label>Email Address</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="experience_email" type="text" />
+                  <input matInput formControlName="experienceEmail" type="text" />
                 </mat-form-field>
               </div>
               <div class="form-field-wrapper">
                 <label>Phone Number</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <input matInput formControlName="experience_phonenumber" type="text" />
+                  <input matInput formControlName="experiencePhoneNumber" type="text" />
                 </mat-form-field>
               </div>
             </div>
@@ -124,7 +124,7 @@
             <div class="two-column-grid-21">
               <div class="form-field-wrapper">
                 <label>Experience Type&nbsp;&nbsp;</label>
-                <mat-button-toggle-group formControlName="experience_type" name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle-group formControlName="experienceType" name="fontStyle" aria-label="Font Style">
                   <mat-button-toggle value="1"><img src="../../../assets/images/3.png" alt="angry" style="width: 30px; height: 30px;"></mat-button-toggle>
                   <mat-button-toggle value="2"><img src="../../../assets/images/2.png" alt="normal" style="width: 30px; height: 30px;"></mat-button-toggle>
                   <mat-button-toggle value="3"><img src="../../../assets/images/1.png" alt="good" style="width: 30px; height: 30px;"></mat-button-toggle>
@@ -135,7 +135,7 @@
               <div class="form-field-wrapper">
                 <label>Experience Category</label>
                 <ng-select2
-                  formControlName="experience_category"
+                  formControlName="experienceCategory"
                   [data]="experienceCategory"
                   [placeholder]="placeholder"
                   [width]="370"
@@ -163,7 +163,7 @@
               <div class="form-field-wrapper">
                 <label>Internal Follow up</label>
                 <mat-form-field appearance="outline" color="accent" class="full-width">
-                  <textarea matInput formControlName="internal_follow_up" type="text" multiple></textarea>
+                  <textarea matInput formControlName="internalFollowUp" type="text" multiple></textarea>
                 </mat-form-field>
               </div>
             </div>
@@ -171,7 +171,7 @@
               <div class="form-field-wrapper">
                 <label>Compensation</label>
                 <ng-select2 
-                  formControlName="compensation_name"
+                  formControlName="compensationName"
                   [data]="compensation"
                   [width]="370">
                 </ng-select2>
