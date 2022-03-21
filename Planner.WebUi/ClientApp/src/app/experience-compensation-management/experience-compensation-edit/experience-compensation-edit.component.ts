@@ -37,6 +37,7 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
     this.categoryForm = this._formBuilder.group({
       name: [this.category.name, [Validators.required]],
       price: [this.category.price, [Validators.required]],
+      currency: [this.category.currency, [Validators.required]],
     });
   }
 
@@ -63,6 +64,7 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
   private _setCategoryFormData() {
     this.categoryForm.controls.name.setValue(this.category.name);
     this.categoryForm.controls.price.setValue(this.category.price);
+    this.categoryForm.controls.currency.setValue(this.category.currency);
 
     this.categoryForm.updateValueAndValidity({ onlySelf: false });
 
@@ -92,7 +94,8 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
     let formValues = this.categoryForm.getRawValue();
     let insertRequest: InsertExperienceCompensationCommand = new InsertExperienceCompensationCommand({
       name: formValues.name,
-      price: formValues.price
+      price: formValues.price,
+      currency: formValues.currency
     });
 
     this.loading.start();
@@ -113,7 +116,8 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
         let CategoryDetails = new ExperienceCompensationDetailsViewModel({
           id: response.data,
           name: insertRequest.name,
-          price: insertRequest.price
+          price: insertRequest.price,
+          currency: insertRequest.currency
         });
 
         this.inserted.next(CategoryDetails);
@@ -134,6 +138,7 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
       id: this.category.id,
       name: formValues.name,
       price: formValues.price,
+      currency: formValues.currency
     });
 
     this.loading.start();
@@ -154,7 +159,8 @@ export class ExperienceCompensationEditComponent implements OnInit, OnChanges {
         let CategoryDetails = new ExperienceCompensationDetailsViewModel({
           id: updateRequest.id,
           name: updateRequest.name,
-          price: updateRequest.price
+          price: updateRequest.price,
+          currency: updateRequest.currency
         });
 
         this.updated.next(CategoryDetails);

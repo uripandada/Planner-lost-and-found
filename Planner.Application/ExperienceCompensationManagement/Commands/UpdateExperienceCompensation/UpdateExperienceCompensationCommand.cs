@@ -20,6 +20,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Commands.UpdateEx
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int Price { get; set; }
+		public string Currency { get; set; }
 	}
 
 	public class UpdateExperienceCompensationCommandHandler : IRequestHandler<UpdateExperienceCompensationCommand, ProcessResponse>, IAmWebApplicationHandler
@@ -51,6 +52,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Commands.UpdateEx
 			compensation.ModifiedById = this._userId;
 			compensation.Name = request.Name;
 			compensation.Price = request.Price;
+			compensation.Currency = request.Currency;
 
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 

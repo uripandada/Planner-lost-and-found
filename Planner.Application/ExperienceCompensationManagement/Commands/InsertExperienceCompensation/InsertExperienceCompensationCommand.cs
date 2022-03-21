@@ -20,6 +20,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Commands.InsertEx
 	{
 		public string Name { get; set; }
 		public int Price { get; set; }
+		public string Currency { get; set; }
 	}
 
 	public class InsertExperienceCompensationCommandHandler : IRequestHandler<InsertExperienceCompensationCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
@@ -44,6 +45,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Commands.InsertEx
 				Id = Guid.NewGuid(),
 				Name = request.Name,
 				Price = request.Price,
+				Currency = request.Currency
 			};
 
 			await this._databaseContext.ExperienceCompensations.AddAsync(compensation);

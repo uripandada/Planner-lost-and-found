@@ -13,6 +13,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetExperi
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int Price{ get; set; }
+		public string Currency { get; set; }
 	}
 
 	public class GetExperienceCompensationDetailsQuery : IRequest<ExperienceCompensationDetailsViewModel>
@@ -40,6 +41,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetExperi
 				Id = compensation.Id,
 				Name = compensation.Name,
 				Price = compensation.Price,
+				Currency = compensation.Currency
 			};
 		}
 	}

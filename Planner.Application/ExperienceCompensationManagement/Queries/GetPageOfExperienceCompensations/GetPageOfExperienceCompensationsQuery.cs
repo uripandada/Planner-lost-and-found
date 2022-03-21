@@ -16,6 +16,7 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public int Price { get; set; }
+		public string Currency { get; set; }
 		//public int Credits { get; set; }
 	}
 
@@ -99,7 +100,8 @@ namespace Planner.Application.ExperienceCompensationManagement.Queries.GetPageOf
 				{
 					Id = d.Id,
 					Name = d.Name,
-					Price = d.Price
+					Price = d.Price,
+					Currency = d.Currency
 				}).ToArray()
 			};
 

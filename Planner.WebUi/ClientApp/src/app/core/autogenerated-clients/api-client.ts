@@ -23031,6 +23031,7 @@ export class ExperienceCompensationGridItemViewModel implements IExperienceCompe
     id!: string;
     name?: string | null;
     price!: number;
+    currency?: string | null;
 
     constructor(data?: IExperienceCompensationGridItemViewModel) {
         if (data) {
@@ -23046,6 +23047,7 @@ export class ExperienceCompensationGridItemViewModel implements IExperienceCompe
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.currency = _data["currency"] !== undefined ? _data["currency"] : <any>null;
         }
     }
 
@@ -23061,6 +23063,7 @@ export class ExperienceCompensationGridItemViewModel implements IExperienceCompe
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["currency"] = this.currency !== undefined ? this.currency : <any>null;
         return data; 
     }
 }
@@ -23069,6 +23072,7 @@ export interface IExperienceCompensationGridItemViewModel {
     id: string;
     name?: string | null;
     price: number;
+    currency?: string | null;
 }
 
 export class GetPageOfExperienceCompensationsQuery extends GetPageRequest implements IGetPageOfExperienceCompensationsQuery {
@@ -23112,6 +23116,7 @@ export class ExperienceCompensationDetailsViewModel implements IExperienceCompen
     id!: string;
     name?: string | null;
     price!: number;
+    currency?: string | null;
 
     constructor(data?: IExperienceCompensationDetailsViewModel) {
         if (data) {
@@ -23127,6 +23132,7 @@ export class ExperienceCompensationDetailsViewModel implements IExperienceCompen
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.currency = _data["currency"] !== undefined ? _data["currency"] : <any>null;
         }
     }
 
@@ -23142,6 +23148,7 @@ export class ExperienceCompensationDetailsViewModel implements IExperienceCompen
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["currency"] = this.currency !== undefined ? this.currency : <any>null;
         return data; 
     }
 }
@@ -23150,6 +23157,7 @@ export interface IExperienceCompensationDetailsViewModel {
     id: string;
     name?: string | null;
     price: number;
+    currency?: string | null;
 }
 
 export class GetExperienceCompensationDetailsQuery implements IGetExperienceCompensationDetailsQuery {
@@ -23191,6 +23199,7 @@ export interface IGetExperienceCompensationDetailsQuery {
 export class InsertExperienceCompensationCommand implements IInsertExperienceCompensationCommand {
     name?: string | null;
     price!: number;
+    currency?: string | null;
 
     constructor(data?: IInsertExperienceCompensationCommand) {
         if (data) {
@@ -23205,6 +23214,7 @@ export class InsertExperienceCompensationCommand implements IInsertExperienceCom
         if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.currency = _data["currency"] !== undefined ? _data["currency"] : <any>null;
         }
     }
 
@@ -23219,6 +23229,7 @@ export class InsertExperienceCompensationCommand implements IInsertExperienceCom
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["currency"] = this.currency !== undefined ? this.currency : <any>null;
         return data; 
     }
 }
@@ -23226,12 +23237,14 @@ export class InsertExperienceCompensationCommand implements IInsertExperienceCom
 export interface IInsertExperienceCompensationCommand {
     name?: string | null;
     price: number;
+    currency?: string | null;
 }
 
 export class UpdateExperienceCompensationCommand implements IUpdateExperienceCompensationCommand {
     id!: string;
     name?: string | null;
     price!: number;
+    currency?: string | null;
 
     constructor(data?: IUpdateExperienceCompensationCommand) {
         if (data) {
@@ -23247,6 +23260,7 @@ export class UpdateExperienceCompensationCommand implements IUpdateExperienceCom
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.currency = _data["currency"] !== undefined ? _data["currency"] : <any>null;
         }
     }
 
@@ -23262,6 +23276,7 @@ export class UpdateExperienceCompensationCommand implements IUpdateExperienceCom
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["currency"] = this.currency !== undefined ? this.currency : <any>null;
         return data; 
     }
 }
@@ -23270,6 +23285,7 @@ export interface IUpdateExperienceCompensationCommand {
     id: string;
     name?: string | null;
     price: number;
+    currency?: string | null;
 }
 
 export class DeleteExperienceCompensationCommand implements IDeleteExperienceCompensationCommand {

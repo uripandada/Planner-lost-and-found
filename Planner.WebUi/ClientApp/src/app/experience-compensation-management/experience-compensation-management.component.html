@@ -57,7 +57,7 @@
                   <div class="cell-value">{{category.name}}</div>
                 </td>
                 <td class="is-public-cell text-center">
-                  <div class="cell-value">{{category.price}}</div>
+                  <div class="cell-value">{{category.price | currency: category.currency}}</div>
                 </td>
               </tr>
             </tbody>

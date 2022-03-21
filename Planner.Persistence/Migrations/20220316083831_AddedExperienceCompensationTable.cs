@@ -14,6 +14,7 @@ namespace Planner.Persistence.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     price = table.Column<int>(type: "integer", nullable: false),
+                    currency = table.Column<int>(type: "text", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "now()"),
                     created_by_id = table.Column<Guid>(type: "uuid", nullable: true),
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "now()"),

@@ -50,8 +50,6 @@ export class ExperienceCategoryEditComponent implements OnInit, OnChanges {
       filter((name) => !!name),
       switchMap(name => this._CategoryManagementClient.getList(new GetListOfExperienceCategoriesQuery({ name: name })))
     )
-
-    console.log(this.categories);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
