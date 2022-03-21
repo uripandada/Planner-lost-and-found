@@ -136,7 +136,7 @@
                 <label>Experience Category</label>
                 <ng-select2
                   formControlName="experienceCategory"
-                  [data]="experienceCategory"
+                  [data]="categoriesList | async"
                   [placeholder]="placeholder"
                   [width]="370"
                   [options]="options"
@@ -172,7 +172,7 @@
                 <label>Compensation</label>
                 <ng-select2 
                   formControlName="compensationName"
-                  [data]="compensation"
+                  [data]="compensationList | async"
                   [width]="370">
                 </ng-select2>
               </div>

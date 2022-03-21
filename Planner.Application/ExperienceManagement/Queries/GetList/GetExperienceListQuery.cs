@@ -54,7 +54,7 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 
 		public async Task<PageOf<ExperienceGridItemViewModel>> Handle(GetExperienceListQuery request, CancellationToken cancellationToken)
 		{
-			var query = this._databaseContext.Experiences.Include(x=>x.ExperienceCategory).Include(x => x.ExperienceCompensation).AsQueryable();
+			var query = this._databaseContext.Experiences.AsQueryable();
 
 			if (request.Keywords.IsNotNull())
 			{
@@ -114,7 +114,9 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 					Actions = d.Actions,
 					InternalFollowUp = d.InternalFollowUp,
 					ExperienceCategoryId = d.ExperienceCategoryId,
-					ExperienceCompensationId = d.ExperienceCompensationId
+					ExperienceCategory = d.ExperienceCategory,
+					ExperienceCompensationId = d.ExperienceCompensationId,
+					ExperienceCompensation = d.ExperienceCompensation
 				}).ToArray()
 			};
 
