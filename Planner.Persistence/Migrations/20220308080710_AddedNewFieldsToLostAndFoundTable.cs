@@ -28,11 +28,6 @@ namespace Planner.Persistence.Migrations
                 type: "text",
                 nullable: true);
             migrationBuilder.AddColumn<Guid>(
-                name: "lost_and_found_category_id",
-                table: "lost_and_founds",
-                type: "uuid",
-                nullable: true);
-            migrationBuilder.AddColumn<Guid>(
                 name: "storage_room_id",
                 table: "lost_and_founds",
                 type: "uuid",
@@ -52,9 +47,6 @@ namespace Planner.Persistence.Migrations
                 table: "lost_and_founds");
             migrationBuilder.DropColumn(
                 name: "founder_phone_number",
-                table: "lost_and_founds");
-            migrationBuilder.DropColumn(
-                name: "lost_and_found_category_id",
                 table: "lost_and_founds");
             migrationBuilder.DropColumn(
                 name: "storage_room_id",

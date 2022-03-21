@@ -11,6 +11,7 @@ using Planner.Common.Data;
 using Planner.Domain.Values;
 using System;
 using System.Threading.Tasks;
+using Planner.Application.ExperienceCompensationManagement.Queries.GetList;
 
 namespace Planner.WebUi.Controllers
 {
@@ -24,6 +25,12 @@ namespace Planner.WebUi.Controllers
 
 		[HttpPost]
 		public async Task<ExperienceCompensationDetailsViewModel> GetExperienceCompensationDetails([FromBody] GetExperienceCompensationDetailsQuery request)
+		{
+			return await this.Mediator.Send(request);
+		}
+
+		[HttpPost]
+		public async Task<PageOf<ExperienceCompensationItemViewModel>> GetList([FromBody] GetListExperienceCompensationsQuery request)
 		{
 			return await this.Mediator.Send(request);
 		}

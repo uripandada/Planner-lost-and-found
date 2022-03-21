@@ -3064,6 +3064,58 @@ export class ExperienceCompensationManagementClient {
         return _observableOf<ExperienceCompensationDetailsViewModel>(<any>null);
     }
 
+    getList(request: GetListExperienceCompensationsQuery): Observable<PageOfOfExperienceCompensationItemViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/GetList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfExperienceCompensationItemViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfExperienceCompensationItemViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetList(response: HttpResponseBase): Observable<PageOfOfExperienceCompensationItemViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfExperienceCompensationItemViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfExperienceCompensationItemViewModel>(<any>null);
+    }
+
     insertExperienceCompensation(request: InsertExperienceCompensationCommand): Observable<ProcessResponseOfGuid> {
         let url_ = this.baseUrl + "/api/ExperienceCompensationManagement/InsertExperienceCompensation";
         url_ = url_.replace(/[?&]$/, "");
@@ -23350,6 +23402,129 @@ export class GetExperienceCompensationDetailsQuery implements IGetExperienceComp
 
 export interface IGetExperienceCompensationDetailsQuery {
     id: string;
+}
+
+export class PageOfOfExperienceCompensationItemViewModel implements IPageOfOfExperienceCompensationItemViewModel {
+    items?: ExperienceCompensationItemViewModel[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfExperienceCompensationItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ExperienceCompensationItemViewModel.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfExperienceCompensationItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfExperienceCompensationItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfExperienceCompensationItemViewModel {
+    items?: ExperienceCompensationItemViewModel[] | null;
+    totalNumberOfItems: number;
+}
+
+export class ExperienceCompensationItemViewModel implements IExperienceCompensationItemViewModel {
+    id!: string;
+    name?: string | null;
+    price!: number;
+    currency?: string | null;
+
+    constructor(data?: IExperienceCompensationItemViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.price = _data["price"] !== undefined ? _data["price"] : <any>null;
+            this.currency = _data["currency"] !== undefined ? _data["currency"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ExperienceCompensationItemViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExperienceCompensationItemViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["currency"] = this.currency !== undefined ? this.currency : <any>null;
+        return data; 
+    }
+}
+
+export interface IExperienceCompensationItemViewModel {
+    id: string;
+    name?: string | null;
+    price: number;
+    currency?: string | null;
+}
+
+export class GetListExperienceCompensationsQuery extends GetPageRequest implements IGetListExperienceCompensationsQuery {
+
+    constructor(data?: IGetListExperienceCompensationsQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+    }
+
+    static fromJS(data: any): GetListExperienceCompensationsQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetListExperienceCompensationsQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetListExperienceCompensationsQuery extends IGetPageRequest {
 }
 
 export class InsertExperienceCompensationCommand implements IInsertExperienceCompensationCommand {

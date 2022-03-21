@@ -46,8 +46,14 @@ namespace Planner.Persistence.Migrations
                 table: "lost_and_found_categories",
                 column: "modified_by_id");
 
+            migrationBuilder.AddColumn<Guid>(
+                name: "lost_and_found_category_id",
+                table: "lost_and_founds",
+                type: "uuid",
+                nullable: true);
+
             migrationBuilder.AddForeignKey(
-                name: "fk_lost_and_founds_lost_and_found_categories_lost_and_found_categ~",
+                name: "fk_lost_and_founds_lost_and_found_categories_lost_and_found_cat~",
                 table: "lost_and_founds",
                 column: "lost_and_found_category_id",
                 principalTable: "lost_and_found_categories",
@@ -58,7 +64,11 @@ namespace Planner.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "fk_lost_and_founds_categorys_lost_and_found_category_id",
+                name: "fk_lost_and_founds_lost_and_found_categories_lost_and_found_cat~",
+                table: "lost_and_founds");
+
+            migrationBuilder.DropColumn(
+                name: "lost_and_found_category_id",
                 table: "lost_and_founds");
 
             migrationBuilder.DropTable(

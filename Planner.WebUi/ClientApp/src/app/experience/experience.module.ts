@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ExperienceComponent } from './experience.component';
 import { ExperienceRoutingModule } from './experience-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -14,6 +14,7 @@ import { NgSelect2Module } from "ng-select2"
     ExperienceRoutingModule,
     NgSelect2Module
   ],
-  exports: [ExperienceComponent, AddEditExperienceComponent]
+  exports: [ExperienceComponent, AddEditExperienceComponent],
+  providers: [CurrencyPipe]
 })
 export class ExperienceModule { }
