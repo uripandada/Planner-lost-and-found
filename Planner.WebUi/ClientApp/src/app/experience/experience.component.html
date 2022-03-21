@@ -67,22 +67,22 @@
                   <tr class="list-view-items-row" *ngFor="let item of items" (click)="selectItem(item)"
                       [class.list-view-items-row-selected]="item.id === selectedItem.value?.id">
                     <td class="name-cell">
-                      <div class="cell-value">{{item.check_in}}</div>
+                      <div class="cell-value">{{item.checkIn | date}}</div>
                     </td>
                     <td class="name-cell">                                            
-                      <div class="cell-value">{{item.room_name}}</div>                                        
+                      <div class="cell-value">{{item.roomName}}</div>                                        
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.guest_name}}</div>
+                      <div class="cell-value">{{item.guestName}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.vip}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.check_out}}</div>                                        
+                      <div class="cell-value">{{item.checkOut | date}}</div>                                        
                     </td>                                        
                     <td class="name-cell">                                            
-                      <div class="cell-value">{{item.experience_category}}</div>
+                      <div class="cell-value">{{item.experienceCategory}}</div>
                     </td>
                     <td class="name-cell">
                       <div class="cell-value">{{item.solveStatus}}</div>

@@ -132,7 +132,7 @@ export class ExperienceComponent implements OnInit {
 
   selectItem(item: ExperienceDetailsViewModel) {
     this.ExperienceManagementClient.getById(new GetExperienceDetailsQuery({ id: item.id })).subscribe(response => {
-      console.log(response)
+      // console.log(response)
     })
   }
 
