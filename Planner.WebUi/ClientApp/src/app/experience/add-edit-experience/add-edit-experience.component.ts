@@ -225,19 +225,19 @@ export class AddEditExperienceComponent implements OnInit {
 
     this.foundForm = this.formBuilder.group({
       hotelId: [this.item.id],
-      guest_name: [this.item.guestName],
-      room_name: [this.item.roomName],
-      check_in: [this.item.checkIn],
-      check_out: [this.item.checkOut],
-      reservation_id: [this.item.reservationId],
+      guestName: [this.item.guestName],
+      roomName: [this.item.roomName],
+      checkIn: [this.item.checkIn],
+      checkOut: [this.item.checkOut],
+      reservationId: [this.item.reservationId],
       vip: [this.item.vip],
-      experience_email: [this.item.email],
-      experience_phonenumber: [this.item.phoneNumber],
-      experience_type: [this.item.type],
-      experience_category: [this.item.experienceCategoryId],
+      experienceEmail: [this.item.email],
+      experiencePhoneNumber: [this.item.phoneNumber],
+      experienceType: [this.item.type],
+      experienceCategory: [this.item.experienceCategoryId],
       actions: [this.item.actions],
-      internal_follow_up: [this.item.internalFollowUp],
-      compensation_name: [this.item.experienceCompensationId],
+      internalFollowUp: [this.item.internalFollowUp],
+      compensationName: [this.item.experienceCompensationId],
       description: [this.item.description],
       solveStatus: [1],
       clientStatus: [1],
@@ -254,20 +254,20 @@ export class AddEditExperienceComponent implements OnInit {
     this.isSolveStatus = true;
     this.isClientStatus = true;
 
-    this.foundForm.controls.guest_name.setValue(this.item.guestName);
-    this.foundForm.controls.room_name.setValue(this.item.roomName);
-    this.foundForm.controls.check_in.setValue(this.item.checkIn);
-    this.foundForm.controls.check_out.setValue(this.item.checkOut);
-    this.foundForm.controls.reservation_id.setValue(this.item.reservationId);
+    this.foundForm.controls.guestName.setValue(this.item.guestName);
+    this.foundForm.controls.roomName.setValue(this.item.roomName);
+    this.foundForm.controls.checkIn.setValue(this.item.checkIn);
+    this.foundForm.controls.checkOut.setValue(this.item.checkOut);
+    this.foundForm.controls.reservationId.setValue(this.item.reservationId);
     this.foundForm.controls.vip.setValue(this.item.vip);
-    this.foundForm.controls.experience_email.setValue(this.item.email);
-    this.foundForm.controls.experience_phonenumber.setValue(this.item.phoneNumber);
+    this.foundForm.controls.experienceEmail.setValue(this.item.email);
+    this.foundForm.controls.experiencePhoneNumber.setValue(this.item.phoneNumber);
     this.foundForm.controls.description.setValue(this.item.description);
     this.foundForm.controls.actions.setValue(this.item.actions);
-    this.foundForm.controls.internal_follow_up.setValue(this.item.internalFollowUp);
-    this.foundForm.controls.compensation_name.setValue(this.item.experienceCompensationId);
-    this.foundForm.controls.experience_category.setValue(this.item.experienceCategoryId);
-    this.foundForm.controls.experience_type.setValue(this.item.type);
+    this.foundForm.controls.internalFollowUp.setValue(this.item.internalFollowUp);
+    this.foundForm.controls.compensationName.setValue(this.item.experienceCompensationId);
+    this.foundForm.controls.experienceCategory.setValue(this.item.experienceCategoryId);
+    this.foundForm.controls.experienceType.setValue(this.item.type);
   }
 
   get f() {
@@ -311,19 +311,19 @@ export class AddEditExperienceComponent implements OnInit {
 
 
     let insertRequest = new InsertExperienceCommand({
-      guestName: formValues.guest_name,
-      roomName: formValues.room_name,
-      checkIn: formValues.check_in,
-      checkOut: formValues.check_out,
-      reservationId: formValues.reservation_id,
+      guestName: formValues.guestName,
+      roomName: formValues.roomName,
+      checkIn: formValues.checkIn,
+      checkOut: formValues.checkOut,
+      reservationId: formValues.reservationId,
       vip: formValues.vip,
-      email: formValues.experience_email,
-      phoneNumber: formValues.experience_phonenumber,
-      type: formValues.experience_type,
-      experienceCategoryId: formValues.experience_category,
+      email: formValues.experienceEmail,
+      phoneNumber: formValues.experiencePhoneNumber,
+      type: formValues.experienceType,
+      experienceCategoryId: formValues.experienceCategory,
       actions: formValues.actions,
-      internalFollowUp: formValues.internal_follow_up,
-      experienceCompensationId: formValues.compensation_name,
+      internalFollowUp: formValues.internalFollowUp,
+      experienceCompensationId: formValues.compensationName,
       description: formValues.description,
     });
 
