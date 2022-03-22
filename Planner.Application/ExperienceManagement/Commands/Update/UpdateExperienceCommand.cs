@@ -78,6 +78,7 @@ namespace Planner.Application.ExperienceManagement.Commands.Update
 			experience.Type = request.Type;
 			experience.Description = request.Description;
 			experience.Actions = request.Actions;
+			experience.Group = request.Group;
 			experience.InternalFollowUp = request.InternalFollowUp;
 			experience.ExperienceCategoryId = request.ExperienceCategoryId;
 			experience.ExperienceCompensationId = request.ExperienceCompensationId;

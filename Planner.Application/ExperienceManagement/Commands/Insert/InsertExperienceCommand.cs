@@ -72,6 +72,7 @@ namespace Planner.Application.ExperienceManagement.Commands.Insert
 				Type = request.Type,
 				Description = request.Description,
 				Actions = request.Actions,
+				Group = request.Group,
 				InternalFollowUp = request.InternalFollowUp,
 				ExperienceCategoryId = request.ExperienceCategoryId,
 				ExperienceCompensationId = request.ExperienceCompensationId,

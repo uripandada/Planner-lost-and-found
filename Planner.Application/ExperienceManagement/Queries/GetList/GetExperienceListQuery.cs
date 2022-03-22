@@ -44,6 +44,7 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 		public string Keywords { get; set; }
 		public DateTime? DateFrom { get; set; }
 		public DateTime? DateTo { get; set; }
+		public string SortKey { get; set; }
 	}
 
 	public class GetExperienceListQueryHandler : GetPageRequest, IRequestHandler<GetExperienceListQuery, PageOf<ExperienceGridItemViewModel>>, IAmWebApplicationHandler
@@ -71,6 +72,21 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 			if (request.Skip > 0 || request.Take > 0)
 			{
 				count = await query.CountAsync();
+			}
+
+			if (request.SortKey.IsNotNull())
+			{
+				switch (request.SortKey)
+				{
+					case "CREATED_AT_DESC":
+						query = query.OrderBy(q => q.CheckIn);
+						break;
+					case "CREATED_AT_ASC":
+						query = query.OrderByDescending(q => q.CheckIn);
+						break;
+					default:
+						break;
+				}
 			}
 
 			if (request.DateFrom.HasValue)
@@ -117,6 +133,7 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 					Type = d.Type,
 					Description = d.Description,
 					Actions = d.Actions,
+					Group = d.Group,
 					InternalFollowUp = d.InternalFollowUp,
 					ExperienceCategoryId = d.ExperienceCategoryId,
 					ExperienceCategory = this._databaseContext.ExperienceCategories.Where(x => x.Id == d.ExperienceCategoryId).Single(),

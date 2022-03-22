@@ -74,6 +74,7 @@ namespace Planner.Application.ExperienceManagement.Queries.GetById
 				Type = experience.Type,
 				Description = experience.Description,
 				Actions = experience.Actions,
+				Group = experience.Group,
 				InternalFollowUp = experience.InternalFollowUp,
 				ExperienceCategoryId = experience.ExperienceCategoryId,
 				ExperienceCompensationId = experience.ExperienceCompensationId,

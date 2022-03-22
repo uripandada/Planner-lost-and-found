@@ -30275,6 +30275,7 @@ export class GetExperienceListQuery extends GetPageRequest implements IGetExperi
     keywords?: string | null;
     dateFrom?: moment.Moment | null;
     dateTo?: moment.Moment | null;
+    sortKey?: string | null;
 
     constructor(data?: IGetExperienceListQuery) {
         super(data);
@@ -30286,6 +30287,7 @@ export class GetExperienceListQuery extends GetPageRequest implements IGetExperi
             this.keywords = _data["keywords"] !== undefined ? _data["keywords"] : <any>null;
             this.dateFrom = _data["dateFrom"] ? moment(_data["dateFrom"].toString()) : <any>null;
             this.dateTo = _data["dateTo"] ? moment(_data["dateTo"].toString()) : <any>null;
+            this.sortKey = _data["sortKey"] !== undefined ? _data["sortKey"] : <any>null;
         }
     }
 
@@ -30301,6 +30303,7 @@ export class GetExperienceListQuery extends GetPageRequest implements IGetExperi
         data["keywords"] = this.keywords !== undefined ? this.keywords : <any>null;
         data["dateFrom"] = this.dateFrom ? this.dateFrom.toISOString() : <any>null;
         data["dateTo"] = this.dateTo ? this.dateTo.toISOString() : <any>null;
+        data["sortKey"] = this.sortKey !== undefined ? this.sortKey : <any>null;
         super.toJSON(data);
         return data; 
     }
@@ -30310,6 +30313,7 @@ export interface IGetExperienceListQuery extends IGetPageRequest {
     keywords?: string | null;
     dateFrom?: moment.Moment | null;
     dateTo?: moment.Moment | null;
+    sortKey?: string | null;
 }
 
 export class ExperienceDetailsViewModel implements IExperienceDetailsViewModel {
