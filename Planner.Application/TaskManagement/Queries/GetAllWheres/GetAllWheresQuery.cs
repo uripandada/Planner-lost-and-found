@@ -65,7 +65,7 @@ namespace Planner.Application.TaskManagement.Queries.GetAllWheres
 			
 			if (request.IgnoreFutureReservations)            			
 			{								
-				reservationsQuery = reservationsQuery.Where(r => r.CheckIn < DateTime.Today && r.CheckOut >= DateTime.Today);				
+				reservationsQuery = reservationsQuery.Where(r => r.CheckIn < DateTime.Today && r.CheckOut >= DateTime.Today).Where(r => r.ReservationStatusKey == "DEP");				
 				reservationsQuery = reservationsQuery.Where(r => r.Room.BuildingId.HasValue && r.Room.FloorId.HasValue);		
 			}
 

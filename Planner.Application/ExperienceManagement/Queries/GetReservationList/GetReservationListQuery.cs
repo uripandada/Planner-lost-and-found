@@ -12,11 +12,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Planner.Application.ReservationManagement.Queries.GetList
+namespace Planner.Application.ReservationManagement.Queries.GetReservationList
 {
 	public class ReservationViewModel
 	{
-		
+		public string Id { get; set; }
+		public string RoomName { get; set; }
+		public string GuestName { get; set; }
+		public DateTime? CheckIn { get; set; }
+		public DateTime? CheckOut { get; set; }
+		public string Vip { get; set; }
+		public string Group { get; set; }
 	}
 
 	public class GetReservationListQuery : GetPageRequest, IRequest<PageOf<ReservationViewModel>>
@@ -38,6 +44,13 @@ namespace Planner.Application.ReservationManagement.Queries.GetList
 		{
 			var query = this._databaseContext.Reservations.AsQueryable();
 
+			var reservationStautuses = new List<string>();
+			reservationStautuses.Add("STAY");
+			reservationStautuses.Add("DEP");
+
+			query = query.Where(r => reservationStautuses.Contains(r.ReservationStatusKey));
+			query = query.Where(r => r.CheckIn < DateTime.Today && r.CheckOut >= DateTime.Today).Where(r => r.Room.Category != null && !r.Room.Category.IsPrivate && r.Room.BuildingId != null && r.Room.FloorId != null).OrderBy(r=> r.RoomName);
+			
 			var reservations = await query.ToArrayAsync();
 
 			var response = new PageOf<ReservationViewModel>
@@ -45,7 +58,13 @@ namespace Planner.Application.ReservationManagement.Queries.GetList
 				TotalNumberOfItems = reservations.Length,
 				Items = reservations.Select(d => new ReservationViewModel
 				{
-					
+					Id = d.Id,
+					RoomName = d.RoomName,
+					GuestName = d.GuestName,
+					CheckIn = d.CheckIn,
+					CheckOut = d.CheckOut,
+					Vip = d.Vip,
+					Group = d.Group
 				}).ToArray()
 			};
 

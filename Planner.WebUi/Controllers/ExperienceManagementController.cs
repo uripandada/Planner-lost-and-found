@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Planner.Application.ExperienceManagement.Queries.GetById;
 using Planner.Application.ExperienceManagement.Queries.GetList;
 using Planner.Application.ExperienceManagement.Commands.Update;
+using Planner.Application.ReservationManagement.Queries.GetReservationList;
 
 namespace Planner.WebUi.Controllers
 {
@@ -17,6 +18,12 @@ namespace Planner.WebUi.Controllers
 	{
         [HttpPost]
         public async Task<PageOf<ExperienceGridItemViewModel>> GetList([FromBody] GetExperienceListQuery request)
+        {
+            return await this.Mediator.Send(request);
+        }
+
+        [HttpPost]
+        public async Task<PageOf<ReservationViewModel>> GetReservationList([FromBody] GetReservationListQuery request)
         {
             return await this.Mediator.Send(request);
         }

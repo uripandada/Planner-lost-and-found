@@ -3338,6 +3338,58 @@ export class ExperienceManagementClient {
         return _observableOf<PageOfOfExperienceGridItemViewModel>(<any>null);
     }
 
+    getReservationList(request: GetReservationListQuery): Observable<PageOfOfReservationViewModel> {
+        let url_ = this.baseUrl + "/api/ExperienceManagement/GetReservationList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReservationList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReservationList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageOfOfReservationViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageOfOfReservationViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetReservationList(response: HttpResponseBase): Observable<PageOfOfReservationViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PageOfOfReservationViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageOfOfReservationViewModel>(<any>null);
+    }
+
     getById(request: GetExperienceDetailsQuery): Observable<ExperienceDetailsViewModel> {
         let url_ = this.baseUrl + "/api/ExperienceManagement/GetById";
         url_ = url_.replace(/[?&]$/, "");
@@ -30314,6 +30366,141 @@ export interface IGetExperienceListQuery extends IGetPageRequest {
     dateFrom?: moment.Moment | null;
     dateTo?: moment.Moment | null;
     sortKey?: string | null;
+}
+
+export class PageOfOfReservationViewModel implements IPageOfOfReservationViewModel {
+    items?: ReservationViewModel[] | null;
+    totalNumberOfItems!: number;
+
+    constructor(data?: IPageOfOfReservationViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ReservationViewModel.fromJS(item));
+            }
+            this.totalNumberOfItems = _data["totalNumberOfItems"] !== undefined ? _data["totalNumberOfItems"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PageOfOfReservationViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageOfOfReservationViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalNumberOfItems"] = this.totalNumberOfItems !== undefined ? this.totalNumberOfItems : <any>null;
+        return data; 
+    }
+}
+
+export interface IPageOfOfReservationViewModel {
+    items?: ReservationViewModel[] | null;
+    totalNumberOfItems: number;
+}
+
+export class ReservationViewModel implements IReservationViewModel {
+    id?: string | null;
+    roomName?: string | null;
+    guestName?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    vip?: string | null;
+    group?: string | null;
+
+    constructor(data?: IReservationViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.roomName = _data["roomName"] !== undefined ? _data["roomName"] : <any>null;
+            this.guestName = _data["guestName"] !== undefined ? _data["guestName"] : <any>null;
+            this.checkIn = _data["checkIn"] ? moment(_data["checkIn"].toString()) : <any>null;
+            this.checkOut = _data["checkOut"] ? moment(_data["checkOut"].toString()) : <any>null;
+            this.vip = _data["vip"] !== undefined ? _data["vip"] : <any>null;
+            this.group = _data["group"] !== undefined ? _data["group"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): ReservationViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReservationViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["roomName"] = this.roomName !== undefined ? this.roomName : <any>null;
+        data["guestName"] = this.guestName !== undefined ? this.guestName : <any>null;
+        data["checkIn"] = this.checkIn ? this.checkIn.toISOString() : <any>null;
+        data["checkOut"] = this.checkOut ? this.checkOut.toISOString() : <any>null;
+        data["vip"] = this.vip !== undefined ? this.vip : <any>null;
+        data["group"] = this.group !== undefined ? this.group : <any>null;
+        return data; 
+    }
+}
+
+export interface IReservationViewModel {
+    id?: string | null;
+    roomName?: string | null;
+    guestName?: string | null;
+    checkIn?: moment.Moment | null;
+    checkOut?: moment.Moment | null;
+    vip?: string | null;
+    group?: string | null;
+}
+
+export class GetReservationListQuery extends GetPageRequest implements IGetReservationListQuery {
+
+    constructor(data?: IGetReservationListQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+    }
+
+    static fromJS(data: any): GetReservationListQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReservationListQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IGetReservationListQuery extends IGetPageRequest {
 }
 
 export class ExperienceDetailsViewModel implements IExperienceDetailsViewModel {
