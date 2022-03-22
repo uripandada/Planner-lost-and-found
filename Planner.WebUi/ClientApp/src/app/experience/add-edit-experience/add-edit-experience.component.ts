@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ResolvedReflectiveFactory, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
-  ExperienceCategoryGridItemViewModel,
   ExperienceDetailsViewModel,
   ExperienceManagementClient,
   ExperienceCategoryManagementClient,
@@ -12,7 +10,6 @@ import {
   ExtendedWhereData,
   HotelItemData,
   InsertExperienceCommand,
-  TaskWhereData,
   GetListOfExperienceCategoriesQuery,
   GetPageOfExperienceCategoriesQuery,
   GetListExperienceCompensationsQuery,
@@ -42,8 +39,7 @@ export class AddEditExperienceComponent implements OnInit {
   @Output() cancelled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   myControl = new FormControl();
-  options: string[] = ['NAME1', 'NAME2', 'NAME3', 'NAME4', 'NAME5'];
-  filteredOptions: Observable<string[]>;
+  filteredOptions: Observable<ReservationViewModel[]>;
 
   public experienceCategory: Array<Select2OptionData>;
   public compensation: Array<Select2OptionData>;
@@ -71,7 +67,6 @@ export class AddEditExperienceComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private _route: ActivatedRoute,
     private experienceClient: ExperienceManagementClient,
     private experienceCategoryClient: ExperienceCategoryManagementClient,
     private experienceCompensationClient: ExperienceCompensationManagementClient,
@@ -127,22 +122,20 @@ export class AddEditExperienceComponent implements OnInit {
       this.compensationList.next(this.compensation)
     })
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value)),
-    );
-
     this.experienceClient.getReservationList(new GetReservationListQuery({take: 0, skip: 0})).subscribe(response => {
       this.reservationList.next(response.items);
+      this.filteredOptions = this.experienceForm.controls.guestName.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value)),
+      );
     })
     this.initForm();
-
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: any): ReservationViewModel[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.reservationList.value?.filter(option => option.guestName.toLowerCase().includes(filterValue));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -158,7 +151,8 @@ export class AddEditExperienceComponent implements OnInit {
     }
   }
 
-  getPosts(item: ReservationViewModel) {
+  setReservationValue(name: string) {
+    let item = this.reservationList.value.filter(res => res.guestName == name)[0];
     this.experienceForm.controls.guestName.setValue(item.guestName);
     this.experienceForm.controls.roomName.setValue(item.roomName);
     this.experienceForm.controls.checkIn.setValue(item.checkIn?.format('yyyy-MM-DD'));

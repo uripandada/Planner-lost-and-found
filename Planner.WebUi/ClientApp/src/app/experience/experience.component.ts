@@ -130,7 +130,6 @@ export class ExperienceComponent implements OnInit {
       keywords: this.filterForm.controls.keywords.value,
       sortKey: this.filterForm.controls.sortKey.value
     })).subscribe((response) => {
-      console.log(response.items);
       this.itemsList.next(response.items);
       this.totalNumber$.next(response.totalNumberOfItems);
       this.loadedNumber$.next(this.loadedNumber$.value + 20);

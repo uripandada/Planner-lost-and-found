@@ -45,8 +45,8 @@
                          matInput
                          formControlName="guestName"
                          [matAutocomplete]="auto">
-                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getPosts($event.option.value)'>
-                    <mat-option *ngFor="let option of reservationList | async" [value]="option">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='setReservationValue($event.option.value)'>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.guestName">
                       {{option.guestName}}
                     </mat-option>
                   </mat-autocomplete>
