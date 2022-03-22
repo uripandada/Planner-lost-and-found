@@ -1,11 +1,11 @@
 <ng-container *ngIf="item">
   <div class="major-column-title">
     <ng-container *ngIf="isCreateNew">Create a <b>new experience</b></ng-container>
-    <ng-container *ngIf="!isCreateNew">Edit Experience <b>{{ item.guest_name }}</b></ng-container>
+    <ng-container *ngIf="!isCreateNew">Edit Experience <b>{{ item.guestName }}</b></ng-container>
   </div>
   <div class="item-component-wrapper component-wrapper component-box">
     <div class="item-edit-wrapper">
-      <form [formGroup]="foundForm" (ngSubmit)="save()">
+      <form [formGroup]="experienceForm" (ngSubmit)="save()">
         <div class="item-edit">
 
           <input matInput formControlName="hotelId" type="text" hidden/>
@@ -13,19 +13,19 @@
           <div class="form-section">
             <div class="two-column-grid">
               <div class="experience-details-statuses">
-                <div [ngClass]="{'experience-details-status-item-change': isSolveStatus, 'experience-details-status-item': !isSolveStatus }">
-                  <mat-select formControlName="solveStatus" (selectionChange)="solveStatusSelectChanged()">
-                    <mat-option *ngFor="let solveStatus of solveStatuses" [value]="solveStatus.key">{{ solveStatus.value }}</mat-option>
+                <div [ngClass]="{'experience-details-status-item-change': isexperienceTicketStatus, 'experience-details-status-item': !isexperienceTicketStatus }">
+                  <mat-select formControlName="experienceTicketStatus" (selectionChange)="experienceTicketStatusSelectChanged()">
+                    <mat-option *ngFor="let experienceTicketStatus of experienceTicketStatuses" [value]="experienceTicketStatus.key">{{ experienceTicketStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div [ngClass]="{'experience-details-status-item-change': isClientStatus, 'experience-details-status-item': !isClientStatus }">
-                  <mat-select formControlName="clientStatus" (selectionChange)="clientStatusSelectChanged()">
-                    <mat-option *ngFor="let clientStatus of clientStatuses" [value]="clientStatus.key">{{ clientStatus.value }}</mat-option>
+                <div [ngClass]="{'experience-details-status-item-change': isexperienceClientRelationStatus, 'experience-details-status-item': !isexperienceClientRelationStatus }">
+                  <mat-select formControlName="experienceClientRelationStatus" (selectionChange)="experienceClientRelationStatusSelectChanged()">
+                    <mat-option *ngFor="let experienceClientRelationStatus of experienceClientRelationStatuses" [value]="experienceClientRelationStatus.key">{{ experienceClientRelationStatus.value }}</mat-option>
                   </mat-select>
                 </div>
-                <div [ngClass]="{'experience-details-status-item-change': isSolveStatus1, 'experience-details-status-item': !isSolveStatus1 }">
-                  <mat-select formControlName="solveStatus1" (valueChange)="solveStatusSelectChanged1($event)">
-                    <mat-option *ngFor="let solveStatus1 of solveStatuses1" [value]="solveStatus1.key">{{ solveStatus1.value }}</mat-option>
+                <div [ngClass]="{'experience-details-status-item-change': isexperienceResolutionStatus, 'experience-details-status-item': !isexperienceResolutionStatus }">
+                  <mat-select formControlName="experienceResolutionStatus" (valueChange)="experienceResolutionStatusSelectChanged($event)">
+                    <mat-option *ngFor="let experienceResolutionStatus of experienceResolutionStatuses" [value]="experienceResolutionStatus.key">{{ experienceResolutionStatus.value }}</mat-option>
                   </mat-select>
                 </div>
               </div>
@@ -66,8 +66,8 @@
                   <input matInput [matDatepicker]="datePickerCheckIn" formControlName="checkIn">
                   <mat-datepicker-toggle matSuffix [for]="datePickerCheckIn" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
                   <mat-datepicker #datePickerCheckIn></mat-datepicker>
-                  <mat-error class="error" *ngIf="canShowErrorMessage('check_in')">
-                    <span *ngIf="f.check_in.errors.required">Required</span>
+                  <mat-error class="error" *ngIf="canShowErrorMessage('checkIn')">
+                    <span *ngIf="f.checkIn.errors.required">Required</span>
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -77,8 +77,8 @@
                   <input matInput [matDatepicker]="datePickerCheckOut" formControlName="checkOut">
                   <mat-datepicker-toggle matSuffix [for]="datePickerCheckOut" [disableRipple]="true"><i class="icofont-calendar" matDatepickerToggleIcon></i></mat-datepicker-toggle>
                   <mat-datepicker #datePickerCheckOut></mat-datepicker>
-                  <mat-error class="error" *ngIf="canShowErrorMessage('check_out')">
-                    <span *ngIf="f.check_out.errors.required">Required</span>
+                  <mat-error class="error" *ngIf="canShowErrorMessage('checkOut')">
+                    <span *ngIf="f.checkOut.errors.required">Required</span>
                   </mat-error>
                 </mat-form-field>
               </div>

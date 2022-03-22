@@ -17,6 +17,11 @@ import { data } from 'jquery';
 })
 export class ExperienceComponent implements OnInit {
 
+  sorts = [
+    { key: 'CREATED_AT_DESC', value: 'Newest first' },
+    { key: 'CREATED_AT_ASC', value: 'Oldest first' },
+  ];
+
   filterForm: FormGroup;
   itemsList: BehaviorSubject<ExperienceGridItemViewModel[]> = new BehaviorSubject<ExperienceGridItemViewModel[]>(null);
   selectedItem: BehaviorSubject<ExperienceGridItemViewModel> = new BehaviorSubject<ExperienceGridItemViewModel>(null);
@@ -48,6 +53,7 @@ export class ExperienceComponent implements OnInit {
   ngOnInit(): void {
 
     this.filterForm = this.formBuilder.group({
+      sortKey: ['CREATED_AT_DESC'],
       keywords: [''],
       dateFrom: [''],
       dateTo: [''],
@@ -122,6 +128,7 @@ export class ExperienceComponent implements OnInit {
       dateFrom: this.filterForm.controls.dateFrom.value,
       dateTo: this.filterForm.controls.dateTo.value,
       keywords: this.filterForm.controls.keywords.value,
+      sortKey: this.filterForm.controls.sortKey.value
     })).subscribe((response) => {
       console.log(response.items);
       this.itemsList.next(response.items);

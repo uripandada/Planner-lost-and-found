@@ -48,7 +48,7 @@ export class AddEditExperienceComponent implements OnInit {
   public experienceCategory: Array<Select2OptionData>;
   public compensation: Array<Select2OptionData>;
 
-  foundForm: FormGroup;
+  experienceForm: FormGroup;
 
   categoriesList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
   compensationList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
@@ -60,12 +60,9 @@ export class AddEditExperienceComponent implements OnInit {
   statusChange$: Subscription;
   statusFlag: number;
 
-  selectedSolveStatus: string;
-  selectedClientStatus: string;
-
-  isSolveStatus: boolean;
-  isClientStatus: boolean;
-  isSolveStatus1: boolean;
+  isexperienceTicketStatus: boolean;
+  isexperienceClientRelationStatus: boolean;
+  isexperienceResolutionStatus: boolean;
 
   hotels: HotelItemData[] = [];
 
@@ -87,7 +84,7 @@ export class AddEditExperienceComponent implements OnInit {
     this.experienceClientRelationStatuses.push({ key: ExperienceClientRelationStatus.MeetWithClient, value: "Meet with client" });
     this.experienceClientRelationStatuses.push({ key: ExperienceClientRelationStatus.MeetWithClientAtCO, value: "Meet with Client at C/O(avecArchiveiuto)" });
 
-    this.experienceResolutionStatuses.push({ key: ExperienceResolutionStatus.None, value: "Resolved" });
+    this.experienceResolutionStatuses.push({ key: ExperienceResolutionStatus.None, value: "None" });
     this.experienceResolutionStatuses.push({ key: ExperienceResolutionStatus.Resolved, value: "Resolved" });
     this.experienceResolutionStatuses.push({ key: ExperienceResolutionStatus.Closed, value: "Closed" });
 
@@ -96,6 +93,7 @@ export class AddEditExperienceComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.experienceCategoryClient.getPageOfExperienceCategories(new GetPageOfExperienceCategoriesQuery({ skip: 0, take: 2000 })).subscribe(response => {
       this.experienceCategoryClient.getList(new GetListOfExperienceCategoriesQuery({name : ""})).subscribe(data => {
         this.experienceCategory = [];
@@ -117,6 +115,8 @@ export class AddEditExperienceComponent implements OnInit {
       })
     })
 
+    console.log(this.categoriesList);
+
     this.experienceCompensationClient.getList(new GetListExperienceCompensationsQuery({take:0, skip: 0})).subscribe(response => {
       this.compensation = [];
       response.items?.map(compensation => {
@@ -127,6 +127,8 @@ export class AddEditExperienceComponent implements OnInit {
       })
       this.compensationList.next(this.compensation)
     })
+
+    console.log(this.compensationList);
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -158,32 +160,36 @@ export class AddEditExperienceComponent implements OnInit {
     }
   }
 
-  solveStatusSelectChanged() {
-    this.isSolveStatus = true;
-    this.isClientStatus = false;
-    this.isSolveStatus1 = false;
+  experienceTicketStatusSelectChanged() {
+    this.isexperienceTicketStatus = true;
+    this.isexperienceClientRelationStatus = false;
+    this.isexperienceResolutionStatus = false;
   }
 
-  clientStatusSelectChanged() {
-    this.isSolveStatus = true;
-    this.isClientStatus = true;
-    this.isSolveStatus1 = false;
+  experienceClientRelationStatusSelectChanged() {
+    this.isexperienceTicketStatus = true;
+    this.isexperienceClientRelationStatus = true;
+    this.isexperienceResolutionStatus = false;
   }
 
-  solveStatusSelectChanged1(value:any) {
+  experienceResolutionStatusSelectChanged(value:any) {
     if ( value == this.experienceResolutionStatuses[0].key) {
-      this.isSolveStatus = true;
-      this.isClientStatus = true;
-      this.isSolveStatus1 = false;
+      this.isexperienceTicketStatus = true;
+      this.isexperienceClientRelationStatus = true;
+      this.isexperienceResolutionStatus = false;
     }else {
-      this.isSolveStatus = true;
-      this.isClientStatus = true;
-      this.isSolveStatus1 = true;
+      this.isexperienceTicketStatus = true;
+      this.isexperienceClientRelationStatus = true;
+      this.isexperienceResolutionStatus = true;
     }
   }
 
   initForm() {
-    this.foundForm = this.formBuilder.group({
+
+    this.isexperienceTicketStatus= true;
+    this.isexperienceClientRelationStatus= true;
+    
+    this.experienceForm = this.formBuilder.group({
       hotelId: [this.item.id],
       guestName: [this.item.guestName],
       roomName: [this.item.roomName],
@@ -199,46 +205,50 @@ export class AddEditExperienceComponent implements OnInit {
       internalFollowUp: [this.item.internalFollowUp],
       compensationName: [this.item.experienceCompensationId],
       description: [this.item.description],
-      solveStatus: [1],
-      clientStatus: [1],
-      solveStatus1: [1],
-      group: [""]
+      experienceTicketStatus: [this.item.experienceTicketStatus],
+      experienceClientRelationStatus: [this.item.experienceClientRelationStatus],
+      experienceResolutionStatus: [this.item.experienceResolutionStatus],
+      group: [this.item.group]
     });
 
   }
 
   setFormData() {
-    this.isSolveStatus = true;
-    this.isClientStatus = true;
+    this.isexperienceTicketStatus = true;
+    this.isexperienceClientRelationStatus = true;
 
-    this.foundForm.controls.guestName.setValue(this.item.guestName);
-    this.foundForm.controls.roomName.setValue(this.item.roomName);
-    this.foundForm.controls.checkIn.setValue(this.item.checkIn?.format('yyyy-MM-DD'));
-    this.foundForm.controls.checkOut.setValue(this.item.checkOut?.format('yyyy-MM-DD'));
-    this.foundForm.controls.reservationId.setValue(this.item.reservationId);
-    this.foundForm.controls.vip.setValue(this.item.vip);
-    this.foundForm.controls.experienceEmail.setValue(this.item.email);
-    this.foundForm.controls.experiencePhoneNumber.setValue(this.item.phoneNumber);
-    this.foundForm.controls.description.setValue(this.item.description);
-    this.foundForm.controls.actions.setValue(this.item.actions);
-    this.foundForm.controls.internalFollowUp.setValue(this.item.internalFollowUp);
-    this.foundForm.controls.compensationName.setValue(this.item.experienceCompensationId);
-    this.foundForm.controls.experienceCategory.setValue(this.item.experienceCategoryId);
-    this.foundForm.controls.experienceType.setValue(this.item.type);
+    this.experienceForm.controls.guestName.setValue(this.item.guestName);
+    this.experienceForm.controls.roomName.setValue(this.item.roomName);
+    this.experienceForm.controls.checkIn.setValue(this.item.checkIn?.format('yyyy-MM-DD'));
+    this.experienceForm.controls.checkOut.setValue(this.item.checkOut?.format('yyyy-MM-DD'));
+    this.experienceForm.controls.reservationId.setValue(this.item.reservationId);
+    this.experienceForm.controls.vip.setValue(this.item.vip);
+    this.experienceForm.controls.experienceEmail.setValue(this.item.email);
+    this.experienceForm.controls.experiencePhoneNumber.setValue(this.item.phoneNumber);
+    this.experienceForm.controls.description.setValue(this.item.description);
+    this.experienceForm.controls.actions.setValue(this.item.actions);
+    this.experienceForm.controls.internalFollowUp.setValue(this.item.internalFollowUp);
+    this.experienceForm.controls.compensationName.setValue(this.item.experienceCompensationId);
+    this.experienceForm.controls.experienceCategory.setValue(this.item.experienceCategoryId);
+    this.experienceForm.controls.experienceType.setValue(this.item.type);
+    this.experienceForm.controls.experienceTicketStatus.setValue(this.item.experienceTicketStatus);
+    this.experienceForm.controls.experienceClientRelationStatus.setValue(this.item.experienceClientRelationStatus);
+    this.experienceForm.controls.experienceResolutionStatus.setValue(this.item.experienceResolutionStatus);
+    this.experienceForm.controls.group.setValue(this.item.group);
   }
 
   get f() {
-    return this.foundForm.controls;
+    return this.experienceForm.controls;
   }
 
   save() {
-    this.foundForm.markAsTouched({ onlySelf: false });
-    if (this.foundForm?.invalid) {
+    this.experienceForm.markAsTouched({ onlySelf: false });
+    if (this.experienceForm?.invalid) {
       this.toastr.error("You have to fix invalid form fields before you can continue.");
       return;
     }
 
-    let formValues = this.foundForm.getRawValue();
+    let formValues = this.experienceForm.getRawValue();
 
     let insertRequest = new InsertExperienceCommand({
       guestName: formValues.guestName,
@@ -257,9 +267,11 @@ export class AddEditExperienceComponent implements OnInit {
       description: formValues.description,
       group: formValues.group,
       experienceTicketStatus: formValues.experienceTicketStatus,
-      experienceClientRelationStatus: formValues.experienceResolutionStatus,
+      experienceClientRelationStatus: formValues.experienceClientRelationStatus,
       experienceResolutionStatus: formValues.experienceResolutionStatus
     });
+
+    console.log(insertRequest);
 
     if (this.item.id === null) {
 
@@ -305,11 +317,11 @@ export class AddEditExperienceComponent implements OnInit {
   }
 
   public canShowErrorMessage(control: string,): boolean {
-    const foundForm = this.foundForm as FormGroup;
-    if (foundForm.controls[control]) {
+    const experienceForm = this.experienceForm as FormGroup;
+    if (experienceForm.controls[control]) {
       return !!(
-        (foundForm.controls[control].touched || foundForm.touched) &&
-        foundForm.controls[control].errors
+        (experienceForm.controls[control].touched || experienceForm.touched) &&
+        experienceForm.controls[control].errors
       );
     } else {
       return false;

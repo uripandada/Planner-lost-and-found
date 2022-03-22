@@ -20,6 +20,15 @@
               <div class="item-filter-row-grid">
                 <div class="form-field-wrapper">
                   <mat-form-field appearance="outline" color="accent" class="full-width">
+                    <mat-select formControlName="sortKey" name="Open Date">
+                      <mat-option *ngFor="let sort of sorts" [value]="sort.key">
+                        {{sort.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper">
+                  <mat-form-field appearance="outline" color="accent" class="full-width">
                     <input formControlName="keywords" matInput placeholder="Filter items...">
                   </mat-form-field>
                 </div>
