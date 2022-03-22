@@ -5,6 +5,7 @@ using Planner.Application.Interfaces;
 using Planner.Common.Data;
 using Planner.Common.Extensions;
 using Planner.Domain.Entities;
+using Planner.Domain.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,10 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 		public ExperienceCategory ExperienceCategory { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
 		public ExperienceCompensation ExperienceCompensation { get; set; }
+		public string Group { get; set; }
+		public ExperienceTicketStatus ExperienceTicketStatus { get; set; }
+		public ExperienceClientRelationStatus ExperienceClientRelationStatus { get; set; }
+		public ExperienceResolutionStatus ExperienceResolutionStatus { get; set; }
 	}
 
 	public class GetExperienceListQuery : GetPageRequest, IRequest<PageOf<ExperienceGridItemViewModel>>
@@ -116,7 +121,10 @@ namespace Planner.Application.ExperienceManagement.Queries.GetList
 					ExperienceCategoryId = d.ExperienceCategoryId,
 					ExperienceCategory = this._databaseContext.ExperienceCategories.Where(x => x.Id == d.ExperienceCategoryId).Single(),
 					ExperienceCompensationId = d.ExperienceCompensationId,
-					ExperienceCompensation = this._databaseContext.ExperienceCompensations.Where(x => x.Id == d.ExperienceCompensationId).Single()
+					ExperienceCompensation = this._databaseContext.ExperienceCompensations.Where(x => x.Id == d.ExperienceCompensationId).Single(),
+					ExperienceTicketStatus = d.ExperienceTicketStatus,
+					ExperienceClientRelationStatus = d.ExperienceClientRelationStatus,
+					ExperienceResolutionStatus = d.ExperienceResolutionStatus
 				}).ToArray()
 			};
 

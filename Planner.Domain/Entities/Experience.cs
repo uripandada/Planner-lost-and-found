@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planner.Domain.Values;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,6 +24,10 @@ namespace Planner.Domain.Entities
 		public ExperienceCategory ExperienceCategory { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
 		public ExperienceCompensation ExperienceCompensation { get; set; }
+		public string Group { get; set; }
+		public ExperienceTicketStatus ExperienceTicketStatus { get; set; }
+		public ExperienceClientRelationStatus ExperienceClientRelationStatus { get; set; }
+		public ExperienceResolutionStatus ExperienceResolutionStatus { get; set; }
 
 		/// <summary>
 		/// Whether rooms with this category are public.

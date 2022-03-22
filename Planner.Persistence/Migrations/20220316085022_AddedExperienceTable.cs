@@ -23,6 +23,7 @@ namespace Planner.Persistence.Migrations
                     type = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "0"),
                     description = table.Column<string>(type: "text", nullable: true),
                     actions = table.Column<string>(type: "text", nullable: true),
+                    group = table.Column<string>(type: "text", nullable: true),
                     internal_follow_up = table.Column<string>(type: "text", nullable: true),
                     experience_category_id = table.Column<Guid>(type: "uuid", nullable: true),
                     experience_compensation_id = table.Column<Guid>(type: "uuid", nullable: true),

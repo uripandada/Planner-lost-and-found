@@ -52,6 +52,11 @@ namespace Planner.Persistence.Migrations
                 type: "uuid",
                 nullable: true);
 
+            migrationBuilder.CreateIndex(
+                name: "ix_lost_and_founds_lost_and_found_category_id",
+                table: "lost_and_founds",
+                column: "lost_and_found_category_id");
+
             migrationBuilder.AddForeignKey(
                 name: "fk_lost_and_founds_lost_and_found_categories_lost_and_found_cat~",
                 table: "lost_and_founds",
@@ -65,6 +70,10 @@ namespace Planner.Persistence.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "fk_lost_and_founds_lost_and_found_categories_lost_and_found_cat~",
+                table: "lost_and_founds");
+
+            migrationBuilder.DropIndex(
+                name: "ix_lost_and_founds_lost_and_found_category_id",
                 table: "lost_and_founds");
 
             migrationBuilder.DropColumn(

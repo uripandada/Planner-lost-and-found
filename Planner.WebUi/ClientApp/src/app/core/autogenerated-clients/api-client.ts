@@ -23721,6 +23721,10 @@ export class ExperienceGridItemViewModel implements IExperienceGridItemViewModel
     experienceCategory?: ExperienceCategory | null;
     experienceCompensationId!: string;
     experienceCompensation?: ExperienceCompensation | null;
+    group?: string | null;
+    experienceTicketStatus!: ExperienceTicketStatus;
+    experienceClientRelationStatus!: ExperienceClientRelationStatus;
+    experienceResolutionStatus!: ExperienceResolutionStatus;
 
     constructor(data?: IExperienceGridItemViewModel) {
         if (data) {
@@ -23750,6 +23754,10 @@ export class ExperienceGridItemViewModel implements IExperienceGridItemViewModel
             this.experienceCategory = _data["experienceCategory"] ? ExperienceCategory.fromJS(_data["experienceCategory"]) : <any>null;
             this.experienceCompensationId = _data["experienceCompensationId"] !== undefined ? _data["experienceCompensationId"] : <any>null;
             this.experienceCompensation = _data["experienceCompensation"] ? ExperienceCompensation.fromJS(_data["experienceCompensation"]) : <any>null;
+            this.group = _data["group"] !== undefined ? _data["group"] : <any>null;
+            this.experienceTicketStatus = _data["experienceTicketStatus"] !== undefined ? _data["experienceTicketStatus"] : <any>null;
+            this.experienceClientRelationStatus = _data["experienceClientRelationStatus"] !== undefined ? _data["experienceClientRelationStatus"] : <any>null;
+            this.experienceResolutionStatus = _data["experienceResolutionStatus"] !== undefined ? _data["experienceResolutionStatus"] : <any>null;
         }
     }
 
@@ -23779,6 +23787,10 @@ export class ExperienceGridItemViewModel implements IExperienceGridItemViewModel
         data["experienceCategory"] = this.experienceCategory ? this.experienceCategory.toJSON() : <any>null;
         data["experienceCompensationId"] = this.experienceCompensationId !== undefined ? this.experienceCompensationId : <any>null;
         data["experienceCompensation"] = this.experienceCompensation ? this.experienceCompensation.toJSON() : <any>null;
+        data["group"] = this.group !== undefined ? this.group : <any>null;
+        data["experienceTicketStatus"] = this.experienceTicketStatus !== undefined ? this.experienceTicketStatus : <any>null;
+        data["experienceClientRelationStatus"] = this.experienceClientRelationStatus !== undefined ? this.experienceClientRelationStatus : <any>null;
+        data["experienceResolutionStatus"] = this.experienceResolutionStatus !== undefined ? this.experienceResolutionStatus : <any>null;
         return data; 
     }
 }
@@ -23801,6 +23813,10 @@ export interface IExperienceGridItemViewModel {
     experienceCategory?: ExperienceCategory | null;
     experienceCompensationId: string;
     experienceCompensation?: ExperienceCompensation | null;
+    group?: string | null;
+    experienceTicketStatus: ExperienceTicketStatus;
+    experienceClientRelationStatus: ExperienceClientRelationStatus;
+    experienceResolutionStatus: ExperienceResolutionStatus;
 }
 
 export abstract class ChangeTrackingBaseEntity implements IChangeTrackingBaseEntity {
@@ -30239,6 +30255,22 @@ export interface IExperienceCompensation extends IChangeTrackingBaseEntity {
     currency?: string | null;
 }
 
+export enum ExperienceTicketStatus {
+    Pending = 0,
+}
+
+export enum ExperienceClientRelationStatus {
+    NoClientAction = 0,
+    MeetWithClient = 1,
+    MeetWithClientAtCO = 2,
+}
+
+export enum ExperienceResolutionStatus {
+    None = 0,
+    Resolved = 1,
+    Closed = 2,
+}
+
 export class GetExperienceListQuery extends GetPageRequest implements IGetExperienceListQuery {
     keywords?: string | null;
     dateFrom?: moment.Moment | null;
@@ -30298,6 +30330,10 @@ export class ExperienceDetailsViewModel implements IExperienceDetailsViewModel {
     experienceCategory?: ExperienceCategory | null;
     experienceCompensationId!: string;
     experienceCompensation?: ExperienceCompensation | null;
+    group?: string | null;
+    experienceTicketStatus!: ExperienceTicketStatus;
+    experienceClientRelationStatus!: ExperienceClientRelationStatus;
+    experienceResolutionStatus!: ExperienceResolutionStatus;
 
     constructor(data?: IExperienceDetailsViewModel) {
         if (data) {
@@ -30327,6 +30363,10 @@ export class ExperienceDetailsViewModel implements IExperienceDetailsViewModel {
             this.experienceCategory = _data["experienceCategory"] ? ExperienceCategory.fromJS(_data["experienceCategory"]) : <any>null;
             this.experienceCompensationId = _data["experienceCompensationId"] !== undefined ? _data["experienceCompensationId"] : <any>null;
             this.experienceCompensation = _data["experienceCompensation"] ? ExperienceCompensation.fromJS(_data["experienceCompensation"]) : <any>null;
+            this.group = _data["group"] !== undefined ? _data["group"] : <any>null;
+            this.experienceTicketStatus = _data["experienceTicketStatus"] !== undefined ? _data["experienceTicketStatus"] : <any>null;
+            this.experienceClientRelationStatus = _data["experienceClientRelationStatus"] !== undefined ? _data["experienceClientRelationStatus"] : <any>null;
+            this.experienceResolutionStatus = _data["experienceResolutionStatus"] !== undefined ? _data["experienceResolutionStatus"] : <any>null;
         }
     }
 
@@ -30356,6 +30396,10 @@ export class ExperienceDetailsViewModel implements IExperienceDetailsViewModel {
         data["experienceCategory"] = this.experienceCategory ? this.experienceCategory.toJSON() : <any>null;
         data["experienceCompensationId"] = this.experienceCompensationId !== undefined ? this.experienceCompensationId : <any>null;
         data["experienceCompensation"] = this.experienceCompensation ? this.experienceCompensation.toJSON() : <any>null;
+        data["group"] = this.group !== undefined ? this.group : <any>null;
+        data["experienceTicketStatus"] = this.experienceTicketStatus !== undefined ? this.experienceTicketStatus : <any>null;
+        data["experienceClientRelationStatus"] = this.experienceClientRelationStatus !== undefined ? this.experienceClientRelationStatus : <any>null;
+        data["experienceResolutionStatus"] = this.experienceResolutionStatus !== undefined ? this.experienceResolutionStatus : <any>null;
         return data; 
     }
 }
@@ -30378,6 +30422,10 @@ export interface IExperienceDetailsViewModel {
     experienceCategory?: ExperienceCategory | null;
     experienceCompensationId: string;
     experienceCompensation?: ExperienceCompensation | null;
+    group?: string | null;
+    experienceTicketStatus: ExperienceTicketStatus;
+    experienceClientRelationStatus: ExperienceClientRelationStatus;
+    experienceResolutionStatus: ExperienceResolutionStatus;
 }
 
 export class GetExperienceDetailsQuery implements IGetExperienceDetailsQuery {
@@ -30431,6 +30479,10 @@ export class InsertExperienceCommand implements IInsertExperienceCommand {
     internalFollowUp?: string | null;
     experienceCategoryId!: string;
     experienceCompensationId!: string;
+    group?: string | null;
+    experienceTicketStatus!: ExperienceTicketStatus;
+    experienceClientRelationStatus!: ExperienceClientRelationStatus;
+    experienceResolutionStatus!: ExperienceResolutionStatus;
 
     constructor(data?: IInsertExperienceCommand) {
         if (data) {
@@ -30457,6 +30509,10 @@ export class InsertExperienceCommand implements IInsertExperienceCommand {
             this.internalFollowUp = _data["internalFollowUp"] !== undefined ? _data["internalFollowUp"] : <any>null;
             this.experienceCategoryId = _data["experienceCategoryId"] !== undefined ? _data["experienceCategoryId"] : <any>null;
             this.experienceCompensationId = _data["experienceCompensationId"] !== undefined ? _data["experienceCompensationId"] : <any>null;
+            this.group = _data["group"] !== undefined ? _data["group"] : <any>null;
+            this.experienceTicketStatus = _data["experienceTicketStatus"] !== undefined ? _data["experienceTicketStatus"] : <any>null;
+            this.experienceClientRelationStatus = _data["experienceClientRelationStatus"] !== undefined ? _data["experienceClientRelationStatus"] : <any>null;
+            this.experienceResolutionStatus = _data["experienceResolutionStatus"] !== undefined ? _data["experienceResolutionStatus"] : <any>null;
         }
     }
 
@@ -30483,6 +30539,10 @@ export class InsertExperienceCommand implements IInsertExperienceCommand {
         data["internalFollowUp"] = this.internalFollowUp !== undefined ? this.internalFollowUp : <any>null;
         data["experienceCategoryId"] = this.experienceCategoryId !== undefined ? this.experienceCategoryId : <any>null;
         data["experienceCompensationId"] = this.experienceCompensationId !== undefined ? this.experienceCompensationId : <any>null;
+        data["group"] = this.group !== undefined ? this.group : <any>null;
+        data["experienceTicketStatus"] = this.experienceTicketStatus !== undefined ? this.experienceTicketStatus : <any>null;
+        data["experienceClientRelationStatus"] = this.experienceClientRelationStatus !== undefined ? this.experienceClientRelationStatus : <any>null;
+        data["experienceResolutionStatus"] = this.experienceResolutionStatus !== undefined ? this.experienceResolutionStatus : <any>null;
         return data; 
     }
 }
@@ -30502,6 +30562,10 @@ export interface IInsertExperienceCommand {
     internalFollowUp?: string | null;
     experienceCategoryId: string;
     experienceCompensationId: string;
+    group?: string | null;
+    experienceTicketStatus: ExperienceTicketStatus;
+    experienceClientRelationStatus: ExperienceClientRelationStatus;
+    experienceResolutionStatus: ExperienceResolutionStatus;
 }
 
 export class UpdateExperienceCommand implements IUpdateExperienceCommand {
@@ -30520,6 +30584,10 @@ export class UpdateExperienceCommand implements IUpdateExperienceCommand {
     internalFollowUp?: string | null;
     experienceCategoryId!: string;
     experienceCompensationId!: string;
+    group?: string | null;
+    experienceTicketStatus!: ExperienceTicketStatus;
+    experienceClientRelationStatus!: ExperienceClientRelationStatus;
+    experienceResolutionStatus!: ExperienceResolutionStatus;
 
     constructor(data?: IUpdateExperienceCommand) {
         if (data) {
@@ -30547,6 +30615,10 @@ export class UpdateExperienceCommand implements IUpdateExperienceCommand {
             this.internalFollowUp = _data["internalFollowUp"] !== undefined ? _data["internalFollowUp"] : <any>null;
             this.experienceCategoryId = _data["experienceCategoryId"] !== undefined ? _data["experienceCategoryId"] : <any>null;
             this.experienceCompensationId = _data["experienceCompensationId"] !== undefined ? _data["experienceCompensationId"] : <any>null;
+            this.group = _data["group"] !== undefined ? _data["group"] : <any>null;
+            this.experienceTicketStatus = _data["experienceTicketStatus"] !== undefined ? _data["experienceTicketStatus"] : <any>null;
+            this.experienceClientRelationStatus = _data["experienceClientRelationStatus"] !== undefined ? _data["experienceClientRelationStatus"] : <any>null;
+            this.experienceResolutionStatus = _data["experienceResolutionStatus"] !== undefined ? _data["experienceResolutionStatus"] : <any>null;
         }
     }
 
@@ -30574,6 +30646,10 @@ export class UpdateExperienceCommand implements IUpdateExperienceCommand {
         data["internalFollowUp"] = this.internalFollowUp !== undefined ? this.internalFollowUp : <any>null;
         data["experienceCategoryId"] = this.experienceCategoryId !== undefined ? this.experienceCategoryId : <any>null;
         data["experienceCompensationId"] = this.experienceCompensationId !== undefined ? this.experienceCompensationId : <any>null;
+        data["group"] = this.group !== undefined ? this.group : <any>null;
+        data["experienceTicketStatus"] = this.experienceTicketStatus !== undefined ? this.experienceTicketStatus : <any>null;
+        data["experienceClientRelationStatus"] = this.experienceClientRelationStatus !== undefined ? this.experienceClientRelationStatus : <any>null;
+        data["experienceResolutionStatus"] = this.experienceResolutionStatus !== undefined ? this.experienceResolutionStatus : <any>null;
         return data; 
     }
 }
@@ -30594,6 +30670,10 @@ export interface IUpdateExperienceCommand {
     internalFollowUp?: string | null;
     experienceCategoryId: string;
     experienceCompensationId: string;
+    group?: string | null;
+    experienceTicketStatus: ExperienceTicketStatus;
+    experienceClientRelationStatus: ExperienceClientRelationStatus;
+    experienceResolutionStatus: ExperienceResolutionStatus;
 }
 
 export class TemporaryUploadedFileDetails implements ITemporaryUploadedFileDetails {

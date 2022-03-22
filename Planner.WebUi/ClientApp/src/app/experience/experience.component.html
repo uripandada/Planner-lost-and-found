@@ -85,13 +85,13 @@
                       <div class="cell-value">{{item.experienceCategory?.name}} - {{item.experienceCategory?.experienceName}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.solveStatus}}</div>
+                      <div class="cell-value">{{experienceTicketStatusMappings[item.experienceTicketStatus]}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.clientStatus}}</div>
+                      <div class="cell-value">{{experienceClientRelationStatusMappings[item.experienceClientRelationStatus]}}</div>
                     </td>
                     <td class="name-cell">
-                      <div class="cell-value">{{item.solveStatus1}}</div>
+                      <div class="cell-value">{{experienceResolutionStatusMappings[item.experienceResolutionStatus]}}</div>
                     </td>
                   </tr>
                 </tbody>

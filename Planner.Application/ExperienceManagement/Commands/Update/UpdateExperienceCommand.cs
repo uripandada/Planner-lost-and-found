@@ -34,6 +34,10 @@ namespace Planner.Application.ExperienceManagement.Commands.Update
 		public string InternalFollowUp { get; set; }
 		public Guid ExperienceCategoryId { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
+		public string Group { get; set; }
+		public ExperienceTicketStatus ExperienceTicketStatus { get; set; }
+		public ExperienceClientRelationStatus ExperienceClientRelationStatus { get; set; }
+		public ExperienceResolutionStatus ExperienceResolutionStatus { get; set; }
 	}
 
 	public class UpdateExperienceCommandHandler : IRequestHandler<UpdateExperienceCommand, ProcessResponse>, IAmWebApplicationHandler
@@ -77,6 +81,9 @@ namespace Planner.Application.ExperienceManagement.Commands.Update
 			experience.InternalFollowUp = request.InternalFollowUp;
 			experience.ExperienceCategoryId = request.ExperienceCategoryId;
 			experience.ExperienceCompensationId = request.ExperienceCompensationId;
+			experience.ExperienceTicketStatus = request.ExperienceTicketStatus;
+			experience.ExperienceClientRelationStatus = request.ExperienceClientRelationStatus;
+			experience.ExperienceResolutionStatus = request.ExperienceResolutionStatus;
 
 			await this._databaseContext.SaveChangesAsync(cancellationToken);
 

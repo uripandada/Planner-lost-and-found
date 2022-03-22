@@ -15,31 +15,10 @@ namespace Planner.Persistence.Migrations
             migrationBuilder.DropColumn(
                 name: "first_name",
                 table: "lost_and_founds");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_lost_and_founds_lost_and_found_category_id",
-                table: "lost_and_founds",
-                column: "lost_and_found_category_id");
-
-            migrationBuilder.AddForeignKey(
-                name: "fk_lost_and_founds_categorys_lost_and_found_category_id",
-                table: "lost_and_founds",
-                column: "lost_and_found_category_id",
-                principalTable: "categorys",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_lost_and_founds_categorys_lost_and_found_category_id",
-                table: "lost_and_founds");
-
-            migrationBuilder.DropIndex(
-                name: "ix_lost_and_founds_lost_and_found_category_id",
-                table: "lost_and_founds");
-
             migrationBuilder.RenameColumn(
                 name: "name",
                 table: "lost_and_founds",

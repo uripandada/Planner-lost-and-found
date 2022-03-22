@@ -9,6 +9,7 @@ using Planner.Common.Data;
 using Planner.Common.Enums;
 using Planner.Common.Extensions;
 using Planner.Domain.Entities;
+using Planner.Domain.Values;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,10 @@ namespace Planner.Application.ExperienceManagement.Commands.Insert
 		public string InternalFollowUp { get; set; }
 		public Guid ExperienceCategoryId { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
+		public string Group { get; set; }
+		public ExperienceTicketStatus ExperienceTicketStatus { get; set; }
+		public ExperienceClientRelationStatus ExperienceClientRelationStatus { get; set; }
+		public ExperienceResolutionStatus ExperienceResolutionStatus { get; set; }
 	}
 
 	public class InsertExperienceCommandHandler : IRequestHandler<InsertExperienceCommand, ProcessResponse<Guid>>, IAmWebApplicationHandler
@@ -70,6 +75,9 @@ namespace Planner.Application.ExperienceManagement.Commands.Insert
 				InternalFollowUp = request.InternalFollowUp,
 				ExperienceCategoryId = request.ExperienceCategoryId,
 				ExperienceCompensationId = request.ExperienceCompensationId,
+				ExperienceTicketStatus = request.ExperienceTicketStatus,
+				ExperienceClientRelationStatus = request.ExperienceClientRelationStatus,
+				ExperienceResolutionStatus = request.ExperienceResolutionStatus
 			};
 
 			await this._databaseContext.Experiences.AddAsync(experience);

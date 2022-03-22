@@ -5,6 +5,7 @@ using Planner.Application.Interfaces;
 using Planner.Common.Data;
 using Planner.Common.Extensions;
 using Planner.Domain.Entities;
+using Planner.Domain.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,10 @@ namespace Planner.Application.ExperienceManagement.Queries.GetById
 		public ExperienceCategory ExperienceCategory { get; set; }
 		public Guid ExperienceCompensationId { get; set; }
 		public ExperienceCompensation ExperienceCompensation { get; set; }
+		public string Group { get; set; }
+		public ExperienceTicketStatus ExperienceTicketStatus { get; set; }
+		public ExperienceClientRelationStatus ExperienceClientRelationStatus { get; set; }
+		public ExperienceResolutionStatus ExperienceResolutionStatus { get; set; }
 	}
 
 	public class GetExperienceDetailsQuery : IRequest<ExperienceDetailsViewModel>
@@ -73,7 +78,10 @@ namespace Planner.Application.ExperienceManagement.Queries.GetById
 				ExperienceCategoryId = experience.ExperienceCategoryId,
 				ExperienceCompensationId = experience.ExperienceCompensationId,
 				ExperienceCategory = experience.ExperienceCategory,
-				ExperienceCompensation = experience.ExperienceCompensation
+				ExperienceCompensation = experience.ExperienceCompensation,
+				ExperienceTicketStatus = experience.ExperienceTicketStatus,
+				ExperienceClientRelationStatus = experience.ExperienceClientRelationStatus,
+				ExperienceResolutionStatus = experience.ExperienceResolutionStatus
 			};
 		}
 	}
