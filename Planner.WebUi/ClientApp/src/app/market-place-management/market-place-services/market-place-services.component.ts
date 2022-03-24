@@ -16,7 +16,7 @@ export class MarketPlaceServicesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.color = "accent"
+    this.color = "primary"
   }
 
   onChangeEvent(data: any) {

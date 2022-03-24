@@ -84,7 +84,6 @@ export class MarketPlaceManagement implements OnInit {
     this.marketPlaces.map(marketPlace => {
       if (marketPlace.id == id) {
         marketPlace.isChecked = status;
-        console.log(marketPlace);
       }
     })
   }
