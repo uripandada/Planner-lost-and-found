@@ -1,8 +1,8 @@
 
     <mat-card class="market-card">
         <mat-card-title>
-            <span>Active</span>
-            <mat-slide-toggle [(ngModel)]="isChecked">{{isChecked}}</mat-slide-toggle>
+            <span>Active </span>
+            <mat-slide-toggle [(ngModel)]="isChecked" id="{{id}}" (change)="onChangeEvent($event)" [color]="color"></mat-slide-toggle>
         </mat-card-title>
         <mat-card-content style="align-items: center;">
           <img src="{{image}}" alt="" class="logo_image">

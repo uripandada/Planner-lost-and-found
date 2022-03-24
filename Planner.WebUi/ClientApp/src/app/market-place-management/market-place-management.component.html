@@ -10,9 +10,9 @@
     <div>
       <div class="major-column-title"><b>Active</b></div>
       <div style = "display: flex; flex-flow: row wrap;">
-        <div *ngFor="let imageUrl of imageUrls" >
+        <div *ngFor="let marketPlace of marketPlaces" >
           <div style = "display: grid; align-items: end; margin: 10px;">
-            <app-market-place-services *ngIf = "isChecked" [image] = "imageUrl" ></app-market-place-services>
+            <app-market-place-services *ngIf = "marketPlace.isChecked" [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked"></app-market-place-services>
           </div>
         </div>
       </div>
@@ -22,9 +22,9 @@
     <div>
       <div class="major-column-title"><b>Available Connectivities</b></div>
       <div style = "display: flex; flex-flow: row wrap;">
-        <div *ngFor="let imageUrl of imageUrls" >
+        <div *ngFor="let marketPlace of marketPlaces" >
           <div style = "display: grid; align-items: end; margin: 10px;">
-            <app-market-place-services *ngIf = "!isChecked" [image] = "imageUrl" ></app-market-place-services>
+            <app-market-place-services *ngIf = "!marketPlace.isChecked" [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked"></app-market-place-services>
           </div>
         </div>
       </div>
