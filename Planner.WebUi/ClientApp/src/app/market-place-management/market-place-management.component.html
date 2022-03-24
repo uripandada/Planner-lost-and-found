@@ -1,0 +1,33 @@
+<div class="component-wrapper">
+  <div class="list-actions market-place-backColor">
+    <div class="major-column-title"><b>Market Place</b></div>
+    <div class="major-column-buttons">
+      <input matInput placeholder="Search..." style = "margin-right: 10px;">
+      <i class="svg-icon icon-bell"></i>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div class="major-column-title"><b>Active</b></div>
+      <div style = "display: flex; flex-flow: row wrap;">
+        <div *ngFor="let imageUrl of imageUrls" >
+          <div style = "display: grid; align-items: end; margin: 10px;">
+            <app-market-place-services *ngIf = "isChecked" [image] = "imageUrl" ></app-market-place-services>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div class="major-column-title"><b>Available Connectivities</b></div>
+      <div style = "display: flex; flex-flow: row wrap;">
+        <div *ngFor="let imageUrl of imageUrls" >
+          <div style = "display: grid; align-items: end; margin: 10px;">
+            <app-market-place-services *ngIf = "!isChecked" [image] = "imageUrl" ></app-market-place-services>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

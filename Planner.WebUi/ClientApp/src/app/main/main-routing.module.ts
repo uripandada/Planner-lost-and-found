@@ -133,6 +133,13 @@ const routes: Routes = [
     data: { claims: [SettingsClaimKeys.Categories] }
   },
   {
+    path: 'market-place-management',
+    component: MainComponent,
+    loadChildren: () => import('../market-place-management/market-place-management.module').then(m => m.MarketPlaceManagementModule),
+    canActivate: [AuthorizeGuard],
+    data: { claims: [SettingsClaimKeys.Categories] }
+  },
+  {
     path: 'reservations',
     component: MainComponent,
     loadChildren: () => import('../reservations/reservations.module').then(m => m.ReservationsModule),
