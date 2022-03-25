@@ -13,10 +13,10 @@ export class NikoServiceComponent implements OnInit {
   constructor(
     private _router: Router
   ) { 
-    this.statusValue = this._router.getCurrentNavigation().extras.state.option;
   }
 
   ngOnInit(): void {
+    this.statusValue = history.state.option;
   }
 
   backPage() {

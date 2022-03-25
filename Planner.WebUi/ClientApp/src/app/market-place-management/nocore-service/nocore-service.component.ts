@@ -14,10 +14,10 @@ export class NocoreServiceComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
   ) { 
-    this.statusValue = this._router.getCurrentNavigation().extras.state.option;
   }
 
   ngOnInit(): void {
+    this.statusValue = history.state.option;
   }
 
   backPage() {

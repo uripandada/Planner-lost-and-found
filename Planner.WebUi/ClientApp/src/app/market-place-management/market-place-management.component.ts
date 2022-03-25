@@ -31,7 +31,7 @@ export class MarketPlaceManagement implements OnInit {
         {
         id: "alexa",
         url: '../../../assets/images/alexa.png',
-        isChecked: false
+        isChecked: true
       },
       {
         id: "MQTT",
