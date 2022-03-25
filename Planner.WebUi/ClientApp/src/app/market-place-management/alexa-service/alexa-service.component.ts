@@ -8,15 +8,32 @@ import { Router } from '@angular/router';
 })
 export class AlexaServiceComponent implements OnInit {
 
+  public statusValue: any
+
   constructor(
     private _router: Router
-  ) { }
+  ) {
+    this.statusValue = this._router.getCurrentNavigation().extras.state.option;
+  }
 
   ngOnInit(): void {
   }
 
   backPage() {
     this._router.navigate(['/market-place-management']);
+  }
+
+  changeActivate(value: any){
+    switch (value) {
+      case 1:
+        console.log("dfdfdfdfdfd");
+        break;
+      case 2:
+        console.log("hhhhhhhhh");
+        break;
+      default:
+        break;
+    }
   }
 
 }

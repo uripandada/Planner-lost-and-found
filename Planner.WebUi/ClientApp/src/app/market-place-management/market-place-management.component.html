@@ -6,7 +6,7 @@
       <div class = "market-list-content">
         <div *ngFor="let marketPlace of marketPlaces">
           <div *ngIf = "marketPlace.isChecked" class = "market-list-details">
-            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event)"></app-market-place-services>
+            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event, marketPlace)"></app-market-place-services>
           </div>
         </div>
       </div>
@@ -18,7 +18,7 @@
       <div class = "market-list-content">
         <div *ngFor="let marketPlace of marketPlaces">
           <div *ngIf = "!marketPlace.isChecked" class = "market-list-details">
-            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event)"></app-market-place-services>
+            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event, marketPlace)"></app-market-place-services>
           </div>
         </div>
       </div>

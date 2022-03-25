@@ -46,9 +46,11 @@
             <p>I`auttorise Roomchecking a transmettre les donnees client a la societe Peek`in</p>
         </div>
         <div class="three-column-grid">
-            <div>
-                <button mat-raised-button color="warn">Activate alexa</button>
-                <button mat-stroked-button color="primary">Deactibate alexa</button>
+            <div *ngIf="this.statusValue">
+                <button mat-raised-button color="warn" (click) = "changeActivate(1)">Activate alexa</button>
+            </div>
+            <div *ngIf="!this.statusValue">
+                <button mat-stroked-button color="primary" (click) = "changeActivate(2)">Deactibate alexa</button>
             </div>
         </div>
         <div>

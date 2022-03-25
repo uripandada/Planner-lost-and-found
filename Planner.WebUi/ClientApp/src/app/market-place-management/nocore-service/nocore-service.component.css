@@ -34,7 +34,7 @@ h1 {
 }
 
 .two-column-grid-22 input {
-    width: 500px;
+    width: 100%
 }
 
 .two-column-grid-22 button {
@@ -44,6 +44,6 @@ h1 {
 
 .two-column-grid-23 {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1.2fr 1.8fr;
     grid-column-gap: 15px;
 }

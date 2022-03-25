@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-nocore-service',
@@ -8,9 +8,14 @@ import { Router } from '@angular/router';
 })
 export class NocoreServiceComponent implements OnInit {
 
+  public statusValue: any
+
   constructor(
-    private _router: Router
-  ) { }
+    private _router: Router,
+    private _route: ActivatedRoute,
+  ) { 
+    this.statusValue = this._router.getCurrentNavigation().extras.state.option;
+  }
 
   ngOnInit(): void {
   }

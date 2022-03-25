@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-market-place-management',
   templateUrl: './market-place-management.component.html',
@@ -12,12 +12,13 @@ export class MarketPlaceManagement implements OnInit {
     { key: 'PRICE_ASC', value: 'Price A to Z' },
     { key: 'PRICE_DESC', value: 'Price Z to A' },
   ];
-
+  
   public marketPlaces: Array<any>;
   public checkParentStatus: boolean;
   
   constructor(
-    private _router: Router
+    private _router: Router,
+    private _route: ActivatedRoute,
     ) {}
     
     ngOnInit(): void {
@@ -25,7 +26,7 @@ export class MarketPlaceManagement implements OnInit {
         {
           id: "peekin",
           url: '../../../assets/images/peekin.png',
-          isChecked: false
+          isChecked: true
         },
         {
         id: "alexa",
@@ -80,40 +81,40 @@ export class MarketPlaceManagement implements OnInit {
     ]
   }
 
-  showMarketPlaceDetails(data: any) {
+  showMarketPlaceDetails(data: any, status: any) {
     switch (data) {
       case 'peekin':
-        this._router.navigate(['/market-place-management', 'peekin-service']);
+        this._router.navigate(['/market-place-management/peekin-service'], { state: { option: status.isChecked }});
         break;
       case "BACnet":
-        this._router.navigate(['/market-place-management', 'bacnet-service']);
+        this._router.navigate(['/market-place-management/bacnet-service'], { state: { option: status.isChecked }});
         break;
       case "bowo":
-        this._router.navigate(['/market-place-management', 'bowo-service']);
+        this._router.navigate(['/market-place-management/bowo-service'], { state: { option: status.isChecked }});
         break;
       case "Concierge":
-        this._router.navigate(['/market-place-management', 'concierge-service']);
+        this._router.navigate(['/market-place-management/concierge-service'], { state: { option: status.isChecked }});
         break;
       case "Duve":
-        this._router.navigate(['/market-place-management', 'duve-service']);
+        this._router.navigate(['/market-place-management/duve-service'], { state: { option: status.isChecked }});
         break;
       case "LOUNGE":
-        this._router.navigate(['/market-place-management', 'lounge-service']);
+        this._router.navigate(['/market-place-management/lounge-service'], { state: { option: status.isChecked }});
         break;
       case 'QUICKtest':
-        this._router.navigate(['/market-place-management', 'quicktest-service']);
+        this._router.navigate(['/market-place-management/quicktest-service'], { state: { option: status.isChecked }});
         break;
       case "nocore":
-        this._router.navigate(['/market-place-management', 'nocore-service']);
+        this._router.navigate(['/market-place-management/nocore-service'], { state: { option: status.isChecked }});
         break;
       case "Niko":
-        this._router.navigate(['/market-place-management', 'niko-service']);
+        this._router.navigate(['/market-place-management/niko-service'], { state: { option: status.isChecked }});
         break;
       case "MQTT":
-        this._router.navigate(['/market-place-management', 'mqtt-service']);
+        this._router.navigate(['/market-place-management/mqtt-service'], { state: { option: status.isChecked }});
         break;
       case "alexa":
-        this._router.navigate(['/market-place-management', 'alexa-service']);
+        this._router.navigate(['/market-place-management/alexa-service'], { state: { option: status.isChecked }});
         break;
     }
     

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-peekin-service',
@@ -8,15 +8,33 @@ import { Router } from '@angular/router';
 })
 export class PeekinServiceComponent implements OnInit {
 
-  constructor(
-    private _router: Router
-  ) { }
+  public statusValue: any
 
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+  ) {
+    this.statusValue = this._router.getCurrentNavigation().extras.state.option;
+  }
+  
   ngOnInit(): void {
   }
 
   backPage() {
     this._router.navigate(['/market-place-management']);
+  }
+
+  changeActivate(value: any){
+    switch (value) {
+      case 1:
+        console.log("dfdfdfdfdfd");
+        break;
+      case 2:
+        console.log("hhhhhhhhh");
+        break;
+      default:
+        break;
+    }
   }
 
 }
