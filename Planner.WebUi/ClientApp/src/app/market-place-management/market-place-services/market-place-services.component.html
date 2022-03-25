@@ -4,7 +4,7 @@
             <span>Active </span>
             <mat-slide-toggle [(ngModel)]="isChecked" id="{{id}}" (change)="onChangeEvent($event)" [color]="color"></mat-slide-toggle>
         </mat-card-title>
-        <mat-card-content style="align-items: center;" (click)="onClickEvent(id)">
+        <mat-card-content class = "mat-card-content" (click)="onClickEvent(id)">
           <img src="{{image}}" alt="" class="logo_image">
         </mat-card-content>
     </mat-card>

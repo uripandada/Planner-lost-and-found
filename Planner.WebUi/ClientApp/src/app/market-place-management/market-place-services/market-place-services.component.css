@@ -6,6 +6,10 @@
   padding: 10px;
 }
 
+.mat-card-content {
+  align-items: center;
+}
+
 .logo_image {
   width: 300px;
 }

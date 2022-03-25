@@ -16,7 +16,6 @@ import { NikoServiceComponent } from './niko-service/niko-service.component';
 import { BowoServiceComponent } from './bowo-service/bowo-service.component';
 import { DuveServiceComponent } from './duve-service/duve-service.component';
 import { MarketPlaceHeaderComponent } from './market-place-header/market-place-header.component';
-import { BackButtonComponent } from './back-button/back-button.component';
 
 @NgModule({
   imports: [
@@ -39,7 +38,6 @@ import { BackButtonComponent } from './back-button/back-button.component';
     BowoServiceComponent,
     DuveServiceComponent,
     MarketPlaceHeaderComponent,
-    BackButtonComponent,
   ]
 })
 export class MarketPlaceManagementModule { }
