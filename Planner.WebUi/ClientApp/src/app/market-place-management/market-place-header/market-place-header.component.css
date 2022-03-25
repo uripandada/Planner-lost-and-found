@@ -1,0 +1,17 @@
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+.major-column-title b {
+    margin-left: 15px;
+}
+
+.two-column-grid-24 {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 15px;
+}
+
+mat-form-field {
+    margin: -5px !important;
+}

@@ -1,0 +1,28 @@
+.full-size {
+    margin: 0px 20px 20px 20px;
+    padding: 50px 20px 50px 30px;
+}
+
+.two-column-grid {
+    margin-bottom: 25px;
+}
+
+h1 {
+    color: #29437F;
+}
+
+.four-column-grid {
+    margin-bottom: 20px;
+}
+
+.two-column-grid-21 {
+    margin-bottom: 15px;
+}
+
+.three-column-grid {
+    margin-bottom: 30px;
+}
+
+.mat-raised-button {
+    margin-right: 10px;
+}

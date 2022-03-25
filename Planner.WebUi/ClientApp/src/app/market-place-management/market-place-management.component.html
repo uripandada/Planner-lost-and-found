@@ -1,18 +1,12 @@
 <div class="component-wrapper">
-  <div class="list-actions market-place-backColor">
-    <div class="major-column-title"><b>Market Place</b></div>
-    <div class="major-column-buttons">
-      <input matInput placeholder="Search..." style = "margin-right: 10px;">
-      <i class="svg-icon icon-bell"></i>
-    </div>
-  </div>
+  <app-market-place-header></app-market-place-header>
   <div>
     <div class="market-list-container">
       <div class="market-list-title"><b>Active</b></div>
       <div style = "display: flex; flex-flow: row wrap;">
-        <div *ngFor="let marketPlace of marketPlaces" >
+        <div *ngFor="let marketPlace of marketPlaces">
           <div *ngIf = "marketPlace.isChecked" style = "display: grid; align-items: end; margin: 10px;">
-            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked"></app-market-place-services>
+            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event)"></app-market-place-services>
           </div>
         </div>
       </div>
@@ -22,9 +16,9 @@
     <div class="market-list-container">
       <div class="market-list-title"><b>Available Connectivities</b></div>
       <div style = "display: flex; flex-flow: row wrap;">
-        <div *ngFor="let marketPlace of marketPlaces" >
+        <div *ngFor="let marketPlace of marketPlaces">
           <div *ngIf = "!marketPlace.isChecked" style = "display: grid; align-items: end; margin: 10px;">
-            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked"></app-market-place-services>
+            <app-market-place-services [image] = "marketPlace.url" [id]="marketPlace.id" (changeEvent)="changeEvent($event)" [isChecked]="marketPlace.isChecked" (clickEvent)="showMarketPlaceDetails($event)"></app-market-place-services>
           </div>
         </div>
       </div>

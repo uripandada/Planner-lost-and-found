@@ -13,6 +13,7 @@ export class MarketPlaceServicesComponent implements OnInit {
   @Input() checkStatus: any;
   @Input() isChecked: any;
   @Output() changeEvent = new EventEmitter();
+  @Output() clickEvent = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {
@@ -22,6 +23,10 @@ export class MarketPlaceServicesComponent implements OnInit {
   onChangeEvent(data: any) {
     this.isChecked = data.checked;
     this.changeEvent.emit(data);    
+  }
+
+  onClickEvent(id: any){
+    this.clickEvent.emit(id);    
   }
 
 }
