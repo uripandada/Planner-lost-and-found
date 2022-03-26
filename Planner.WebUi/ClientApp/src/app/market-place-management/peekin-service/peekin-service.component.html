@@ -45,10 +45,10 @@
             <p>I`auttorise Roomchecking a transmettre les donnees client a la societe Peekin</p>
         </div>
         <div class="three-column-grid">
-            <div *ngIf="this.statusValue">
+            <div *ngIf="!this.statusValue">
                 <button mat-raised-button color="warn" (click) = "changeActivate(1)">Activate Peekin</button>
             </div>
-            <div *ngIf="!this.statusValue">
+            <div *ngIf="this.statusValue">
                 <button mat-stroked-button color="primary" (click) = "changeActivate(2)">Deactibate Peekin</button>
             </div>
         </div>

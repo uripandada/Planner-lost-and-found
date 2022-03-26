@@ -9,15 +9,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PeekinServiceComponent implements OnInit {
 
   public statusValue: boolean;
+
   @Output() clickEvent = new EventEmitter();
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-  ) { }
+    ) { 
+      this.statusValue = history.state.option;
+    }
   
   ngOnInit(): void {
-    this.statusValue = history.state.option;
+    console.log(this.statusValue);
   }
 
   backPage() {
